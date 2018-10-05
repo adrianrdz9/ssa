@@ -1,0 +1,69 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+@each $key, $color in $colors {
+  .bg-#{$key}{
+    background-color: $color !important;
+  }
+
+  .text-#{$key}{
+    color: $color !important;
+  }
+}
+
+.slider-editor{
+  position: relative;
+  margin: auto;
+  overflow-x: scroll;
+  white-space: nowrap;
+  *{
+      white-space: initial;
+  }
+  .card{
+      display: inline-block;
+      width: 40%;
+      min-width: 200px;
+  }
+}
+
+#app{
+  overflow-x: hidden;
+}
+
+
+.pill{
+  border-radius: 15px;
+  overflow: hidden;
+  box-sizing: border-box;
+  .date{
+      padding: 10px;
+      background-color: rgba(255, 109, 109, 0.637);
+      margin-right: 15px;
+      box-sizing: border-box;
+      b{
+          font-size: 3em;
+          display: inline-block;
+      }
+      span{
+          display: inline-block;
+      }
+  }
+}
+
+.carousel-indicators{
+  & > li{
+    background-color: white;
+    border: 1px solid black;
+    &.active{
+      background-color: black;
+      border: 1px solid white;
+    }
+  }
+}
