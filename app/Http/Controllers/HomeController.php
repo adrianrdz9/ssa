@@ -9,6 +9,9 @@ use \App\Slide;
 use \App\Event;
 use \App\Notice;
 
+use Carbon\Carbon;
+
+
 class HomeController extends Controller
 {
 
@@ -19,8 +22,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // echo phpinfo();
-        // return "";
+       
         $slides = Slide::all();
         foreach($slides as $key=>$slide){
             $slides[$key]->img = $slide->imgPath();
@@ -30,15 +32,25 @@ class HomeController extends Controller
                 return view('admin.index', ['slides' => $slides]);
             }
         }
-        $events = Event::all();
-        return view('student.home', ['slides' => $slides, 'events' => $events]);
+        $events = Event::where([
+            ['date', '<>', 'NULL'],
+            ['date', '>', Carbon::today()->toDateString()]
+        ])->orderBy('date')->get();
+
+        $notices = Notice::where([
+            ['max_date', '<>', 'NULL'],
+            ['max_date', '>', Carbon::today()->toDateString()]
+        ])->orderBy('created_at')->get();
+
+        return view('student.home', ['slides' => $slides, 'events' => $events, 'notices' => $notices]);
     }
 
     public function events(){
-        $events = Event::all();
+        $events = Event::orderBy('date')->get();
+        $notices = Notice::orderBy('created_at')->get();
         if(Auth::check()){
             if(Auth::user()->hasRole('admin')){
-                return view('admin.events', ['events' => $events]);
+                return view('admin.events', ['events' => $events, 'notices' => $notices]);
             }
         }
         return abort(403);

@@ -15,7 +15,7 @@ class EventsController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'date' => 'nullable|date',
+            'date' => 'nullable|date|after:today',
             'event' => 'nullable|string',
         ]);
 
@@ -24,6 +24,26 @@ class EventsController extends Controller
             'event' => $request->event,
         ]);
 
-        return redirect()->back()->with('notice', 'Evento creado');;
+        return redirect()->back()->with('notice', 'Evento creado');
+    }
+
+    public function update(Request $request, $id){
+        $request->validate([
+            'date' => 'nullable|date|after:today',
+            'event' => 'nullable|string',
+        ]);
+
+        Event::find($id)->update([
+            'date'=>$request->date,
+            'event'=>$request->event
+        ]);
+
+        return redirect()->back()->with('notice', 'Evento actualizado');
+
+    }
+
+    public function delete($id){
+        Event::find($id)->delete();
+        return redirect()->back()->with('notice', 'Evento eliminado');
     }
 }

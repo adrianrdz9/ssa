@@ -1,11 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <events-component :e="{{$events}}"></events-component>
-    <form action="/admin/events" method="post">
-        @csrf
-        <input type="date" name="date" id="date">
-        <input type="text" name="event" id="text">
-        <input type="submit" value="Guardar">
-    </form>
+    <h2>Eventos</h2>
+    <admin-events :e="{{$events}}"></admin-events>
+    <h2>Avisos</h2>
+    <admin-notices :n="{{$notices}}"></admin-notices>
+
 @endsection

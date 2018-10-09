@@ -27,14 +27,25 @@
            {{session('notice')}}
         </div>
     @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger fixed-top">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div id="app">
         <div class="row bg-grey p-2">
             <div class="col-sm-7 col-md-8">
-                <a class="mx-4" href="{{ url('/') }}">
-                    <img src="{{asset('images/logo_unam.svg')}}" alt="Logo UNAM" height="100" width="100">
+                <a class="mx-4" href="https://www.unam.mx/">
+                    <img src="{{asset('images/logo_unam.png')}}" alt="Logo UNAM" height="120" >
                 </a>
-                <a href="{{ url('/') }}">
-                    <img src="{{asset('images/logo_fi.png')}}" alt="Logo FI" height="100" width="100">
+                <a href="http://www.ingenieria.unam.mx/">
+                    <img src="{{asset('images/logo_fi.png')}}" alt="Logo FI" height="120" >
                 </a>
             </div>
 

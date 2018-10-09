@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "367eda8dfe48802bc73b09dffa5e7ade",
+    "content-hash": "6f3a33828f48132934b50d7a5a9a36f2",
     "packages": [
         {
             "name": "czim/file-handling",
@@ -743,6 +743,50 @@
                 }
             ],
             "time": "2015-04-20T18:58:01+00:00"
+        },
+        {
+            "name": "laravel-validation-rules/colour",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-validation-rules/colour.git",
+                "reference": "91431feae5e9865417a67ff8b86379d9b25a01bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-validation-rules/colour/zipball/91431feae5e9865417a67ff8b86379d9b25a01bf",
+                "reference": "91431feae5e9865417a67ff8b86379d9b25a01bf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^5.5"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.5",
+                "phpunit/phpunit": "^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LVR\\Colour\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ashley Clarke",
+                    "email": "me@ashleyclarke.me"
+                }
+            ],
+            "keywords": [
+                "colour",
+                "laravel",
+                "validation"
+            ],
+            "time": "2017-09-09T21:51:57+00:00"
         },
         {
             "name": "laravel/framework",

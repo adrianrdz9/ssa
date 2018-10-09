@@ -10670,3 +10670,8 @@ a.text-dark:focus {
   border: 1px solid white;
 }
 
+.notice > p {
+  mix-blend-mode: difference;
+  color: white;
+}
+

@@ -24,3 +24,7 @@ Route::get('/eventos-y-avisos', 'HomeController@events')->name('events');
 Route::post('/admin/events', 'EventsController@store')->name('storeEvent');
 Route::put('/admin/events/{id}', 'EventsController@update');
 Route::delete('/admin/events/{id}', 'EventsController@delete');
+
+Route::post('/admin/notices', 'NoticesController@store')->name('storeNotice');
+Route::put('/admin/notices/{id}', 'NoticesController@update');
+Route::delete('/admin/notices/{id}', 'NoticesController@delete');

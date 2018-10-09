@@ -18,7 +18,10 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('notices-carousel', require('./components/NoticesCarousel.vue'));
 Vue.component('notices-carousel-editor', require('./components/NoticesCarouselEditor.vue'));
-Vue.component('events-component', require('./components/EventsCOmponent.vue'));
+Vue.component('events-component', require('./components/EventsComponent.vue'));
+Vue.component('admin-events', require('./components/AdminEventsComponent.vue'));
+Vue.component('notices-component', require('./components/NoticesComponent.vue'));
+Vue.component('admin-notices', require('./components/AdminNoticesComponent.vue'));
 
 const app = new Vue({
     el: '#app'
