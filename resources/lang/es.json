@@ -1,0 +1,22 @@
+{
+    "Login": "Iniciar sesión",
+    "Account number": "Número de cuenta",
+    "Password": "Contraseña",
+    "Register": "Registro",
+    "Forgot Your Password?": "¿Olvidaste tu contraseña?",
+    "Remember Me": "Recuerdame",
+    "Name": "Nombre",
+    "Last name": "Apellido",
+    "E-Mail Address": "Direccion de correo electrónico",
+    "Height": "Altura",
+    "Weight": "Peso",
+    "Birthdate": "Fecha de nacimiento",
+    "Career": "Carrera",
+    "Semester": "Semestre",
+    "Address": "Dirección",
+    "Medical service type": "Tipo de servicio medico",
+    "Blood type": "Tipo sanguineo",
+    "Medical card number": "Número de carnet",
+    "Phone number": "Número telefonico",
+    "Confirm Password": "Confirmar contraseña"
+}

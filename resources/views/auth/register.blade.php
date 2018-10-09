@@ -61,7 +61,7 @@
 
                             <div class="col-md-6 col-xs-12">
                                 <div class="form-group row">
-                                    <label for="height" class="col-md-4 col-form-label text-md-right">{{ __('Height (in cm)') }}*</label>
+                                    <label for="height" class="col-md-4 col-form-label text-md-right">{{ __('Height') }}*</label>
         
                                     <div class="col-md-8">
                                         <div class="input-group">
@@ -82,7 +82,7 @@
 
                             <div class="col-md-6 col-xs-12">
                                 <div class="form-group row">
-                                    <label for="weight" class="col-md-4 col-form-label text-md-right">{{ __('Weight (in kg)') }}*</label>
+                                    <label for="weight" class="col-md-4 col-form-label text-md-right">{{ __('Weight') }}*</label>
         
                                     <div class="col-md-8">
                                         <div class="input-group">
