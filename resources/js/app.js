@@ -22,6 +22,8 @@ Vue.component('events-component', require('./components/EventsComponent.vue'));
 Vue.component('admin-events', require('./components/AdminEventsComponent.vue'));
 Vue.component('notices-component', require('./components/NoticesComponent.vue'));
 Vue.component('admin-notices', require('./components/AdminNoticesComponent.vue'));
+Vue.component('create-tournament', require('./components/CreateTournamentComponent.vue'));
+Vue.component('date-format', require('./components/DateFormatComponent.vue'));
 
 const app = new Vue({
     el: '#app'

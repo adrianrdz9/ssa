@@ -28,3 +28,11 @@ Route::delete('/admin/events/{id}', 'EventsController@delete');
 Route::post('/admin/notices', 'NoticesController@store')->name('storeNotice');
 Route::put('/admin/notices/{id}', 'NoticesController@update');
 Route::delete('/admin/notices/{id}', 'NoticesController@delete');
+
+Route::post('/admin/sports', 'SportsController@store');
+Route::post('/admin/tournaments', 'TournamentsController@store');
+
+Route::get('/torneos', 'TournamentsController@index')->name('tournamentsIndex');
+Route::get('/torneos/{id}', 'TournamentsController@show')->name('signUpTournament');
+Route::get('/torneos/nuevo', 'TournamentsController@new')->name('newTournament');
+Route::get('/torneos/completar')->name('completeSignup');

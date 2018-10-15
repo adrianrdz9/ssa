@@ -14,7 +14,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
@@ -77,12 +77,23 @@
                             <li class="navbar-item">
                                 <a href="{{ route('events') }}" class="nav-link">Eventos y avisos</a>
                             </li>
-                            <li class="navbar-item">
-                                <a href="#" class="nav-link">Completar inscripción</a>
+                            <li class="navbar-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="tournamentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Torneos
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="tournamentDropdown">
+                                    <a class="dropdown-item" href="{{ route('newTournament') }}">Crear torneo</a>
+                                    <a class="dropdown-item" href="{{ route('tournamentsIndex') }}">Ver todos los torneos</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('completeSignup') }}">Completar inscripción</a>
+                                </div>
                             </li>
                         @else
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
                             </li>
                         @endrole
                     </ul>
