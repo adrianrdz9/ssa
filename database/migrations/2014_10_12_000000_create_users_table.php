@@ -11,18 +11,24 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-    }
+     public function up()
+     {
+         Schema::create('users', function (Blueprint $table) {
+             $table->increments('id');
+             $table->string('name');
+             $table->string('email')->unique();
+             $table->string('Siglas')->unique();
+             $table->string('Nombre');
+             $table->text('Descripcion');
+             $table->string('Logo');
+             $table->string('Foto');
+             $table->string('password', 60);
+             $table->boolean('active')->default(0);
+             $table->string('confirm_token', 100);
+             $table->rememberToken();
+             $table->timestamps();
+         });
+     }
 
     /**
      * Reverse the migrations.

@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{asset('css/noticas.css')}}" rel="stylesheet"/>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -16,7 +15,7 @@
   <div class="container-fluid" id="DivLogo">
     <img src="{{asset('Images/UNAM.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
     <img src="{{asset('Images/FI.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
-    <label>Facultad de Ingeniería</label>
+    <label id="In">Facultad de Ingeniería</label>
   </div>
   <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="background-color:red;">
     <div class="container-fluid" style="background-color:white; border-color:red;">

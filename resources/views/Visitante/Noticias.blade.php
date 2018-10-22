@@ -35,52 +35,22 @@
 </div>
 <section class="details-card">
         <div class="row">
+            @foreach($data as $dato)
             <div class="col-sm-4">
                 <div class="card-content">
-                    <div class="card-img">
+                    <div class="card-img" data-id="{{ $dato->Folio }}">
                         <img src="{{asset('Images/Petro.jpg')}}" alt="">
                     </div>
                     <div class="card-desc">
-                        <h3>Titulo</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
-                            voluptas totam Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
-                            voluptas totam</p>
-                        <h6>Fecha </h6>
-                            <a href="#" class="btn-card">Ver más</a>
+                        <h3>{{ $dato->Titulo }}</h3>
+                        <p>{{ $dato->DescripcionCorta }}</p>
+                        <h6>{{ $dato->Fecha  }}</h6>
+                        <button class="btn-card">Ver más</button>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="card-content">
-                    <div class="card-img">
-                        <img src="{{asset('Images/Inge.jpg')}}" alt="">
-                    </div>
-                    <div class="card-desc">
-                        <h3>Titulo</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
-                            voluptas totam Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
-                            voluptas totam</p>
-                        <h6>Fecha </h6>
-                            <a href="#" class="btn-card">Ver más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card-content">
-                    <div class="card-img">
-                        <img src="{{asset('Images/Petro.jpg')}}" alt="">
-                    </div>
-                    <div class="card-desc">
-                        <h3>Titulo</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
-                            voluptas totam Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
-                            voluptas totam</p>
-                        <h6>Fecha </h6>
-                            <a href="#" class="btn-card">Ver más</a>
-                    </div>
-                </div>
-            </div>
-    </div>
+           @endforeach
+        </div>
 </section>
 <script>
     $('.carousel[data-type="multi"] .item').each(function(){

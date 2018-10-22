@@ -18,7 +18,12 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            $s = auth()->user()->Siglas;
+            if($s="SSA"){
+              return redirect('/Admi');
+            }else {
+              return redirect('/semiAdmi');
+            }
         }
 
         return $next($request);
