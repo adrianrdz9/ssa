@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admis;
-
+use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Noticias;
@@ -27,28 +27,45 @@ class admiController extends Controller
     {
         \Session::forget('Noticias');
 
-        $noticia = (object)array(
-          'Titulo' =>$request->Titulo,
-          'Descripcion' => $request->Descripcion,
-          'Fecha' => $request->Fecha,
-          'ImagenC' => $request->ImagenC,
-          'ImagenR' => $request->ImagenR,
-        );
+        $this->validate($request, array(
+          'Titulo' => 'required|max:191' ,
+          'Descripcion' => 'required',
+          'Fecha' => 'required',
+        ));
 
+        $noticia = "Validando noticia";
         \Session::push('Noticias',$noticia);
 
         $noticias = \Session::get('Noticias');
 
-        foreach ($noticias as $noticia) {
+
           $noti = new Noticias;
-          $noti ->Titulo = $noticia->Titulo;
-          $noti ->Descripcion = $noticia->Descripcion;
-          $noti ->DescripcionCorta = $noticia->Descripcion;
-          $noti ->Fecha = $noticia->Fecha;
-          $noti ->ImagenC = $noticia->ImagenC;
-          $noti ->ImagenR = $noticia->ImagenR;
+
+          $noti ->Titulo = $request->Titulo;
+          $noti ->Descripcion = $request->Descripcion;
+          $noti ->DescripcionCorta = $request->Descripcion;
+          $noti ->Fecha = $request->Fecha;
+
+          //save Images
+          if($request->hasFile('ImagenC')){
+            $image = $request->file('ImagenC');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/Noticias/'. $filename);
+            Image::make($image)->resize(600,309)->save($location);
+
+            $noti->ImagenC = $filename;
+          }
+
+          if($request->hasFile('ImagenR')){
+            $image = $request->file('ImagenR');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/Noticias/'. $filename);
+            Image::make($image)->resize(600,309)->save($location);
+
+            $noti->ImagenR = $filename;
+          }
+
           $noti->save();
-        }
 
         return redirect('Admi');
     }

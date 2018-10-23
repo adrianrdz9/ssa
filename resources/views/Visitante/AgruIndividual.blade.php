@@ -6,7 +6,7 @@
     <h6>SIGLAS</h6>
   <div class="row">
     <div class="col-sm-4" style="background-color:lavender;">
-      <img src="{{asset('Images/FI.png')}}" class="img-responsive">
+      <img src="{{asset('images/FI.png')}}" class="img-responsive">
       <br/>
       <div>
           Descripcion: <br/>
@@ -66,7 +66,7 @@
         </div>
       </div>
       <div align="center">
-        <img src="{{asset('Images/Logo.png')}}" class="img-responsive" width="50%" height="95%">
+        <img src="{{asset('images/Logo.png')}}" class="img-responsive" width="50%" height="95%">
       </div>
     </div>
   </div>

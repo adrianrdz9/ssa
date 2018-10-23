@@ -12,8 +12,8 @@
   </head>
   <body>
   <div class="container-fluid" id="DivLogo">
-    <img src="{{asset('Images/UNAM.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
-    <img src="{{asset('Images/FI.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
+    <img src="{{asset('images/UNAM.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
+    <img src="{{asset('images/FI.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
     <label id="In">Facultad de Ingeniería</label>
   </div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">

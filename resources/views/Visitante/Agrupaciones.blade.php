@@ -4,7 +4,7 @@
 <link href="{{asset('css/AgrupaGnral.css')}}" rel="stylesheet"/>
 <div class="row">
       <div class="col-sm-3" style="background-color:lavender;">
-        <img src="{{asset('Images/Logo.png')}}" class="img-responsive"
+        <img src="{{asset('images/Logo.png')}}" class="img-responsive"
           style="max-width: 115%; max-height: 182%; align:left;">
       </div>
       <div class="col-sm-1 offset-sm-1"></div>

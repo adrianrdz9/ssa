@@ -4,7 +4,7 @@
 Route::get('/login','Auth\LoginController@showLoginForm' );
 Route::post('login','Auth\LoginController@login')->name('login');
 //Administrador
-Route::get('Admi','Admis\admiController@index')->name('Admi');
+Route::any('Admi','Admis\admiController@index')->name('Admi');
 //semiAdmis
 Route::get('semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
 
