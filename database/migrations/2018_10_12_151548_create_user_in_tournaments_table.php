@@ -17,9 +17,12 @@ class CreateUserInTournamentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('tournament_id');
+            $table->string('folio')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('tournament_id')->references('id')->on('tournaments');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

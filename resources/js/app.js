@@ -9,6 +9,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueQrcodeReader from 'vue-qrcode-reader';
+import VueQrcode from '@xkeshi/vue-qrcode';
+
+Vue.use(VueQrcodeReader);
+Vue.component(VueQrcode.name, VueQrcode);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -24,6 +31,8 @@ Vue.component('notices-component', require('./components/NoticesComponent.vue'))
 Vue.component('admin-notices', require('./components/AdminNoticesComponent.vue'));
 Vue.component('create-tournament', require('./components/CreateTournamentComponent.vue'));
 Vue.component('date-format', require('./components/DateFormatComponent.vue'));
+Vue.component('complete-signup', require('./components/CompleteSignUp.vue'));
+
 
 const app = new Vue({
     el: '#app'

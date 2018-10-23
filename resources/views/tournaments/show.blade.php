@@ -96,7 +96,18 @@
 
                 </div>
             </div>
-            <button class="card-footer btn btn-info bg-info">Inscribirme</button>
+            @if ($isSignedUp)
+                <p class="d-block text-center">
+                    Ya estas inscrito a este torneo
+                    <br>
+                    <a href="{{ route('tournamentVoucher', ['id' => Crypt::encrypt($tournament->id)] )}}">Descargar comprobante</a>
+                </p>
+            @else
+                <form action="{{ route('signUpTournament', ['id' => Crypt::encrypt($tournament->id)])}}" method="post">
+                    @csrf
+                    <button type="submit" class="card-footer btn btn-info bg-info w-100">Inscribirme</button>
+                </form>
+            @endif
         </div>
     </div>
 @endsection

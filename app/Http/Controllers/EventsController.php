@@ -17,11 +17,15 @@ class EventsController extends Controller
         $request->validate([
             'date' => 'nullable|date|after:today',
             'event' => 'nullable|string',
+            'link_text' => 'nullable|string',
+            'link_to' => 'nullable|string'
         ]);
 
         Event::create([
             'date' => $request->date,
             'event' => $request->event,
+            'link_text' => $request->link_text,
+            'link_to' => $request->link_to
         ]);
 
         return redirect()->back()->with('notice', 'Evento creado');
@@ -31,11 +35,15 @@ class EventsController extends Controller
         $request->validate([
             'date' => 'nullable|date|after:today',
             'event' => 'nullable|string',
+            'link_text' => 'nullable|string',
+            'link_to' => 'nullable|string'
         ]);
 
         Event::find($id)->update([
             'date'=>$request->date,
-            'event'=>$request->event
+            'event'=>$request->event,
+            'link_text' => $request->link_text,
+            'link_to' => $request->link_to
         ]);
 
         return redirect()->back()->with('notice', 'Evento actualizado');

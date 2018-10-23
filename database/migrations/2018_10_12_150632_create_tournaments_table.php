@@ -22,6 +22,8 @@ class CreateTournamentsTable extends Migration
             $table->date('date');
             $table->enum('branch', ['femenil', 'varonil', 'mixto']);
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
     

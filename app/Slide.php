@@ -8,7 +8,7 @@ class Slide extends Model implements \Czim\Paperclip\Contracts\AttachableInterfa
 {
     use \Czim\Paperclip\Model\PaperclipTrait;
 
-    protected $fillable = ['image', 'caption'];
+    protected $fillable = ['image', 'caption', 'link_to', 'link_text'];
 
     public function __construct(array $attributes = [])
     {

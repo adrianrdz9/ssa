@@ -12,8 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Log;
 
-
-
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class RegisterController extends Controller
 {
@@ -48,6 +48,8 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
         $this->auth = $auth;
+        Session::put('backUrl', URL::previous());
+
     }
 
     /**
@@ -117,6 +119,10 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         $user->assignRole('student');
+    }
+
+    public function redirectTo(){
+        return Session::get('backUrl') ? Session::get('backUrl') :   $this->redirectTo;
     }
 
 }

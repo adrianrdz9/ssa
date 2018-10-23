@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost:8000'),
+    'url' => env('APP_URL', 'http://192.168.1.77'),
 
     /*
     |--------------------------------------------------------------------------
@@ -161,7 +161,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Czim\Paperclip\Providers\PaperclipServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -211,8 +212,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Image' => Intervention\Image\Facades\Image::class
-
+        'Image' => Intervention\Image\Facades\Image::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

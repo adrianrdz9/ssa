@@ -96,6 +96,9 @@
                                 <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
                             </li>
                         @endrole
+                        <li class="nav-item">
+                            <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

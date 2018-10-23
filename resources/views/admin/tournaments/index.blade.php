@@ -29,10 +29,6 @@
 
                                         <div class="card-body">
                                             <p>
-                                                <b>Deporte: </b>
-                                                {{$branch->sport->name}}
-                                            </p>
-                                            <p>
                                                 <b>Máximo: </b>
                                                 {{$branch->max_room}}
                                             </p>
@@ -47,11 +43,19 @@
                                                 para inscribirte al torneo
                                             @endauth
                                         </div>
+                                        <div class="card-footer">
+                                            <form action="{{route('deleteTournament', ['id' => Crypt::encrypt($branch->id)])}}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <input type="submit" value="Eliminar" class="btn btn-danger">
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
+                    
                 </div>
             </div>
         @endforeach 

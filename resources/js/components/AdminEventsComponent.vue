@@ -11,8 +11,9 @@
                         </span><br>
                         <a href="#" class="text-indigo" data-toggle="modal" :data-target="'#editEvent-'+event.id">Editar</a>
                     </div>
-                    <p class="col-sm-8">
+                    <p class="col-sm-8 position-relative p-2">
                         {{event.event}}
+                        <a :href="event.link_to" class="position-absolute" style="bottom: 0; right: 0;">{{event.link_text}}</a>
                     </p>
                 </div>
 
@@ -26,8 +27,11 @@
                                     </button>
                                         <input type="hidden" name="_token" :value="csrf">
                                         <input type="hidden" name="_method" value="PUT">
+                                        <label for="date">Fecha</label>
                                         <input type="date" name="date" v-model="event.date" v-on:change="formatDates" class="form-control">
                                         <input type="text" name="event" v-model="event.event" class="form-control mt-2" placeholder="Evento">
+                                        <input type="text" name="link_text" v-model="event.link_text" class="form-control mt-2" placeholder="Texto del link">
+                                        <input type="text" name="link_to" v-model="event.link_to" class="form-control mt-2" placeholder="Dirección del link">
                                 </div>
                                 <div class="modal-footer">
                                     <form :action="'/admin/events/'+event.id" method="post">
@@ -57,8 +61,11 @@
                     <form action="/admin/events" method="post">
                         <div class="modal-body">
                             <input type="hidden" name="_token" :value="csrf">
-                            <input type="date" name="date" id="date" class="form-control">
-                            <input type="text" name="event" id="text" class="form-control">
+                            <label for="date">Fecha</label>
+                            <input type="date" name="date" id="date" class="form-control mt-2">
+                            <input type="text" name="event" class="form-control mt-2" placeholder="Nombre del evento">
+                            <input type="text" name="link_text" class="form-control mt-2" placeholder="Texto del link">
+                            <input type="text" name="link_to" class="form-control mt-2" placeholder="Dirección del link">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

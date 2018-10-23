@@ -17,10 +17,12 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
-        "vue": "^2.5.7"
+        "vue": "^2.5.17"
     },
     "dependencies": {
+        "@xkeshi/vue-qrcode": "^1.0.0",
         "moment": "^2.22.2",
-        "sweetalert2": "^7.28.4"
+        "sweetalert2": "^7.28.4",
+        "vue-qrcode-reader": "^1.2.2"
     }
 }

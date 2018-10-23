@@ -11,8 +11,9 @@
                                 {{event.date.format('YYYY')}}
                             </span>
                         </div>
-                        <p class="col-sm-8">
+                        <p class="col-sm-8 position-relative p-2">
                             {{event.event}}
+                            <a :href="event.link_to" class="position-absolute" style="bottom: 0; right:0;">{{event.link_text}}</a>
                         </p>
                     </div>
                 </div>       

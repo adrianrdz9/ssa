@@ -10,7 +10,8 @@
                     <img class="d-block w-100 " :src="slide.img" alt="" height="400">
                     <div class="carousel-caption d-none d-block w-100 position-absolute" style="left:0">
                         <div :class="{'p-2 rounded w-100': true, 'd-none': !slide.caption}" style="background-color: rgba(0,0,0,0.4)">
-                            <p>{{slide.caption}}</p>
+                            <p class="mb-0">{{slide.caption}}</p>
+                            <a :href="slide.link_to" class="d-block text-right mt-0 w-75">{{slide.link_text}}</a>
                         </div>
                     </div>
                 </div>

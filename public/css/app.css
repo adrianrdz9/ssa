@@ -10471,6 +10471,10 @@ a.text-dark:focus {
   }
 }
 
+main {
+  min-height: 300px;
+}
+
 .bg-blue {
   background-color: #3490dc !important;
 }
@@ -10710,6 +10714,7 @@ a.text-dark:focus {
 
 .pill {
   border-radius: 15px;
+  border: 1px solid rgba(255, 109, 109, 0.637);
   overflow: hidden;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;

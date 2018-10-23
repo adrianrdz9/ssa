@@ -12,7 +12,7 @@
             </div>
         </div>
         <div v-else>
-            <h2>No hay eventos</h2>
+            <h2>No hay avisos</h2>
         </div>
     </div>
 </template>

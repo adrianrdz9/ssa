@@ -9,6 +9,8 @@
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="_token" :value="csrf">
                         <input type="text" v-model="slide.caption" class="form-control" placeholder="Pie de imagen" name="caption">
+                        <input type="text" v-model="slide.link_text" class="form-control" placeholder="Texto del link" name="link_text">
+                        <input type="text" v-model="slide.link_to" class="form-control" placeholder="Dirección del link" name="link_to">
                         <label>Imagen</label>
                         <input type="file" @change="changeImg(i, $event)" class="form-control-file" name="image">
                         <div class="row mt-2">

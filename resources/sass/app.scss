@@ -8,6 +8,10 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+main{
+  min-height: 300px;
+}
+
 @each $key, $color in $colors {
   .bg-#{$key}{
     background-color: $color !important;
@@ -44,6 +48,7 @@
 
 .pill{
   border-radius: 15px;
+  border: 1px solid rgba(255, 109, 109, 0.637);
   overflow: hidden;
   box-sizing: border-box;
   .date{
