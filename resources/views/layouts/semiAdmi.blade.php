@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <body>
+  <div class='container'>
     <nav class="navbar navbar-expand-lg navbar-light bg-light nav-tabs">
         <a class="navbar-brand" href="#">Agrupaciones</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,12 +25,14 @@
                     <a class="nav-link" href="#">Reclutamientos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Salir</a>
+                  <form method="POST" action=" {{ route('logout') }} ">
+                    {{ csrf_field() }}
+                    <button class="btn btn-danger btn-block">Cerrar sesión</button>
+                  </form>
                 </li>
             </ul>
         </div>
     </nav>
-    <div class='container'>
         @yield('content')
     </div>
   </body>
