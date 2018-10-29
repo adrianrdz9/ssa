@@ -1,17 +1,13 @@
 @extends('layouts.Admi')
 @section('title','Nueva notica')
 @section('content')
-<form method="POST" action=" {{ route('logout') }} ">
-  {{ csrf_field() }}
-  <button class="btn btn-danger btn-block">Cerrar sesión</button>
-</form>
 <h3>Noticias</h3>
 @if($msg=="Se guardo la notica con exito")
   <div class="alert alert-success" role="alert">
     {{ $msg }}
   </div>
 @endif
-<form action="{{ url('Admi') }}" method="post">
+<form method="post" action="{{ url('Admi') }}" enctype="multipart/form-data">
   {{ csrf_field() }}
   <div class="form-row">
     <div class="form-group col-md-6">
