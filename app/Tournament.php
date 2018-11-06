@@ -19,15 +19,18 @@ class Tournament extends Model
     }
 
     public function users(){
-        $usersIds = UserInTournament::where('tournament_id', $this->id)->select('user_id');
-        return User::whereIn(
-            'id',
-            $usersIds
-        )->get();
+        return $this->belongsToMany('\App\User', 'user_in_tournaments');
     }
 
     public function roomLeft(){
         return $this->max_room - $this->users()->count();
+    }
+
+    public function completedSignups(){
+        return UserInTournament::where([
+            ['tournament_id', $this->id],
+            ['status', 'Completada']
+        ]);
     }
 
     public function room_left(){

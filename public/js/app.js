@@ -31342,6 +31342,8 @@ Vue.component('admin-notices', __webpack_require__(214));
 Vue.component('create-tournament', __webpack_require__(217));
 Vue.component('date-format', __webpack_require__(220));
 Vue.component('complete-signup', __webpack_require__(223));
+Vue.component('profile-avatar-input', __webpack_require__(228));
+Vue.component('tournament-historic', __webpack_require__(232));
 
 var app = new Vue({
   el: '#app'
@@ -79321,6 +79323,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -79335,7 +79348,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             dataAvailable: false,
             user: {},
             tournament: {},
-            decoded: false
+            decoded: false,
+            error: ""
         };
     },
 
@@ -79343,6 +79357,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         onDecode: function onDecode(decodedString) {
             this.folio = decodedString;
+            this.paused = true;
+            this.decoded = true;
+            this.validFolio = decodedString;
             this.onSubmit();
         },
         onSubmit: function onSubmit(event) {
@@ -79350,17 +79367,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             if (event) event.preventDefault();
             axios.get('/torneos/completar/' + this.folio).then(function (response) {
-                console.log(response.data);
                 if (response.data) {
-                    _this.paused = true;
                     _this.tournament = response.data.tournament;
                     _this.user = response.data.user;
+                    _this.user.status = response.data.status;
                     _this.dataAvailable = true;
+                    _this.paused = true;
                     _this.decoded = true;
                     _this.validFolio = _this.folio;
+                    console.log(response.data);
+                } else {
+                    _this.error = "No hay ningun registro con ese folio.";
                 }
             }).catch(function (err) {
-                console.log(err.response);
+                _this.error = "Ocurrio un error inesperado.";
             });
         }
     }
@@ -79452,7 +79472,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "folio" },
+                  attrs: { type: "text", name: "folio", required: "" },
                   domProps: { value: _vm.folio },
                   on: {
                     input: function($event) {
@@ -79471,6 +79491,12 @@ var render = function() {
         )
       ])
     ]),
+    _vm._v(" "),
+    _vm.error !== ""
+      ? _c("h2", { staticClass: "d-block text-center" }, [
+          _vm._v(_vm._s(_vm.error))
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _vm.dataAvailable
       ? _c("div", { staticClass: "card" }, [
@@ -79657,7 +79683,64 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "card-footer" }, [
+            _c("span", [
+              _vm._v("\n                Estado: \n                "),
+              _vm.user.status == "Pendiente"
+                ? _c("b", { staticClass: "text-danger" }, [_vm._v("Pendiente")])
+                : _vm.user.status == "Completada"
+                  ? _c("b", { staticClass: "text-success" }, [
+                      _vm._v("Completada")
+                    ])
+                  : _vm.user.status == "Eliminada"
+                    ? _c("b", { staticClass: "text-danger" }, [
+                        _vm._v("Eliminada")
+                      ])
+                    : _vm._e()
+            ]),
+            _vm._v(" "),
+            _vm.user.status == "Pendiente"
+              ? _c("div", [
+                  _c(
+                    "form",
+                    {
+                      attrs: {
+                        action: "/torneos/completar/" + _vm.validFolio,
+                        method: "post"
+                      }
+                    },
+                    [
+                      _c("input", {
+                        attrs: { type: "hidden", name: "_token" },
+                        domProps: { value: _vm.csrf }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "_method", value: "PUT" }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "btn btn-success float-right",
+                        attrs: {
+                          type: "submit",
+                          value: "Completar",
+                          name: "action"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "btn btn-outline-danger float-right",
+                        attrs: {
+                          type: "submit",
+                          value: "Eliminar",
+                          name: "action"
+                        }
+                      })
+                    ]
+                  )
+                ])
+              : _vm._e()
+          ])
         ])
       : _vm._e()
   ])
@@ -79672,21 +79755,6 @@ var staticRenderFns = [
         staticClass: "btn btn-info w-100",
         attrs: { type: "submit", value: "Buscar" }
       })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c("span", [
-        _vm._v("\n                Estado: \n                "),
-        _c("b", { staticClass: "text-danger" }, [_vm._v("pendiente")])
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-success float-right" }, [
-        _vm._v("\n                Completar inscripción\n            ")
-      ])
     ])
   }
 ]
@@ -79704,6 +79772,925 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 227 */,
+/* 228 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(229)
+/* template */
+var __vue_template__ = __webpack_require__(230)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/ProfileAvatarInput.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3310b39a", Component.options)
+  } else {
+    hotAPI.reload("data-v-3310b39a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 229 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        src: String
+    },
+
+    data: function data() {
+        return {
+            imageUrl: this.src
+        };
+    },
+
+    methods: {
+        changeImg: function changeImg(event) {
+            var _this = this;
+
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+
+                    _this.imageUrl = e.target.result;
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "label",
+      { staticClass: "btn btn-secondary", attrs: { for: "avatar" } },
+      [_vm._v("Cambiar imagen de perfil")]
+    ),
+    _vm._v(" "),
+    _c("input", {
+      staticClass: "d-none",
+      attrs: { type: "file", name: "avatar", id: "avatar" },
+      on: {
+        change: function($event) {
+          _vm.changeImg($event)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("img", { attrs: { src: _vm.imageUrl, alt: "Missing", height: "70" } })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3310b39a", module.exports)
+  }
+}
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports=function(modules){function __webpack_require__(moduleId){if(installedModules[moduleId])return installedModules[moduleId].exports;var module=installedModules[moduleId]={i:moduleId,l:!1,exports:{}};return modules[moduleId].call(module.exports,module,module.exports,__webpack_require__),module.l=!0,module.exports}var installedModules={};return __webpack_require__.m=modules,__webpack_require__.c=installedModules,__webpack_require__.i=function(value){return value},__webpack_require__.d=function(exports,name,getter){__webpack_require__.o(exports,name)||Object.defineProperty(exports,name,{configurable:!1,enumerable:!0,get:getter})},__webpack_require__.n=function(module){var getter=module&&module.__esModule?function(){return module.default}:function(){return module};return __webpack_require__.d(getter,"a",getter),getter},__webpack_require__.o=function(object,property){return Object.prototype.hasOwnProperty.call(object,property)},__webpack_require__.p="",__webpack_require__(__webpack_require__.s=3)}([function(module,__webpack_exports__,__webpack_require__){"use strict";function getChartsLoader(){return window.google&&window.google.charts?Promise.resolve(window.google.charts):(chartsLoaderPromise||(chartsLoaderPromise=new Promise(function(resolve){var script=document.createElement("script");script.type="text/javascript",script.onload=function(){return resolve(window.google.charts)},script.src=chartsScriptUrl,document.body.appendChild(script)})),chartsLoaderPromise)}function loadGoogleCharts(){var version=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"current",settings=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return getChartsLoader().then(function(loader){if("object"!==(void 0===settings?"undefined":_typeof(settings)))throw new Error("Google Charts loader: settings must be an object");var settingsKey=version+"_"+JSON.stringify(settings,Object.keys(settings).sort());if(loadedPackages.has(settingsKey))return loadedPackages.get(settingsKey);var loaderPromise=new Promise(function(resolve){loader.load(version,settings),loader.setOnLoadCallback(function(){return resolve(window.google)})});return loadedPackages.set(settingsKey,loaderPromise),loaderPromise})}__webpack_exports__.a=loadGoogleCharts;var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(obj){return typeof obj}:function(obj){return obj&&"function"==typeof Symbol&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj},chartsScriptUrl="https://www.gstatic.com/charts/loader.js",chartsLoaderPromise=null,loadedPackages=new Map},function(module,exports,__webpack_require__){var Component=__webpack_require__(5)(__webpack_require__(4),__webpack_require__(6),null,null);module.exports=Component.exports},function(module,exports){module.exports=function(func,wait,immediate){function later(){var last=Date.now()-timestamp;last<wait&&last>=0?timeout=setTimeout(later,wait-last):(timeout=null,immediate||(result=func.apply(context,args),context=args=null))}var timeout,args,context,timestamp,result;null==wait&&(wait=100);var debounced=function(){context=this,args=arguments,timestamp=Date.now();var callNow=immediate&&!timeout;return timeout||(timeout=setTimeout(later,wait)),callNow&&(result=func.apply(context,args),context=args=null),result};return debounced.clear=function(){timeout&&(clearTimeout(timeout),timeout=null)},debounced.flush=function(){timeout&&(result=func.apply(context,args),context=args=null,clearTimeout(timeout),timeout=null)},debounced}},function(module,__webpack_exports__,__webpack_require__){"use strict";function install(Vue){Vue.component("GChart",__WEBPACK_IMPORTED_MODULE_1__components_GChart_vue___default.a)}Object.defineProperty(__webpack_exports__,"__esModule",{value:!0}),__webpack_exports__.install=install;var __WEBPACK_IMPORTED_MODULE_0__lib_google_charts_loader__=__webpack_require__(0),__WEBPACK_IMPORTED_MODULE_1__components_GChart_vue__=__webpack_require__(1),__WEBPACK_IMPORTED_MODULE_1__components_GChart_vue___default=__webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_GChart_vue__);__webpack_require__.d(__webpack_exports__,"loadGoogleCharts",function(){return __WEBPACK_IMPORTED_MODULE_0__lib_google_charts_loader__.a}),__webpack_require__.d(__webpack_exports__,"GChart",function(){return __WEBPACK_IMPORTED_MODULE_1__components_GChart_vue___default.a});var plugin={version:"0.3.2",install:install};__webpack_exports__.default=plugin;var GlobalVue=null;"undefined"!=typeof window?GlobalVue=window.Vue:"undefined"!=typeof global&&(GlobalVue=global.Vue),GlobalVue&&GlobalVue.use(plugin)},function(module,__webpack_exports__,__webpack_require__){"use strict";Object.defineProperty(__webpack_exports__,"__esModule",{value:!0});var __WEBPACK_IMPORTED_MODULE_0__lib_google_charts_loader__=__webpack_require__(0),__WEBPACK_IMPORTED_MODULE_1_debounce__=__webpack_require__(2),__WEBPACK_IMPORTED_MODULE_1_debounce___default=__webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_debounce__),_slicedToArray=function(){function sliceIterator(arr,i){var _arr=[],_n=!0,_d=!1,_e=void 0;try{for(var _s,_i=arr[Symbol.iterator]();!(_n=(_s=_i.next()).done)&&(_arr.push(_s.value),!i||_arr.length!==i);_n=!0);}catch(err){_d=!0,_e=err}finally{try{!_n&&_i.return&&_i.return()}finally{if(_d)throw _e}}return _arr}return function(arr,i){if(Array.isArray(arr))return arr;if(Symbol.iterator in Object(arr))return sliceIterator(arr,i);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(obj){return typeof obj}:function(obj){return obj&&"function"==typeof Symbol&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj},chartsLib=null;__webpack_exports__.default={name:"GChart",props:{type:{type:String},data:{type:[Array,Object],default:function(){return[]}},options:{type:Object,default:function(){return{}}},version:{type:String,default:"current"},settings:{type:Object,default:function(){return{packages:["corechart","table"]}}},events:{type:Object},createChart:{type:Function},resizeDebounce:{type:Number,default:200}},data:function(){return{chartObject:null}},watch:{data:{deep:!0,handler:function(){this.drawChart()}},options:{deep:!0,handler:function(){this.drawChart()}},type:function(value){this.createChartObject(),this.drawChart()}},mounted:function(){var _this=this;__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_google_charts_loader__.a)(this.version,this.settings).then(function(api){chartsLib=api;var chart=_this.createChartObject();_this.$emit("ready",chart,api),_this.drawChart()}),this.resizeDebounce>0&&window.addEventListener("resize",__WEBPACK_IMPORTED_MODULE_1_debounce___default()(this.drawChart,this.resizeDebounce))},beforeDestroy:function(){this.chartObject&&this.chartObject.clearChart()},methods:{drawChart:function(){if(chartsLib&&this.chartObject){var data=this.getValidChartData();data&&this.chartObject.draw(data,this.options)}},getValidChartData:function(){return this.data instanceof chartsLib.visualization.DataTable?this.data:this.data instanceof chartsLib.visualization.DataView?this.data:Array.isArray(this.data)?chartsLib.visualization.arrayToDataTable(this.data):null!==this.data&&"object"===_typeof(this.data)?new chartsLib.visualization.DataTable(this.data):null},createChartObject:function(){var createChart=function(el,google,type){if(!type)throw new Error("please, provide chart type property");return new google.visualization[type](el)},fn=this.createChart||createChart;return this.chartObject=fn(this.$refs.chart,chartsLib,this.type),this.attachListeners(),this.chartObject},attachListeners:function(){var _this2=this;this.events&&Object.entries(this.events).forEach(function(_ref){var _ref2=_slicedToArray(_ref,2),event=_ref2[0],listener=_ref2[1];chartsLib.visualization.events.addListener(_this2.chartObject,event,listener)})}}}},function(module,exports){module.exports=function(rawScriptExports,compiledTemplate,scopeId,cssModules){var esModule,scriptExports=rawScriptExports=rawScriptExports||{},type=typeof rawScriptExports.default;"object"!==type&&"function"!==type||(esModule=rawScriptExports,scriptExports=rawScriptExports.default);var options="function"==typeof scriptExports?scriptExports.options:scriptExports;if(compiledTemplate&&(options.render=compiledTemplate.render,options.staticRenderFns=compiledTemplate.staticRenderFns),scopeId&&(options._scopeId=scopeId),cssModules){var computed=options.computed||(options.computed={});Object.keys(cssModules).forEach(function(key){var module=cssModules[key];computed[key]=function(){return module}})}return{esModule:esModule,exports:scriptExports,options:options}}},function(module,exports){module.exports={render:function(){var _vm=this,_h=_vm.$createElement;return(_vm._self._c||_h)("div",{ref:"chart"})},staticRenderFns:[]}}]);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ }),
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(243)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(233)
+/* template */
+var __vue_template__ = __webpack_require__(240)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-e61331da"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/TournamentHistoric.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e61331da", Component.options)
+  } else {
+    hotAPI.reload("data-v-e61331da", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 233 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_google_charts__ = __webpack_require__(234);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        GChart: __WEBPACK_IMPORTED_MODULE_0_vue_google_charts__["GChart"]
+    },
+
+    props: {
+        tournaments: Array
+    },
+
+    mounted: function mounted() {},
+
+
+    methods: {
+        onClick: function onClick(event) {
+            var _this = this;
+
+            event.preventDefault();
+            this.showList = false;
+            this.loading = true;
+            var id = $(event.target).data('id');
+            axios.get('/historico/' + id).then(function (response) {
+                if (response.statusText === "OK") {
+                    _this.data = response.data;
+                    _this.loading = false;
+                    _this.showData = true;
+                }
+            });
+        },
+        back: function back(event) {
+            event.preventDefault();
+            this.showData = false;
+            this.showList = true;
+        },
+        isPast: function isPast() {
+            return moment(this.data.date) < moment();
+        },
+        ageGraphData: function ageGraphData() {
+            var ageCounts = {};
+            this.data.users.forEach(function (user) {
+                var age = moment(user.birthdate).fromNow(true);
+                if (ageCounts[age]) ageCounts[age]++;else ageCounts[age] = 1;
+            });
+
+            var data = [['Edad', 'Participantes']];
+
+            for (var key in ageCounts) {
+                if (ageCounts.hasOwnProperty(key)) {
+                    var age = ageCounts[key];
+                    data.push([key, age]);
+                }
+            }
+            return data;
+        },
+        careerGraphData: function careerGraphData() {
+            var careers = {};
+            this.data.users.forEach(function (user) {
+                var career = user.career;
+                if (careers[career]) careers[career]++;else careers[career] = 1;
+            });
+
+            var data = [['Carrera', 'Participantes']];
+
+            for (var key in careers) {
+                if (careers.hasOwnProperty(key)) {
+                    var career = careers[key];
+                    data.push([key, career]);
+                }
+            }
+            return data;
+        },
+        sportGraphData: function sportGraphData() {
+
+            var data = [['Torneo', 'Inscripciones']];
+            for (var tName in this.data.sport.tournaments.counts) {
+                if (tName !== '_total') data.push([tName, this.data.sport.tournaments.counts[tName]]);
+            }
+
+            return data;
+        }
+    },
+
+    data: function data() {
+        return {
+            data: null,
+            showList: true,
+            loading: false,
+            showData: false,
+            ageGraphOptions: {
+                title: "Edad de los participantes"
+            },
+            careerGraphOptions: {
+                title: "Carrera de los participantes"
+            }
+        };
+    }
+});
+
+/***/ }),
+/* 234 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_vue_google_charts_common__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_vue_google_charts_common___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__dist_vue_google_charts_common__);
+/* unused harmony reexport default */
+/* harmony namespace reexport (by used) */ if(__webpack_require__.o(__WEBPACK_IMPORTED_MODULE_0__dist_vue_google_charts_common__, "GChart")) __webpack_require__.d(__webpack_exports__, "GChart", function() { return __WEBPACK_IMPORTED_MODULE_0__dist_vue_google_charts_common__["GChart"]; });
+
+
+// import './dist/vue-google-charts.css'
+
+
+/***/ }),
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(239)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { attrs: { id: "content" } }, [
+    _vm.showList
+      ? _c(
+          "div",
+          { staticClass: "list-group" },
+          _vm._l(_vm.tournaments, function(tournament) {
+            return _c(
+              "a",
+              {
+                key: tournament.id,
+                staticClass: "list-group-item list-group-item-action btn",
+                attrs: { href: "", "data-id": tournament.id },
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    _vm.onClick($event)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(tournament.name) +
+                    " - " +
+                    _vm._s(tournament.branch) +
+                    "\n        "
+                )
+              ]
+            )
+          })
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.loading
+      ? _c("div", { staticClass: "d-block text-center" }, [
+          _c("i", {
+            staticClass: "fas fa-spinner fa-spin",
+            staticStyle: { "font-size": "7em" }
+          })
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.showData
+      ? _c(
+          "div",
+          { staticClass: "position-relative" },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "position-fixed",
+                staticStyle: { top: "10px", "z-index": "100" }
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-secondary",
+                    staticStyle: { "font-size": "1.5em" },
+                    attrs: { href: "#", id: "backArrow" },
+                    on: {
+                      click: function($event) {
+                        $event.stopPropagation()
+                        _vm.back($event)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-arrow-left" })]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("h3", { staticClass: "d-block text-center" }, [
+              _vm._v(
+                "\n            " +
+                  _vm._s(this.data.name) +
+                  " - Rama " +
+                  _vm._s(this.data.branch) +
+                  "\n        "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "h4",
+              { staticClass: "d-block text-center" },
+              [
+                _vm._v("\n            Fecha: "),
+                _c("date-format", {
+                  attrs: {
+                    date: this.data.date,
+                    format: "dddd D [de] MMMM [de] YYYY "
+                  }
+                }),
+                _vm._v(" "),
+                _vm.isPast()
+                  ? _c("span", { staticClass: "badge badge-danger" }, [
+                      _vm._v("Terminó")
+                    ])
+                  : _c("span", { staticClass: "badge badge-success" }, [
+                      _vm._v("Próximo")
+                    ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("h4", { staticClass: "d-block text-center" }, [
+              _vm._v(
+                "\n            Datos de los participantes              \n        "
+              )
+            ]),
+            _vm._v(" "),
+            _c("GChart", {
+              attrs: {
+                type: "PieChart",
+                data: _vm.ageGraphData(),
+                options: _vm.ageGraphOptions
+              }
+            }),
+            _vm._v(" "),
+            _c("GChart", {
+              attrs: {
+                type: "PieChart",
+                data: _vm.careerGraphData(),
+                options: _vm.careerGraphOptions
+              }
+            }),
+            _vm._v(" "),
+            _c("h4", { staticClass: "d-block text-center" }, [
+              _vm._v("\n            Datos del torneo              \n        ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "p",
+              [
+                _c("b", [_vm._v("Nombre del torneo: ")]),
+                _vm._v(_vm._s(this.data.name) + " "),
+                _c("br"),
+                _vm._v(" "),
+                _c("b", [_vm._v("Rama: ")]),
+                _vm._v(_vm._s(this.data.branch) + " "),
+                _c("br"),
+                _vm._v(" "),
+                _c("b", [_vm._v("Fecha: ")]),
+                _c("date-format", {
+                  attrs: {
+                    date: this.data.date,
+                    format: "dddd D [de] MMMM [de] YYYY "
+                  }
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("b", [_vm._v("Número de participantes: ")]),
+                _vm._v(_vm._s(this.data.users.length) + " "),
+                _c("br"),
+                _vm._v(" "),
+                _c("b", [_vm._v("Maximo de inscripciones: ")]),
+                _vm._v(_vm._s(this.data.max_room) + " "),
+                _c("br"),
+                _vm._v(" "),
+                _c("b", [_vm._v("Deporte: ")]),
+                _vm._v(_vm._s(this.data.sport.name) + " "),
+                _c("br")
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("h4", { staticClass: "d-block text-center" }, [
+              _vm._v(
+                "\n            Datos del deporte (" +
+                  _vm._s(this.data.sport.name) +
+                  ")              \n        "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "p",
+              [
+                _c("b", [
+                  _vm._v("Torneos de " + _vm._s(this.data.sport.name) + ":")
+                ]),
+                _vm._v(
+                  _vm._s(Object.keys(this.data.sport.tournaments).length - 1) +
+                    " "
+                ),
+                _c("br"),
+                _vm._v(" "),
+                _c("b", [_vm._v("Total de inscripciones: ")]),
+                _vm._v(
+                  _vm._s(this.data.sport.tournaments.counts._total) +
+                    "\n            "
+                ),
+                _c("GChart", {
+                  attrs: {
+                    type: "PieChart",
+                    data: _vm.sportGraphData(),
+                    options: {
+                      title:
+                        "Inscripciones en los torneos de " +
+                        this.data.sport.name
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e61331da", module.exports)
+  }
+}
+
+/***/ }),
+/* 241 */,
+/* 242 */,
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(244);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(238)("5a571af2", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e61331da\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TournamentHistoric.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e61331da\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TournamentHistoric.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 244 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(192)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#backArrow[data-v-e61331da] {\n  margin-left: 2em;\n  position: relative;\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n#backArrow[data-v-e61331da]::before {\n  content: '';\n  position: absolute;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: calc(35px/2) 30px calc(35px/2) 0;\n  border-color: transparent #6c757d transparent transparent;\n  top: -1px;\n  right: 2em;\n  -webkit-transition: border-color 0.15s ease-in-out;\n  transition: border-color 0.15s ease-in-out;\n}\n#backArrow[data-v-e61331da]:hover::before {\n  border-right-color: #5a6268;\n}\n#content[data-v-e61331da] {\n  min-height: 50vh;\n  max-height: 50vh;\n  overflow-y: scroll;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

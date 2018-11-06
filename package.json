@@ -23,6 +23,7 @@
         "@xkeshi/vue-qrcode": "^1.0.0",
         "moment": "^2.22.2",
         "sweetalert2": "^7.28.4",
+        "vue-google-charts": "^0.3.2",
         "vue-qrcode-reader": "^1.2.2"
     }
 }

@@ -123,7 +123,9 @@
         
                                     <div class="col-md-8">
                                         <select id="career" class="form-control{{ $errors->has('career') ? ' is-invalid' : '' }}" name="career" value="{{ old('career') }}" required>
-                                            <option value="Ingeniería en sistemas">Ingeniería en sistemas</option>
+                                            @foreach ($careers as $career)
+                                                <option value="{{$career}}" {{ old('career') == $career ? 'selected' : '' }}>{{$career}}</option>
+                                            @endforeach
                                         </select>
                                         
                                         @if ($errors->has('career'))
@@ -140,8 +142,24 @@
                                     <label for="semester" class="col-md-4 col-form-label text-md-right">{{ __('Semester') }}</label>
         
                                     <div class="col-md-8">
-                                        <select id="semester" class="form-control{{ $errors->has('semester') ? ' is-invalid' : '' }}" name="semester" value="{{ old('semester') }}" required>
-                                            <option value="4º semestre">4º semestre</option>
+                                        <select id="semester" class="form-control{{ $errors->has('semester') ? ' is-invalid' : '' }}" name="semester" required>
+                                                @for ($i = 1; $i <= 10; $i++)
+                                                @switch($i)
+                                                    @case(1)
+                                                        {{$semester = '1er'}}
+                                                        @break
+                                                    @case(2)
+                                                        {{$semester = '2do'}}
+                                                        @break
+                                                    @case(3)
+                                                        {{$semester = '3er'}}
+                                                        @break
+                                                    @default
+                                                        {{$semester = $i.'º'}}
+                                                @endswitch
+                                                {{ $semester .= ' semestre' }}
+                                                <option value="{{$semester}}" {{ old('semester') == $semester ? 'selected' : ''  }}>{{$semester}}</option>
+                                            @endfor
                                         </select>
                                         
                                         @if ($errors->has('semester'))
@@ -225,7 +243,9 @@
         
                                     <div class="col-md-8">
                                         <select id="blood_type" class="form-control{{ $errors->has('blood_type') ? ' is-invalid' : '' }}" name="blood_type" value="{{ old('blood_type') }}" required>
-                                            <option value="AB+">AB+</option>
+                                            @foreach ($bloodTypes as $bt)
+                                                <option value="{{$bt}}" {{old('blood_type') == $bt ? 'selected' : '' }}>{{$bt}}</option>
+                                            @endforeach
                                         </select>
                                         
                                         @if ($errors->has('blood_type'))

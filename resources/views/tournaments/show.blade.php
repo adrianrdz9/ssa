@@ -40,7 +40,7 @@
 
                     <div class="col-sm-12 col-md-6 p-2 text-center">
                         <h5 >Datos del alumno:</h5>
-                        <small>Si hay algun error en tus datos ve a <a href="#">editar cuenta</a> para corregirlo</small>
+                        <small>Si hay algun error en tus datos ve a <a href="{{ route('updateAccount') }}">editar cuenta</a> para corregirlo</small>
                         
                         <p>
                             <b>Nombre: </b>

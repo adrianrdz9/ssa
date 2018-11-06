@@ -17,7 +17,7 @@
             <form action="" @submit="onSubmit" ref="form">
                 <div class="row">
                     <div class="col-9">
-                        <input type="text" name="folio" class="form-control" v-model="folio">  
+                        <input type="text" name="folio" class="form-control" v-model="folio" required>  
                     </div>
                     <div class="col-3">
                         <input type="submit" value="Buscar" class="btn btn-info w-100">
@@ -26,6 +26,9 @@
             </form>
         </div>
     </div>
+
+    <h2 v-if="error !== ''" class="d-block text-center">{{error}}</h2>
+
     <div class="card" v-if="dataAvailable">
 
         <div class="card-header text-center" >
@@ -132,11 +135,19 @@
         <div class="card-footer">
             <span>
                 Estado: 
-                <b class="text-danger">pendiente</b>
+                <b class="text-danger" v-if="user.status == 'Pendiente'">Pendiente</b>
+                <b class="text-success" v-else-if="user.status == 'Completada'">Completada</b>
+                <b class="text-danger" v-else-if="user.status == 'Eliminada'">Eliminada</b>
             </span>
-            <button class="btn btn-success float-right">
-                Completar inscripción
-            </button>
+            <div v-if="user.status == 'Pendiente'">
+                <form :action="'/torneos/completar/'+validFolio" method="post">
+                    <input type="hidden" name="_token" :value="csrf">
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="submit" value="Completar" name="action" class="btn btn-success float-right">
+                    <input type="submit" value="Eliminar" name="action" class="btn btn-outline-danger float-right">
+                </form>
+            </div>
+           
         </div>
     </div>
             
@@ -157,13 +168,17 @@ export default {
             dataAvailable: false,
             user: {},
             tournament: {},
-            decoded: false
+            decoded: false,
+            error: ""
         }
     },
 
     methods: {
         onDecode(decodedString){
             this.folio = decodedString;
+            this.paused = true
+            this.decoded = true;
+            this.validFolio = decodedString;
             this.onSubmit();
         },
 
@@ -171,17 +186,21 @@ export default {
             if(event)
                 event.preventDefault();
             axios.get('/torneos/completar/'+this.folio).then((response)=>{
-                console.log(response.data);
                 if(response.data){
-                    this.paused = true
                     this.tournament = response.data.tournament;
                     this.user = response.data.user;
+                    this.user.status = response.data.status;
                     this.dataAvailable = true;
+                    this.paused = true
                     this.decoded = true;
                     this.validFolio = this.folio;
+                    console.log(response.data);
+                    
+                }else{
+                    this.error = "No hay ningun registro con ese folio.";
                 }
             }).catch((err) => {
-                console.log(err.response);
+                this.error = "Ocurrio un error inesperado.";
             })
         }
     }

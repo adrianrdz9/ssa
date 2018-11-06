@@ -32,7 +32,8 @@ Vue.component('admin-notices', require('./components/AdminNoticesComponent.vue')
 Vue.component('create-tournament', require('./components/CreateTournamentComponent.vue'));
 Vue.component('date-format', require('./components/DateFormatComponent.vue'));
 Vue.component('complete-signup', require('./components/CompleteSignUp.vue'));
-
+Vue.component('profile-avatar-input', require('./components/ProfileAvatarInput.vue'));
+Vue.component('tournament-historic', require('./components/TournamentHistoric.vue'));
 
 const app = new Vue({
     el: '#app'

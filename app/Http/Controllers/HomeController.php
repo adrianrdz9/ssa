@@ -8,12 +8,17 @@ use Illuminate\Support\Facades\Auth;
 use \App\Slide;
 use \App\Event;
 use \App\Notice;
+use \App\Tournament;
 
 use Carbon\Carbon;
 
 
 class HomeController extends Controller
 {
+    protected $historic;
+    public function __construct(HistoricController $historic){
+        $this->historic = $historic;
+    }
 
     /**
      * Show the application dashboard.
@@ -22,7 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-       
+       if(Auth::check() && Auth::user()->hasRole('eval')){
+           return $this->historic->index();
+       }
         $slides = Slide::all();
         foreach($slides as $key=>$slide){
             $slides[$key]->img = $slide->imgPath();

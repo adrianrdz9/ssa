@@ -16,6 +16,26 @@ class UserRolesSeeder extends Seeder
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'eval']);
         Role::create(['name' => 'student']);
+
+        $user = User::create([
+            'name' => 'Juan Adrian',
+            'last_name'=> 'Rodriguez Farias',
+            'email' => 'adrian.rodriguez7109@gmail.com',
+            'height'=>'178',
+            'weight'=>'71',
+            'birthdate'=>'2001-08-02',
+            'semester'=>'2º semestre',
+            'career'=>'Ingeniería en computación',
+            'account_number'=>'317114270',
+            'curp'=>'',
+            'address'=>' ',
+            'medical_service'=>'IMSS',
+            'blood_type'=>'AB+',
+            'medical_card_no'=>'1234567890',
+            'phone_number'=>'5539155027',
+            'password' => Hash::make('Xaya2412'),
+        ]);
+
         $user = User::create([
             'name' => 'admin',
             'last_name'=> 'admin',
@@ -36,5 +56,26 @@ class UserRolesSeeder extends Seeder
         ]);
             
         $user->syncRoles(['admin']);
+
+        $user = User::create([
+            'name' => 'eval',
+            'last_name'=> 'eval',
+            'email' => 'eval@eval.eval',
+            'height'=>' ',
+            'weight'=>' ',
+            'birthdate'=>'1111-11-11',
+            'semester'=>' ',
+            'career'=>' ',
+            'account_number'=>'317114260',
+            'curp'=>' ',
+            'address'=>' ',
+            'medical_service'=>' ',
+            'blood_type'=>' ',
+            'medical_card_no'=>' ',
+            'phone_number'=>' ',
+            'password' => Hash::make('Xaya2412'),
+        ]);
+
+        $user->syncRoles(['eval']);
     }
 }

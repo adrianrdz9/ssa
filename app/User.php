@@ -11,11 +11,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements \Czim\Paperclip\Contracts\AttachableInterface
 {
     use Notifiable;
     use HasRoles;
     use SoftDeletes;
+    use \Czim\Paperclip\Model\PaperclipTrait;
+
+    public function __construct(array $attributes = [])
+    {
+        $this->hasAttachedFile('avatar', [
+            'variants' => [
+                'medium' => [
+                    'resize'      => ['dimensions' => '300x300'],
+                ],
+                'thumb' => '100x100',
+            ],
+            'attributes' => [
+                'variants' => true,
+            ],
+        ]);
+
+        parent::__construct($attributes);   
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -39,5 +57,20 @@ class User extends Authenticatable
     public function getAgeAttribute()
     {
         return Carbon::parse($this->attributes['birthdate'])->age;
+    }
+
+    public function avatarPath(){
+        $avatarUrl = str_replace('public/', '', $this->avatar->url());
+        return $avatarUrl;
+        if(file_exists($avatarUrl))
+            return $avatarUrl;
+        else return asset('images/missing_avatar.png');
+    }
+
+    public function avatarPublicPath(){
+        $avatarUrl = public_path(str_replace('public/', 'storage/', $this->avatar->path()));
+        if(file_exists($avatarUrl))
+            return $avatarUrl;
+        else return public_path('images/missing_avatar.png');
     }
 }

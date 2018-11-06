@@ -36,12 +36,13 @@
                                                 <b>Lugares disponibles: </b>
                                                 {{ $branch->roomLeft() }}
                                             </p>
-                                            @auth
-                                                <a href="{{route('signUpTournament', ['id' => Crypt::encrypt($branch->id)])}}" class="btn btn-info">Inscribirme</a>
-                                            @else
-                                                <a href="{{route('login')}}">Inicia sesion</a>
-                                                para inscribirte al torneo
-                                            @endauth
+                                            <p>
+                                                <b>Registros completados: </b>
+                                                {{$branch->completedSignups()->count()}}
+                                            </p>
+                                            <p>
+                                                <a href="{{ route('cedula', ['id' => Crypt::encrypt($branch->id)])}}" class="btn btn-info" target="blank">Ver cédula de registro</a>
+                                            </p>
                                         </div>
                                         <div class="card-footer">
                                             <form action="{{route('deleteTournament', ['id' => Crypt::encrypt($branch->id)])}}" method="post">

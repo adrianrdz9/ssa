@@ -36,9 +36,12 @@ Route::get('/torneos', 'TournamentsController@index')->name('tournamentsIndex');
 Route::get('/torneos/nuevo', 'TournamentsController@new')->name('newTournament');
 Route::get('/torneos/completar', 'TournamentsController@complete')->name('completeSignup');
 Route::get('/torneos/completar/{id}', 'TournamentsController@query')->name('querySignup');
+Route::put('/torneos/completar/{id}', 'TournamentsController@update');
 Route::get('/torneos/{id}', 'TournamentsController@show')->name('signUpTournament');
 Route::post('/torneos/{id}', 'TournamentsController@signUp')->name('signUpTournament');
 Route::delete('/torneos/{id}', 'TournamentsController@delete')->name('deleteTournament');
+Route::get('/torneos/{id}/cedula', 'TournamentsController@cedula')->name('cedula');
+
 
 Route::get('/torneos/{id}/comprobante', 'TournamentsController@voucher')->name('tournamentVoucher');
 
@@ -46,3 +49,9 @@ Route::get('/torneos/{id}/comprobante', 'TournamentsController@voucher')->name('
 Route::get('/deportes', 'SportsController@index')->name('sportsIndex');
 Route::put('/deportes/{sportName}', 'SportsController@update')->name('updateSport');
 Route::delete('/deportes/{sportName}', 'SportsController@delete')->name('deleteSport');
+
+Route::get('/cuenta', 'Auth\UpdateAccountController@show')->name('updateAccount');
+Route::put('/cuenta', 'Auth\UpdateAccountController@update')->name('updateAccount');
+
+Route::get('/historico', 'HistoricController@index')->name('historicIndex');
+Route::get('/historico/{id}', 'HistoricController@show')->name('tournamentHistoric');

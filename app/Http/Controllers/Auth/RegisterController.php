@@ -11,6 +11,8 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Config;
+
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
@@ -123,6 +125,12 @@ class RegisterController extends Controller
 
     public function redirectTo(){
         return Session::get('backUrl') ? Session::get('backUrl') :   $this->redirectTo;
+    }
+
+    public function showRegistrationForm(){
+        $careers = Config::get('constants.careers');
+        $bloodTypes = Config::get('constants.bloodTypes');
+        return view('auth.register', ['careers' => $careers, 'bloodTypes' => $bloodTypes]);
     }
 
 }

@@ -85,16 +85,24 @@
                                     <a class="dropdown-item" href="{{ route('newTournament') }}">Crear torneo</a>
                                     <a class="dropdown-item" href="{{ route('tournamentsIndex') }}">Ver todos los torneos</a>
                                     <div class="dropdown-divider"></div>
+                                    <a href="{{ route('historicIndex') }}" class="dropdown-item">Historico</a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('completeSignup') }}">Completar inscripción</a>
                                 </div>
                             </li>
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">Inicio</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
-                            </li>
+                            @role('eval')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('home') }}">Inicio</a>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('home') }}">Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
+                                </li>
+                            @endrole
                         @endrole
                         <li class="nav-item">
                             <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
@@ -120,12 +128,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('updateAccount') }}" class="dropdown-item">Editar cuenta</a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
+                                    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>

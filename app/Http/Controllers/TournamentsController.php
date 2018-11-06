@@ -54,7 +54,7 @@ class TournamentsController extends Controller
             ]);
         }
 
-        return redirect()->back()->with(['notice' => 'Torneo creado']);
+        return redirect('/torneos')->with(['notice' => 'Torneo creado']);
     }
 
     public function show($id){
@@ -167,5 +167,39 @@ class TournamentsController extends Controller
 
 
         return redirect()->back()->with(['notice' => 'Torneo eliminado']);
+    }
+
+    public function update($id, Request $request){
+        $signUp = UserInTournament::find($id);
+        if($request->action == "Eliminar"){
+            $signUp->status = "Eliminada";
+        }else if($request->action == "Completar"){
+            $signUp->status = "Completada";
+        }
+        $signUp->update();
+        return redirect()->back()->with('Registro actualizado');
+
+    }
+
+    public function cedula($id){
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (\Exception $e) {
+            return abort(404);
+        }
+        if(!($tournament = Tournament::find($id)) ){
+            return redirect('/')->with(['notice' => 'No existe el torneo']);
+        }
+
+        $users = UserInTournament::where([
+            ['tournament_id', $tournament->id],
+            ['status', 'Completada']
+        ])->with('user')->with('tournament')->get();
+        //return view('admin.tournaments.cedula', ['users' => $users, 'tournament' => $tournament]);
+
+        $pdf = PDF::loadView('admin.tournaments.cedula', ['users' => $users, 'tournament' => $tournament]);
+        return $pdf->stream('Comprobante.pdf');
+
+
     }
 }
