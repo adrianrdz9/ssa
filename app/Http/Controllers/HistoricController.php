@@ -40,8 +40,10 @@ class HistoricController extends Controller
             }
             $usersInBranch[$branch]['users'] = 0;
             foreach ($tournaments as $tournament) {
-                $usersInBranch[$branch]['users'] += count($tournament['users']);
-                $usersInBranch['total'] += count($tournament['users']);
+                try{
+                    $usersInBranch[$branch]['users'] += count($tournament['users']);
+                    $usersInBranch['total'] += count($tournament['users']);
+                }catch(Error $err){}
             }
             
             $usersInBranch[$branch] = $usersInBranch[$branch]->get('users');
