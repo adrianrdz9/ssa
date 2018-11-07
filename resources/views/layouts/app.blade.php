@@ -9,7 +9,7 @@
       <link href="https://fonts.googleapis.com/css?family=Inconsolata|PT+Sans+Narrow|PT+Serif" rel="stylesheet">
   </head>
   <body>
-    <div class="container">
+    <div class="container-fluid">
       @yield('content')
     </div>
   </body>

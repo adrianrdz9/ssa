@@ -6,7 +6,7 @@ Route::post('login','Auth\LoginController@login')->name('login');
 //Administrador
 Route::any('Admi','Admis\admiController@index')->name('Admi');
 //semiAdmis
-Route::get('semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
+Route::any('semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
 
 //logout
 Route::post('logout','Auth\LoginController@logout')->name('logout');
@@ -14,6 +14,10 @@ Route::post('logout','Auth\LoginController@logout')->name('logout');
 //Administrador / semiAdmi
 //Noticias - Admi
 Route::resource('Admi','Admis\admiController');
+//Información general
+Route::post('InfoGeneral','Admis\semiAdmiController@InfoGeneral');
+//Integrantes
+Route::post('Integrantes','Admis\semiAdmiController@Integrantes');
 
 //Visitante
 //Noticias - 9 (index)

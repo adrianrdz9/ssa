@@ -4,6 +4,9 @@ body {
     position: relative;
     text-align: center;
 }
+h5 {
+  text-align: left;
+}
 .affix {
     top:0;
     width: 100%;

@@ -1,75 +1,74 @@
 @extends('layouts.semiAdmi')
 @section('title','Información de la agrupación')
 @section('content')
-<h1 style="text-align:center;">Informacion general</h1>
-<h3> {{ auth()->user()->Nombre }} </h3>
-<br/>
-<form method="post" action="{{URL::to('/update')}}">
-  <div class="form-group row">
-    <div class="col-xs-8" style="margin-left: 10%;">
-      @foreach ($Inte as $value)
-        <p>
-          <input type="text" name="cargo0" required placeholder="{{ $value->Cargo }}" />
-          <input type="text" name="nombre0" required placeholder="{{ $value->Nombre }}" />
-        </p>
-      @endforeach
-      <p>
-        <input type="text" name="cargo1" required placeholder="Cargo" />
-        <input type="text" name="nombre1" required placeholder="Nombre" />
-      </p>
-      <p>
-        <input type="text" name="cargo3" required placeholder="Cargo" />
-        <input type="text" name="nombre3" required placeholder="Nombre" />
-      </p>
-      <p>
-        <input type="text" name="cargo2" required placeholder="Cargo" />
-        <input type="text" name="nombre2" required placeholder="Nombre"/>
-      </p>
-      <p>
-        <input type="text" name="cargo4" required placeholder="Cargo" />
-        <input type="text" name="nombre4" required placeholder="Nombre" />
-      </p>
-        <button type="submit"class="btn btn-primary"style="margin-left:23%;">Actualizar integrantes</button>
-</form>
-    <br/>
-    <br/>
-<form method="post" action="{{URL::to('/General')}}">
-      <label>Descripción:</label>
-      <textarea class="form-control" rows="5" name="Descripcion" maxlength="500" placeholder="{{ $Info[0]->Descripcion }}"></textarea>
-      <br/>
-  </div>
-  <div class="col-xs-8" style="margin-left: 20%;">
-    <label>Logo</label>
-      <input type="file" class="form-control-file" style="margin-left: 10%;" name="Logo">
-    <br/>
-    <label>Fotografía</label>
-      <input type="file" class="form-control-file" style="margin-left: 10%;" name="Foto">
-    <br/>
-    <p>
-    <label for="ex8">Link</label>
-      <input type="text" style="margin-left: 5%;" name="Link1"/>
-    </p>
-    <p>
-    <label for="ex8">Link</label>
-      <input type="text" style="margin-left: 11%;" name="Link2"/>
-    </p>
-    <p>
-    <label for="ex8">Link</label>
-      <input type="text" style="margin-left: 11%;" name="Link3"/>
-    </p>
-      <button type="submit"class="btn btn-primary"style="margin-left:25%; margin-top:27%;">Actualizar Información</button>
-  </div>
-</form>
-  <div class="text-danger">
-    @if($errors->any())
-      <div>
-        <ul>
-            @foreach($errors->all() as $error)
-            <li>{{$error}}</li>
-            @endforeach
-        </ul>
+<h3 style="text-align:center;">{{ auth()->user()->Nombre }}</h3>
+<form method="post" action="{{ url('InfoGeneral') }}" enctype="multipart/form-data">
+  {{ csrf_field() }}
+    <div class="row" style="text-align:left;">
+      <div class="col-md-6">
+          <div class="form-group">
+              <h5>Logo de la Agrupación:</h5>
+              <input type="file" class="form-control-file border" name="Logo">
+          </div>
+          <div class="form-group">
+             <h5>Fotografía representativa:</h5>
+             <input type="file" class="form-control-file border" name="Foto">
+          </div>
+          <div class="form-group">
+              <h5>Link red social:</h5>
+              <input type="text" name="Link1" class="form-control" placeholder="" />
+          </div>
       </div>
-    @endif
-  </div>
-</div>
+      <div class="col-md-6">
+        <div class="form-group">
+            <h5>Descripción:</h5>
+            <textarea name="Descripcion" class="form-control" placeholder="" style="width: 100%; height: 110px;" maxlength="500"></textarea>
+        </div>
+        <div class="form-group">
+            <h5>Link red social:</h5>
+            <input type="text" name="Link2" class="form-control" placeholder="" />
+        </div>
+        <div class="form-group" style="text-align:right;">
+            <input type="submit" class="btn btn-primary" value="Actualizar"/>
+        </div>
+      </div>
+   </div>
+</form>
+
+<form method="post" action="{{ url('Integrantes') }}">
+  {{ csrf_field() }}
+    <div class="row" style="text-align:left;">
+      <div class="col-md-6">
+          <div class="form-group">
+              <input type="text" name="Cargo1" class="form-control" placeholder="Cargo" />
+              <input type="text" name="Nombre1" class="form-control" placeholder="Nombre" />
+          </div>
+          <div class="form-group">
+              <input type="text" name="Cargo2" class="form-control" placeholder="Cargo" />
+              <input type="text" name="Nombre2" class="form-control" placeholder="Nombre" />
+          </div>
+          <div class="form-group">
+              <input type="text" name="Cargo3" class="form-control" placeholder="Cargo" />
+              <input type="text" name="Nombre3" class="form-control" placeholder="Nombre" />
+          </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+            <input type="text" name="Cargo4" class="form-control" placeholder="Cargo" />
+            <input type="text" name="Nombre4" class="form-control" placeholder="Nombre" />
+        </div>
+        <div class="form-group">
+            <input type="text" name="Cargo5" class="form-control" placeholder="Cargo" />
+            <input type="text" name="Nombre5" class="form-control" placeholder="Nombre" />
+        </div>
+        <div class="form-group">
+            <input type="text" name="Cargo6" class="form-control" placeholder="Cargo" />
+            <input type="text" name="Nombre6" class="form-control" placeholder="Nombre" />
+        </div>
+        <div class="form-group" style="text-align:right;">
+            <input type="submit" class="btn btn-primary" value="Actualizar"/>
+        </div>
+      </div>
+   </div>
+</form>
 @stop

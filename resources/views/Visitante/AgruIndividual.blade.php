@@ -5,15 +5,15 @@
   <h2>{{ $data[0]->Nombre }}</h2>
     <h6>{{ $data[0]->Siglas }}</h6>
   <div class="row">
-    <div class="col-sm-4" style="background-color:lavender;">
-      <img src="{{asset('images/FI.png')}}" class="img-responsive">
+    <div class="col-sm-4">
+      <img src="{{asset('images/Agrupaciones/Fotos/'. $data[0]->Foto )}}" class="img-responsive">
       <br/>
       <div>
           Descripcion: <br/>
           <p>{{ $data[0]->Descripcion }}</p>
       </div>
     </div>
-    <div class="col-sm-7" style="background-color:lavenderblush;">
+    <div class="col-sm-7">
       <div class="row">
         <h3>Integrantes</h3>
         <div class="col-sm-6">
@@ -24,18 +24,17 @@
           </p>
           <br/>
           @endforeach
-        <div class="col-sm-6">
-          <p>
-            <h4>Cargo</h4>
-                Nombre
-          </p>
-          <br/>
-        </div>
-      </div>
+       </div>
       <div align="center">
-        <img src="{{asset('images/Logo.png')}}" class="img-responsive" width="50%" height="95%">
+        <img src="{{asset('images/Agrupaciones/Logos/'. $data[0]->Logo )}}" class="img-responsive" width="50%" height="95%">
       </div>
     </div>
   </div>
+</div>
+<div>
+  <h6>Contacto</h6>
+  {{ $data[0]->Link1 }}
+  <br/>
+  {{ $data[0]->Link2 }}
 </div>
 @stop

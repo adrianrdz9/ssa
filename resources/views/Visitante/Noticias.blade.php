@@ -55,7 +55,6 @@
             </div>
            @endforeach
         </div>
-
 </section>
 <script>
     $('.carousel[data-type="multi"] .item').each(function(){
