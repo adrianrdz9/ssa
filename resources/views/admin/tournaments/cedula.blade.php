@@ -6,15 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Comprobante</title>
     <link rel="stylesheet" href="{{public_path('css/bootstrap.min.css')}}">
-    <style>
-        
-    </style>
+
 </head>
 <body class="px-4">
     <div class="row justify-content-between " style="height: 90px">
         <div class="col">
-            <img src="{{public_path('images/logo_unam.png')}}" alt="Logo UNAM" height="90" class="d-inline-block">
-            <img src="{{public_path('images/logo_fi.png')}}" alt="Logo FI" height="90" class="d-inline-block">
+            <img src="{{public_path('images/logo_unam.png')}}" alt="Logo UNAM" height="100" class="d-inline-block" style="margin-top: 3px;">
+            <img src="{{public_path('images/logo_fi.png')}}" alt="Logo FI" height="101" class="d-inline-block">
+        </div>
+        <div class="col text-right" id="header">
+            <h2 class="m-0">Facultad de ingeniería</h2>
+            <h4 class="m-0">Apoyo a la comunidad</h4>
+            <h5 class="m-0">Actividades deportivas</h5>
         </div>
     </div>
     <div>
