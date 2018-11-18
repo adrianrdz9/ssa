@@ -6,7 +6,7 @@
                 <h2>
                     {{$tournament->name}}
                     - rama 
-                    {{ ucfirst($tournament->branch)}}
+                    {{ ucfirst($branch->branch)}}
                 </h2>
             </div>
 
@@ -96,17 +96,14 @@
 
                 </div>
             </div>
-            @if ($isSignedUp)
+            @if ($tournament->userSignedUp($user->id))
                 <p class="d-block text-center">
                     Ya estas inscrito a este torneo
                     <br>
-                    <a href="{{ route('tournamentVoucher', ['id' => Crypt::encrypt($tournament->id)] )}}">Descargar comprobante</a>
+                    <a href="{{ route('tournamentVoucher', ['id' => $branch->id] )}}">Descargar comprobante</a>
                 </p>
             @else
-                <form action="{{ route('signUpTournament', ['id' => Crypt::encrypt($tournament->id)])}}" method="post">
-                    @csrf
-                    <button type="submit" class="card-footer btn btn-info bg-info w-100">Inscribirme</button>
-                </form>
+                <a href="{{route('teamSelect', ['id' => $branch->id ])}}" class="card-footer btn btn-info bg-info w-100">Elegir/crear equipo para inscribirme</a>
             @endif
         </div>
     </div>

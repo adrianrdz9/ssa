@@ -15,12 +15,21 @@ class CreateTournamentsTable extends Migration
     {
         Schema::create('tournaments', function (Blueprint $table) {
             $table->increments('id');
+
             $table->unsignedInteger('sport_id');
             $table->foreign('sport_id')->references('id')->on('sports');
+
+            $table->text('responsable');
+            $table->date('technic_meeting');
             $table->string('name');
-            $table->integer('max_room');
+            $table->string('place');
+            $table->integer('max_teams');
+            $table->integer('min_per_team');
+            $table->integer('max_per_team');
+            $table->boolean('only_representative')->default(false);
             $table->date('date');
-            $table->enum('branch', ['femenil', 'varonil', 'mixto']);
+            $table->date('signup_close');
+            $table->string('semester');
             $table->timestamps();
 
             $table->softDeletes();

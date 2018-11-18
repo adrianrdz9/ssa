@@ -3,203 +3,176 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use \App\Tournament;
 use \App\Sport;
-use \App\UserInTournament;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
-use Barryvdh\DomPDF\Facade as PDF;
+use \App\Requirement;
+use \App\RequirementInTournament;
+use \App\Branch;
 
 class TournamentsController extends Controller
 {
+    /**
+     * Establecer los middlewares
+     */
     public function __construct(){
-        $this->middleware('auth', ['except' => 'index']);
-        $this->middleware('role:admin', ['except'=>['index', 'show', 'signUp', 'voucher']]);
+        $this->middleware('auth', ['except' => ['index']]);
+        $this->middleware('role:admin', ['except' => ['index']]);
     }
 
+    /**
+     * Mostrar todos los torneos
+     *
+     * @return void
+     */
     public function index(){
-        
-        $tournaments = Tournament::all();
-        $tournaments = $tournaments->groupBy('name');
-
-        if(Auth::check() && Auth::user()->hasRole('admin')){
-            return view('admin.tournaments.index', ['tournaments' => $tournaments]);
-        }
-
+        $tournaments = Tournament::with('sport')->with('requirements')->with('branches')->get();
         return view('tournaments.index', ['tournaments' => $tournaments]);
     }
 
+    /**
+     * Mostrar el formulario de un nuevo torneo
+     *
+     * @return void
+     */
     public function new(){
         $sports = Sport::all();
-        return view('admin.tournaments.new', ['sports' => $sports]);
+        $requirements = Requirement::all();
+        return view('admin.tournaments.new', ['sports' => $sports, 'requirements' => $requirements]);
     }
 
+    /**
+     * Almacenar un nuevo torneo
+     *
+     * @param Request $request
+     * @return void
+     */
     public function store(Request $request){
+        //eturn $request;
         $request->validate([
+            'sport_id' => 'required|exists:sports,id',
+            'responsable' => 'required|string',
+            'technic_meeting' => 'required|date|after:today',
             'name' => 'required|string',
-            'sport' => 'required|exists:sports,id',
-            'date'=>'required|date|after:today',
-            'max_room' => 'required|integer|gte:1',
-            'branch' => 'required_without_all'
+            'place' => 'required|string',
+            'max_teams' => 'required|integer|gte:1',
+            'min_per_team' => 'required|integer|gte:1',
+            'max_per_team' => 'required|integer|gte:1',
+            'date' => 'required|date|after:today',
+            'signup_close' => 'required|date|after:today',
+            'semester' => 'required|string',
+            'branch' => 'required'
         ]);
 
-        foreach ($request->branch as $branch) {
-            Tournament::create([
-                'name' => $request->name,
-                'sport_id' => $request->sport,
-                'date'=>$request->date,
-                'max_room'=>$request->max_room,
-                'branch' => $branch
+        $tournament = Tournament::create( 
+            array_merge(
+                $request->except('branch', 'only_representative'), 
+                ['only_representative' => $request->only_representative ? true : false]
+            )
+        );
+        foreach($request->branch as $branch){
+            Branch::create([
+                'branch' => $branch,
+                'tournament_id' => $tournament->id
+            ]);
+        }
+        foreach ($request->requirements as $requirement) {
+            RequirementInTournament::create([
+                'requirement_id' => $requirement,
+                'tournament_id' => $tournament->id,
             ]);
         }
 
-        return redirect('/torneos')->with(['notice' => 'Torneo creado']);
+        return redirect()->back()->with(['notice' => 'Torneo creado']);
     }
 
-    public function show($id){
-        try {
-            $id = Crypt::decrypt($id);
-        } catch (\Exception $e) {
+    public function edit($id){
+        if(!Tournament::find($id))
             return abort(404);
-        }
-        if(!Tournament::find($id)){
-            return redirect('/')->with(['notice' => 'No existe el torneo']);
-        }
-        $tournament = Tournament::find($id);
-        $user = Auth::user();
-
-        $isSignedUp = UserInTournament::where([['user_id', $user->id], ['tournament_id', $tournament->id] ])->exists();
-
-        return view('tournaments.show', ['tournament' => $tournament, 'user' => $user, 'isSignedUp' => $isSignedUp]);
-    }
-
-    public function signUp($id){
-        $user = Auth::user();
-
-        try {
-            $id = Crypt::decrypt($id);
-        } catch (\Exception $e) {
-            return abort(404);
-        }
-
-        if(!Tournament::find($id)){
-            return redirect('/')->with(['notice' => 'No existe el torneo']);
-        }
-
-        $tournament = Tournament::find($id);
-
-        if(UserInTournament::where([['user_id', $user->id], ['tournament_id', $tournament->id] ])->exists() ){
-            return redirect()->back()->with(['notice' => 'Ya estas inscrito a este torneo']);
-        }
-
-        $userInTournament = UserInTournament::create([
-            'user_id' => $user->id,
-            'tournament_id' => $tournament->id
-        ]);
-
-        $folio = $userInTournament->id;
-
-        $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
-        $max = count($characters) - 1;
-        for ($i = 0; $i < 10; $i++) {
-            $rand = mt_rand(0, $max);
-            $folio .= $characters[$rand];
-        }
-
-        UserInTournament::find($userInTournament->id)->update([
-            'folio' => $folio
-        ]);
-
-        return redirect()->back()->with(['notice'=>'Inscripción exitosa, no olvides descargar tu comprobante.']);
-    }
-
-    public function voucher($id){
-        $user = Auth::user();
-
-        try {
-            $id = Crypt::decrypt($id);
-        } catch (\Exception $e) {
-            return abort(404);
-        }
-        if(!Tournament::find($id)){
-            return redirect('/')->with(['notice' => 'No existe el torneo']);
-        }
-        $tournament = Tournament::find($id);
-
-        if(!UserInTournament::where([['user_id', $user->id], ['tournament_id', $tournament->id] ]) ){
-            return redirect()->back()->with(['notice' => 'No estas inscrito a este torneo']);
-        }else {
-            $userInTournament = UserInTournament::where([['user_id', $user->id], ['tournament_id', $tournament->id] ])->first();
-        }
-
-        //return view('tournaments.voucher', ['user' => $user, 'tournament' => $tournament, 'folio' => $userInTournament->folio]);
-        $pdf = PDF::loadView('tournaments.voucher', ['user' => $user, 'tournament' => $tournament, 'folio' => $userInTournament->folio]);
-        return $pdf->download('Comprobante.pdf');
-
-        return redirect()->back()->with(['notice' => 'La descarga deberia comenzar en breve']);
-    }
-
-    public function complete(){
-        return view('admin.tournaments.complete');
-    }
-
-    public function query($id){
-        if(UserInTournament::where('folio', $id)){
-            $data = UserInTournament::where('folio', $id)->with('user')->with('tournament')->with('tournament.sport')->get()->first();
-            return $data;
-            $data->tournament->roomLeft = $data->tournament->roomLeft();
-            $data->user->age = \Carbon\Carbon::parse($data->user->birthdate)->age;
-            return $data;
-        }else return "{'response': 404}";
-    }
-
-    public function delete($id){
-        try {
-            $id = Crypt::decrypt($id);
-        } catch (\Exception $e) {
-            return abort(404);
-        }
-        if(!Tournament::find($id)){
-            return redirect('/')->with(['notice' => 'No existe el torneo']);
-        }
-        $branch = Tournament::find($id)->delete();
-
-
-        return redirect()->back()->with(['notice' => 'Torneo eliminado']);
+        $tournament = Tournament::find($id)->with('sport')->with('requirements')->with('branches')->first();
+        $sports = Sport::all();
+        $requirements = Requirement::all();
+        return view('admin.tournaments.edit', ['tournament' => $tournament, 'sports' => $sports, 'requirements' => $requirements]);
     }
 
     public function update($id, Request $request){
-        $signUp = UserInTournament::find($id);
-        if($request->action == "Eliminar"){
-            $signUp->status = "Eliminada";
-        }else if($request->action == "Completar"){
-            $signUp->status = "Completada";
-        }
-        $signUp->update();
-        return redirect()->back()->with('Registro actualizado');
-
-    }
-
-    public function cedula($id){
-        try {
-            $id = Crypt::decrypt($id);
-        } catch (\Exception $e) {
+        if(!Tournament::find($id))
             return abort(404);
+        $tournament = Tournament::find($id)->with('branches')->with('requirements')->first();
+        $request->validate([
+            'sport_id' => 'required|exists:sports,id',
+            'responsable' => 'required|string',
+            'technic_meeting' => 'required|date|after:today',
+            'name' => 'required|string',
+            'place' => 'required|string',
+            'max_teams' => 'required|integer|gte:1',
+            'min_per_team' => 'required|integer|gte:1',
+            'max_per_team' => 'required|integer|gte:1',
+            'date' => 'required|date|after:today',
+            'signup_close' => 'required|date|after:today',
+            'semester' => 'required|string',
+            'branch' => 'required'
+        ]);
+
+        Branch::where('tournament_id', $tournament->id)->delete();
+
+        RequirementInTournament::where('tournament_id', $tournament->id)->delete();
+
+        $tournament->update( 
+            array_merge(
+                $request->except('branch', 'only_representative'), 
+                ['only_representative' => $request->only_representative ? true : false]
+            )
+        );
+        foreach($request->branch as $branch){
+            Branch::create([
+                'branch' => $branch,
+                'tournament_id' => $tournament->id
+            ]);
         }
-        if(!($tournament = Tournament::find($id)) ){
-            return redirect('/')->with(['notice' => 'No existe el torneo']);
+        foreach ($request->requirements as $requirement) {
+            RequirementInTournament::create([
+                'requirement_id' => $requirement,
+                'tournament_id' => $tournament->id,
+            ]);
         }
 
-        $users = UserInTournament::where([
-            ['tournament_id', $tournament->id],
-            ['status', 'Completada']
-        ])->with('user')->with('tournament')->get();
-        //return view('admin.tournaments.cedula', ['users' => $users, 'tournament' => $tournament]);
-
-        $pdf = PDF::loadView('admin.tournaments.cedula', ['users' => $users, 'tournament' => $tournament]);
-        return $pdf->stream('Comprobante.pdf');
-
-
+        return redirect()->back()->with(['notice' => 'Torneo actualizado']);
     }
+
+    public function show($id){
+        if(!Branch::find($id))
+            return abort(404);
+        $branch = Branch::find($id);
+        if(!Tournament::find($branch->tournament_id))
+            return abort(404);
+        $tournament = Tournament::find($branch->tournament_id)->with('sport')->with('requirements')->first();
+
+        return view('tournaments.show', ['branch' => $branch, 'tournament' => $tournament, 'user' => Auth::user()]);
+    }
+
+    public function team($id){
+        $branch = Branch::find($id);
+        $tournament = Tournament::find($branch->tournament_id)->with('teams')->get();
+
+        return view('tournaments.team', ['branch' => $branch, 'tournament' => $tournament]);
+    }
+
+    /**
+     * Create a new tournament requirement
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function requirementCreate(Request $request){        
+        $request->validate([
+            'name' => 'required|string'
+        ]);
+
+        return Requirement::create([
+            'name' => $request->name
+        ]);
+    }
+
 }

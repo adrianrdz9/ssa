@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStatusToUserInTournament extends Migration
+class CreateRequirementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddStatusToUserInTournament extends Migration
      */
     public function up()
     {
-        Schema::table('user_in_tournaments', function($table) {
-            $table->string('status')->default('Pendiente');
+        Schema::create('requirements', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +27,6 @@ class AddStatusToUserInTournament extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('requirements');
     }
 }

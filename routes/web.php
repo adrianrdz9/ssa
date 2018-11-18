@@ -30,20 +30,22 @@ Route::put('/admin/notices/{id}', 'NoticesController@update');
 Route::delete('/admin/notices/{id}', 'NoticesController@delete');
 
 Route::post('/admin/sports', 'SportsController@store');
-Route::post('/admin/tournaments', 'TournamentsController@store');
+Route::post('/admin/requirements', 'TournamentsController@requirementCreate');
 
-Route::get('/torneos', 'TournamentsController@index')->name('tournamentsIndex');
-Route::get('/torneos/nuevo', 'TournamentsController@new')->name('newTournament');
-Route::get('/torneos/completar', 'TournamentsController@complete')->name('completeSignup');
-Route::get('/torneos/completar/{id}', 'TournamentsController@query')->name('querySignup');
-Route::put('/torneos/completar/{id}', 'TournamentsController@update');
-Route::get('/torneos/{id}', 'TournamentsController@show')->name('signUpTournament');
-Route::post('/torneos/{id}', 'TournamentsController@signUp')->name('signUpTournament');
-Route::delete('/torneos/{id}', 'TournamentsController@delete')->name('deleteTournament');
-Route::get('/torneos/{id}/cedula', 'TournamentsController@cedula')->name('cedula');
+Route::group(['prefix' => '/torneos'], function () {
+    Route::get('/', 'TournamentsController@index')->name('tournamentsIndex');
+    Route::get('/nuevo', 'TournamentsController@new')->name('newTournament');
+    Route::post('/nuevo', 'TournamentsController@store')->name('newTournament');
 
+    Route::put('/{id}', 'TournamentsController@update')->name('updateTournament');
+    Route::get('/{id}/editar', 'TournamentsController@edit')->name('editTournament');
 
-Route::get('/torneos/{id}/comprobante', 'TournamentsController@voucher')->name('tournamentVoucher');
+    Route::get('/{id}', 'TournamentsController@show')->name('signUpTournament');
+    Route::get('/{id}/equipo', 'TournamentsController@team')->name('teamSelect');
+    Route::get('/{id}/voucher')->name('tournamentVoucher');
+
+    Route::get('/completar')->name('completeSignup');
+});
 
 
 Route::get('/deportes', 'SportsController@index')->name('sportsIndex');
