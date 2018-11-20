@@ -3,24 +3,23 @@
 @section('content')
 <link href="{{asset('css/AgrupaGnral.css')}}" rel="stylesheet"/>
 <div class="row">
-      <div class="col-sm-3" style="background-color:lavender;">
-        <img src="{{asset('images/Logo.png')}}" class="img-responsive"
-          style="max-width: 115%; max-height: 182%; align:left;">
+  @foreach ($data as $Info)
+  <div class="col-sm-12" style="margin-top:1%;">
+      <div class="col-sm-3">
+        <img src="{{asset('images/Agrupaciones/Logos/'.$Info->Logo)}}" class="img-responsive">
       </div>
       <div class="col-sm-1 offset-sm-1"></div>
-      <div class="col-sm-8">
-        @foreach ($data as $Info)
-        <div class="col" style="background-color:#e0e0e0;">
+      <div class="col-sm-8"style="background-color:#e0e0e0; border-radius: 10px;">
           <h3> {{ $Info->Siglas }} </h3> <hr/>
           <p>  {{ $Info->Nombre }}</p>
           <p>
-            <button type="button" class="btn btn-info">
+            <a href="Agrupacion/id/{{ $Info->Siglas }}"<button type="button" class="btn btn-info">
               Más información
-            </button>
+            </button></a>
           </p>
-        </div>
-        @endforeach
       </div>
+   </div>
+  @endforeach
 </div>
 
 @stop

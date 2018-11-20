@@ -12,6 +12,7 @@
 
   </head>
   <body>
+  <div class='container-fluid'>
   <div class="container-fluid" id="DivLogo">
     <img src="{{asset('images/UNAM.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
     <img src="{{asset('images/FI.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
@@ -29,8 +30,8 @@
       <div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li><a href="#section1">Inicio</a></li>
-            <li><a href="#section2">Agrupaciones</a></li>
+            <li><a href="Agrupaciones/public/">Inicio</a></li>
+            <li><a href="#">Agrupaciones</a></li>
             <li><a href="#section3">Historial</a></li>
             <li><a href="#section3">Reclutamiento</a></li>
           </ul>
@@ -38,7 +39,6 @@
       </div>
     </div>
   </nav>
-  <div class='container'>
       @yield('content')
   </div>
   </body>

@@ -8,12 +8,11 @@ use App\Noticias;
 
 class admiController extends Controller
 {
-    public function construct()
-    {
+    public function construct(){
       $this->middleware('auth');
     }
-    public function index()
-    {
+    public function index(){
+
       if(\Session::get('Noticias')){
         $msg = "Se guardo la notica con exito";
         \Session::forget('Noticias');
@@ -23,8 +22,7 @@ class admiController extends Controller
         return view('Admis.formNoti', ['msg'=>$msg]);
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         \Session::forget('Noticias');
 
         $this->validate($request, array(
@@ -43,7 +41,7 @@ class admiController extends Controller
 
           $noti ->Titulo = $request->Titulo;
           $noti ->Descripcion = $request->Descripcion;
-          $noti ->DescripcionCorta = $request->Descripcion;
+          $noti ->DescripcionCorta = $request->DescripcionCorta;
           $noti ->Fecha = $request->Fecha;
 
           //save Images
@@ -60,7 +58,7 @@ class admiController extends Controller
             $image = $request->file('ImagenR');
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/Noticias/'. $filename);
-            Image::make($image)->resize(600,309)->save($location);
+            Image::make($image)->resize(743,387)->save($location);
 
             $noti->ImagenR = $filename;
           }

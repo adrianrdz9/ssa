@@ -2,73 +2,39 @@
 @section('title','Agrupaciones')
 @section('content')
 <link href="{{asset('css/AIndivi.css')}}" rel="stylesheet"/>
-  <h2>Nombre de la Agrupación</h2>
-    <h6>SIGLAS</h6>
+  <h2>{{ $data[0]->Nombre }}</h2>
+    <h6>{{ $data[0]->Siglas }}</h6>
   <div class="row">
-    <div class="col-sm-4" style="background-color:lavender;">
-      <img src="{{asset('images/FI.png')}}" class="img-responsive">
+    <div class="col-sm-4">
+      <img src="{{asset('images/Agrupaciones/Fotos/'. $data[0]->Foto )}}" class="img-responsive">
       <br/>
       <div>
           Descripcion: <br/>
-          <p>
-            Somos una agrupacion que hace tal y tal, para que promer el desarrollo
-            Somos una agrupacion que hace tal y tal, para que promer el desarrollo
-            Somos una agrupacion que hace tal y tal, para que promer el desarrollo
-            Somos una agrupacion que hace tal y tal, para que promer el desarrollo
-            Somos una agrupacion que hace tal y tal, para que promer el desarrollo
-          </p>
+          <p>{{ $data[0]->Descripcion }}</p>
       </div>
     </div>
-    <div class="col-sm-7" style="background-color:lavenderblush;">
+    <div class="col-sm-7">
       <div class="row">
         <h3>Integrantes</h3>
         <div class="col-sm-6">
+          @foreach ($inte as $Nom)
           <p>
-            <h4>Cargo</h4>
-                Nombre
+            <h4>{{ $Nom->Cargo }}</h4>
+                {{ $Nom->Nombre }}
           </p>
           <br/>
-          <p>
-            <h4>Cargo</h4>
-                Nombre
-          </p>
-          <br/>
-          <p>
-            <h4>Cargo</h4>
-                Nombre
-          </p>
-          <br/>
-          <p>
-            <h4>Cargo</h4>
-                Nombre
-          </p>
-        </div>
-        <div class="col-sm-6">
-          <p>
-            <h4>Cargo</h4>
-                Nombre
-          </p>
-          <br/>
-          <p>
-            <h4>Cargo</h4>
-                Nombre
-          </p>
-          <br/>
-          <p>
-            <h4>Cargo</h4>
-                Nombre
-          </p>
-          <br/>
-          <p>
-            <h4>Cargo</h4>
-                Nombre
-          </p>
-        </div>
-      </div>
+          @endforeach
+       </div>
       <div align="center">
-        <img src="{{asset('images/Logo.png')}}" class="img-responsive" width="50%" height="95%">
+        <img src="{{asset('images/Agrupaciones/Logos/'. $data[0]->Logo )}}" class="img-responsive" width="50%" height="95%">
       </div>
     </div>
   </div>
+</div>
+<div>
+  <h6>Contacto</h6>
+  {{ $data[0]->Link1 }}
+  <br/>
+  {{ $data[0]->Link2 }}
 </div>
 @stop

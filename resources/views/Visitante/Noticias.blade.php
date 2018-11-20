@@ -48,7 +48,7 @@
                         <h3>{{ $dato->Titulo }}</h3>
                         <p>{{ $dato->DescripcionCorta }}</p>
                         <h6>{{ $dato->Fecha  }}</h6>
-                        <button class="btn-card">Ver más</button>
+                        <a href='Noticia/id/{{ $dato->Folio }}'><button class="btn btn-card">Ver más</button></a>
                     </div>
                 </div>
                  <br/>
