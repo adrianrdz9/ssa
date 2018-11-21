@@ -21,6 +21,10 @@ class semiAdmiController extends Controller
                   ]);
     }
 
+    public function Propuestas(){
+        return view('Admis.PropuestaSemi');
+    }
+
     // public function Integrantes(Request $request){
     //   $u = auth()->user()->Siglas;
     //   $a = $request->all();

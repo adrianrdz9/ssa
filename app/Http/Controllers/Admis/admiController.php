@@ -11,6 +11,11 @@ class admiController extends Controller
     public function construct(){
       $this->middleware('auth');
     }
+
+    public function Propuestas(){
+        return view('Admis.PropuestaAdmi');
+    }
+
     public function index(){
 
       if(\Session::get('Noticias')){

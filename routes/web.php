@@ -13,11 +13,16 @@ Route::post('logout','Auth\LoginController@logout')->name('logout');
 
 //Administrador / semiAdmi
 //Noticias - Admi
-Route::resource('Admi','Admis\admiController');
+Route::post('Admi','Admis\admiController@index');
+//Ver propuestas
+Route::get('Admi/Propuestas','Admis\admiController@Propuestas');
+
 //Información general
 Route::post('InfoGeneral','Admis\semiAdmiController@InfoGeneral');
 //Integrantes
 Route::post('Integrantes','Admis\semiAdmiController@Integrantes');
+//status propuesta
+Route::get('semiAdmi/Propuesta','Admis\semiAdmiController@Propuestas');
 
 //Visitante
 //Noticias - 9 (index)

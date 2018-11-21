@@ -35,6 +35,9 @@
             <a class="nav-link" href="#">Contraseñas</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#">Propuestas</a>
+          </li>
+          <li class="nav-item">
             <form method="POST" action=" {{ route('logout') }} ">
               {{ csrf_field() }}
               <button class="btn btn-danger">Cerrar sesión</button>
