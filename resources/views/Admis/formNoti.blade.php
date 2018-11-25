@@ -7,7 +7,7 @@
     {{ $msg }}
   </div>
 @endif
-<form method="post" action="{{ url('Admi') }}" enctype="multipart/form-data">
+<form method="post" action="{{ url('AdmiP') }}" enctype="multipart/form-data">
   {{ csrf_field() }}
   <div class="form-row">
     <div class="form-group col-md-6">

@@ -9,22 +9,26 @@
 </div>
 <h5>Estado de propuestas</h5>
 <div>
+  @foreach ($data as $value)
+    @if($value->Estado == "Pendiente")
+    <div class="alert alert-info">
+      <label>{{ $value->Titulo }}</label><br/>
+      <strong>En proceso.</strong>
+    </div>
+    @endif
+    @if($value->Estado == "Aprobada")
     <div class="alert alert-success">
-      <label>Juegos de mesa</label><br/>
+      <label>{{ $value->Titulo }}</label><br/>
       <strong>Aprobada.</strong>
     </div>
-    <div class="alert alert-info">
-      <label>Conferencia X</label><br/>
-      <strong>En proceso.</strong>
-    </div>
-    <div class="alert alert-info">
-      <label>Conferencia Z</label><br/>
-      <strong>En proceso.</strong>
-    </div>
+    @endif
+    @if($value->Estado == "Comunicate")
     <div class="alert alert-warning">
-      <label>Presentación de trabajos</label><br/>
+      <label>{{ $value->Titulo }}</label><br/>
       <strong>Comunicate con la Secretaria de Servicios Academicos a la brevedad.</strong>
     </div>
+    @endif
+  @endforeach
 </div>
 
   <div class="modal fade" id="NPropuesta">
@@ -39,11 +43,11 @@
             {{ csrf_field() }}
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Titulo:</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="Titulo">
               </div>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Descripción:</label>
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control" name="Descripcion"></textarea>
               </div>
           </div>
           <div class="modal-footer">

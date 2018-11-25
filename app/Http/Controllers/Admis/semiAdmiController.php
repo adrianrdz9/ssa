@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Propuestas;
+use Alert;
 class semiAdmiController extends Controller
 {
 
@@ -21,8 +23,42 @@ class semiAdmiController extends Controller
                   ]);
     }
 
-    public function Propuestas(){
-        return view('Admis.PropuestaSemi');
+    public function Propuesta(){
+
+      if(\Session::get('Propuesta')){
+        $msg = "Se ha enviado la propuesta con exito.";
+        \Session::forget('Propuesta');
+      }else{
+        $msg = "Al parecer hubo un error, intentalo de lo nuevo.";
+      }
+      $u = auth()->user()->Siglas;
+      $data = DB:: select("SELECT Titulo,Estado FROM Propuestas WHERE Siglas = '$u' " );
+        return view('Admis.PropuestaSemi',[
+           'msg'=> $msg,
+           'data'=> $data,
+        ]);
+    }
+
+    public function NPropuesta(Request $request){
+       \Session::forget('Propuesta');
+
+       $this->validate($request, array(
+         'Titulo' => 'required|max:191' ,
+         'Descripcion' => 'required',
+       ));
+       $propuesta = "Crear propuesta";
+       \Session::push('Propuesta',$propuesta);
+       $propuestas = \Session::get('Propuesta');
+       $u = auth()->user()->Siglas;
+
+         $propu = new Propuestas;
+         $propu ->Siglas = $u;
+         $propu ->Titulo = $request->Titulo;
+         $propu ->Descripcion = $request->Descripcion;
+         $propu->save();
+
+          alert()->success('Notificación de Éxito.','Título')->autoclose(3000);
+         return redirect('semiAdmi/Propuesta');
     }
 
     // public function Integrantes(Request $request){

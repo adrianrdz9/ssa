@@ -13,7 +13,7 @@ Route::post('logout','Auth\LoginController@logout')->name('logout');
 
 //Administrador / semiAdmi
 //Noticias - Admi
-Route::post('Admi','Admis\admiController@index');
+Route::post('AdmiP','Admis\admiController@store')->name('AdmiP');
 //Ver propuestas
 Route::get('Admi/Propuestas','Admis\admiController@Propuestas');
 
@@ -22,8 +22,9 @@ Route::post('InfoGeneral','Admis\semiAdmiController@InfoGeneral');
 //Integrantes
 Route::post('Integrantes','Admis\semiAdmiController@Integrantes');
 //status propuesta
-Route::get('semiAdmi/Propuesta','Admis\semiAdmiController@Propuestas');
-
+Route::get('semiAdmi/Propuesta','Admis\semiAdmiController@Propuesta')->name('PropuestaSemi');
+//Nueva propuesta
+Route::post('NPropuesta','Admis\semiAdmiController@NPropuesta');
 //Visitante
 //Noticias - 9 (index)
 Route::get('/','Visitante\generalController@index');

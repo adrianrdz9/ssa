@@ -18,7 +18,7 @@
       </p>
     </div>
      <div class="card-footer" style="text-align:right;">
-      <button type="button" class="btn btn-success">Aceptar</button>
+      <button type="button" class="btn btn-success Aceptar">Aceptar</button>
       <button type="button" class="btn btn-info">Comunicate con nosotros</button>
     </div>
   </div>
@@ -43,4 +43,26 @@
     </div>
   </div>
 </div>
+<script>
+$('.Aceptar').click(function () {
+  swal({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.value) {
+      swal(
+        'Deleted!',
+        'Your file has been deleted.',
+        'success'
+      )
+    }
+  })
+
+});
+</script>
 @stop

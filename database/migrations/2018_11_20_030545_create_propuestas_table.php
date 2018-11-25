@@ -18,7 +18,7 @@ class CreatePropuestasTable extends Migration
             $table->string('Siglas');
             $table->string('Titulo');
             $table->text('Descripcion');
-            $table->string('Estado');
+            $table->string('Estado')->default('Pendiente');
             $table->timestamps();
         });
     }
