@@ -33,13 +33,13 @@
             <a class="nav-link" href="#">Noticias</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/Agrupaciones/public/Admi">Nueva noticia</a>
+            <a class="nav-link" href="../Admi">Nueva noticia</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contraseñas</a>
+            <a class="nav-link" href="../Admi/Contraseñas">Contraseñas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Propuestas</a>
+            <a class="nav-link" href="../Admi/Propuestas">Propuestas</a>
           </li>
           <li class="nav-item">
             <form method="POST" action=" {{ route('logout') }} ">

@@ -30,8 +30,8 @@
       <div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li><a href="Agrupaciones/public/">Inicio</a></li>
-            <li><a href="#">Agrupaciones</a></li>
+            <li><a href="../../">Inicio</a></li>
+            <li><a href="../../Agrupaciones">Agrupaciones</a></li>
             <li><a href="#section3">Historial</a></li>
             <li><a href="#section3">Reclutamiento</a></li>
           </ul>

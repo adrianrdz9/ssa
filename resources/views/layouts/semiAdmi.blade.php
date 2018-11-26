@@ -22,20 +22,20 @@
       <label id="In">Facultad de Ingeniería</label>
     </div>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-      <a class="navbar-brand" href="#">{{ auth()->user()->Siglas }}</a>
+      <a class="navbar-brand" href="../semiAdmi/Propuesta">{{ auth()->user()->Siglas }}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Información</a>
+            <a class="nav-link" href="../semiAdmi">Información</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Reclutamientos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Propuestas</a>
+            <a class="nav-link" href="../semiAdmi/Propuesta">Propuestas</a>
           </li>
           <li class="nav-item">
             <form method="POST" action=" {{ route('logout') }} ">
