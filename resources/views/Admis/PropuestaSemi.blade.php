@@ -2,11 +2,15 @@
 @section('title','Propuestas')
 @section('content')
 <h3>Propuestas para la Feria de Agrupaciones Esdiantiles</h3>
-<div style="text-align:right; margin-right:3%;">
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NPropuesta">
-      Realizar una propuesta
-  </button>
-</div>
+@if($Mensaje != "Ya no es posible enviar propuestas.")
+  <div style="text-align:right; margin-right:3%;">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NPropuesta">
+        Realizar una propuesta
+    </button>
+  </div>
+@else
+  <h3>{{ $Mensaje }}</h3>
+@endif
 <h5>Estado de propuestas</h5>
 <div>
   @foreach ($data as $value)

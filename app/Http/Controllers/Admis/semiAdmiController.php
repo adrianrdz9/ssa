@@ -24,31 +24,32 @@ class semiAdmiController extends Controller
     }
 
     public function Propuesta(){
-
-      if(\Session::get('Propuesta')){
-        $msg = "Se ha enviado la propuesta con exito.";
-        \Session::forget('Propuesta');
-      }else{
-        $msg = "Al parecer hubo un error, intentalo de lo nuevo.";
-      }
       $u = auth()->user()->Siglas;
-      $data = DB:: select("SELECT Titulo,Estado FROM Propuestas WHERE Siglas = '$u' " );
+      $data = DB:: select("SELECT Titulo,Estado FROM Propuestas WHERE Siglas = '$u' ORDER BY created_at DESC" );
+
+      $f = DB:: select("SELECT Limite FROM Ferias LIMIT 1");
+      $hoy[0]= date("Y-m-d");
+      foreach ($f as $key => $value) {
+          $limite[] = $value->Limite;
+      }
+      if($limite === $hoy){
+        $msg = "Hoy es el último día para enviar propuestas.";
+      }elseif ($limite > $hoy) {
+        $msg = "Aún puedes enviar propuestas";
+      }elseif ($limite < $hoy) {
+        $msg = "Ya no es posible enviar propuestas.";
+      }
         return view('Admis.PropuestaSemi',[
-           'msg'=> $msg,
            'data'=> $data,
+           'Mensaje' => $msg,
         ]);
     }
 
     public function NPropuesta(Request $request){
-       \Session::forget('Propuesta');
-
        $this->validate($request, array(
          'Titulo' => 'required|max:191' ,
          'Descripcion' => 'required',
        ));
-       $propuesta = "Crear propuesta";
-       \Session::push('Propuesta',$propuesta);
-       $propuestas = \Session::get('Propuesta');
        $u = auth()->user()->Siglas;
 
          $propu = new Propuestas;
@@ -57,7 +58,7 @@ class semiAdmiController extends Controller
          $propu ->Descripcion = $request->Descripcion;
          $propu->save();
 
-          alert()->success('Notificación de Éxito.','Título')->autoclose(3000);
+         alert()->success('Se ha enviado tu propuesta','Propuesta')->autoclose(3000);
          return redirect('semiAdmi/Propuesta');
     }
 

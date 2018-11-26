@@ -3,66 +3,89 @@
 @section('content')
 <h3>Propuestas para la Feria de Agrupaciones</h3>
 <div>
-  <div class="card">
-    <div class="card-header">Conferencia X por SiK</div>
-    <div class="card-body" style="text-align:left;">
-      <p class="card-text">
-        Reunión de autoridades políticas o intelectuales para tratar un tema importante,
-        en especial si se trata de representantes de países, organismos o entidades.
-      </p>
-      <b>Contacto:</b> <br/>
-      <p style="margin-left:3%;">
-        Presidente: Pablo Neruda <br/>
-        Celular: 5528072878 <br/>
-        Email: pablo@comunidad.unam.mx <br/>
-      </p>
+  @if($Propuestas != [])
+    @foreach ($Propuestas as $value)
+      @if($value->Estado == "Pendiente")
+      <div class="card" data-id="{{ $value->id }}">
+        <div class="card-header">{{ $value->Titulo }} por {{ $value->Siglas}}</div>
+        <div class="card-body" style="text-align:left;">
+          <p class="card-text">{{ $value->Descripcion }}</p>
+          <b>Contacto:</b> <br/>
+          <p style="margin-left:3%;">
+            Presidente: Pablo Neruda <br/>
+            Celular: 5528072878 <br/>
+            Email: pablo@comunidad.unam.mx <br/>
+          </p>
+        </div>
+         <div class="card-footer" style="text-align:right;" data-id="{{ $value->id }}">
+          <button type="button" class="btn btn-success Aceptar">Aceptar</button>
+          <button type="button" class="btn btn-info Comunicate">Comunicate con nosotros</button>
+        </div>
+      </div>
+      @endif
+      @if($value->Estado == "Aprobada")
+      <div class="card" data-id="{{ $value->id }}">
+        <div class="card-header">{{ $value->Titulo }} por {{ $value->Siglas}}</div>
+        <div class="card-body" style="text-align:left;">
+          <p class="card-text">{{ $value->Descripcion }}</p>
+          <b>Contacto:</b> <br/>
+          <p style="margin-left:3%;">
+            Presidente: Pablo Neruda <br/>
+            Celular: 5528072878 <br/>
+            Email: pablo@comunidad.unam.mx <br/>
+          </p>
+        </div>
+      </div>
+      @endif
+      @if($value->Estado == "Comunicate")
+      <div class="card" data-id="{{ $value->id }}">
+        <div class="card-header">{{ $value->Titulo }} por {{ $value->Siglas}}</div>
+        <div class="card-body" style="text-align:left;">
+          <p class="card-text">{{ $value->Descripcion }}</p>
+          <b>Contacto:</b> <br/>
+          <p style="margin-left:3%;">
+            Presidente: Pablo Neruda <br/>
+            Celular: 5528072878 <br/>
+            Email: pablo@comunidad.unam.mx <br/>
+          </p>
+        </div>
+         <div class="card-footer" style="text-align:right;" data-id="{{ $value->id }}">
+          <button type="button" class="btn btn-success Aceptar">Aceptar</button>
+        </div>
+      </div>
+      @endif
+    @endforeach
+   @else
+     <div>
+       @if($Mensaje == "Ya no se recibiran propuestas" )
+          <h4> {{ $Mensaje }} </h4>
+          <button type="button" class="btn btn-success Crear">
+            Establece una nuevas fechas para la próxima feria
+          </button>
+      @else
+        <h4> {{ $Mensaje }} </h4>
+      @endif
     </div>
-     <div class="card-footer" style="text-align:right;">
-      <button type="button" class="btn btn-success Aceptar">Aceptar</button>
-      <button type="button" class="btn btn-info">Comunicate con nosotros</button>
-    </div>
-  </div>
-  <BR/>
-  <div class="card">
-    <div class="card-header">Conferencia Z por SiK</div>
-    <div class="card-body" style="text-align:left;">
-      <p class="card-text">
-        Reunión de autoridades políticas o intelectuales para tratar un tema importante,
-        en especial si se trata de representantes de países, organismos o entidades.
-      </p>
-      <b>Contacto:</b> <br/>
-      <p style="margin-left:3%;">
-        Presidente: Pablo Neruda <br/>
-        Celular: 5528072878 <br/>
-        Email: pablo@comunidad.unam.mx <br/>
-      </p>
-    </div>
-     <div class="card-footer" style="text-align:right;">
-      <button type="button" class="btn btn-success">Aceptar</button>
-      <button type="button" class="btn btn-info">Comunicate con nosotros</button>
-    </div>
-  </div>
+   @endif
 </div>
 <script>
-$('.Aceptar').click(function () {
-  swal({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.value) {
-      swal(
-        'Deleted!',
-        'Your file has been deleted.',
-        'success'
-      )
-    }
-  })
-
-});
+  $('.Aceptar').click(function () {
+  let id = $(this).parents('div').data('id');
+    $.ajax({
+      url: "/statusA/id/" + id,
+      method: "get"
+    }).done(()=>{
+        $(this).closest('.card-footer').remove();
+    });
+  });
+  $('.Comunicate').click(function () {
+  let id = $(this).parents('div').data('id');
+    $.ajax({
+      url: "/statusC/id/" + id,
+      method: "get"
+    }).done(()=>{
+        $(this).closest('.btn-info').remove();
+    });
+  });
 </script>
 @stop
