@@ -2,7 +2,7 @@
 @section('title','Agrupaciones')
 @section('content')
 <link href="{{asset('css/AIndivi.css')}}" rel="stylesheet"/>
-  <h2>{{ $data[0]->Nombre }}</h2>
+  <h2 style="margin-top:1%;">{{ $data[0]->Nombre }}</h2>
     <h6>{{ $data[0]->Siglas }}</h6>
   <div class="row">
     <div class="col-sm-4">
