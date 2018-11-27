@@ -20,10 +20,6 @@ class Tournament extends Model
         return $this->belongsTo('App\Sport')->withTrashed();
     }
 
-    public function teams(){
-        return $this->hasMany('\App\Team', 'tournament_id', 'id');
-    }
-
     public function requirements(){
         return $this->belongsToMany('App\Requirement', 'requirement_in_tournaments', 'tournament_id', 'requirement_id');
     }
@@ -32,18 +28,9 @@ class Tournament extends Model
         return $this->hasMany('App\Branch', 'tournament_id', 'id');
     }
 
-    public function userSignedup($id){
-        $team = UserInTeam::where('user_id', $id)
-                    ->whereIn('tournament_id', $this->teams->only('id'));
-        if($team->count() > 0){
-           return true;
-        }
-        return false;
-    }
+    
 
-    public function roomLeft(){
-        return $this->max_teams - $this->teams->count();
-    }
+    
 
     
 }

@@ -102,6 +102,9 @@
                                 <li class="nav-item">
                                     <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('teamsIndex') }}" class="nav-link">Equipos</a>
+                                </li>
                             @endrole
                         @endrole
                         <li class="nav-item">

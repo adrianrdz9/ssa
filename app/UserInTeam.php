@@ -21,4 +21,8 @@ class UserInTeam extends Model
         return $this->belongsTo('\App\Team');
     }
 
+    public function isCaptain(){
+        return $this->user_id == $this->team->captain_id;
+    }
+
 }

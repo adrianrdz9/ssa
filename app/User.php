@@ -73,4 +73,19 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
             return $avatarUrl;
         else return public_path('images/missing_avatar.png');
     }
+
+    public function teams(){
+        $teams = UserInTeam::where('user_id', $this->id)->with('team.accepted_users')->with('team.captain')->with('team.branch.tournament')->get();
+        foreach ($teams as $team) {
+            if($team->isCaptain()){
+                $team->team->requests = \App\UserInTeam::where([
+                    ['team_id', $team->team->id],
+                    ['status', 'pending']
+                ])->with('user')->get();
+            }
+        }
+
+        return $teams;
+        //foreach()
+    }
 }

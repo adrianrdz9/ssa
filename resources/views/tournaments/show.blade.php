@@ -29,7 +29,7 @@
                             </p>
                         <p>
                             <b>Lugares disponibles: </b>
-                            {{$tournament->roomLeft()}}
+                            {{$branch->roomLeft()}}
                         </p>
 
                         <p>
@@ -96,7 +96,7 @@
 
                 </div>
             </div>
-            @if ($tournament->userSignedUp($user->id))
+            @if ($branch->userSignedUp($user->id))
                 <p class="d-block text-center">
                     Ya estas inscrito a este torneo
                     <br>

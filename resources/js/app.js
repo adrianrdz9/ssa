@@ -35,6 +35,7 @@ Vue.component('edit-tournament', require('./components/EditTournamentComponent.v
 Vue.component('complete-signup', require('./components/CompleteSignUp.vue'));
 Vue.component('profile-avatar-input', require('./components/ProfileAvatarInput.vue'));
 Vue.component('tournament-historic', require('./components/TournamentHistoric.vue'));
+Vue.component('team-index', require('./components/TeamIndexComponent.vue'));
 
 const app = new Vue({
     el: '#app'

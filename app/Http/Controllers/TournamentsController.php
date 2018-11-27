@@ -18,7 +18,7 @@ class TournamentsController extends Controller
      */
     public function __construct(){
         $this->middleware('auth', ['except' => ['index']]);
-        $this->middleware('role:admin', ['except' => ['index']]);
+        $this->middleware('role:admin', ['except' => ['index', 'show', 'team']]);
     }
 
     /**
@@ -115,7 +115,7 @@ class TournamentsController extends Controller
             'branch' => 'required'
         ]);
 
-        Branch::where('tournament_id', $tournament->id)->delete();
+        $availableBranches = Branch::where('tournament_id', $tournament->id)->get();
 
         RequirementInTournament::where('tournament_id', $tournament->id)->delete();
 
@@ -125,11 +125,22 @@ class TournamentsController extends Controller
                 ['only_representative' => $request->only_representative ? true : false]
             )
         );
-        foreach($request->branch as $branch){
-            Branch::create([
-                'branch' => $branch,
-                'tournament_id' => $tournament->id
-            ]);
+        foreach ($availableBranches as $branch) {
+            if(array_search($branch->branch, $request->branch) === FALSE){
+                Branch::find($branch->id)->delete();
+            }
+        }
+
+        foreach ($request->branch as $branch) {
+            if(!Branch::where([
+                ['tournament_id', $tournament->id],
+                ['branch', $branch]
+            ])->exists()){
+                Branch::create([
+                    'tournament_id' => $tournament->id,
+                    'branch' => $branch
+                ]);
+            }
         }
         foreach ($request->requirements as $requirement) {
             RequirementInTournament::create([
@@ -153,10 +164,14 @@ class TournamentsController extends Controller
     }
 
     public function team($id){
-        $branch = Branch::find($id);
-        $tournament = Tournament::find($branch->tournament_id)->with('teams')->get();
-
-        return view('tournaments.team', ['branch' => $branch, 'tournament' => $tournament]);
+        $branch = Branch::find($id)->with('teams')->with(['teams.captain' => function($query){
+            $query->select('id', 'name', 'last_name');
+        }])->with('tournament')->with(['teams.accepted_users' => function($query){
+            
+        }])->first();
+        
+        //return $branch;
+        return view('tournaments.team', ['branch' => $branch, 'tournament' => $branch->tournament]);
     }
 
     /**

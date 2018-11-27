@@ -55,7 +55,7 @@
                                                 </p>
                                                 <p>
                                                     <b>Lugares para equipos disponibles: </b>
-                                                    {{ $tournament->roomLeft() }}
+                                                    {{ $branch->roomLeft() }}
                                                 </p>
                                                 <p>
                                                     <b>Requisitos: </b><br>

@@ -47,6 +47,11 @@ Route::group(['prefix' => '/torneos'], function () {
     Route::get('/completar')->name('completeSignup');
 });
 
+Route::post('/teams', 'TeamsController@store');
+Route::post('/teams/{id}', 'TeamsController@request');
+
+Route::get('/mis_equipos', 'TeamsController@index')->name('teamsIndex');
+
 
 Route::get('/deportes', 'SportsController@index')->name('sportsIndex');
 Route::put('/deportes/{sportName}', 'SportsController@update')->name('updateSport');

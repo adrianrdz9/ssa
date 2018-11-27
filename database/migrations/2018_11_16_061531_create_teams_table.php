@@ -17,9 +17,8 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('captain_id');
             $table->foreign('captain_id')->references('id')->on('users');
-            $table->unsignedInteger('tournament_id');
-            $table->foreign('tournament_id')->references('id')->on('tournaments');
-            $table->unsignedInteger('max');
+            $table->unsignedInteger('branch_id');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->string('name');
             $table->boolean('isRepresentative')->default(false);
             

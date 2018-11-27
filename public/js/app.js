@@ -31434,6 +31434,7 @@ Vue.component('edit-tournament', __webpack_require__(240));
 Vue.component('complete-signup', __webpack_require__(224));
 Vue.component('profile-avatar-input', __webpack_require__(227));
 Vue.component('tournament-historic', __webpack_require__(230));
+Vue.component('team-index', __webpack_require__(243));
 
 var app = new Vue({
   el: '#app'
@@ -81666,6 +81667,361 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-241d05e2", module.exports)
+  }
+}
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(244)
+/* template */
+var __vue_template__ = __webpack_require__(245)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/TeamIndexComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e34ca49a", Component.options)
+  } else {
+    hotAPI.reload("data-v-e34ca49a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 244 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        t: Array,
+        tr: Object,
+        branch: Object
+    },
+
+    data: function data() {
+        return {
+            teams: this.t,
+            tournament: this.tr
+        };
+    },
+
+
+    methods: {
+        newTeam: function newTeam() {
+            var _this = this;
+
+            swal({
+                title: 'Crear un equipo',
+                text: "El capitan del equipo debe de crear el equipo, pues el creador será el responsable y unico capaz de aceptar a los integrantes del equipo, además deberá de completar el registro del equipo (más información sobre este paso despues de crear el equipo)",
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Continuar',
+                cancelButtonText: 'Cancelar'
+            }).then(function (result) {
+                if (result.value) {
+                    swal({
+                        title: 'Nombre del equipo',
+                        input: 'text',
+                        inputAttributes: {
+                            autocapitalize: 'on'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Crear',
+                        showLoaderOnConfirm: true,
+                        preConfirm: function preConfirm(data) {
+                            axios.post('/teams', {
+                                tournament_id: _this.branch.id,
+                                name: data
+                            }).then(function (response) {
+                                console.log(response);
+
+                                if (response.status !== 200 && response.status !== 201) {
+                                    throw new Error(reponse);
+                                }
+                                _this.teams.push(response.data[0]);
+                                return response;
+                            }).catch(function (error) {
+                                if (error.response.status == 400) swal('Error', error.response.data.error, 'error');else if (error.response.status == 422) swal('Error', error.response.data.errors.name[0], 'error');
+                            });
+                        },
+                        allowOutsideClick: function allowOutsideClick() {
+                            return !swal.isLoading();
+                        }
+                    }).then(function (result) {
+                        if (result.value) {
+                            swal('Equipo creado', 'Recuerda el equipo debe de tener entre ' + _this.tournament.min_per_team + ' y ' + _this.tournament.max_per_team + ' integrantes.', 'success');
+                        }
+                    });
+                }
+            });
+        },
+        signToTeam: function signToTeam(team) {
+            swal({
+                title: 'Unirse al equipo <i>' + team.name + '</i>',
+                text: "El capitan del equipo debera aceptarte antes de que puedas unirte a este equipo, asi que si no lo has hecho asegurate de que el capitan te aceptara. <br> El capitan del equipo podra ver tus datos de contacto (número de telefono y correo electrónico) por si quiere verificar tu identidad",
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Continuar',
+                cancelButtonText: 'Cancelar'
+            }).then(function (result) {
+                if (result.value) {
+                    axios.post('/teams/' + team.id).then(function (response) {
+                        console.log(response);
+
+                        if (response.status !== 200 && response.status !== 201) {
+                            throw new Error(reponse);
+                        }
+                        //this.teams.push(response.data[0]);
+                        return response;
+                    }).catch(function (error) {
+                        if (error.response.status == 400) swal('Error', error.response.data.error, 'error');else if (error.response.status == 422) swal('Error', error.response.data.errors.name[0], 'error');
+                    });
+                }
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 245 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.teams.length <= 0
+      ? _c("h2", { staticClass: "d-block text-center" }, [
+          _vm._v("Aún no hay equipos")
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "container" }, [
+      _c(
+        "div",
+        { staticClass: "row" },
+        _vm._l(_vm.teams, function(team) {
+          return _c("div", { key: team.id, staticClass: "col" }, [
+            _c("div", { staticClass: "card" }, [
+              _c(
+                "div",
+                {
+                  class: {
+                    "card-header": true,
+                    "bg-primary":
+                      team.accepted_users.length < _vm.tournament.min_per_team,
+                    "bg-danger":
+                      team.accepted_users.length >= _vm.tournament.max_per_team,
+                    "bg-success":
+                      team.accepted_users.length <
+                        _vm.tournament.max_per_team &&
+                      team.accepted_users.length >= _vm.tournament.min_per_team
+                  }
+                },
+                [
+                  _c("h3", [_vm._v(_vm._s(team.name))]),
+                  _vm._v(" "),
+                  _c("h5", [
+                    team.accepted_users.length < _vm.tournament.min_per_team
+                      ? _c("i", [
+                          _vm._v(
+                            "A este equipo le faltan " +
+                              _vm._s(
+                                _vm.tournament.min_per_team -
+                                  team.accepted_users.length
+                              ) +
+                              " integrantes para poder entrar al torneo"
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    team.accepted_users.length >= _vm.tournament.max_per_team
+                      ? _c("i", [_vm._v("Este equipo ya está lleno")])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    team.accepted_users.length < _vm.tournament.max_per_team &&
+                    team.accepted_users.length >= _vm.tournament.min_per_team
+                      ? _c("i", [
+                          _vm._v(
+                            "Este equipo solo puede recibir " +
+                              _vm._s(
+                                _vm.tournament.max_per_team -
+                                  team.accepted_users.length
+                              ) +
+                              " integrantes mas"
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("p", [
+                  _c("b", [_vm._v("Capitan: ")]),
+                  _vm._v(
+                    " " +
+                      _vm._s(team.captain.name) +
+                      " " +
+                      _vm._s(team.captain.last_name) +
+                      "\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Integrantes del equipo")]),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    _vm._l(team.accepted_users, function(user) {
+                      return _c("li", { key: user.user.id }, [
+                        _vm._v(
+                          _vm._s(user.user.name) +
+                            " " +
+                            _vm._s(user.user.last_name)
+                        )
+                      ])
+                    })
+                  )
+                ]),
+                _vm._v(" "),
+                team.accepted_users.length < _vm.tournament.max_per_team
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info d-block ml-auto",
+                        on: {
+                          click: function($event) {
+                            _vm.signToTeam(team)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            Unirme a este equipo\n                        "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ])
+          ])
+        })
+      )
+    ]),
+    _vm._v(" "),
+    _vm.tournament.max_teams > _vm.teams.length
+      ? _c("div", { staticClass: "row justify-content-around mt-4" }, [
+          _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+            _c(
+              "button",
+              { staticClass: "btn btn-info w-100", on: { click: _vm.newTeam } },
+              [_vm._v("Crear nuevo equipo")]
+            )
+          ])
+        ])
+      : _c("h2", { staticClass: "d-block text-center" }, [
+          _vm._v("Ya no se pueden inscribir mas equipos")
+        ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e34ca49a", module.exports)
   }
 }
 
