@@ -12,20 +12,20 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <h4>Titulo</h4>
-      <input class="form-control" name="Titulo" type="text">
+      <input class="form-control" name="Titulo" type="text" required>
     </div>
     <div class="form-group col-md-6">
       <h4>Fecha </h4>
-      <input type="date" name="Fecha">
+      <input type="date" name="Fecha" required>
     </div>
   </div>
   <div class="form-group">
     <h4>Descripción corta:</h4>
-    <textarea class="form-control" name="DescripcionCorta" type="text"></textarea>
+    <textarea class="form-control" name="DescripcionCorta" type="text" required></textarea>
   </div>
   <div class="form-group">
     <h4>Noticia completa:</h4>
-    <textarea class="form-control" name="Descripcion"></textarea>
+    <textarea class="form-control" name="Descripcion" required></textarea>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">

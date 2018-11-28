@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Noticias;
+use App\Ferias;
 use Alert;
 class admiController extends Controller
 {
@@ -13,13 +14,17 @@ class admiController extends Controller
       $this->middleware('auth');
     }
 
-    public function Agrupaciones(){
-        $data = DB:: select("SELECT * FROM Users ORDER BY Siglas ASC" );
-        return view('Admis.Contraseñas',['data' => $data]);
+    public function Noticias(){
+      $data = DB:: select("SELECT Folio,Titulo,DescripcionCorta,Disponible,ImagenC FROM noticias ORDER BY Folio DESC");
+      return view('Admis.NoticiasAdmi',['data' => $data]);
     }
-
+    public function ONoticia($id){
+      DB::update("UPDATE Noticias SET Disponible = '0' where Folio='$id'");
+    }
+    public function MNoticia($id){
+      DB::update("UPDATE Noticias SET Disponible = '1' where Folio='$id'");
+    }
     public function index(){
-
       if(\Session::get('Noticias')){
         $msg = "Se guardo la notica con exito";
         \Session::forget('Noticias');
@@ -28,7 +33,6 @@ class admiController extends Controller
       }
         return view('Admis.formNoti', ['msg'=>$msg]);
     }
-
     public function store(Request $request){
         \Session::forget('Noticias');
 
@@ -77,9 +81,9 @@ class admiController extends Controller
 
         public function Propuestas(){
             $data = DB:: select("SELECT id,Siglas,Titulo,Descripcion,Estado FROM Propuestas");
-            $msg = "No";
+            $msg = "";
             if($data == []){
-              $f = DB:: select("SELECT Limite FROM Ferias LIMIT 1");
+              $f = DB:: select("SELECT Limite FROM Ferias ORDER BY Limite DESC LIMIT 1");
               $hoy[0]= date("Y-m-d");
               //Convert stdClass object to array in PHP
               foreach ($f as $key => $value) {
@@ -98,12 +102,31 @@ class admiController extends Controller
               'Mensaje' => $msg,
             ]);
         }
-
+        public function Feria(Request $request){
+          $feria = new Ferias;
+          $feria ->Nombre = $request->Nombre;
+          $feria ->Inicio = $request->FInicio;
+          $feria ->Limite = $request->FLimite;
+          $feria->save();
+          return redirect('Admi/Propuestas');
+        }
         public function StatusA($id){
           DB::update("UPDATE Propuestas SET Estado = 'Aprobada' where id='$id'");
         }
         public function StatusC($id){
           DB::update("UPDATE Propuestas SET Estado = 'Comunicate' where id='$id'");
+        }
+
+        public function Agrupaciones(){
+            $data = DB:: select("SELECT * FROM Users ORDER BY Siglas ASC" );
+            return view('Admis.Contraseñas',['data' => $data]);
+        }
+        public function NPassword(Request $request){
+          $id = $request->Id;
+          $c = bcrypt($request->pass);
+          DB::update("UPDATE Users SET password = '$c' where id='$id'");
+          alert()->success('Contraseña actualizada');
+          return redirect('Admi/Contraseñas');
         }
 
 }

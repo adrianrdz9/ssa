@@ -23,14 +23,14 @@
       <label id="In">Facultad de Ingeniería</label>
     </div>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-      <a class="navbar-brand" href="#">{{ auth()->user()->Siglas }}</a>
+      <a class="navbar-brand" href="../ANoticias">{{ auth()->user()->Siglas }}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Noticias</a>
+            <a class="nav-link" href="../ANoticias">Noticias</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Admi">Nueva noticia</a>

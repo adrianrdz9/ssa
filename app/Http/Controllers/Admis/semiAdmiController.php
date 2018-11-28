@@ -27,7 +27,7 @@ class semiAdmiController extends Controller
       $u = auth()->user()->Siglas;
       $data = DB:: select("SELECT Titulo,Estado FROM Propuestas WHERE Siglas = '$u' ORDER BY created_at DESC" );
 
-      $f = DB:: select("SELECT Limite FROM Ferias LIMIT 1");
+      $f = DB:: select("SELECT Limite FROM Ferias ORDER BY Limite DESC LIMIT 1");
       $hoy[0]= date("Y-m-d");
       foreach ($f as $key => $value) {
           $limite[] = $value->Limite;
@@ -58,25 +58,22 @@ class semiAdmiController extends Controller
          $propu ->Descripcion = $request->Descripcion;
          $propu->save();
 
-         alert()->success('Se ha enviado tu propuesta','Propuesta')->autoclose(3000);
+         alert()->success('Se ha enviado tu propuesta');
          return redirect('semiAdmi/Propuesta');
     }
 
-    // public function Integrantes(Request $request){
-    //   $u = auth()->user()->Siglas;
-    //   $a = $request->all();
-    //   foreach ($a as $key => $value) {
-    //     if ($value!= ""){
-    //       echo $value . "<br/>";
-    //       if(DB::update("UPDATE Integrantes SET $key = '$value' where Siglas='$u' AND Cargo = '$key'" == 1)){
-    //         echo "LIsto";
-    //       }else {
-    //          DB::insert("INSERT INTO Integrantes (Siglas,Cargo,Nombre) VALUES ('$u','$key','$')",
-    //       }
-    //     }
-    //   }
-    //
-    // }
+    public function Integrantes(Request $request){
+      $u = auth()->user()->Siglas;
+      $Cargos = array(
+                array('Presidente',$request->NPresi,$request->TPresi,$request->CPresi),
+                array('Vicepresidente',$request->NVice,$request->TVice,$request->CVice),
+                array($request->Cargo3,$request->NCargo3,$request->TCargo3,$request->CCargo3),
+                array($request->Cargo4,$request->NCargo4,$request->TCargo4,$request->CCargo4),
+                array($request->Cargo5,$request->NCargo5,$request->TCargo5,$request->CCargo5),
+                array($request->Cargo6,$request->NCargo6,$request->TCargo6,$request->CCargo6),
+              );
+      print_r($Cargos);
+    }
 
     public function InfoGeneral(Request $request){
         $u = auth()->user()->Siglas;
