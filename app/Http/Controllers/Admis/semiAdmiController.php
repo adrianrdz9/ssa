@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Propuestas;
+use App\Integrantes;
 use Alert;
 class semiAdmiController extends Controller
 {
@@ -16,7 +17,7 @@ class semiAdmiController extends Controller
         $u = auth()->user()->Siglas;
         $data = DB:: select("SELECT * FROM users WHERE Siglas = '$u' " );
         //integrantes
-        $int = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$u' " );
+        $int = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$u' ORDER BY NCargo ASC LIMIT 3" );
         return view('Admis.Informacion',[
                     'Info' => $data,
                     'Inte' => $int
@@ -58,21 +59,97 @@ class semiAdmiController extends Controller
          $propu ->Descripcion = $request->Descripcion;
          $propu->save();
 
-         alert()->success('Se ha enviado tu propuesta');
+         alert()->success('Propuesta','Se ha enviado tu propuesta','success');
          return redirect('semiAdmi/Propuesta');
     }
 
     public function Integrantes(Request $request){
       $u = auth()->user()->Siglas;
-      $Cargos = array(
-                array('Presidente',$request->NPresi,$request->TPresi,$request->CPresi),
-                array('Vicepresidente',$request->NVice,$request->TVice,$request->CVice),
-                array($request->Cargo3,$request->NCargo3,$request->TCargo3,$request->CCargo3),
-                array($request->Cargo4,$request->NCargo4,$request->TCargo4,$request->CCargo4),
-                array($request->Cargo5,$request->NCargo5,$request->TCargo5,$request->CCargo5),
-                array($request->Cargo6,$request->NCargo6,$request->TCargo6,$request->CCargo6),
-              );
-      print_r($Cargos);
+      $Cargos = Array
+      (
+          Array(
+                  'NCargo'=> 1,
+                  'Cargo'=> 'Presidente',
+                  'Nombre' => $request->NPresi,
+                  'Telefono' => $request->TPresi,
+                  'Correo' => $request->CPresi,
+          ),
+          Array(
+                  'NCargo'=> 2,
+                  'Cargo'=> 'Vicepresidente',
+                  'Nombre' => $request->NVice,
+                  'Telefono' => $request->TVice,
+                  'Correo' => $request->CVice,
+          ),
+          Array(
+                  'NCargo'=> 3,
+                  'Cargo'=> $request->Cargo3,
+                  'Nombre' => $request->NCargo3,
+                  'Telefono' => $request->TCargo3,
+                  'Correo' => $request->CCargo3,
+          ),
+          Array(
+                  'NCargo'=> 4,
+                  'Cargo'=> $request->Cargo4,
+                  'Nombre' => $request->NCargo4,
+                  'Telefono' => $request->TCargo4,
+                  'Correo' => $request->CCargo4,
+          ),
+          Array(
+                  'NCargo'=> 5,
+                  'Cargo'=> $request->Cargo5,
+                  'Nombre' => $request->NCargo5,
+                  'Telefono' => $request->TCargo5,
+                  'Correo' => $request->CCargo5,
+          ),
+          Array(
+                  'NCargo'=> 6,
+                  'Cargo'=> $request->Cargo6,
+                  'Nombre' => $request->NCargo6,
+                  'Telefono' => $request->TCargo6,
+                  'Correo' => $request->CCargo6,
+          ),
+      );
+      foreach ($Cargos as $row) {
+          $nC = $row['NCargo'];
+          $Cargo = $row["Cargo"];
+          $Nombre = $row["Nombre"];
+          $Correo = $row["Correo"];
+          $Tel = $row["Telefono"];
+          if($row['Telefono'] == "")
+            $row['Telefono'] = "0";
+          $find = DB:: select("SELECT Nombre FROM Integrantes WHERE Siglas = '$u' AND NCargo = '$nC'");
+          if($find == []){
+              $integrante = new Integrantes;
+              $integrante ->Siglas = $u;
+              $integrante ->NCargo = $nC;
+              $integrante ->Cargo = $row['Cargo'];
+              $integrante ->Nombre = $row['Nombre'];
+              $integrante ->Email = $row['Correo'];
+              $integrante ->Numero = $row['Telefono'];
+              $integrante->save();
+          }else if($find != []){
+             echo "HOAL";
+              if($row['Cargo'] != ""){
+                DB::update("UPDATE Integrantes SET Cargo = '$Cargo'
+                      WHERE Siglas = '$u' AND NCargo = '$nC'");
+              }
+              if ($row['Nombre'] != "") {
+                DB::update("UPDATE Integrantes SET Nombre = '$Nombre'
+                      WHERE Siglas = '$u' AND NCargo = '$nC'");
+              }
+              if ($row['Correo'] != "") {
+                DB::update("UPDATE Integrantes SET Email = '$Correo'
+                      WHERE Siglas = '$u' AND NCargo = '$nC'");
+              }
+              if ($row['Telefono'] != "") {
+                DB::update("UPDATE Integrantes SET Numero = '$Tel'
+                      WHERE Siglas = '$u' AND NCargo = '$nC'");
+              }
+          }
+      }
+      alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
+      return redirect('semiAdmi');
     }
 
     public function InfoGeneral(Request $request){

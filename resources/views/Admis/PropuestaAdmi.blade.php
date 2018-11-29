@@ -12,9 +12,11 @@
           <p class="card-text">{{ $value->Descripcion }}</p>
           <b>Contacto:</b> <br/>
           <p style="margin-left:3%;">
-            Presidente: Pablo Neruda <br/>
-            Celular: 5528072878 <br/>
-            Email: pablo@comunidad.unam.mx <br/>
+            @foreach ($Presidente as $Info)
+              Presidente: {{ $Info->Nombre }} <br/>
+              Celular: {{ $Info->Numero }} <br/>
+              Email: {{ $Info->Email }} 
+            @endforeach
           </p>
         </div>
          <div class="card-footer" style="text-align:right;" data-id="{{ $value->id }}">

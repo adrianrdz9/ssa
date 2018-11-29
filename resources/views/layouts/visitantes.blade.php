@@ -10,7 +10,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Chakra+Petch|Playfair+Display|Roboto+Slab" rel="stylesheet">
-
+    <style>
+      nav.navbar {
+          background-color: #CC1414;
+        }
+    </style>
   </head>
   <body>
   <div class='container-fluid'>
@@ -19,7 +23,7 @@
     <img src="{{asset('images/FI.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%; margin-left:.5%;" align="left">
     <label id="In">Facultad de Ingeniería</label>
   </div>
-  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <nav class="navbar navbar-expand-md navbar-dark">
     <a class="navbar-brand" href="../../">Inicio</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>

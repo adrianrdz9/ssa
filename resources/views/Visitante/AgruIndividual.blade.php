@@ -14,20 +14,28 @@
       </div>
     </div>
     <div class="col-sm-7">
-      <div class="row">
-        <h3  style="margin-left:8%;">Integrantes</h3>
+      <div class="row" style="text-align:center;">
         <div class="col-sm-6">
-          @foreach ($inte as $Nom)
+          @foreach ($Inte1 as $Nom)
           <p>
-            <h4>{{ $Nom->Cargo }}</h4>
-                {{ $Nom->Nombre }}
+            <h4>{{ $Nom->Nombre }}</h4>
+            {{ $Nom->Cargo }}
           </p>
           <br/>
           @endforeach
        </div>
+       <div class="col-sm-6">
+         @foreach ($Inte2 as $Nom)
+         <p>
+           <h4>{{ $Nom->Nombre }}</h4>
+           {{ $Nom->Cargo }}
+         </p>
+         <br/>
+         @endforeach
+      </div>
       <div align="center">
         <img src="{{asset('images/Agrupaciones/Logos/'. $data[0]->Logo )}}"
-            class="img-responsive" style="margin-left:20%;"
+            class="img-responsive" style="margin:auto;"
             width="30%" height="95%">
       </div>
     </div>

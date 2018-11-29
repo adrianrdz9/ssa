@@ -10,13 +10,13 @@
           </div>
           <div class="panel-body">
             <font size=4>
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('Agrupa') }}">
               {{ csrf_field() }}
                 <div class="form-group {{ $errors->has('Siglas') ? 'has-error' : '' }} " style="font-family: 'Inconsolata', monospace;">
                   <label for="Siglas">Siglas</label>
                   <input class="form-control"
                       type="text"
-                      name="Siglas"
+                      name="Siglas" required
                       value = "{{ old('Siglas')}}"
                       placeholder="Ingresa las siglas de tu agrupación">
                   <br/><p style="text-align:center;">
@@ -28,6 +28,7 @@
                   <input class="form-control"
                       type="password"
                       name="password"
+                      required
                       placeholder="Ingresa tu contraseña">
                   {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
 

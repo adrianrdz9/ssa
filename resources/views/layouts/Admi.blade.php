@@ -13,6 +13,11 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link href="{{asset('css/noticas.css')}}" rel="stylesheet"/>
+    <style>
+      nav.navbar {
+          background-color: #CC1414;
+        }
+    </style>
   </head>
   <body>
   @include('sweet::alert')
@@ -22,7 +27,7 @@
       <img src="{{asset('images/FI.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
       <label id="In">Facultad de Ingeniería</label>
     </div>
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-md navbar-dark">
       <a class="navbar-brand" href="../ANoticias">{{ auth()->user()->Siglas }}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>

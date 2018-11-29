@@ -1,8 +1,8 @@
 <?php
 
 //login
-Route::get('/login','Auth\LoginController@showLoginForm' );
-Route::post('login','Auth\LoginController@login')->name('login');
+Route::get('/Agrupa','Auth\LoginController@showLoginForm' );
+Route::post('Agrupa','Auth\LoginController@login')->name('Agrupa');
 //Administrador
 Route::any('Admi','Admis\admiController@index')->name('Admi');
 //semiAdmis
@@ -35,7 +35,8 @@ Route::post('Integrantes','Admis\semiAdmiController@Integrantes');
 Route::get('semiAdmi/Propuesta','Admis\semiAdmiController@Propuesta')->name('PropuestaSemi');
 //Nueva propuesta
 Route::post('NPropuesta','Admis\semiAdmiController@NPropuesta');
-
+//Cambio de Mesa
+Route::view('/semiAdmi/CambioMesa','Admis.cambioMesa');
 //Visitante
 //Noticias - 9 (index)
 Route::get('/','Visitante\generalController@index');

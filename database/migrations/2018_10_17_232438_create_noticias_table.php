@@ -14,6 +14,7 @@ class CreateNoticiasTable extends Migration
     public function up()
     {
         Schema::create('noticias', function (Blueprint $table) {
+           $table->collation = 'utf8_unicode_ci';
             $table->increments('Folio');
             $table->string('Titulo');
             $table->text('DescripcionCorta');

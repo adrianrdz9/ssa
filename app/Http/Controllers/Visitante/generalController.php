@@ -31,7 +31,12 @@ class generalController extends Controller
     //Vista de cada agrupación
     public function individual($id){
         $data = DB:: select("SELECT * FROM Users WHERE Siglas = '$id'" );
-        $inte = DB:: select("SELECT Cargo, Nombre FROM Integrantes WHERE Siglas = '$id'" );
-        return view('Visitante.AgruIndividual', ['data' => $data, 'inte' => $inte]);
+        $int1 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo ASC LIMIT 3" );
+        $int2 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo DESC LIMIT 3" );
+        return view('Visitante.AgruIndividual', [
+          'data' => $data,
+          'Inte1' => $int1,
+          'Inte2' => $int2,
+        ]);
     }
 }

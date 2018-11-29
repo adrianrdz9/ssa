@@ -81,6 +81,9 @@ class admiController extends Controller
 
         public function Propuestas(){
             $data = DB:: select("SELECT id,Siglas,Titulo,Descripcion,Estado FROM Propuestas");
+            foreach ($data as $key => $value)
+                  $siglas[] = $value->Siglas;
+            $presi = DB:: select("SELECT Nombre,Email,Numero FROM Integrantes WHERE Cargo ='Presidente' AND Siglas ='$siglas[0]'");
             $msg = "";
             if($data == []){
               $f = DB:: select("SELECT Limite FROM Ferias ORDER BY Limite DESC LIMIT 1");
@@ -100,6 +103,7 @@ class admiController extends Controller
             return view('Admis.PropuestaAdmi',[
               'Propuestas' => $data,
               'Mensaje' => $msg,
+              'Presidente'=>$presi,
             ]);
         }
         public function Feria(Request $request){
@@ -125,7 +129,7 @@ class admiController extends Controller
           $id = $request->Id;
           $c = bcrypt($request->pass);
           DB::update("UPDATE Users SET password = '$c' where id='$id'");
-          alert()->success('Contraseña actualizada');
+          alert()->success('Exito!','Contraseña actualizada','success');
           return redirect('Admi/Contraseñas');
         }
 
