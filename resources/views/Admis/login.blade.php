@@ -1,18 +1,12 @@
 @extends('layouts.app')
 @section('content')
-  <div class="row"  style="margin-top:7%; margin-left:auto;">
-      <div class="col-md-5 col-md-offset-5">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="panel-title"
-                style="font-family: 'PT Serif', serif;
-                text-align:center; ">Iniciar sesión</h1>
-          </div>
-          <div class="panel-body">
-            <font size=4>
+  <link href="{{asset('css/login.css')}}" rel="stylesheet"/>
+  <div class="row login-box">
+    <!-- <img src="{{asset('images/FI.png')}}" class="avatar" alt="Avatar Image"> -->
+      <div class="col-md-12">
             <form method="POST" action="{{ route('Agrupa') }}">
               {{ csrf_field() }}
-                <div class="form-group {{ $errors->has('Siglas') ? 'has-error' : '' }} " style="font-family: 'Inconsolata', monospace;">
+                <div class="form-group {{ $errors->has('Siglas') ? 'has-error' : '' }} ">
                   <label for="Siglas">Siglas</label>
                   <input class="form-control"
                       type="text"
@@ -32,11 +26,9 @@
                       placeholder="Ingresa tu contraseña">
                   {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
 
-                </font></div>
-                <button class="btn btn-primary btn-block">Iniciar sesión</button>
+                </div>
+                <input type="submit" value="Iniciar sesión">
             </form>
-          </div>
-        </div>
       </div>
   </div>
 @endsection

@@ -119,7 +119,7 @@ class semiAdmiController extends Controller
           if($row['Telefono'] == "")
             $row['Telefono'] = "0";
           $find = DB:: select("SELECT Nombre FROM Integrantes WHERE Siglas = '$u' AND NCargo = '$nC'");
-          if($find == []){
+          if($find == [] && $Cargo != "" && $Nombre != "" && $Correo != "" && $Tel !=""){
               $integrante = new Integrantes;
               $integrante ->Siglas = $u;
               $integrante ->NCargo = $nC;
@@ -129,7 +129,6 @@ class semiAdmiController extends Controller
               $integrante ->Numero = $row['Telefono'];
               $integrante->save();
           }else if($find != []){
-             echo "HOAL";
               if($row['Cargo'] != ""){
                 DB::update("UPDATE Integrantes SET Cargo = '$Cargo'
                       WHERE Siglas = '$u' AND NCargo = '$nC'");
@@ -184,7 +183,7 @@ class semiAdmiController extends Controller
             DB::update("UPDATE users SET $key = '$value' where Siglas='$u'");
           }
         }
-
+        alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
         return redirect('semiAdmi');
     }
 

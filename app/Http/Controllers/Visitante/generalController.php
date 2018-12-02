@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 namespace App\Http\Controllers\Visitante;
 use Illuminate\Support\Facades\DB;
@@ -31,8 +31,14 @@ class generalController extends Controller
     //Vista de cada agrupación
     public function individual($id){
         $data = DB:: select("SELECT * FROM Users WHERE Siglas = '$id'" );
-        $int1 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo ASC LIMIT 3" );
-        $int2 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo DESC LIMIT 3" );
+        $coun = DB:: select("SELECT COUNT(*) FROM Integrantes WHERE SIGLAS='$id'" );
+        if($coun < 3){
+          $int1 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo ASC LIMIT 3" );
+          $int2 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo DESC LIMIT 3" );
+        }else {
+          $int1 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo ASC LIMIT 3" );
+          $int2 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = 'Hola' ORDER BY NCargo ASC LIMIT 3" );
+        }
         return view('Visitante.AgruIndividual', [
           'data' => $data,
           'Inte1' => $int1,

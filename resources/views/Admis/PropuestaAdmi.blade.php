@@ -15,7 +15,7 @@
             @foreach ($Presidente as $Info)
               Presidente: {{ $Info->Nombre }} <br/>
               Celular: {{ $Info->Numero }} <br/>
-              Email: {{ $Info->Email }} 
+              Email: {{ $Info->Email }}
             @endforeach
           </p>
         </div>
@@ -113,6 +113,11 @@
       url: "/statusA/id/" + id,
       method: "get"
     }).done(()=>{
+      swal(
+        'Exito!',
+        'Propuesta aceptada',
+        'success'
+        )
         $(this).closest('.card-footer').remove();
     });
   });
@@ -122,6 +127,11 @@
       url: "/statusC/id/" + id,
       method: "get"
     }).done(()=>{
+      swal(
+          'Exito!',
+          'Se enviara la notificaciòn correspondiente',
+          'success'
+        )
         $(this).closest('.btn-info').remove();
     });
   });
