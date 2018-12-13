@@ -16,6 +16,9 @@
       nav.navbar {
           background-color: #CC1414;
         }
+      body{
+        background-color: #ecf0f1;
+      }
     </style>
   </head>
   <body>

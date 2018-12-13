@@ -2,7 +2,7 @@
 @section('title','Restablecer contraseñas')
 @section('content')
 <link href="{{asset('css/AgrupaGnral.css')}}" rel="stylesheet"/>
-<div class="row">
+<div class="row" style="margin-top:1%;">
   @foreach ($data as $Info)
     <div class="col-sm-4"style=" border-radius: 10px; margin:auto;">
       <img src="{{asset('images/Agrupaciones/Logos/'.$Info->Logo)}}" class="img-responsive"

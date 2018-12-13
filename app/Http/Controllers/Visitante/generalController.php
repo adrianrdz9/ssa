@@ -7,13 +7,14 @@ use App\Http\Controllers\Controller;
 
 class generalController extends Controller
 {
-    //Todas las noticias
+    //index
     public function index(){
         $data = DB:: select("SELECT Folio,Titulo,DescripcionCorta,Fecha,ImagenC
                 FROM noticias WHERE Disponible = '1' ORDER BY Folio DESC LIMIT 9");
         $caru = DB:: select("SELECT Titulo,Descripcion,Imagen,Link
                 FROM carusels WHERE Estado = '1' ORDER BY id DESC LIMIT 5");
-        return view('Visitante.Noticias',['data' => $data, 'images' => $caru]);
+        $num = count($caru);
+        return view('Visitante.Noticias',['data' => $data, 'images' => $caru ,  'numero' => $num]);
     }
     public function Historial(){
       $data = DB:: select("SELECT Folio,Titulo,DescripcionCorta,Disponible,ImagenC FROM noticias ORDER BY Folio DESC");

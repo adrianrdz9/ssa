@@ -36,67 +36,81 @@ class admiController extends Controller
     }
     public function store(Request $request){
         \Session::forget('Noticias');
-
         $this->validate($request, array(
           'Titulo' => 'required|max:191' ,
           'Descripcion' => 'required',
           'Fecha' => 'required',
         ));
-
         $noticia = "Validando noticia";
         \Session::push('Noticias',$noticia);
-
         $noticias = \Session::get('Noticias');
 
-
           $noti = new Noticias;
-
           $noti ->Titulo = $request->Titulo;
           $noti ->Descripcion = $request->Descripcion;
           $noti ->DescripcionCorta = $request->DescripcionCorta;
           $noti ->Fecha = $request->Fecha;
-
           //save Images
           if($request->hasFile('ImagenC')){
             $image = $request->file('ImagenC');
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/Noticias/'. $filename);
             Image::make($image)->resize(600,309)->save($location);
-
             $noti->ImagenC = $filename;
           }
-
           if($request->hasFile('ImagenR')){
             $image = $request->file('ImagenR');
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/Noticias/'. $filename);
-            Image::make($image)->resize(1730,879)->save($location);
-
+            Image::make($image)->resize(743,387)->save($location);
             $noti->ImagenR = $filename;
           }
-
           $noti->save();
-
+          $fol = DB:: select("SELECT Folio FROM noticias WHERE Titulo = '$request->Titulo'");
+          if ($request->carusel == "S" && $request->hasFile('ImagenR')) {
+              $carusel = new Carusel;
+              $carusel->Titulo = $request->Titulo;
+              $carusel->Descripcion = $request->Descripcion;
+              $carusel->Tipo = "N";
+              foreach ($fol as $fol) {
+                $carusel->Link = "Noticia/id/".$fol->Folio;
+              }
+                $image = $request->file('ImagenR');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('images/Carusel/'. $filename);
+                Image::make($image)->resize(1730,879)->save($location);
+                $carusel->Imagen = $filename;
+              $carusel->save();
+          }
         return redirect('Admi');
+    }
+    public function VerCarusel(){
+      $data = DB:: select("SELECT id,Titulo,Descripcion,Imagen,Estado FROM carusels ORDER BY id DESC");
+      return view('Admis.AdmiCaruselEdit',['data' => $data]);
+    }
+    public function OImagenC($id){
+      DB::update("UPDATE carusels SET Estado = '0' where id='$id'");
+    }
+    public function MImagenC($id){
+      DB::update("UPDATE carusels SET Estado = '1' where id='$id'");
     }
     public function Carusel(){
       return view('Admis.Carusel');
     }
     public function NCarusel(Request $request){
-      //dd($request->Tipo);
       $carusel = new Carusel;
-      $carusel->Titulo = $request->Titulo;
-      $carusel->Descripcion = $request->Descripcion;
-      $carusel->Link = $request->Link;
-      $carusel->Tipo = $request->Tipo;
-      $image = $request->file('Imagen');
-      $filename = time() . '.' . $image->getClientOriginalExtension();
-      $location = public_path('images/Carusel/'. $filename);
-        Image::make($image)->resize(600,309)->save($location);
-      $carusel->Imagen = $filename;
+        $carusel->Titulo = $request->Titulo;
+        $carusel->Descripcion = $request->Descripcion;
+        $carusel->Link = $request->Link;
+        $carusel->Tipo = $request->Tipo;
+        $image = $request->file('Imagen');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        $location = public_path('images/Carusel/'. $filename);
+          Image::make($image)->resize(600,309)->save($location);
+        $carusel->Imagen = $filename;
       $carusel->save();
       alert()->success('Imagen agregada','Exito!','success');
-      return redirect('Admi/Carusel');
+      return redirect('Admi/NICarusel');
     }
         public function Propuestas(){
             $data = DB:: select("SELECT id,Siglas,Titulo,Descripcion,Estado FROM Propuestas");
@@ -141,7 +155,7 @@ class admiController extends Controller
         }
 
         public function Agrupaciones(){
-            $data = DB:: select("SELECT * FROM Users ORDER BY Siglas ASC" );
+            $data = DB:: select("SELECT id,Siglas,Nombre,Logo FROM Users ORDER BY Siglas ASC" );
             return view('Admis.Contraseñas',['data' => $data]);
         }
         public function NPassword(Request $request){

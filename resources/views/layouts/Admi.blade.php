@@ -16,7 +16,10 @@
     <style>
       nav.navbar {
           background-color: #CC1414;
-        }
+      }
+      body{
+        background-color: #ecf0f1;
+      }
     </style>
   </head>
   <body>
@@ -38,10 +41,13 @@
             <a class="navbar-brand" href="../ANoticias">Noticias</a>
           </li>
           <li class="nav-item">
+            <a class="navbar-brand" href="../Admi">Nueva noticia</a>
+          </li>
+          <li class="nav-item">
             <a class="navbar-brand" href="../Admi/Carusel">Carusel</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../Admi">Nueva noticia</a>
+            <a class="navbar-brand" href="../Admi/NICarusel">Nueva Imagen Carusel</a>
           </li>
           <li class="nav-item">
             <a class="navbar-brand" href="../Admi/Contraseñas">Contraseñas</a>

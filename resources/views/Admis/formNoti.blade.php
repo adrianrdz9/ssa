@@ -1,7 +1,8 @@
 @extends('layouts.Admi')
 @section('title','Nueva notica')
 @section('content')
-<h3>Noticias</h3>
+<h3>Nueva noticia</h3>
+<div class="container">
 @if($msg=="Se guardo la notica con exito")
   <div class="alert alert-success" role="alert">
     {{ $msg }}
@@ -37,6 +38,16 @@
       <input type="file" class="form-control-file border" name="ImagenR">
     </div>
   </div>
+  <h4 for="inputCity">¿Mostrar en el carusel?</h4>
+  <p>
+    <label class="radio-inline">
+      <input type="radio" name="carusel" value="S" required>Sí
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="carusel"  value="N" checked required>No
+    </label>
+ </p>
   <button type="submit" class="btn btn-primary">Publicar</button>
 </form>
+</Div>
 @stop

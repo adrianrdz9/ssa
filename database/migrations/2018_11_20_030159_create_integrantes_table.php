@@ -20,8 +20,8 @@ class CreateIntegrantesTable extends Migration
             $table->string('Siglas');
             $table->string('Cargo');
             $table->string('Nombre');
-            $table->string('Email');
-            $table->string('Numero');
+            $table->string('Email')->nullable();
+            $table->string('Numero')->nullable();
             $table->timestamps();
 
         });

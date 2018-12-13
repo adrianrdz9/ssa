@@ -18,8 +18,11 @@ Route::post('AdmiP','Admis\admiController@store')->name('AdmiP');
 Route::get('/oNoticia/id/{id}','Admis\admiController@ONoticia');
 Route::get('/mNoticia/id/{id}','Admis\admiController@MNoticia');
 //Carusel
-Route::get('Admi/Carusel','Admis\admiController@Carusel');
+Route::get('Admi/Carusel','Admis\admiController@VerCarusel');
+Route::get('Admi/NICarusel','Admis\admiController@Carusel');
 Route::post('NCarusel','Admis\admiController@NCarusel');
+Route::get('/OImagenC/id/{id}','Admis\admiController@OImagenC');
+Route::get('/MImagenC/id/{id}','Admis\admiController@MImagenC');
 //Ver propuestas
 Route::get('Admi/Propuestas','Admis\admiController@Propuestas');
 Route::post('NFeria','Admis\admiController@Feria');

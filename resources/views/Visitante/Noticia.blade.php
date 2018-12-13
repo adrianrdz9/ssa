@@ -6,7 +6,7 @@
 <div style="text-align:right; margin-right:5%;"><label style="font-family: 'Inconsolata', monospace;">{{ $data[0]->Fecha }}</label></div>
 <div style="display:block; margin:auto; text-align:center;">
    <img src="{{asset('images/Noticias/'. $data[0]->ImagenR )}}"
-        class="img-responsive">
+        class="img-fluid">
 </div>
     <br/>
     <div style="margin-left:7%;">

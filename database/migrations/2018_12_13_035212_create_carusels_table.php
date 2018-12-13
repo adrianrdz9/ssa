@@ -19,8 +19,8 @@ class CreateCaruselsTable extends Migration
             $table->string('Descripcion')->nullable();
             $table->string('Link')->nullable();
             $table->string('Tipo');
-            $table->string('Estado')->default('1');
-            $table->string('Imagen')->nullable();
+            $table->integer('Estado')->default('1');
+            $table->string('Imagen');
 
             $table->timestamps();
         });

@@ -4,12 +4,15 @@
 <div id="demo" class="carousel slide container" data-ride="carousel" style="margin-top: 1%;">
   <ul class="carousel-indicators">
     <li data-target="#demo" data-slide-to="0" class="active"></li>
-    <li data-target="#demo" data-slide-to="1"></li>
-    <li data-target="#demo" data-slide-to="2"></li>
+    @for ($c = 1; $c <= $numero; $c++)
+      <li data-target="#demo" data-slide-to="{{ $c }}"></li>
+    @endfor
   </ul>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="{{asset('images/carucero.jpg')}}" alt="Los Angeles" width="1100" height="500">
+      <a href="https://www.youtube.com/watch?v=Ad3St7UJ9p0" target="_blank">
+        <img src="{{asset('images/carucero.jpeg')}}" alt="Welcome" width="1100" height="566" class="img-fluid">
+      </a>
       <div class="carousel-caption">
         <h3></h3>
         <p></p>
@@ -17,8 +20,10 @@
     </div>
       @foreach($images as $images)
       <div class="carousel-item">
-        <img src="{{asset('images/Carusel/'. $images->Imagen )}}" alt="{{ $images->Titulo}}"
-        width="1100" height="500" class="img-fluid" href="{{ $images->Link }}">
+        <a href="{{ $images->Link }}" target="_blank">
+          <img src="{{asset('images/Carusel/'. $images->Imagen )}}" alt="{{ $images->Titulo}}"
+          width="1100" height="500" class="img-fluid">
+        </a>
         <div class="carousel-caption">
           <h3>{{ $images->Titulo}}</h3>
           <p>{{ $images->Descripcion}}</p>
@@ -33,7 +38,7 @@
     </a>
   </div>
 </div>
-<section class="details-card">
+<section class="details-card container">
         <div class="row">
             @foreach($data as $dato)
             <div class="col-sm-4">
