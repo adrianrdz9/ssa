@@ -31,7 +31,8 @@ class generalController extends Controller
      }
     //Listado de Agrupaciones
     public function agrupaciones(){
-        $data = DB:: select("SELECT * FROM Users ORDER BY Siglas ASC" );
+        //$data = DB:: select("SELECT * FROM Users ORDER BY Siglas ASC" );
+	$data = \App\User::all();
         return view('Visitante.Agrupaciones',['data' => $data]);
     }
 
