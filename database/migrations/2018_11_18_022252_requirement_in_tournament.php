@@ -31,6 +31,6 @@ class RequirementInTournament extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requirement_in_tournament');
+        Schema::dropIfExists('requirement_in_tournaments');
     }
 }

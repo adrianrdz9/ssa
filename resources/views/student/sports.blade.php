@@ -7,49 +7,54 @@
         <div class="card mb-4">
             <div class="card-header">{{$sport->name}}</div>
             <div class="card-body">
-                {{$sport->uniqueTournaments()->count()}}
+                {{$sport->tournaments->count()}}
                 torneo(s) de este deporte:
 
-                @foreach ($sport->uniqueTournaments() as $tournamentName=>$tournamentGroup)
+                @foreach ($sport->tournaments as $tournament)
                     <div class="accordion" id="sport-{{$sport->id}}">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tournament-info-{{$tournamentGroup[0]->id}}" aria-expanded="false" aria-controls="#tournament-info-{{$tournamentGroup[0]->id}}">
-                                        {{$tournamentName}}
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tournament-info-{{$tournament->id}}" aria-expanded="false" aria-controls="#tournament-info-{{$tournament->id}}">
+                                        {{$tournament->name}}
                                     </button>
                                 </h5>
                             </div>
-                            <div class="collapse" id="tournament-info-{{$tournamentGroup[0]->id}}">
+                            <div class="collapse" id="tournament-info-{{$tournament->id}}">
                                 <div class="card-body">
-                                    Fecha: {{$tournamentGroup[0]->date}}
+                                    Fecha: {{$tournament->date}}
                                     <br>
                                     Ramas: 
-                                    @foreach ($tournamentGroup as $branch)
-                                        @switch($branch->branch)
-                                            @case('varonil')
-                                                <span class="badge badge-pill badge-primary">Varonil</span>                                            
-                                                @break
-                                            @case('femenil')
-                                                <span class="badge badge-pill badge-success">Femenil</span>                                            
-                                                @break
-                                            @case('mixto')
-                                                <span class="badge badge-pill badge-warning">Mixto</span>
-                                                @break   
-                                        @endswitch
+                                    @foreach ($tournament->branches as $branch)
+                                        <div class="card">
+                                            <div class="card-header">
+                                                @switch($branch->branch)
+                                                    @case('varonil')
+                                                        <h4>Varonil</h4>                                            
+                                                        @break
+                                                    @case('femenil')
+                                                        <h4>Femenil</h4>                                            
+                                                        @break
+                                                    @case('mixto')
+                                                        <h4>Mixto</h4>
+                                                        @break   
+                                                @endswitch
+                                            </div>
+                                            <div class="card-body">
+                                                @if ($branch->roomLeft() > 0)
+                                                    <span class="badge badge-success">Lugares disponibles</span>
+                                                    @auth
+                                                        <a href="{{route('signUpTournament', ['id' => $branch->id])}}" class="btn btn-info">Inscribirme</a>
+                                                    @else
+                                                        <a href="{{route('login')}}">Inicia sesion</a>
+                                                        para inscribirte al torneo
+                                                    @endauth
+                                                @else
+                                                    <span class="badge badge-danger" style="font-size: 0.9em;">Ya no hay lugares</span>
+                                                @endif
+                                            </div>
+                                        </div>
                                     @endforeach
-                                    <br>
-                                    @if ($tournamentGroup[0]->roomLeft() > 0)
-                                        <span class="badge badge-success" style="font-size: 0.9em;">Lugares disponibles</span>
-                                        @auth
-                                            <a href="{{route('signUpTournament', ['id' => Crypt::encrypt($branch->id)])}}" class="btn btn-info">Inscribirme</a>
-                                        @else
-                                            <a href="{{route('login')}}">Inicia sesion</a>
-                                            para inscribirte al torneo
-                                        @endauth
-                                    @else
-                                        <span class="badge badge-danger" style="font-size: 0.9em;">Ya no hay lugares</span>
-                                    @endif
                                 </div>
                             </div>
                         </div>

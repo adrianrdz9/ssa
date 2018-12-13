@@ -24,6 +24,7 @@
                             <div class="col-12">
                                 <span class="h3 ml-4">Responsable: {{$tournament->responsable}}</span><br>
                                 <span class="h3 ml-4">Sede: {{$tournament->place}}</span><br>
+                                <span class="h3 ml-4">Deporte: {{$tournament->sport->name}}</span><br>
                                 @if(!$tournament->only_representative)
                                     <span class="h4 ml-4">Fecha máxima de inscripción: <date-format :date="'{{$tournament->signup_close}}'" :format="'D [de] MMMM [de] YYYY'"></date-format></span>
                                 @endif

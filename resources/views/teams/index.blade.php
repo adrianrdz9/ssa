@@ -51,15 +51,7 @@
 
                                                 <div class="col-4">
                                                     Teléfono: <br>
-                                                    @if (count($request->user->phone_number) >= 8) 
-                                                        <a href="tel:{{$request->user->phone_number}}">
-                                                            {{$request->user->phone_number}}
-                                                            <i class="fas fa-external-link-alt"></i>
-                                                        </a>
-                                                    @else
-                                                        N/D
-                                                    @endif
-                                                    
+                                                    {{$request->user->phone_number}}
                                                 </div>
 
                                                 <div class="col-4">
@@ -73,8 +65,13 @@
 
                                                 <div class="col-12">
                                                     <div class="d-block text-right">
-                                                        <button class="btn btn-success">Aceptar</button>
-                                                        <button class="btn btn-danger">Rechazar</button>
+                                                        <form action="{{route('updateUserTeam', ['id' => $team->id])}}" method="post">
+                                                            @method('put')
+                                                            @csrf
+                                                            <input type="hidden" name="request_id" value="{{$request->id}}">
+                                                            <input class="btn btn-success" type="submit" value="Aceptar" name="action">
+                                                            <input class="btn btn-danger" type="submit" value="Rechazar" name="action">
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>

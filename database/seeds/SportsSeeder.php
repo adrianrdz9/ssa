@@ -4,6 +4,15 @@ use Illuminate\Database\Seeder;
 
 class SportsSeeder extends Seeder
 {
+
+    private $sports = [
+        'Basketball',
+        'Futbol americano',
+        'Futbol soccer',
+        'Natación',
+        'Tenis'
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -11,6 +20,8 @@ class SportsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Sport::class, 10)->create();
+        foreach ($this->sports as $sport) {
+            \App\Sport::create(['name' => $sport]);
+        }
     }
 }

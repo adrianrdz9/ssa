@@ -51,6 +51,7 @@ Route::post('/teams', 'TeamsController@store');
 Route::post('/teams/{id}', 'TeamsController@request');
 
 Route::get('/mis_equipos', 'TeamsController@index')->name('teamsIndex');
+Route::put('/mis_equipos/{id}', 'TeamsController@update')->name('updateUserTeam');
 
 
 Route::get('/deportes', 'SportsController@index')->name('sportsIndex');

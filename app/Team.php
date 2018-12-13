@@ -18,7 +18,7 @@ class Team extends Model
     
     public function requests()
     {
-        return $this->hasMany('App\UserInTeam', 'team_id', 'id')->with('user');
+        return $this->hasMany('App\UserInTeam', 'team_id', 'id');
     }
 
     public function accepted_users(){

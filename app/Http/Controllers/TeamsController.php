@@ -34,8 +34,15 @@ class TeamsController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|string|unique:teams,name'
+            'name' => 'required|string'
         ]);
+
+        if(Team::where([
+            ['branch_id', $id],
+            ['name', $request->name]
+        ])->exists()){
+            return \Response::make(['error' => 'Ya hay un equipo con éste nombre'], 400);
+        }
 
         $team = Team::create([
             'name' => $request->name,
@@ -49,9 +56,7 @@ class TeamsController extends Controller
             'status' => 'accepted'
         ]);
 
-        $team = Team::find($team->id)->with('captain')->with('accepted_users')->get();
-
-        return $team;
+        return;
         
     }
 
@@ -82,6 +87,25 @@ class TeamsController extends Controller
             }
         }else{
             return \Response::make(['error' => 'No existe el equipo'], 400);
+        }
+    }
+
+    public function update($id, Request $request){
+        if($team = Team::find($id)){
+            if($team->captain->id == Auth::user()->id){
+                if($req = UserInTeam::find($request->request_id)){
+                    $req->transition($request->action);
+                    $req->save();
+                    return redirect()->back()->with(['notice' => 'Listo']);
+                }else{
+                    return abort(404);
+                }
+                
+            }else{
+                return abort(403);
+            }
+        }else{
+            return abort(404);
         }
     }
 }

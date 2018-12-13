@@ -28,6 +28,7 @@ class TournamentsController extends Controller
      */
     public function index(){
         $tournaments = Tournament::with('sport')->with('requirements')->with('branches')->get();
+
         return view('tournaments.index', ['tournaments' => $tournaments]);
     }
 
@@ -88,18 +89,18 @@ class TournamentsController extends Controller
     }
 
     public function edit($id){
-        if(!Tournament::find($id))
+        if(!Tournament::where('id', $id)->exists())
             return abort(404);
-        $tournament = Tournament::find($id)->with('sport')->with('requirements')->with('branches')->first();
+        $tournament = Tournament::where('id', $id)->with('sport')->with('requirements')->with('branches')->first();
         $sports = Sport::all();
         $requirements = Requirement::all();
         return view('admin.tournaments.edit', ['tournament' => $tournament, 'sports' => $sports, 'requirements' => $requirements]);
     }
 
     public function update($id, Request $request){
-        if(!Tournament::find($id))
+        if(!Tournament::where('id', $id))
             return abort(404);
-        $tournament = Tournament::find($id)->with('branches')->with('requirements')->first();
+        $tournament = Tournament::where('id', $id)->with('branches')->with('requirements')->first();
         $request->validate([
             'sport_id' => 'required|exists:sports,id',
             'responsable' => 'required|string',
@@ -164,13 +165,21 @@ class TournamentsController extends Controller
     }
 
     public function team($id){
-        $branch = Branch::find($id)->with('teams')->with(['teams.captain' => function($query){
+        $branch = Branch::where('id', $id)->with('teams')->with(['teams.captain' => function($query){
             $query->select('id', 'name', 'last_name');
         }])->with('tournament')->with(['teams.accepted_users' => function($query){
             
-        }])->first();
+        }])->with('teams.requests')->first();
+
+        foreach ($branch->teams as $team) {
+            foreach ($team->requests as $req) {
+                if($req->user_id == Auth::user()->id){
+                    $team->status = $req->status;
+                }
+            }
+            unset($team->requests);
+        }
         
-        //return $branch;
         return view('tournaments.team', ['branch' => $branch, 'tournament' => $branch->tournament]);
     }
 

@@ -31,9 +31,22 @@
                                     <li v-for="user in team.accepted_users" :key="user.user.id">{{user.user.name}} {{user.user.last_name}}</li>
                                 </ul>
                             </p>
-                            <button class="btn btn-info d-block ml-auto" v-if="team.accepted_users.length < tournament.max_per_team" @click="signToTeam(team)">
-                                Unirme a este equipo
-                            </button>
+                            
+                            <div v-if="team.status" class="text-right">
+                                <button disabled="disabled" :class="{
+                                    'btn': true,
+                                    'btn-success': team.status == 'accepted',
+                                    'btn-warning': team.status == 'pending',
+                                    'btn-danger': team.status == 'denied'
+                                }">
+                                    {{team.status == 'accepted' ? "Ya eres parte del equipo" : teams.status == 'pending' ? "Solicitud pendiente" : "Rechazado"}}
+                                </button>
+                            </div>
+                            <div v-else>
+                                <button class="btn btn-info d-block ml-auto" v-if="team.accepted_users.length < tournament.max_per_team" @click="signToTeam(team)">
+                                    Unirme a este equipo
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,7 +68,7 @@ export default {
     props: {
         t: Array,
         tr: Object,
-        branch: Object
+        branch: Object,
     },
 
     data(){
@@ -97,7 +110,6 @@ export default {
                                 if(response.status !== 200 && response.status !== 201){
                                     throw new Error(reponse);
                                 }
-                                this.teams.push(response.data[0]);
                                 return response;
                             }).catch(error =>{                                 
                                 if(error.response.status == 400)
@@ -109,7 +121,7 @@ export default {
                         allowOutsideClick: () => !swal.isLoading()
                     }).then((result) => {
                         if (result.value) {
-                            swal('Equipo creado', 'Recuerda el equipo debe de tener entre '+this.tournament.min_per_team+' y '+this.tournament.max_per_team+' integrantes.', 'success');
+                            swal('Equipo creado', 'Recuerda el equipo debe de tener entre '+this.tournament.min_per_team+' y '+this.tournament.max_per_team+' integrantes.', 'success').then(()=>window.location.reload());
                         }
                     })
                 }

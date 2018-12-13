@@ -10,12 +10,12 @@ return [
             'denied'
         ],
         'transitions' => [
-            'accept' => [
+            'Aceptar' => [
                 'from' => ['pending', 'denied'],
                 'to' => 'accepted'
             ],
 
-            'deny' => [
+            'Rechazar' => [
                 'from' => ['pending', 'accepted'],
                 'to' => 'denied'
             ]

@@ -16,8 +16,8 @@ class SportsController extends Controller
     }
 
     public function index(){
-        $sports = Sport::all();
-
+        $sports = Sport::with('tournaments.branches')->get();
+        
         if(Auth::check() && Auth::user()->hasRole('admin')){
             return view('admin.sports.index', ['sports'=>$sports]);
         }
