@@ -13,7 +13,11 @@
     <style>
       nav.navbar {
           background-color: #CC1414;
+          color: white;
         }
+      body{
+        background-color: #ecf0f1;
+      }
     </style>
   </head>
   <body>
@@ -31,13 +35,13 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="../../Agrupaciones">Agrupaciones</a>
+          <a class="navbar-brand" href="../../Agrupaciones">Agrupaciones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../../Historial">Historial</a>
+          <a class="navbar-brand" href="../../Historial">Historial</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Reclutamientos</a>
+          <a class="navbar-brand" href="#">Reclutamientos</a>
         </li>
       </ul>
     </div>

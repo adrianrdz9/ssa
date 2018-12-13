@@ -9,7 +9,7 @@
         class="img-responsive">
 </div>
     <br/>
-    <div style="font-family: 'PT Sans Narrow', sans-serif; text-align:left; margin-left:7%;"><font size="5">
-         {{ $data[0]->Descripcion }}
-    </div></font>
+    <div style="margin-left:7%;">
+         {{ $des[0]->Descripcion }}
+    </div>
 @stop

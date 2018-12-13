@@ -1,6 +1,38 @@
 @extends('layouts.visitantes')
 @section('title','Noticias')
 @section('content')
+<div id="demo" class="carousel slide container" data-ride="carousel" style="margin-top: 1%;">
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{asset('images/carucero.jpg')}}" alt="Los Angeles" width="1100" height="500">
+      <div class="carousel-caption">
+        <h3></h3>
+        <p></p>
+      </div>
+    </div>
+      @foreach($images as $images)
+      <div class="carousel-item">
+        <img src="{{asset('images/Carusel/'. $images->Imagen )}}" alt="{{ $images->Titulo}}"
+        width="1100" height="500" class="img-fluid" href="{{ $images->Link }}">
+        <div class="carousel-caption">
+          <h3>{{ $images->Titulo}}</h3>
+          <p>{{ $images->Descripcion}}</p>
+        </div>
+      </div>
+      @endforeach
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+</div>
 <section class="details-card">
         <div class="row">
             @foreach($data as $dato)
@@ -26,22 +58,4 @@
            @endforeach
         </div>
 </section>
-<script>
-    $('.carousel[data-type="multi"] .item').each(function(){
-    var next = $(this).next();
-    if (!next.length) {
-      next = $(this).siblings(':first');
-    }
-    next.children(':first-child').clone().appendTo($(this));
-
-    for (var i=0;i<4;i++) {
-      next=next.next();
-      if (!next.length) {
-      	next = $(this).siblings(':first');
-    	}
-
-      next.children(':first-child').clone().appendTo($(this));
-    }
-  });
-</script>
 @stop

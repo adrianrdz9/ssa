@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Noticias;
 use App\Ferias;
+use App\Carusel;
 use Alert;
 class admiController extends Controller
 {
@@ -69,7 +70,7 @@ class admiController extends Controller
             $image = $request->file('ImagenR');
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/Noticias/'. $filename);
-            Image::make($image)->resize(743,387)->save($location);
+            Image::make($image)->resize(1730,879)->save($location);
 
             $noti->ImagenR = $filename;
           }
@@ -78,7 +79,25 @@ class admiController extends Controller
 
         return redirect('Admi');
     }
-
+    public function Carusel(){
+      return view('Admis.Carusel');
+    }
+    public function NCarusel(Request $request){
+      //dd($request->Tipo);
+      $carusel = new Carusel;
+      $carusel->Titulo = $request->Titulo;
+      $carusel->Descripcion = $request->Descripcion;
+      $carusel->Link = $request->Link;
+      $carusel->Tipo = $request->Tipo;
+      $image = $request->file('Imagen');
+      $filename = time() . '.' . $image->getClientOriginalExtension();
+      $location = public_path('images/Carusel/'. $filename);
+        Image::make($image)->resize(600,309)->save($location);
+      $carusel->Imagen = $filename;
+      $carusel->save();
+      alert()->success('Imagen agregada','Exito!','success');
+      return redirect('Admi/Carusel');
+    }
         public function Propuestas(){
             $data = DB:: select("SELECT id,Siglas,Titulo,Descripcion,Estado FROM Propuestas");
             foreach ($data as $key => $value)

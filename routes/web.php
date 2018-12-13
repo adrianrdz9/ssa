@@ -17,6 +17,9 @@ Route::get('ANoticias','Admis\admiController@Noticias')->name('ANoticias');
 Route::post('AdmiP','Admis\admiController@store')->name('AdmiP');
 Route::get('/oNoticia/id/{id}','Admis\admiController@ONoticia');
 Route::get('/mNoticia/id/{id}','Admis\admiController@MNoticia');
+//Carusel
+Route::get('Admi/Carusel','Admis\admiController@Carusel');
+Route::post('NCarusel','Admis\admiController@NCarusel');
 //Ver propuestas
 Route::get('Admi/Propuestas','Admis\admiController@Propuestas');
 Route::post('NFeria','Admis\admiController@Feria');

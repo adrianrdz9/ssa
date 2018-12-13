@@ -35,16 +35,19 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="../ANoticias">Noticias</a>
+            <a class="navbar-brand" href="../ANoticias">Noticias</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../Admi">Nueva noticia</a>
+            <a class="navbar-brand" href="../Admi/Carusel">Carusel</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../Admi/Contraseñas">Contraseñas</a>
+            <a class="navbar-brand" href="../Admi">Nueva noticia</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../Admi/Propuestas">Propuestas</a>
+            <a class="navbar-brand" href="../Admi/Contraseñas">Contraseñas</a>
+          </li>
+          <li class="nav-item">
+            <a class="navbar-brand" href="../Admi/Propuestas">Propuestas</a>
           </li>
           <li class="nav-item">
             <form method="POST" action=" {{ route('logout') }} ">

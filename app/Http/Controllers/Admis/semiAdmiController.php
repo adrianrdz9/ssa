@@ -119,7 +119,7 @@ class semiAdmiController extends Controller
           if($row['Telefono'] == "")
             $row['Telefono'] = "0";
           $find = DB:: select("SELECT Nombre FROM Integrantes WHERE Siglas = '$u' AND NCargo = '$nC'");
-          if($find == [] && $Cargo != "" && $Nombre != "" && $Correo != "" && $Tel !=""){
+          if($find == [] && $Cargo != "" && $Nombre != ""){
               $integrante = new Integrantes;
               $integrante ->Siglas = $u;
               $integrante ->NCargo = $nC;

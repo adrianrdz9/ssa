@@ -9,8 +9,11 @@ class generalController extends Controller
 {
     //Todas las noticias
     public function index(){
-        $data = DB:: select("SELECT * FROM noticias WHERE Disponible = '1' ORDER BY Folio DESC LIMIT 9");
-        return view('Visitante.Noticias',['data' => $data]);
+        $data = DB:: select("SELECT Folio,Titulo,DescripcionCorta,Fecha,ImagenC
+                FROM noticias WHERE Disponible = '1' ORDER BY Folio DESC LIMIT 9");
+        $caru = DB:: select("SELECT Titulo,Descripcion,Imagen,Link
+                FROM carusels WHERE Estado = '1' ORDER BY id DESC LIMIT 5");
+        return view('Visitante.Noticias',['data' => $data, 'images' => $caru]);
     }
     public function Historial(){
       $data = DB:: select("SELECT Folio,Titulo,DescripcionCorta,Disponible,ImagenC FROM noticias ORDER BY Folio DESC");
@@ -18,10 +21,13 @@ class generalController extends Controller
     }
     //Notica (individual)
     public function noticia($id){
-        $data = DB:: select("SELECT Titulo, Descripcion, Fecha, ImagenR
+      $des = DB:: select("SELECT Descripcion FROM noticias WHERE Folio = '$id'" );
+      $data = DB:: select("SELECT Titulo,Fecha, ImagenR
                              FROM noticias WHERE Folio = '$id'" );
-        return view('Visitante.Noticia',['data' => $data]);
-    }
+      return view('Visitante.Noticia',[
+        'data' => $data,
+        'des' => $des]);
+     }
     //Listado de Agrupaciones
     public function agrupaciones(){
         $data = DB:: select("SELECT * FROM Users ORDER BY Siglas ASC" );

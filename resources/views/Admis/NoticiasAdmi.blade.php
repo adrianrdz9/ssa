@@ -7,7 +7,7 @@
     @if($Info->ImagenC=="")
     <img src="{{asset('images/Inge.png')}}" class="img-responsive" width="100%" height="100%">
     @else
-      <img src="{{asset('images/Noticias'.$Info->ImagenC)}}" class="img-responsive" width="100%" height="100%">
+      <img src="{{asset('images/Noticias/'.$Info->ImagenC)}}" class="img-responsive" width="100%" height="100%">
     @endif
   </div>
   <div class="offset-sm-1"></div>

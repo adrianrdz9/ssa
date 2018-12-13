@@ -34,16 +34,16 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="../semiAdmi">Información</a>
+            <a class="navbar-brand" href="../semiAdmi">Información</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Reclutamientos</a>
+            <a class="navbar-brand" href="#">Reclutamientos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../semiAdmi/Propuesta">Propuestas</a>
+            <a class="navbar-brand" href="../semiAdmi/Propuesta">Propuestas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../semiAdmi/CambioMesa">Cambio de Mesa</a>
+            <a class="navbar-brand" href="../semiAdmi/CambioMesa">Cambio de Mesa</a>
           </li>
           <li class="nav-item">
             <form method="POST" action=" {{ route('logout') }} ">
