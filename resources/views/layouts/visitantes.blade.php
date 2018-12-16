@@ -28,17 +28,17 @@
     <label id="In">Facultad de Ingeniería</label>
   </div>
   <nav class="navbar navbar-expand-md navbar-dark">
-    <a class="navbar-brand" href="../../">Inicio</a>
+    <a class="navbar-brand" href="/agrupaciones/">Inicio</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="navbar-brand" href="../../Agrupaciones">Agrupaciones</a>
+          <a class="navbar-brand" href="/agrupaciones/Agrupaciones">Agrupaciones</a>
         </li>
         <li class="nav-item">
-          <a class="navbar-brand" href="../../Historial">Historial</a>
+          <a class="navbar-brand" href="/agrupaciones/Historial">Historial</a>
         </li>
         <li class="nav-item">
           <a class="navbar-brand" href="#">Reclutamientos</a>
