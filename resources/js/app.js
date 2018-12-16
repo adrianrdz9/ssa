@@ -8,7 +8,14 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-window.swal = require('sweetalert');
+
+import VueQrcodeReader from 'vue-qrcode-reader';
+import VueQrcode from '@xkeshi/vue-qrcode';
+
+Vue.use(VueQrcodeReader);
+Vue.component(VueQrcode.name, VueQrcode);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -16,6 +23,19 @@ window.swal = require('sweetalert');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('notices-carousel', require('./components/NoticesCarousel.vue'));
+Vue.component('notices-carousel-editor', require('./components/NoticesCarouselEditor.vue'));
+Vue.component('events-component', require('./components/EventsComponent.vue'));
+Vue.component('admin-events', require('./components/AdminEventsComponent.vue'));
+Vue.component('notices-component', require('./components/NoticesComponent.vue'));
+Vue.component('admin-notices', require('./components/AdminNoticesComponent.vue'));
+Vue.component('date-format', require('./components/DateFormatComponent.vue'));
+Vue.component('create-tournament', require('./components/CreateTournamentComponent.vue'));
+Vue.component('edit-tournament', require('./components/EditTournamentComponent.vue'));
+Vue.component('complete-signup', require('./components/CompleteSignUp.vue'));
+Vue.component('profile-avatar-input', require('./components/ProfileAvatarInput.vue'));
+Vue.component('tournament-historic', require('./components/TournamentHistoric.vue'));
+Vue.component('team-index', require('./components/TeamIndexComponent.vue'));
 
 const app = new Vue({
     el: '#app'

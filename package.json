@@ -7,9 +7,14 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
+<<<<<<< HEAD
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
 	"serve":"./serve.sh &"    
 },
+=======
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+>>>>>>> sports
     "devDependencies": {
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
@@ -18,7 +23,18 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
+<<<<<<< HEAD
         "sweetalert": "^2.0.8",
         "vue": "^2.5.7"
+=======
+        "vue": "^2.5.17"
+    },
+    "dependencies": {
+        "@xkeshi/vue-qrcode": "^1.0.0",
+        "moment": "^2.22.2",
+        "sweetalert2": "^7.28.4",
+        "vue-google-charts": "^0.3.2",
+        "vue-qrcode-reader": "^1.2.2"
+>>>>>>> sports
     }
 }

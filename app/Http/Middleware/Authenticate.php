@@ -14,6 +14,10 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+<<<<<<< HEAD
         return route('/login');
+=======
+        return route('login');
+>>>>>>> sports
     }
 }

@@ -9,12 +9,37 @@ $line-height-base: 1.6;
 
 // Colors
 $blue: #3490dc;
-$indigo: #6574cd;
+$indigo: #39458a;
 $purple: #9561e2;
 $pink: #f66D9b;
-$red: #e3342f;
+$red: #bd5f5f;
 $orange: #f6993f;
-$yellow: #ffed4a;
-$green: #38c172;
+$yellow: #f1dd73;
+$green: #70cc8f;
 $teal: #4dc0b5;
-$cyan: #6cb2eb;
+$cyan: #5ec4ae;
+$grey: #bbb;
+$gold: rgba(201, 181, 56, 0.58);
+$silver: rgba(178, 178, 178, 0.58);
+$bronze: rgba(80, 50, 20, 0.5);
+$white: white;
+$black: black;
+
+$colors: (
+    'blue': #3490dc,
+    'indigo': #6574cd,
+    'purple': #9561e2,
+    'pink': #f66D9b,
+    'red': #bd5f5f,
+    'orange': #f6993f,
+    'yellow': #f1dd73,
+    'green': #70cc8f,
+    'teal': #4dc0b5,
+    'cyan': #5ec4ae,
+    'grey': #bbb,
+    'gold': rgba(201, 181, 56, 0.58),
+    'silver': rgba(178, 178, 178, 0.58),
+    'bronze': rgba(80, 50, 20, 0.5),
+    'white': white,
+    'black': black,
+)
