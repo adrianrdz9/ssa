@@ -1,5 +1,9 @@
 <?php
 
+Route::get('/', function(){
+    return view('home');
+});
+
 Route::group(['prefix' => 'agrupaciones'], function () { 
     //login
     Route::get('/Agrupa','Auth\LoginController@showLoginForm' );
@@ -46,7 +50,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::view('/semiAdmi/CambioMesa','Admis.cambioMesa');
     //Visitante
     //Noticias - 9 (index)
-    Route::get('/','Visitante\generalController@index');
+    Route::get('/','Visitante\generalController@index')->name('agrupacionesIndex');
     //Noticias individual
     Route::get('Noticia/id/{id}','Visitante\generalController@noticia');
     Route::get('/Historial','Visitante\generalController@Historial');
@@ -59,7 +63,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
 Route::group(['prefix' => 'actividades-deportivas'], function () {
     
     
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index')->name('actividadesDeportivasIndex');
     
     Auth::routes();
     
@@ -111,4 +115,10 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     
     Route::get('/historico', 'HistoricController@index')->name('historicIndex');
     Route::get('/historico/{id}', 'HistoricController@show')->name('tournamentHistoric');
+});
+
+Route::group(['prefix' => 'bolsa'], function () {
+    Route::get('/', function(){
+
+    })->name('bolsaIndex');
 });

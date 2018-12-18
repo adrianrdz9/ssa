@@ -37,7 +37,6 @@
             </ul>
         </div>
     @endif
-
     <div id="app">
         <div class="row bg-grey p-2">
             <div class="col-sm-7 col-md-8">
@@ -69,10 +68,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         
-
+                        <li class="nav-item">
+                            <a href="/" class="nav-link">Volver al inicio SSA</a>
+                        </li>
                         @role('admin')
                             <li class="navbar-item">
-                                <a href="{{ route('home') }}" class="nav-link">Carrusel</a>
+                                <a href="{{ route('actividadesDeportivasIndex') }}" class="nav-link">Carrusel</a>
                             </li>
                             <li class="navbar-item">
                                 <a href="{{ route('events') }}" class="nav-link">Eventos y avisos</a>
@@ -93,11 +94,11 @@
                         @else
                             @role('eval')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('home') }}">Inicio</a>
+                                    <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
                                 </li>
                             @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('home') }}">Inicio</a>
+                                    <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
