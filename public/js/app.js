@@ -81054,8 +81054,10 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_qrcode_reader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-qrcode-reader */ "./node_modules/vue-qrcode-reader/index.js");
-/* harmony import */ var _xkeshi_vue_qrcode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @xkeshi/vue-qrcode */ "./node_modules/@xkeshi/vue-qrcode/dist/vue-qrcode.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_qrcode_reader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-qrcode-reader */ "./node_modules/vue-qrcode-reader/index.js");
+/* harmony import */ var _xkeshi_vue_qrcode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @xkeshi/vue-qrcode */ "./node_modules/@xkeshi/vue-qrcode/dist/vue-qrcode.esm.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -81066,29 +81068,30 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 
-Vue.use(vue_qrcode_reader__WEBPACK_IMPORTED_MODULE_0__["default"]);
-Vue.component(_xkeshi_vue_qrcode__WEBPACK_IMPORTED_MODULE_1__["default"].name, _xkeshi_vue_qrcode__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_qrcode_reader__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_xkeshi_vue_qrcode__WEBPACK_IMPORTED_MODULE_2__["default"].name, _xkeshi_vue_qrcode__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue"));
-Vue.component('notices-carousel', __webpack_require__(/*! ./components/NoticesCarousel.vue */ "./resources/js/components/NoticesCarousel.vue"));
-Vue.component('notices-carousel-editor', __webpack_require__(/*! ./components/NoticesCarouselEditor.vue */ "./resources/js/components/NoticesCarouselEditor.vue"));
-Vue.component('events-component', __webpack_require__(/*! ./components/EventsComponent.vue */ "./resources/js/components/EventsComponent.vue"));
-Vue.component('admin-events', __webpack_require__(/*! ./components/AdminEventsComponent.vue */ "./resources/js/components/AdminEventsComponent.vue"));
-Vue.component('notices-component', __webpack_require__(/*! ./components/NoticesComponent.vue */ "./resources/js/components/NoticesComponent.vue"));
-Vue.component('admin-notices', __webpack_require__(/*! ./components/AdminNoticesComponent.vue */ "./resources/js/components/AdminNoticesComponent.vue"));
-Vue.component('date-format', __webpack_require__(/*! ./components/DateFormatComponent.vue */ "./resources/js/components/DateFormatComponent.vue"));
-Vue.component('create-tournament', __webpack_require__(/*! ./components/CreateTournamentComponent.vue */ "./resources/js/components/CreateTournamentComponent.vue"));
-Vue.component('edit-tournament', __webpack_require__(/*! ./components/EditTournamentComponent.vue */ "./resources/js/components/EditTournamentComponent.vue"));
-Vue.component('complete-signup', __webpack_require__(/*! ./components/CompleteSignUp.vue */ "./resources/js/components/CompleteSignUp.vue"));
-Vue.component('profile-avatar-input', __webpack_require__(/*! ./components/ProfileAvatarInput.vue */ "./resources/js/components/ProfileAvatarInput.vue"));
-Vue.component('tournament-historic', __webpack_require__(/*! ./components/TournamentHistoric.vue */ "./resources/js/components/TournamentHistoric.vue"));
-Vue.component('team-index', __webpack_require__(/*! ./components/TeamIndexComponent.vue */ "./resources/js/components/TeamIndexComponent.vue"));
-var app = new Vue({
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('notices-carousel', __webpack_require__(/*! ./components/NoticesCarousel.vue */ "./resources/js/components/NoticesCarousel.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('notices-carousel-editor', __webpack_require__(/*! ./components/NoticesCarouselEditor.vue */ "./resources/js/components/NoticesCarouselEditor.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('events-component', __webpack_require__(/*! ./components/EventsComponent.vue */ "./resources/js/components/EventsComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('admin-events', __webpack_require__(/*! ./components/AdminEventsComponent.vue */ "./resources/js/components/AdminEventsComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('notices-component', __webpack_require__(/*! ./components/NoticesComponent.vue */ "./resources/js/components/NoticesComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('admin-notices', __webpack_require__(/*! ./components/AdminNoticesComponent.vue */ "./resources/js/components/AdminNoticesComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('date-format', __webpack_require__(/*! ./components/DateFormatComponent.vue */ "./resources/js/components/DateFormatComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('create-tournament', __webpack_require__(/*! ./components/CreateTournamentComponent.vue */ "./resources/js/components/CreateTournamentComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('edit-tournament', __webpack_require__(/*! ./components/EditTournamentComponent.vue */ "./resources/js/components/EditTournamentComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('complete-signup', __webpack_require__(/*! ./components/CompleteSignUp.vue */ "./resources/js/components/CompleteSignUp.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('profile-avatar-input', __webpack_require__(/*! ./components/ProfileAvatarInput.vue */ "./resources/js/components/ProfileAvatarInput.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('tournament-historic', __webpack_require__(/*! ./components/TournamentHistoric.vue */ "./resources/js/components/TournamentHistoric.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('team-index', __webpack_require__(/*! ./components/TeamIndexComponent.vue */ "./resources/js/components/TeamIndexComponent.vue").default);
+var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app'
 });
 

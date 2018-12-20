@@ -17,6 +17,17 @@ class UserRolesSeeder extends Seeder
         Role::create(['name' => 'eval']);
         Role::create(['name' => 'student']);
 
+        //Agrupacion
+        User::create([
+            'username' => 'SSA',
+            'Siglas' => 'SSA',
+            'Nombre' => 'Secretaria de Servicios Academicos',
+            'Logo' => 'Logo.png',
+            'password' => Hash::make('secret')
+        ]);
+
+        //Actividades deportivas
+
         $user = User::create([
             'name' => 'Juan Adrian',
             'last_name'=> 'Rodriguez Farias',
@@ -26,7 +37,8 @@ class UserRolesSeeder extends Seeder
             'birthdate'=>'2001-08-02',
             'semester'=>'2º semestre',
             'career'=>'Ingeniería en computación',
-            'account_number'=>'317114270',
+            'username'=>'317114270',
+            'account_number' => '317114270',
             'curp'=>'',
             'address'=>' ',
             'medical_service'=>'IMSS',
@@ -45,7 +57,8 @@ class UserRolesSeeder extends Seeder
             'birthdate'=>'1111-11-11',
             'semester'=>' ',
             'career'=>' ',
-            'account_number'=>'317114271',
+            'username'=>'317114271',
+            'account_number' => '317114271',
             'curp'=>' ',
             'address'=>' ',
             'medical_service'=>' ',
@@ -66,7 +79,8 @@ class UserRolesSeeder extends Seeder
             'birthdate'=>'1111-11-11',
             'semester'=>' ',
             'career'=>' ',
-            'account_number'=>'317114260',
+            'username'=>'317114260',
+            'account_number' => '317114260',
             'curp'=>' ',
             'address'=>' ',
             'medical_service'=>' ',

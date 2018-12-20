@@ -4,6 +4,8 @@ Route::get('/', function(){
     return view('home');
 });
 
+Auth::routes();
+
 Route::group(['prefix' => 'agrupaciones'], function () { 
     //login
     Route::get('/Agrupa','Auth\LoginController@showLoginForm' );
@@ -65,7 +67,6 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     
     Route::get('/', 'HomeController@index')->name('actividadesDeportivasIndex');
     
-    Auth::routes();
     
     Route::post('/admin/slides', 'SlidesController@store')->name('storeSlide');
     Route::put('/admin/slides/{id}', 'SlidesController@update');
