@@ -56,7 +56,7 @@
             </ul>
           </div>
         </nav>
-    <div class='container-fluid'>
+    <div class='container-fluid' id="app">
       @yield('content')
     </div>
   </body>
