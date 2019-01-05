@@ -16,10 +16,14 @@ class admiController extends Controller
     }
 
     public function Noticias(){
-      $data = DB:: select("SELECT Folio,Titulo,DescripcionCorta,Disponible,ImagenC FROM noticias ORDER BY Folio DESC");
+      $data = \App\Noticias::orderBy('Folio','desc')->get();
       return view('Admis.NoticiasAdmi',['data' => $data]);
     }
     public function ONoticia($id){
+      // $id = $Folio;
+      // $pastel = \App\Noticias::findOrFail($Folio);
+      // $pastel->Disponible = '0';
+      // $pastel->save();
       DB::update("UPDATE Noticias SET Disponible = '0' where Folio='$id'");
     }
     public function MNoticia($id){
@@ -32,7 +36,11 @@ class admiController extends Controller
       }else{
         $msg = "No fue posible guardar la noticia";
       }
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
         return view('Admis.formNoti', ['msg'=>$msg]);
+      }
     }
     public function store(Request $request){
         \Session::forget('Noticias');
@@ -66,7 +74,8 @@ class admiController extends Controller
             $noti->ImagenR = $filename;
           }
           $noti->save();
-          $fol = DB:: select("SELECT Folio FROM noticias WHERE Titulo = '$request->Titulo'");
+          $fol = \App\Noticias::where(['Titulo',$request->Titulo])->get(['Folio']);
+//  $fol = DB:: select("SELECT Folio FROM noticias WHERE Titulo = '$request->Titulo'");
           if ($request->carusel == "S" && $request->hasFile('ImagenR')) {
               $carusel = new Carusel;
               $carusel->Titulo = $request->Titulo;
@@ -82,88 +91,136 @@ class admiController extends Controller
                 $carusel->Imagen = $filename;
               $carusel->save();
           }
-        return redirect('Admi');
+          if(is_null(auth()->user()))
+            return redirect('/');
+          else {
+            return redirect('Admi');
+          }
     }
     public function VerCarusel(){
-      $data = DB:: select("SELECT id,Titulo,Descripcion,Imagen,Estado FROM carusels ORDER BY id DESC");
-      return view('Admis.AdmiCaruselEdit',['data' => $data]);
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        $data = \App\Carusel::orderBy('id','desc')->get(['id', 'Titulo','Descripcion','Imagen','Estado']);
+        return view('Admis.AdmiCaruselEdit',['data' => $data]);
+     }
     }
     public function OImagenC($id){
-      DB::update("UPDATE carusels SET Estado = '0' where id='$id'");
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        DB::update("UPDATE carusels SET Estado = '0' where id='$id'");
+      }
     }
     public function MImagenC($id){
-      DB::update("UPDATE carusels SET Estado = '1' where id='$id'");
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        DB::update("UPDATE carusels SET Estado = '1' where id='$id'");
+      }
     }
     public function Carusel(){
-      return view('Admis.Carusel');
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        return view('Admis.Carusel');
+      }
     }
     public function NCarusel(Request $request){
-      $carusel = new Carusel;
-        $carusel->Titulo = $request->Titulo;
-        $carusel->Descripcion = $request->Descripcion;
-        $carusel->Link = $request->Link;
-        $carusel->Tipo = $request->Tipo;
-        $image = $request->file('Imagen');
-        $filename = time() . '.' . $image->getClientOriginalExtension();
-        $location = public_path('images/Carusel/'. $filename);
-          Image::make($image)->resize(600,309)->save($location);
-        $carusel->Imagen = $filename;
-      $carusel->save();
-      alert()->success('Imagen agregada','Exito!','success');
-      return redirect('Admi/NICarusel');
+        if(is_null(auth()->user()))
+          return redirect('/');
+        else {
+          $carusel = new Carusel;
+            $carusel->Titulo = $request->Titulo;
+            $carusel->Descripcion = $request->Descripcion;
+            $carusel->Link = $request->Link;
+            $carusel->Tipo = $request->Tipo;
+            $image = $request->file('Imagen');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/Carusel/'. $filename);
+              Image::make($image)->resize(600,309)->save($location);
+            $carusel->Imagen = $filename;
+          $carusel->save();
+          alert()->success('Imagen agregada','Exito!','success');
+          return redirect('Admi/NICarusel');
+        }
+      }
+    public function Propuestas(){
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        $data = \App\Propuestas::get(['id', 'Siglas','Titulo','Descripcion','Estado']);
+        foreach ($data as $key => $value)
+              $siglas[] = $value->Siglas;
+        $presi = \App\Integrantes::where([['Cargo','Presidente'],['Siglas',$siglas]])->get(['Nombre', 'Email','Numero']);
+        $msg = "";
+        if($data == []){
+          $f = \App\Ferias::orderBy('Limite','desc')->take(1)->get();
+          $hoy[0]= date("Y-m-d");
+          //Convert stdClass object to array in PHP
+          foreach ($f as $key => $value) {
+              $limite[] = $value->Limite;
+          }
+          if($limite === $hoy){
+            $msg = "Hoy es el último día para enviar propuestas.";
+          }elseif ($limite > $hoy) {
+            $msg = "Aún no hay propuestas.";
+          }elseif ($limite < $hoy) {
+            $msg = "Ya no se recibiran propuestas.";
+          }
+        }
+        return view('Admis.PropuestaAdmi',[
+          'Propuestas' => $data,
+          'Mensaje' => $msg,
+          'Presidente'=>$presi,
+        ]);
+      }
+  }
+  public function Feria(Request $request){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      $feria = new Ferias;
+      $feria ->Nombre = $request->Nombre;
+      $feria ->Inicio = $request->FInicio;
+      $feria ->Limite = $request->FLimite;
+      $feria->save();
+      return redirect('Admi/Propuestas');
     }
-        public function Propuestas(){
-            $data = DB:: select("SELECT id,Siglas,Titulo,Descripcion,Estado FROM Propuestas");
-            foreach ($data as $key => $value)
-                  $siglas[] = $value->Siglas;
-            $presi = DB:: select("SELECT Nombre,Email,Numero FROM Integrantes WHERE Cargo ='Presidente' AND Siglas ='$siglas[0]'");
-            $msg = "";
-            if($data == []){
-              $f = DB:: select("SELECT Limite FROM Ferias ORDER BY Limite DESC LIMIT 1");
-              $hoy[0]= date("Y-m-d");
-              //Convert stdClass object to array in PHP
-              foreach ($f as $key => $value) {
-                  $limite[] = $value->Limite;
-              }
-              if($limite === $hoy){
-                $msg = "Hoy es el último día para enviar propuestas.";
-              }elseif ($limite > $hoy) {
-                $msg = "Aún no hay propuestas.";
-              }elseif ($limite < $hoy) {
-                $msg = "Ya no se recibiran propuestas.";
-              }
-            }
-            return view('Admis.PropuestaAdmi',[
-              'Propuestas' => $data,
-              'Mensaje' => $msg,
-              'Presidente'=>$presi,
-            ]);
-        }
-        public function Feria(Request $request){
-          $feria = new Ferias;
-          $feria ->Nombre = $request->Nombre;
-          $feria ->Inicio = $request->FInicio;
-          $feria ->Limite = $request->FLimite;
-          $feria->save();
-          return redirect('Admi/Propuestas');
-        }
-        public function StatusA($id){
-          DB::update("UPDATE Propuestas SET Estado = 'Aprobada' where id='$id'");
-        }
-        public function StatusC($id){
-          DB::update("UPDATE Propuestas SET Estado = 'Comunicate' where id='$id'");
-        }
+  }
+  public function StatusA($id){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      DB::update("UPDATE Propuestas SET Estado = 'Aprobada' where id='$id'");
+    }
+  }
+  public function StatusC($id){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      DB::update("UPDATE Propuestas SET Estado = 'Comunicate' where id='$id'");
+    }
+  }
 
-        public function Agrupaciones(){
-            $data = DB:: select("SELECT id,Siglas,Nombre,Logo FROM Users ORDER BY Siglas ASC" );
-            return view('Admis.Contraseñas',['data' => $data]);
-        }
-        public function NPassword(Request $request){
-          $id = $request->Id;
-          $c = bcrypt($request->pass);
-          DB::update("UPDATE Users SET password = '$c' where id='$id'");
-          alert()->success('Exito!','Contraseña actualizada','success');
-          return redirect('Admi/Contraseñas');
-        }
+  public function Agrupaciones(){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      $data = \App\User::orderBy('Siglas','asc')->get(['id', 'Siglas','Nombre','Logo']);
+      return view('Admis.Contraseñas',['data' => $data]);
+    }
+  }
+  public function NPassword(Request $request){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      $id = $request->Id;
+      $c = bcrypt($request->pass);
+      DB::update("UPDATE Users SET password = '$c' where id='$id'");
+      alert()->success('Exito!','Contraseña actualizada','success');
+      return redirect('Admi/Contraseñas');
+    }
+  }
 
 }
