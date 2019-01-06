@@ -20,14 +20,10 @@ class admiController extends Controller
       return view('Admis.NoticiasAdmi',['data' => $data]);
     }
     public function ONoticia($id){
-      // $id = $Folio;
-      // $pastel = \App\Noticias::findOrFail($Folio);
-      // $pastel->Disponible = '0';
-      // $pastel->save();
-      DB::update("UPDATE Noticias SET Disponible = '0' where Folio='$id'");
+      \App\Noticias::where('Folio',$id)->update(['Disponible' => 0]);
     }
     public function MNoticia($id){
-      DB::update("UPDATE Noticias SET Disponible = '1' where Folio='$id'");
+      \App\Noticias::where('Folio',$id)->update(['Disponible' => 1]);
     }
     public function index(){
       if(\Session::get('Noticias')){
@@ -43,6 +39,9 @@ class admiController extends Controller
       }
     }
     public function store(Request $request){
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
         \Session::forget('Noticias');
         $this->validate($request, array(
           'Titulo' => 'required|max:191' ,
@@ -74,8 +73,7 @@ class admiController extends Controller
             $noti->ImagenR = $filename;
           }
           $noti->save();
-          $fol = \App\Noticias::where(['Titulo',$request->Titulo])->get(['Folio']);
-//  $fol = DB:: select("SELECT Folio FROM noticias WHERE Titulo = '$request->Titulo'");
+          $fol = \App\Noticias::where('Titulo',$request->Titulo)->get();
           if ($request->carusel == "S" && $request->hasFile('ImagenR')) {
               $carusel = new Carusel;
               $carusel->Titulo = $request->Titulo;
@@ -91,9 +89,6 @@ class admiController extends Controller
                 $carusel->Imagen = $filename;
               $carusel->save();
           }
-          if(is_null(auth()->user()))
-            return redirect('/');
-          else {
             return redirect('Admi');
           }
     }
@@ -109,14 +104,14 @@ class admiController extends Controller
       if(is_null(auth()->user()))
         return redirect('/');
       else {
-        DB::update("UPDATE carusels SET Estado = '0' where id='$id'");
+        \App\Carusel::where('id',$id)->update(['Estado' => 0]);
       }
     }
     public function MImagenC($id){
       if(is_null(auth()->user()))
         return redirect('/');
       else {
-        DB::update("UPDATE carusels SET Estado = '1' where id='$id'");
+        \App\Carusel::where('id',$id)->update(['Estado' => 1]);
       }
     }
     public function Carusel(){
@@ -150,24 +145,31 @@ class admiController extends Controller
         return redirect('/');
       else {
         $data = \App\Propuestas::get(['id', 'Siglas','Titulo','Descripcion','Estado']);
-        foreach ($data as $key => $value)
+        if(count($data)>=1){
+         foreach ($data as $key => $value)
               $siglas[] = $value->Siglas;
-        $presi = \App\Integrantes::where([['Cargo','Presidente'],['Siglas',$siglas]])->get(['Nombre', 'Email','Numero']);
+          $presi = \App\Integrantes::where([['Cargo','Presidente'],['Siglas',$siglas]])
+                                    ->get(['Nombre', 'Email','Numero']);
+        }else{
+          $presi = [];
+          $data = [];
+        }
         $msg = "";
-        if($data == []){
-          $f = \App\Ferias::orderBy('Limite','desc')->take(1)->get();
-          $hoy[0]= date("Y-m-d");
-          //Convert stdClass object to array in PHP
+        $f = \App\Ferias::orderBy('Limite','desc')->take(1)->get();
+        $hoy[0]= date("Y-m-d");
+        if(count($f)>=1){
           foreach ($f as $key => $value) {
               $limite[] = $value->Limite;
           }
           if($limite === $hoy){
             $msg = "Hoy es el último día para enviar propuestas.";
           }elseif ($limite > $hoy) {
-            $msg = "Aún no hay propuestas.";
+              $msg = "Aún no hay propuestas.";
           }elseif ($limite < $hoy) {
-            $msg = "Ya no se recibiran propuestas.";
+                $msg = "Ya no se recibiran propuestas.";
           }
+        }else{
+          $msg = "Aún no hay fechas.";
         }
         return view('Admis.PropuestaAdmi',[
           'Propuestas' => $data,
@@ -192,14 +194,14 @@ class admiController extends Controller
     if(is_null(auth()->user()))
       return redirect('/');
     else {
-      DB::update("UPDATE Propuestas SET Estado = 'Aprobada' where id='$id'");
+      \App\Propuestas::where('id',$id)->update(['Estado' => 'Aprobada']);
     }
   }
   public function StatusC($id){
     if(is_null(auth()->user()))
       return redirect('/');
     else {
-      DB::update("UPDATE Propuestas SET Estado = 'Comunicate' where id='$id'");
+      \App\Propuestas::where('id',$id)->update(['Estado' => 'Comunicate']);
     }
   }
 
@@ -217,7 +219,7 @@ class admiController extends Controller
     else {
       $id = $request->Id;
       $c = bcrypt($request->pass);
-      DB::update("UPDATE Users SET password = '$c' where id='$id'");
+      \App\User::where('id',$id)->update(['password' => $c]);
       alert()->success('Exito!','Contraseña actualizada','success');
       return redirect('Admi/Contraseñas');
     }

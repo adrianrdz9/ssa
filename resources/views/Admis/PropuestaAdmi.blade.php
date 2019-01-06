@@ -59,7 +59,7 @@
     @endforeach
    @else
      <div>
-       @if($Mensaje == "Ya no se recibiran propuestas." )
+       @if($Mensaje == "Ya no se recibiran propuestas." || $Mensaje == "Aún no hay fechas.")
          <div class="alert alert-danger">
            <h4> {{ $Mensaje }} </h4>
          </div>

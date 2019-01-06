@@ -134,8 +134,6 @@ class semiAdmiController extends Controller
             $Nombre = $row["Nombre"];
             $Correo = $row["Correo"];
             $Tel = $row["Telefono"];
-            if($row['Telefono'] == "")
-              $row['Telefono'] = "0";
             $find = \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])->get(['Nombre']);
             if($find == [] && $Cargo != "" && $Nombre != ""){
                 $integrante = new Integrantes;
@@ -148,20 +146,20 @@ class semiAdmiController extends Controller
                 $integrante->save();
             }else if($find != []){
                 if($row['Cargo'] != ""){
-                  DB::update("UPDATE Integrantes SET Cargo = '$Cargo'
-                        WHERE Siglas = '$u' AND NCargo = '$nC'");
+                  \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                    ->update(['Cargo' => $Cargo]);
                 }
                 if ($row['Nombre'] != "") {
-                  DB::update("UPDATE Integrantes SET Nombre = '$Nombre'
-                        WHERE Siglas = '$u' AND NCargo = '$nC'");
+                  \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                    ->update(['Nombre' => $Nombre]);
                 }
                 if ($row['Correo'] != "") {
-                  DB::update("UPDATE Integrantes SET Email = '$Correo'
-                        WHERE Siglas = '$u' AND NCargo = '$nC'");
+                  \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                    ->update(['Email' => $Correo]);
                 }
                 if ($row['Telefono'] != "") {
-                  DB::update("UPDATE Integrantes SET Numero = '$Tel'
-                        WHERE Siglas = '$u' AND NCargo = '$nC'");
+                  \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                    ->update(['Numero' => $Tel]);
                 }
             }
         }
@@ -202,7 +200,7 @@ class semiAdmiController extends Controller
 
         foreach ($a as $key => $value) {
           if ($value!= ""){
-            DB::update("UPDATE users SET $key = '$value' where Siglas='$u'");
+            \App\User::where('Siglas',$u)->update([$key => $value]);
           }
         }
         alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
