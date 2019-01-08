@@ -10,10 +10,20 @@ use \App\UserInTournament;
 class HistoricController extends Controller
 {
 
+    /**
+     * Metodo constructor utilizado para limitar el acceso a solo administradores y evaluadores
+     * 
+     * @return void
+     */
     public function __construct(){
         $this->middleware('role:admin|eval');
     }
 
+    /**
+     * Metodo utilizado para mostrar el inicio de la pagina de historico
+     * 
+     * @return View
+     */
     public function index(){
         $tournamentsCount = Tournament::all()->groupBy('name')->count();
         $userInTournamentsCount = UserInTournament::all()->count();
@@ -88,6 +98,11 @@ class HistoricController extends Controller
         return view('historic.index', $data);
     }
 
+    /**
+     * Metodo utlizado para consultar datos de un torneo especifio
+     * 
+     * @return Data
+     */
     public function show($id){
         $data = Tournament::where('id', $id)->with('users')->with('sport')->with('sport.tournaments')->get()[0];
         $groupedTournaments = (object)collect($data->sport->tournaments)->groupBy('name');

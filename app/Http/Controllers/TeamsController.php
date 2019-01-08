@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Controlador encargado de manejar los equipos de los torneos
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
@@ -11,16 +15,33 @@ use App\UserInTeam;
 
 class TeamsController extends Controller
 {
+    /**
+     * Metodo constructor que limita el acceso a usuarios que hayan iniciado sesion
+     * 
+     * @return void
+     */
     public function __construct(){
         $this->middleware('auth');
     }
 
+    /**
+     * Metodo utilizado para mostrar los equipos a los que el usuario pertenezca
+     * 
+     * @return View
+     */
     public function index(){
         $teams = Auth::user()->teams();
 
         return view('teams.index', ['teams' => $teams]);
     }
 
+    /**
+     * Metodo utilizado para crear un equipo nuevo
+     * 
+     * @param Request $request
+     * 
+     * @return void|Exception Puede dar error
+     */
     public function store(Request $request){
         $user = Auth::user();
         $id = $request->tournament_id;
@@ -60,6 +81,13 @@ class TeamsController extends Controller
         
     }
 
+    /**
+     * Metodo utilizado para que un usuario pueda solicitar unirse a un equipo
+     * 
+     * @param Integer $id Id del equipo al que se quiere unir
+     * 
+     * @return \App\UserInTeam|Exception Registro creado o error
+     */
     public function request($id){
         if($team = Team::find($id)){
             $team = Team::where('id', $id)->with('accepted_users')->with('branch.tournament')->first();
@@ -90,6 +118,14 @@ class TeamsController extends Controller
         }
     }
 
+    /**
+     * Metodo utilizado por el capitan para aceptar o rechazar a alguien de su equipo
+     * 
+     * @param Integer $id Id del equipo
+     * @param Request $request Peticion con los datos de la solicitud y su nuevo estatus
+     * 
+     * @return Redirect|Exception
+     */
     public function update($id, Request $request){
         if($team = Team::find($id)){
             if($team->captain->id == Auth::user()->id){

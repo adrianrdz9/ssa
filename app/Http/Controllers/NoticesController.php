@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Controlador encargado de todo lo relacionado con las noticias
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -12,10 +16,20 @@ use LVR\Colour\Hex;
 
 class NoticesController extends Controller
 {
+    /**
+     * Metodo contructor utilizado para limitar el acceso a los administradores
+     * 
+     * @return void
+     */
     public function __construct(){
         $this->middleware('role:admin');
     }
 
+    /**
+     * Metodo utlizado para validar y almacenar las nuevas noticias
+     * 
+     * @return Redirect
+     */
     public function store(Request $request){
         $request->validate([
             'max_date' => 'nullable|date|after:today',
@@ -34,6 +48,14 @@ class NoticesController extends Controller
         return redirect()->back()->with('notice', 'Aviso creado');
     }
 
+    /**
+     * Metodo utilizado para actualizar una noticia especifica
+     * 
+     * @param Request $request Peticion con los datos
+     * @param Integer $id Id de la noticia que se desea actualizar
+     * 
+     * @return Redirect
+     */
     public function update(Request $request, $id){
         $request->validate([
             'max_date' => 'nullable|date|after:today',
@@ -52,6 +74,13 @@ class NoticesController extends Controller
 
     }
 
+    /**
+     * Metodo encargado de eliminar una noticia especifica
+     * 
+     * @param Integer $id Id de la noticia a eliminar
+     * 
+     * @return Redirect
+     */
     public function delete($id){
         Notice::find($id)->delete();
         return redirect()->back()->with('notice', 'Aviso eliminado');

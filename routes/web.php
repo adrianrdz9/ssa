@@ -72,8 +72,8 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     Route::put('/admin/slides/{id}', 'SlidesController@update');
     Route::delete('/admin/slides/{id}', 'SlidesController@delete');
     
-    Route::get('/eventos-y-avisos', 'HomeController@events')->name('events');
     
+    Route::get('/admin/events', 'EventsController@index')->name('events');
     Route::post('/admin/events', 'EventsController@store')->name('storeEvent');
     Route::put('/admin/events/{id}', 'EventsController@update');
     Route::delete('/admin/events/{id}', 'EventsController@delete');

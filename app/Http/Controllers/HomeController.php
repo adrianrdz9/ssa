@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Controlador encargado de mostrar el inicio
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -15,15 +19,30 @@ use Carbon\Carbon;
 
 class HomeController extends Controller
 {
+    /**
+     * Propiedad que almacena el controlador HistoricController
+     * 
+     * @var \App\HistoricController
+     */
     protected $historic;
+
+    /**
+     * Metodo constructor utilizado para solicitar al inyector de dependencias 
+     * una instancia del controllador HistoricController
+     * 
+     * @param \App\HistoricController $historic
+     * 
+     * @return void
+     */
     public function __construct(HistoricController $historic){
         $this->historic = $historic;
     }
 
     /**
-     * Show the application dashboard.
+     * Muestra la vista correspondiente al usuario que ingresa a la pagina
+     * (Estudiante, Evaluador, Administrador, Sin registro)
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
@@ -52,14 +71,5 @@ class HomeController extends Controller
         return view('student.home', ['slides' => $slides, 'events' => $events, 'notices' => $notices]);
     }
 
-    public function events(){
-        $events = Event::orderBy('date')->get();
-        $notices = Notice::orderBy('created_at')->get();
-        if(Auth::check()){
-            if(Auth::user()->hasRole('admin')){
-                return view('admin.events', ['events' => $events, 'notices' => $notices]);
-            }
-        }
-        return abort(403);
-    }
+    
 }

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Controlador encargado de manejar los torneos
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -14,7 +18,9 @@ use \App\Branch;
 class TournamentsController extends Controller
 {
     /**
-     * Establecer los middlewares
+     * Metodo constructor utilizado para limitar el acceso a diferentes vistas
+     * 
+     * @return void
      */
     public function __construct(){
         $this->middleware('auth', ['except' => ['index']]);
@@ -22,9 +28,9 @@ class TournamentsController extends Controller
     }
 
     /**
-     * Mostrar todos los torneos
+     * Metodo utilizado para mostrar todos los torneos
      *
-     * @return void
+     * @return View
      */
     public function index(){
         $tournaments = Tournament::with('sport')->with('requirements')->with('branches')->get();
@@ -33,9 +39,9 @@ class TournamentsController extends Controller
     }
 
     /**
-     * Mostrar el formulario de un nuevo torneo
+     * Metodo utilizado para mostrar el formulario de un nuevo torneo
      *
-     * @return void
+     * @return View
      */
     public function new(){
         $sports = Sport::all();
@@ -44,10 +50,11 @@ class TournamentsController extends Controller
     }
 
     /**
-     * Almacenar un nuevo torneo
+     * Metodo utizado para almacenar un nuevo torneo
      *
-     * @param Request $request
-     * @return void
+     * @param Request $request Peticion con los datos
+     * 
+     * @return Redirect
      */
     public function store(Request $request){
         //eturn $request;
@@ -88,6 +95,13 @@ class TournamentsController extends Controller
         return redirect()->back()->with(['notice' => 'Torneo creado']);
     }
 
+    /**
+     * Metodo utilizado para mostrar el formulario de edicion de un torneo
+     * 
+     * @param Integer $id Id del torneo
+     * 
+     * @return View
+     */
     public function edit($id){
         if(!Tournament::where('id', $id)->exists())
             return abort(404);
@@ -97,6 +111,14 @@ class TournamentsController extends Controller
         return view('admin.tournaments.edit', ['tournament' => $tournament, 'sports' => $sports, 'requirements' => $requirements]);
     }
 
+    /**
+     * Metodo utilizado para actualizar un torneo existente
+     * 
+     * @param Integer $id Id del torneo
+     * @param Request $request Peticion con los dato nuevos
+     * 
+     * @return Redirect|Exception
+     */
     public function update($id, Request $request){
         if(!Tournament::where('id', $id))
             return abort(404);
@@ -153,6 +175,13 @@ class TournamentsController extends Controller
         return redirect()->back()->with(['notice' => 'Torneo actualizado']);
     }
 
+    /**
+     * Metodo utilizado para mostrar un torneo, sus ramas, expecificaciones, datos del usuario, etc.
+     * 
+     * @param Integer $id Id del torneo
+     * 
+     * @return View|Exception
+     */
     public function show($id){
         if(!Branch::find($id))
             return abort(404);
@@ -164,6 +193,13 @@ class TournamentsController extends Controller
         return view('tournaments.show', ['branch' => $branch, 'tournament' => $tournament, 'user' => Auth::user()]);
     }
 
+    /**
+     * Metodo utiliado para mostrar la vista donde se elige el equipo al cual se desea inscribir
+     * 
+     * @param Integer $id Id de la rama a la que se desee inscribir
+     * 
+     * @return View
+     */
     public function team($id){
         $branch = Branch::where('id', $id)->with('teams')->with(['teams.captain' => function($query){
             $query->select('id', 'name', 'last_name');
@@ -184,10 +220,11 @@ class TournamentsController extends Controller
     }
 
     /**
-     * Create a new tournament requirement
+     * Metodo utilizado para crear una nueva opcion de requerimiento para los torneos
      *
-     * @param Request $request
-     * @return void
+     * @param Request $request Peticion con los datos
+     * 
+     * @return \App\Requirement Requerimiento recien creado
      */
     public function requirementCreate(Request $request){        
         $request->validate([

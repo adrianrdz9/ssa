@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Controllador encargado de manejar lo relacionado con el carrusel
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -8,10 +12,22 @@ use Image;
 
 class SlidesController extends Controller
 {
+    /**
+     * Metodo constructor utilizado para limitar el acceso a adminstradores
+     * 
+     * @return void
+     */
     public function __construct(){
         $this->middleware('role:admin');
     }
 
+    /**
+     * Metodo utilizado para validar y almacenar una nueva imagen del carrusel
+     * 
+     * @param Request $request Peticion con los datos
+     * 
+     * @return Redirect
+     */
     public function store(Request $request){
         $request->validate([
             'caption'=>"nullable|string",
@@ -30,6 +46,14 @@ class SlidesController extends Controller
         return redirect()->back()->with('notice', 'Imagen creada');
     }
 
+    /**
+     * Metodo utilizado para actualizar una imagen existente del carrusel
+     * 
+     * @param Integer $id Id de la imagen
+     * @param Request $request Peticion con los datos nuevos
+     * 
+     * @return Redirect
+     */
     public function update($id, Request $request){
         $request->validate([
             'caption'=>"nullable|string",
@@ -50,6 +74,13 @@ class SlidesController extends Controller
         return redirect()->back()->with('notice', 'Imagen actualizada');
     }
 
+    /**
+     * Metodo utilizado para eliminar una imagen existente
+     * 
+     * @param Integer $id Id de la imagen a eliminar
+     * 
+     * @return Redirect
+     */
     public function delete($id){
         Slide::find($id)->delete();
         return redirect()->back()->with('notice', 'Imagen eliminada');
