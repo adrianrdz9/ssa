@@ -7,7 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Noticias;
 class generalController extends Controller
 {
-    //index
+  /**
+    * Metodo utilizado para mostrar la página principal
+    *
+    * @return view
+  */
     public function index(){
         $data = \App\Noticias::where('Disponible', 1)
                ->orderBy('Folio', 'desc')
@@ -22,26 +26,45 @@ class generalController extends Controller
                     'images' => $caru ,
                     'numero' => $num]);
     }
+    /**
+      * Metodo utilizado para mostrar un listado de todas las noticias
+      *
+      * @return view
+    */
     public function Historial(){
       $data = \App\Noticias::orderBy('Folio','desc')->get();
       return view('Visitante.Historial',['data' => $data]);
     }
-    //Notica (individual)
+    /**
+      * Metodo utilizado para mostrar un listado de todas las noticias
+      *
+      * @param Integer $id Id de la noticia seleccionada
+      *
+      * @return view
+    */
     public function noticia($id){
-      //Descripcion
       $des = \App\Noticias::where('Folio',$id)->get();
       $data = \App\Noticias::where('Folio',$id)->get();
       return view('Visitante.Noticia',[
         'data' => $data,
         'des' => $des]);
      }
-    //Listado de Agrupaciones
+     /**
+       * Metodo utilizado para mostrar un listado de las agrupaciones
+       *
+       * @return view
+     */
     public function agrupaciones(){
         $data = \App\User::orderBy('Siglas','asc')->get();
         return view('Visitante.Agrupaciones',['data' => $data]);
     }
-
-    //Vista de cada agrupación
+    /**
+      * Metodo utilizado para mostrar la informacion de una agrupacion
+      *
+      * @param Integer $id Id de la agrupacion seleccionada
+      *
+      * @return view
+    */
     public function individual($id){
         $data = \App\User::where('Siglas',$id)->get();
         $coun = \App\Integrantes::where('Siglas',$id)->get();
