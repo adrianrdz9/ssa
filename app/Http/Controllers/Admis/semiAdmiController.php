@@ -11,7 +11,12 @@ use App\Integrantes;
 use Alert;
 class semiAdmiController extends Controller
 {
-
+  /**
+    * Metodo utilizado para mostrar los formularios para actualizar la informacion
+    * general y los integrantes de cada agrupacion
+    *
+    * @return view
+  */
     public function index(){
         //Informacion general
         if(is_null(auth()->user()))
@@ -27,7 +32,11 @@ class semiAdmiController extends Controller
                     ]);
         }
     }
-
+    /**
+      * Metodo utilizado para mostrar las propuestas de la agrupaciones
+      *
+      * @return view
+    */
     public function Propuesta(){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -56,7 +65,12 @@ class semiAdmiController extends Controller
           ]);
       }
     }
-
+    /**
+      * Metodo utilizado guardar en la BD la informacion de la Propuesta
+      *realizada por la agruapcion
+      *
+      * @return view
+    */
     public function NPropuesta(Request $request){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -77,7 +91,12 @@ class semiAdmiController extends Controller
          return redirect('semiAdmi/Propuesta');
       }
     }
-
+    /**
+      * Metodo utilizado para guardar/actualizar las informacion de los
+      *integrantes.
+      *
+      * @return redirect
+    */
     public function Integrantes(Request $request){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -167,7 +186,12 @@ class semiAdmiController extends Controller
         return redirect('semiAdmi');
       }
     }
-
+    /**
+      * Metodo utilizado para guardar/actualizar la informacion general de la
+      *agrupacion
+      *
+      * @return redirect
+    */
     public function InfoGeneral(Request $request){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -207,6 +231,11 @@ class semiAdmiController extends Controller
         return redirect('semiAdmi');
       }
     }
+    /**
+      * Metodo utilizado para mostrar la vista con la informacion del cambio de mesa
+      *
+      * @return view
+    */
     public function Mesa(){
       if(is_null(auth()->user()))
         return redirect('/');

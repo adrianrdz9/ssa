@@ -11,20 +11,45 @@ use App\Carusel;
 use Alert;
 class admiController extends Controller
 {
+    /**
+      * Metodo constructor utilizado para limitar el acceso a solo al administrador (SSA)
+      *
+      * @return void
+    */
     public function construct(){
       $this->middleware('auth');
     }
-
+    /**
+      * Metodo utilizado para mostrar las noticias al administrador
+      * dando la posibilidad de ocultar o mostrar Noticias
+      *
+      * @return view
+    */
     public function Noticias(){
       $data = \App\Noticias::orderBy('Folio','desc')->get();
       return view('Admis.NoticiasAdmi',['data' => $data]);
     }
+    /**
+      * Metodo utilizado para ocultar noticias de la página principal de visitantes
+      *
+      * AJAX
+    */
     public function ONoticia($id){
       \App\Noticias::where('Folio',$id)->update(['Disponible' => 0]);
     }
+    /**
+      * Metodo utilizado para mostrar noticias de la página principal de visitantes
+      *
+      * AJAX
+    */
     public function MNoticia($id){
       \App\Noticias::where('Folio',$id)->update(['Disponible' => 1]);
     }
+    /**
+      * Metodo utilizado para mostrar el formulario de noticias.
+      *
+      * @return view
+    */
     public function index(){
       if(\Session::get('Noticias')){
         $msg = "Se guardo la notica con exito";
@@ -38,6 +63,11 @@ class admiController extends Controller
         return view('Admis.formNoti', ['msg'=>$msg]);
       }
     }
+    /**
+      * Metodo utilizado para guardar los datos registrados el formulario de noticias.
+      *
+      * @return redirect
+    */
     public function store(Request $request){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -92,6 +122,12 @@ class admiController extends Controller
             return redirect('Admi');
           }
     }
+    /**
+      * Metodo utilizado para mostrar el carrusel, dando la oportunidad de ocultar o mostrar
+      *imagenes en la página principal de visitantes,
+      *
+      * @return view
+    */
     public function VerCarusel(){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -100,6 +136,11 @@ class admiController extends Controller
         return view('Admis.AdmiCaruselEdit',['data' => $data]);
      }
     }
+    /**
+      * Metodo utilizado para ocular imagenes del carrusel.
+      *
+      * AJAX
+    */
     public function OImagenC($id){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -107,6 +148,11 @@ class admiController extends Controller
         \App\Carusel::where('id',$id)->update(['Estado' => 0]);
       }
     }
+    /**
+      * Metodo utilizado para mostrar imagenes en el carrusel.
+      *
+      * AJAX
+    */
     public function MImagenC($id){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -114,6 +160,11 @@ class admiController extends Controller
         \App\Carusel::where('id',$id)->update(['Estado' => 1]);
       }
     }
+    /**
+      * Metodo utilizado para mostrar el formulario para agregar imagenes al carrusel
+      *
+      * @return view
+    */
     public function Carusel(){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -121,6 +172,12 @@ class admiController extends Controller
         return view('Admis.Carusel');
       }
     }
+    /**
+      * Metodo utilizado para mostrar guardar en la BD la informacion registrada en
+      *el formulario de Carusel
+      *
+      * @return redirect
+    */
     public function NCarusel(Request $request){
         if(is_null(auth()->user()))
           return redirect('/');
@@ -140,6 +197,11 @@ class admiController extends Controller
           return redirect('Admi/NICarusel');
         }
       }
+      /**
+        * Metodo utilizado para mostrar las propuestas par la feria de Agrupaciones.
+        *
+        * @return view
+      */
     public function Propuestas(){
       if(is_null(auth()->user()))
         return redirect('/');
@@ -178,6 +240,11 @@ class admiController extends Controller
         ]);
       }
   }
+  /**
+    * Metodo utilizado para guardar en la BD la informacion referente a la feria de agrupaciones
+    *
+    * @return redirect
+  */
   public function Feria(Request $request){
     if(is_null(auth()->user()))
       return redirect('/');
@@ -190,6 +257,11 @@ class admiController extends Controller
       return redirect('Admi/Propuestas');
     }
   }
+  /**
+    * Metodo utilizado para acepar propuestas.
+    *
+    * AJAX
+  */
   public function StatusA($id){
     if(is_null(auth()->user()))
       return redirect('/');
@@ -197,6 +269,11 @@ class admiController extends Controller
       \App\Propuestas::where('id',$id)->update(['Estado' => 'Aprobada']);
     }
   }
+  /**
+    * Metodo utilizado para pedirle a una agrupacion que se comunique con la SSA
+    *
+    * AJAX
+  */
   public function StatusC($id){
     if(is_null(auth()->user()))
       return redirect('/');
@@ -204,7 +281,12 @@ class admiController extends Controller
       \App\Propuestas::where('id',$id)->update(['Estado' => 'Comunicate']);
     }
   }
-
+  /**
+    * Metodo utilizado para mostrar la lista de agrupaciones y poder cambiar
+    *su contraseña
+    *
+    * @return view
+  */
   public function Agrupaciones(){
     if(is_null(auth()->user()))
       return redirect('/');
@@ -213,6 +295,12 @@ class admiController extends Controller
       return view('Admis.Contraseñas',['data' => $data]);
     }
   }
+  /**
+    * Metodo utilizado para guardar en la base de datos la nueva contraseñas
+    *de las agrupaciones
+    *
+    * @return view
+  */
   public function NPassword(Request $request){
     if(is_null(auth()->user()))
       return redirect('/');
