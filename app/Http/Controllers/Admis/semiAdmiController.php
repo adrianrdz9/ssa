@@ -67,7 +67,9 @@ class semiAdmiController extends Controller
     }
     /**
       * Metodo utilizado guardar en la BD la informacion de la Propuesta
-      *realizada por la agruapcion
+      * realizada por la agruapcion
+      *
+      * @param Request $request Peticion con los dato
       *
       * @return view
     */
@@ -94,6 +96,8 @@ class semiAdmiController extends Controller
     /**
       * Metodo utilizado para guardar/actualizar las informacion de los
       *integrantes.
+      *
+      * @param Request $request Peticion con los dato
       *
       * @return redirect
     */
@@ -188,7 +192,9 @@ class semiAdmiController extends Controller
     }
     /**
       * Metodo utilizado para guardar/actualizar la informacion general de la
-      *agrupacion
+      * agrupacion
+      *
+      * @param Request $request Peticion con los dato
       *
       * @return redirect
     */

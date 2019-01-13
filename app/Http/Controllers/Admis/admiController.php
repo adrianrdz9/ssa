@@ -32,6 +32,8 @@ class admiController extends Controller
     /**
       * Metodo utilizado para ocultar noticias de la página principal de visitantes
       *
+      * @param Integer $id Id de la noticia seleccionada
+      *
       * AJAX
     */
     public function ONoticia($id){
@@ -39,6 +41,8 @@ class admiController extends Controller
     }
     /**
       * Metodo utilizado para mostrar noticias de la página principal de visitantes
+      *
+      * @param Integer $id Id de la noticia seleccionada
       *
       * AJAX
     */
@@ -65,6 +69,8 @@ class admiController extends Controller
     }
     /**
       * Metodo utilizado para guardar los datos registrados el formulario de noticias.
+      *
+      *@param Request $request Peticion con los dato
       *
       * @return redirect
     */
@@ -139,6 +145,8 @@ class admiController extends Controller
     /**
       * Metodo utilizado para ocular imagenes del carrusel.
       *
+      *@param Integer $id Id de la imagen seleccionada
+      *
       * AJAX
     */
     public function OImagenC($id){
@@ -150,6 +158,8 @@ class admiController extends Controller
     }
     /**
       * Metodo utilizado para mostrar imagenes en el carrusel.
+      *
+      *@param Integer $id Id de la imagen seleccionada
       *
       * AJAX
     */
@@ -174,7 +184,9 @@ class admiController extends Controller
     }
     /**
       * Metodo utilizado para mostrar guardar en la BD la informacion registrada en
-      *el formulario de Carusel
+      * el formulario de Carusel
+      *
+      * @param Request $request Peticion con los dato
       *
       * @return redirect
     */
@@ -243,6 +255,8 @@ class admiController extends Controller
   /**
     * Metodo utilizado para guardar en la BD la informacion referente a la feria de agrupaciones
     *
+    *@param Request $request Peticion con los dato
+    *
     * @return redirect
   */
   public function Feria(Request $request){
@@ -260,6 +274,8 @@ class admiController extends Controller
   /**
     * Metodo utilizado para acepar propuestas.
     *
+    *@param Integer $id Id de la noticia a eliminar
+    *
     * AJAX
   */
   public function StatusA($id){
@@ -271,6 +287,8 @@ class admiController extends Controller
   }
   /**
     * Metodo utilizado para pedirle a una agrupacion que se comunique con la SSA
+    *
+    * @param Integer $id Id de la noticia a eliminar
     *
     * AJAX
   */
@@ -297,7 +315,9 @@ class admiController extends Controller
   }
   /**
     * Metodo utilizado para guardar en la base de datos la nueva contraseñas
-    *de las agrupaciones
+    * de las agrupaciones
+    *
+    *@param Request $request Peticion con los dato
     *
     * @return view
   */
