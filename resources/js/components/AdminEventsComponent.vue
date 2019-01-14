@@ -20,7 +20,7 @@
                 <div class="modal fade" :id="'editEvent-'+event.id" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form :action="'/admin/events/'+event.id" method="post">
+                            <form :action="'/actividades-deportivas/admin/events/'+event.id" method="post">
                                 <div class="modal-body">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="cancel">
                                         <span aria-hidden="true">&times;</span>
@@ -34,7 +34,7 @@
                                         <input type="text" name="link_to" v-model="event.link_to" class="form-control mt-2" placeholder="Dirección del link">
                                 </div>
                                 <div class="modal-footer">
-                                    <form :action="'/admin/events/'+event.id" method="post">
+                                    <form :action="'/actividades-deportivas/admin/events/'+event.id" method="post">
                                         <input type="hidden" name="_token" :value="csrf">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="submit" value="Eliminar" class="btn btn-danger">
@@ -58,7 +58,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="/admin/events" method="post">
+                    <form action="/actividades-deportivas/admin/events" method="post">
                         <div class="modal-body">
                             <input type="hidden" name="_token" :value="csrf">
                             <label for="date">Fecha</label>

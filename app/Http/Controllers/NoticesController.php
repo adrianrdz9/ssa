@@ -31,6 +31,7 @@ class NoticesController extends Controller
      * @return Redirect
      */
     public function store(Request $request){
+        // Realizar validacion
         $request->validate([
             'max_date' => 'nullable|date|after:today',
             'notice' => 'nullable|string',
@@ -38,6 +39,7 @@ class NoticesController extends Controller
 
         ]);
 
+        // Realizar creacion
         Notice::create([
             'max_date' => $request->max_date,
             'notice' => $request->notice,
@@ -45,6 +47,7 @@ class NoticesController extends Controller
 
         ]);
 
+        // Redireccionar
         return redirect()->back()->with('notice', 'Aviso creado');
     }
 
@@ -57,12 +60,14 @@ class NoticesController extends Controller
      * @return Redirect
      */
     public function update(Request $request, $id){
+        // Realizar validacion
         $request->validate([
             'max_date' => 'nullable|date|after:today',
             'notice' => 'nullable|string',
             'color'=> ['nullable', new Hex]
         ]);
 
+        // Buscar y actualizar la noticia
         Notice::find($id)->update([
             'max_date'=>$request->max_date,
             'notice'=>$request->notice,
@@ -70,6 +75,7 @@ class NoticesController extends Controller
 
         ]);
 
+        // Redireccionar
         return redirect()->back()->with('notice', 'Aviso actualizado');
 
     }
@@ -82,7 +88,10 @@ class NoticesController extends Controller
      * @return Redirect
      */
     public function delete($id){
+        // Buscar y eliminar la noticia
         Notice::find($id)->delete();
+
+        // Redireccionar
         return redirect()->back()->with('notice', 'Aviso eliminado');
     }
 }

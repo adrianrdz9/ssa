@@ -72,7 +72,7 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
      */
     protected $fillable = [
         'name', 'last_name', 'email', 'height', 'weight', 'birthdate', 'career', 'semester', 'account_number',
-        'curp', 'address', 'medical_service', 'blood_type', 'medical_card_no', 'phone_number', 'password'
+        'curp', 'address', 'medical_service', 'blood_type', 'medical_card_no', 'phone_number', 'password', 'username'
     ];
 
     /**

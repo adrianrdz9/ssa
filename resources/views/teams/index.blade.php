@@ -21,6 +21,10 @@
                             @if ($team->isCaptain())
                                 <span>Eres el capitan</span>
                             @endif
+
+                            @if ($team->stateIs('pending'))
+                                <span>Solicitud pendientee</span>
+                            @endif
                         </div>
 
                         <div class="card-body">
@@ -29,6 +33,12 @@
                             <b>Capitan:</b>
                             {{$team->team->captain->name}}
                             {{$team->team->captain->last_name}} <br>
+                            <span>
+                                El equipo debe de ser de entre 
+                                {{$team->team->branch->tournament->min_per_team}}
+                                y
+                                {{$team->team->branch->tournament->max_per_team}}
+                            </span><br>
                             <b>Integrantes del equipo:</b>
                             <div class="row">
                                 @foreach ($team->team->accepted_users as $user)
@@ -38,6 +48,27 @@
                                 @endforeach
                             </div>
                             @if ($team->isCaptain())
+                                <hr>
+                                <span>
+                                    Recuerda que no tu equipo no esta inscrito hasta que cierres inscripciones y lleves 
+                                    el combrobante de inscripción a Actividades deportivas para que se valide tu equipo 
+                                </span><br>
+                                @if ($team->team->available)
+                                    @if ($team->team->canClose())
+                                        <form action="{{route('closeTeam', ['id' => $team->team->id])}}" method="post">
+                                            @csrf
+                                            <input type="submit" class="btn btn-warning" value="Cerrar inscripciones a este equipo"> <br>
+                                        </form>
+                                        <small>Ya nadie mas se podrá inscribir al torneo</small>    
+                                    @else
+                                        <button class="btn btn-warning" disabled>Cerrar inscripciones a este equipo</button> <br>
+                                        <small>Le hacen falta integrantes a tu equipo</small> 
+                                    @endif
+                                
+                                @else
+                                    <span>Imprime tu comprobante y llevalo a actividades deportivas para completar la inscripcion</span><br>
+                                    <a href="{{route('getVoucher', ['id' => $team->team->id])}}">Descargar comprobante</a>
+                                @endif
                                 <hr>
                                 <b>Solicitudes</b>
                                 @foreach ($team->team->requests as $request)
@@ -65,7 +96,7 @@
 
                                                 <div class="col-12">
                                                     <div class="d-block text-right">
-                                                        <form action="{{route('updateUserTeam', ['id' => $team->id])}}" method="post">
+                                                        <form action="{{route('updateUserTeam', ['id' => $team->team->id])}}" method="post">
                                                             @method('put')
                                                             @csrf
                                                             <input type="hidden" name="request_id" value="{{$request->id}}">

@@ -32,7 +32,7 @@ class Team extends Model
      * 
      * @var Array[String]
      */
-    protected $fillable = ['captain_id', 'branch_id', 'name'];
+    protected $fillable = ['captain_id', 'branch_id', 'name', 'voucher'];
 
     /**
      * Metodo que devuelve la rama a la que pertence el equipo
@@ -69,5 +69,13 @@ class Team extends Model
      */
     public function accepted_users(){
         return $this->hasMany('App\UserInTeam', 'team_id', 'id')->where('status', 'accepted')->with('user');
+    }
+
+    /**
+     * Verifica si un equipo puede cerrar inscripciones
+     */
+    public function canClose(){
+        return true;
+        return $this->branch->tournament->min_per_team <= $this->accepted_users->count();
     }
 }

@@ -92,12 +92,15 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     
         Route::put('/{id}', 'TournamentsController@update')->name('updateTournament');
         Route::get('/{id}/editar', 'TournamentsController@edit')->name('editTournament');
-    
+        
+        Route::get('/completar', 'TeamsController@complete')->name('completeSignup');
+        Route::get('/completar/{id}', 'TeamsController@teamDetails');
+        Route::post('/completar/{id}', 'TeamsController@markComplete');
+
         Route::get('/{id}', 'TournamentsController@show')->name('signUpTournament');
         Route::get('/{id}/equipo', 'TournamentsController@team')->name('teamSelect');
         Route::get('/{id}/voucher')->name('tournamentVoucher');
     
-        Route::get('/completar')->name('completeSignup');
     });
     
     Route::post('/teams', 'TeamsController@store');
@@ -105,6 +108,8 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     
     Route::get('/mis_equipos', 'TeamsController@index')->name('teamsIndex');
     Route::put('/mis_equipos/{id}', 'TeamsController@update')->name('updateUserTeam');
+    Route::post('/mis_equipos/{id}/close', 'TeamsController@close')->name('closeTeam');
+    Route::get('/mis_equipos/{id}/comprobante', 'TeamsController@voucher')->name('getVoucher');
     
     
     Route::get('/deportes', 'SportsController@index')->name('sportsIndex');

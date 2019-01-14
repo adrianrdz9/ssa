@@ -29,6 +29,7 @@ class SlidesController extends Controller
      * @return Redirect
      */
     public function store(Request $request){
+        // Realizar validacion
         $request->validate([
             'caption'=>"nullable|string",
             'image'=>'nullable|image',
@@ -36,6 +37,7 @@ class SlidesController extends Controller
             'link_text'=>'nullable|string'
         ]);
 
+        // Realizar creacion
         $slide = Slide::create([
             'caption'=>$request->caption,
             'image'=>$request->file('image'),
@@ -43,6 +45,7 @@ class SlidesController extends Controller
             'link_text'=>$request->link_text
         ]);
 
+        // Redireccion
         return redirect()->back()->with('notice', 'Imagen creada');
     }
 
@@ -55,22 +58,27 @@ class SlidesController extends Controller
      * @return Redirect
      */
     public function update($id, Request $request){
+        // Realizar validacion
         $request->validate([
             'caption'=>"nullable|string",
             'image'=>'nullable|image',
             'link_to'=>'nullable|string',
             'link_text'=>'nullable|string'
         ]);
-
+        
+        // Realizar actualizacion manual porque la imagen no se puede actualizar directamente
         $slide = Slide::find($id);
         $slide->caption = $request->caption;
         $slide->link_to = $request->link_to;
         $slide->link_text = $request->link_text;
         $slide->save();
+
+        // Actializar la imagen
         if($request->hasFile('image') && $request->file('image')->isValid())
             $slide->image = $request->file('image');
         $slide->save();
 
+        // Redireccionar
         return redirect()->back()->with('notice', 'Imagen actualizada');
     }
 
@@ -82,7 +90,10 @@ class SlidesController extends Controller
      * @return Redirect
      */
     public function delete($id){
+        // Eliminar la imagen del carrusel
         Slide::find($id)->delete();
+
+        // Redireccionar
         return redirect()->back()->with('notice', 'Imagen eliminada');
     }
 }

@@ -62,14 +62,16 @@ class Branch extends Model
     }
 
     /**
-     * Metodo que devuelve si el usuario ya esta inscrito en algun torneo
+     * Metodo que devuelve si el usuario ya esta inscrito en esta rama
      * 
      * @param Integer $id Id del usuario
      * 
      * @return Boolean
      */
     public function userSignedup($id){
+        // Busca las inscripciones del usuario dado
         $team = UserInTeam::where('user_id', $id)
+                    // Y verifica si alguna corresponde a un equipo de la rama
                     ->whereIn('team_id', $this->teams->only('id'));
         if($team->count() > 0){
            return true;

@@ -6,35 +6,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
-use \App\Slide;
 use \App\Event;
 use \App\Notice;
-use \App\Tournament;
-
-use Carbon\Carbon;
-
+use \App\Slide;
 
 class HomeController extends Controller
 {
     /**
      * Propiedad que almacena el controlador HistoricController
-     * 
+     *
      * @var \App\HistoricController
      */
     protected $historic;
 
     /**
-     * Metodo constructor utilizado para solicitar al inyector de dependencias 
+     * Metodo constructor utilizado para solicitar al inyector de dependencias
      * una instancia del controllador HistoricController
-     * 
+     *
      * @param \App\HistoricController $historic
-     * 
+     *
      * @return void
      */
-    public function __construct(HistoricController $historic){
+    public function __construct(HistoricController $historic)
+    {
+        // Se guarda el controlador dado por el inyector de dependencias
         $this->historic = $historic;
     }
 
@@ -46,30 +43,37 @@ class HomeController extends Controller
      */
     public function index()
     {
-       if(Auth::check() && Auth::user()->hasRole('eval')){
-           return $this->historic->index();
-       }
+        // El usuario es evaluador
+        if (Auth::check() && Auth::user()->hasRole('eval')) {
+            // Ejecuta el codigo correspondiente para el inicio del evaluador (vista de historico)
+            return $this->historic->index();
+        }
+        
         $slides = Slide::all();
-        foreach($slides as $key=>$slide){
+        foreach ($slides as $key => $slide) {
+            // A cada objeto del carrusel se le asigna la ruta hacia la imagen que le corresponde
             $slides[$key]->img = $slide->imgPath();
         }
-        if(Auth::check()){
-            if(Auth::user()->hasRole('admin')){
-                return view('admin.index', ['slides' => $slides]);
-            }
+        
+        // El usuario es administrador
+        if (Auth::check() && Auth::user()->hasRole('admin')) {
+            // Muestra la vista de inicio del administrador (editor del carrusel)
+            return view('admin.index', ['slides' => $slides]);
         }
+        // Eventos posteriores al dia actual
         $events = Event::where([
             ['date', '<>', 'NULL'],
-            ['date', '>', Carbon::today()->toDateString()]
+            ['date', '>', Carbon::today()->toDateString()],
         ])->orderBy('date')->get();
 
+        // Noticias posteriores al dia actual
         $notices = Notice::where([
             ['max_date', '<>', 'NULL'],
-            ['max_date', '>', Carbon::today()->toDateString()]
+            ['max_date', '>', Carbon::today()->toDateString()],
         ])->orderBy('created_at')->get();
 
+        // Vista de estudiantes e invitados
         return view('student.home', ['slides' => $slides, 'events' => $events, 'notices' => $notices]);
     }
 
-    
 }

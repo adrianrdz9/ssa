@@ -45,6 +45,7 @@ class EventsController extends Controller
      * @return Redirect
      */
     public function store(Request $request){
+        // Realizar validacion
         $request->validate([
             'date' => 'nullable|date|after:today',
             'event' => 'nullable|string',
@@ -52,6 +53,7 @@ class EventsController extends Controller
             'link_to' => 'nullable|string'
         ]);
 
+        // Realizar creacion
         Event::create([
             'date' => $request->date,
             'event' => $request->event,
@@ -59,6 +61,7 @@ class EventsController extends Controller
             'link_to' => $request->link_to
         ]);
 
+        // Redireccionar 
         return redirect()->back()->with('notice', 'Evento creado');
     }
 
@@ -71,6 +74,7 @@ class EventsController extends Controller
      * @return Redirect
      */
     public function update(Request $request, $id){
+        // Realizar validacion
         $request->validate([
             'date' => 'nullable|date|after:today',
             'event' => 'nullable|string',
@@ -78,6 +82,7 @@ class EventsController extends Controller
             'link_to' => 'nullable|string'
         ]);
 
+        // Buscar el evento y actualizarlo
         Event::find($id)->update([
             'date'=>$request->date,
             'event'=>$request->event,
@@ -85,6 +90,7 @@ class EventsController extends Controller
             'link_to' => $request->link_to
         ]);
 
+        // Redireccionar
         return redirect()->back()->with('notice', 'Evento actualizado');
 
     }
@@ -97,7 +103,10 @@ class EventsController extends Controller
      * @return Redirect
      */
     public function delete($id){
+        // Buscar el evento y borrarlo
         Event::find($id)->delete();
+
+        // Redireccionar
         return redirect()->back()->with('notice', 'Evento eliminado');
     }
 }

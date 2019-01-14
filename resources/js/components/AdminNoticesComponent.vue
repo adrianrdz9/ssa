@@ -15,7 +15,7 @@
                 <div class="modal fade" :id="'editNotice-'+notice.id" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form :action="'/admin/notices/'+notice.id" method="post">
+                            <form :action="'/actividades-deportivas/admin/notices/'+notice.id" method="post">
                                 <div class="modal-body">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="cancel">
                                         <span aria-hidden="true">&times;</span>
@@ -27,7 +27,7 @@
                                         <input type="color" name="color" v-model="notice.color" class="form-control">
                                 </div>
                                 <div class="modal-footer">
-                                    <form :action="'/admin/notices/'+notice.id" method="post">
+                                    <form :action="'/actividades-deportivas/admin/notices/'+notice.id" method="post">
                                         <input type="hidden" name="_token" :value="csrf">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="submit" value="Eliminar" class="btn btn-danger">
@@ -51,7 +51,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="/admin/notices" method="post">
+                    <form action="/actividades-deportivas/admin/notices" method="post">
                         <div class="modal-body">
                             <input type="hidden" name="_token" :value="csrf">
                             <input type="date" name="max_date" id="date" class="form-control">
