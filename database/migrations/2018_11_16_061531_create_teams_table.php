@@ -21,7 +21,9 @@ class CreateTeamsTable extends Migration
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->string('name');
             $table->boolean('isRepresentative')->default(false);
-            
+            $table->boolean('available')->default(true);
+            $table->string('voucher')->nullable();
+            $table->boolean('completed')->default(false);
             
             $table->timestamps();
         });

@@ -8,6 +8,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import Vue from 'vue'
 
 import VueQrcodeReader from 'vue-qrcode-reader';
 import VueQrcode from '@xkeshi/vue-qrcode';
@@ -22,20 +23,20 @@ Vue.component(VueQrcode.name, VueQrcode);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('notices-carousel', require('./components/NoticesCarousel.vue'));
-Vue.component('notices-carousel-editor', require('./components/NoticesCarouselEditor.vue'));
-Vue.component('events-component', require('./components/EventsComponent.vue'));
-Vue.component('admin-events', require('./components/AdminEventsComponent.vue'));
-Vue.component('notices-component', require('./components/NoticesComponent.vue'));
-Vue.component('admin-notices', require('./components/AdminNoticesComponent.vue'));
-Vue.component('date-format', require('./components/DateFormatComponent.vue'));
-Vue.component('create-tournament', require('./components/CreateTournamentComponent.vue'));
-Vue.component('edit-tournament', require('./components/EditTournamentComponent.vue'));
-Vue.component('complete-signup', require('./components/CompleteSignUp.vue'));
-Vue.component('profile-avatar-input', require('./components/ProfileAvatarInput.vue'));
-Vue.component('tournament-historic', require('./components/TournamentHistoric.vue'));
-Vue.component('team-index', require('./components/TeamIndexComponent.vue'));
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('notices-carousel', require('./components/NoticesCarousel.vue').default);
+Vue.component('notices-carousel-editor', require('./components/NoticesCarouselEditor.vue').default);
+Vue.component('events-component', require('./components/EventsComponent.vue').default);
+Vue.component('admin-events', require('./components/AdminEventsComponent.vue').default);
+Vue.component('notices-component', require('./components/NoticesComponent.vue').default);
+Vue.component('admin-notices', require('./components/AdminNoticesComponent.vue').default);
+Vue.component('date-format', require('./components/DateFormatComponent.vue').default);
+Vue.component('create-tournament', require('./components/CreateTournamentComponent.vue').default);
+Vue.component('edit-tournament', require('./components/EditTournamentComponent.vue').default);
+Vue.component('complete-signup', require('./components/CompleteSignUp.vue').default);
+Vue.component('profile-avatar-input', require('./components/ProfileAvatarInput.vue').default);
+Vue.component('tournament-historic', require('./components/TournamentHistoric.vue').default);
+Vue.component('team-index', require('./components/TeamIndexComponent.vue').default);
 
 const app = new Vue({
     el: '#app'

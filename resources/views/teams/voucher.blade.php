@@ -50,6 +50,10 @@
             left: 37.5%;
             height: 7cm;
         }
+
+        .break{
+            page-break-after: always;
+        }
     </style>
 </head>
 <body class="px-4">
@@ -75,32 +79,50 @@
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">Nombre:</th>
-                    <td>{{$user->name.' '.$user->last_name}}</td>
-                    <td>{{\Carbon\Carbon::parse($user->birthdate)->age}} años</td>
-                    <th>{{$user->curp || 'Curp no disponible'}}</th>
-                    <th style="background: white; border:0;">No. de cuenta</th>
-                    <th>{{$user->account_number}}</th>
+                    <td colspan="6" style="text-align: center; font-size: 1.2em;">
+                        Equipo:
+                        {{$team->name}}
+                    </td> 
                 </tr>
-                <tr>
-                    <th scope="row">Plantel:</th>
-                    <td colspan="3">Facultad de ingenieria</td>
-                    <td>Tipo de usuario: </td>
-                    @role('student')
-                        <th>Estudiante</th>
-                    @endrole
-                </tr>
-                <tr>
-                    <th scope="row">Carrera:</th>
-                    <td>{{$user->career}}</td>
-                    <th>Servicio: </th>
-                    <td>{{$user->medical_service}}</td>
-                    <th colspan="2">Carnet: {{$user->medical_card_no}}</th>
-                </tr>
+                @foreach ($team->accepted_users as $user)
+                    <?php $user = $user->user ?>
+                    <tr style="border-top: solid 2px black;">
+                        <th scope="row">Nombre:</th>
+                        <td>{{$user->name.' '.$user->last_name}}</td>
+                        <td>{{\Carbon\Carbon::parse($user->birthdate)->age}} años</td>
+                        @if(isset($user->curp))
+                            <th>{{$user->curp}}</th>
+                        @else
+                            <th>Curp no disponible</th>
+                        @endif
+                        
+                        <th style="background: white; border:0;">No. de cuenta</th>
+                        <th>{{$user->account_number}}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row">Plantel:</th>
+                        <td colspan="3">Facultad de ingenieria</td>
+                        <td>Tipo de usuario: </td>
+                        <th>
+                        @if($user->hasRole('student'))
+                            Estudiante
+                        @endif
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="row">Carrera:</th>
+                        <td>{{$user->career}}</td>
+                        <th>Servicio: </th>
+                        <td>{{$user->medical_service}}</td>
+                        <th colspan="2">Carnet: {{$user->medical_card_no}}</th>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
-
+    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate($team->voucher)) !!}" id="qr" class="mt-4" height="150">
+    <span><b>Folio: </b> {{$team->voucher}}</span>
+    <div class="break"></div>
     <div class="responsiva position-relative">
         <p class="text-justify">
             <span class="text-uppercase text-center d-block">Carta responsiva del evento</span>
@@ -113,20 +135,30 @@
     </div>
     <table class="w-100 text-center" style="margin-top: 4cm;">
         <thead>
-            <tr>
-                <td class="w-50 border-0" style="font-size:1em;">
-                    <div style="width: 80%; display: block; margin: auto; border: 1px solid black;"></div>
-                    Firma del alumno
-                </td>
-                <td class="w-50 border-0" style="font-size:1em;">
-                    <div style="width: 80%; display: block; margin: auto; border: 1px solid black;"></div>
-                    Firma del tutor (menor de edad)
-                </td>
-            </tr>
+            @foreach ($team->accepted_users as $user)
+                <?php $user = $user->user ?>
+                <tr>
+                    <td class="w-50 border-0" style="font-size:1em;">
+                        <div style="width: 80%; display: block; margin: auto; border: 1px solid black;"></div>
+                        Firma del alumno 
+                        <br>
+                        <small>
+                            {{$user->name}} {{$user->last_name}}
+                        </small> <br> <br><br>
+                    </td>
+                    <td class="w-50 border-0" style="font-size:1em;">
+                        <div style="width: 80%; display: block; margin: auto; border: 1px solid black;"></div>
+                        Firma del tutor (menor de edad)
+                        <br>
+                        <small>
+                            {{$user->name}} {{$user->last_name}}
+                        </small><br> <br><br>
+                    </td>
+                </tr>
+            @endforeach
         </thead>
     </table>
     
-    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate($folio)) !!}" id="qr" class="mt-4" height="150">
-    <span><b>Folio: </b> {{$folio}}</span>
+    
 </body>
 </html>

@@ -1,5 +1,11 @@
 <?php
 
+Route::get('/', function(){
+    return view('home');
+});
+
+Auth::routes();
+
 Route::group(['prefix' => 'agrupaciones'], function () { 
     //login
     Route::get('/Agrupa','Auth\LoginController@showLoginForm' );
@@ -46,7 +52,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::view('/semiAdmi/CambioMesa','Admis.cambioMesa');
     //Visitante
     //Noticias - 9 (index)
-    Route::get('/','Visitante\generalController@index');
+    Route::get('/','Visitante\generalController@index')->name('agrupacionesIndex');
     //Noticias individual
     Route::get('Noticia/id/{id}','Visitante\generalController@noticia');
     Route::get('/Historial','Visitante\generalController@Historial');
@@ -59,16 +65,15 @@ Route::group(['prefix' => 'agrupaciones'], function () {
 Route::group(['prefix' => 'actividades-deportivas'], function () {
     
     
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index')->name('actividadesDeportivasIndex');
     
-    Auth::routes();
     
     Route::post('/admin/slides', 'SlidesController@store')->name('storeSlide');
     Route::put('/admin/slides/{id}', 'SlidesController@update');
     Route::delete('/admin/slides/{id}', 'SlidesController@delete');
     
-    Route::get('/eventos-y-avisos', 'HomeController@events')->name('events');
     
+    Route::get('/admin/events', 'EventsController@index')->name('events');
     Route::post('/admin/events', 'EventsController@store')->name('storeEvent');
     Route::put('/admin/events/{id}', 'EventsController@update');
     Route::delete('/admin/events/{id}', 'EventsController@delete');
@@ -87,12 +92,15 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     
         Route::put('/{id}', 'TournamentsController@update')->name('updateTournament');
         Route::get('/{id}/editar', 'TournamentsController@edit')->name('editTournament');
-    
+        
+        Route::get('/completar', 'TeamsController@complete')->name('completeSignup');
+        Route::get('/completar/{id}', 'TeamsController@teamDetails');
+        Route::post('/completar/{id}', 'TeamsController@markComplete');
+
         Route::get('/{id}', 'TournamentsController@show')->name('signUpTournament');
         Route::get('/{id}/equipo', 'TournamentsController@team')->name('teamSelect');
         Route::get('/{id}/voucher')->name('tournamentVoucher');
     
-        Route::get('/completar')->name('completeSignup');
     });
     
     Route::post('/teams', 'TeamsController@store');
@@ -100,6 +108,8 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     
     Route::get('/mis_equipos', 'TeamsController@index')->name('teamsIndex');
     Route::put('/mis_equipos/{id}', 'TeamsController@update')->name('updateUserTeam');
+    Route::post('/mis_equipos/{id}/close', 'TeamsController@close')->name('closeTeam');
+    Route::get('/mis_equipos/{id}/comprobante', 'TeamsController@voucher')->name('getVoucher');
     
     
     Route::get('/deportes', 'SportsController@index')->name('sportsIndex');
@@ -111,4 +121,10 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     
     Route::get('/historico', 'HistoricController@index')->name('historicIndex');
     Route::get('/historico/{id}', 'HistoricController@show')->name('tournamentHistoric');
+});
+
+Route::group(['prefix' => 'bolsa'], function () {
+    Route::get('/', function(){
+
+    })->name('bolsaIndex');
 });

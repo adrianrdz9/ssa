@@ -5,7 +5,7 @@
             <div v-for="(slide, i) in slides" :key="slide.id" class="card">
                 <img :src="slide.img" alt="" class="w-100" height="200">
                 <div class="card-body">
-                    <form :action="'/admin/slides/'+slide.id" method="post" enctype="multipart/form-data">
+                    <form :action="'/actividades-deportivas/admin/slides/'+slide.id" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="_token" :value="csrf">
                         <input type="text" v-model="slide.caption" class="form-control" placeholder="Pie de imagen" name="caption">
@@ -18,7 +18,7 @@
                                 <input type="submit" value="Guardar" class="btn btn-success w-100">
                             </div>
                             <div class="col-sm-6">
-                                <form :action="'/admin/slides/'+slide.id" method="post">
+                                <form :action="'/actividades-deportivas/admin/slides/'+slide.id" method="post">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" :value="csrf">
                                     <input type="submit" value="Eliminar" class="btn btn-danger w-100">
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="card">
-                <form action="/admin/slides" method="post">
+                <form action="/actividades-deportivas/admin/slides" method="post">
                     <input type="hidden" name="_token" :value="csrf">
                     <button class="btn btn-secondary btn-lg rounded-circle">
                         <i class="fas fa-plus"></i>

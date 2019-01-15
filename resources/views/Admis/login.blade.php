@@ -7,14 +7,14 @@
             <form method="POST" action="{{ route('Agrupa') }}">
               {{ csrf_field() }}
                 <div class="form-group {{ $errors->has('Siglas') ? 'has-error' : '' }} ">
-                  <label for="Siglas">Siglas</label>
+                  <label for="Siglas">Siglas o número de cuenta</label>
                   <input class="form-control"
                       type="text"
-                      name="Siglas" required
-                      value = "{{ old('Siglas')}}"
-                      placeholder="Ingresa las siglas de tu agrupación">
+                      name="username" required
+                      value = "{{ old('username')}}"
+                      placeholder="Ingresa las siglas de tu agrupación o tu numero de cuenta">
                   <br/><p style="text-align:center;">
-                    {!! $errors->first('Siglas', '<span class="alert alert-danger">:message</span>') !!}
+                    {{ $errors->first('username', '<span class="alert alert-danger">:message</span>') }}
                   </p>
                 </div>
                 <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }} ">
@@ -24,7 +24,7 @@
                       name="password"
                       required
                       placeholder="Ingresa tu contraseña">
-                  {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
+                  {{ $errors->first('password', '<span class="help-block">:message</span>') }}
 
                 </div>
                 <input type="submit" value="Iniciar sesión">
