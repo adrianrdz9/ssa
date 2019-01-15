@@ -1,5 +1,23 @@
 <?php
 
+/**
+ * Modelo de un torneo
+ * 
+ * Sport
+ * | Has many
+ * V
+*! Tournament 
+ * | Has many
+ * V
+ * Branch
+ * | Has many
+ * V
+ * Team
+ * |
+ * V 
+*? ...
+ */
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -12,8 +30,16 @@ use \App\UserInTeam;
 
 class Tournament extends Model
 {
+    /**
+     * Trait para implementar soft delete
+     */
     use SoftDeletes;
 
+    /**
+     * Propiedad que almacena los campos que se pueden actualizar "en masa"
+     * 
+     * @var Array[String]
+     */
     protected $fillable = ['name', 'sport_id', 'date', 'signup_close', 'semester', 'only_representative', 'branch', 'responsable', 'technic_meeting', 'place', 'max_teams', 'min_per_team', 'max_per_team'];
 
     public function sport(){

@@ -4,7 +4,7 @@
             <h3>Nuevo torneo</h3>
         </div>
         <div class="card-body">
-            <form action="/torneos/nuevo" method="post" @submit="validateForm">
+            <form action="/actividades-deportivas/torneos/nuevo" method="post" @submit="validateForm">
                 <input type="hidden" name="_token" :value="csrf">
                 <input type="text" name="name" id="name" class="form-control my-2" placeholder="Nombre del torneo" required>
                 <input type="text" name="responsable" id="responsable" class="form-control my-2" placeholder="Responsable del torneo" required>
@@ -137,7 +137,7 @@ export default {
                 confirmButtonText: 'Agregar',
                 showLoaderOnConfirm: true,
                 preConfirm: (data) => {
-                    axios.post('/admin/sports', {
+                    axios.post('/actividades-deportivas/admin/sports', {
                         name: data
                     }).then(response => {
                         console.log(response);
@@ -175,7 +175,7 @@ export default {
                 confirmButtonText: 'Agregar',
                 showLoaderOnConfirm: true,
                 preConfirm: (data) => {
-                    axios.post('/admin/requirements', {
+                    axios.post('/actividades-deportivas/admin/requirements', {
                         name: data
                     }).then(response => {
                         console.log(response);

@@ -4607,6 +4607,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4621,8 +4622,7 @@ __webpack_require__.r(__webpack_exports__);
       folio: "",
       validFolio: "",
       dataAvailable: false,
-      user: {},
-      tournament: {},
+      team: {},
       decoded: false,
       error: ""
     };
@@ -4639,21 +4639,20 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (event) event.preventDefault();
-      axios.get('/torneos/completar/' + this.folio).then(function (response) {
+      axios.get('/actividades-deportivas/torneos/completar/' + this.folio).then(function (response) {
         if (response.data) {
-          _this.tournament = response.data.tournament;
-          _this.user = response.data.user;
-          _this.user.status = response.data.status;
+          console.log(response.data);
+          _this.team = response.data;
           _this.dataAvailable = true;
           _this.paused = true;
           _this.decoded = true;
           _this.validFolio = _this.folio;
-          console.log(response.data);
         } else {
           _this.error = "No hay ningun registro con ese folio.";
         }
       }).catch(function (err) {
         _this.error = "Ocurrio un error inesperado.";
+        log(err);
       });
     }
   }
@@ -4808,7 +4807,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Agregar',
         showLoaderOnConfirm: true,
         preConfirm: function preConfirm(data) {
-          axios.post('/admin/sports', {
+          axios.post('/actividades-deportivas/admin/sports', {
             name: data
           }).then(function (response) {
             console.log(response);
@@ -4850,7 +4849,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Agregar',
         showLoaderOnConfirm: true,
         preConfirm: function preConfirm(data) {
-          axios.post('/admin/requirements', {
+          axios.post('/actividades-deportivas/admin/requirements', {
             name: data
           }).then(function (response) {
             console.log(response);
@@ -5597,7 +5596,7 @@ __webpack_require__.r(__webpack_exports__);
             confirmButtonText: 'Crear',
             showLoaderOnConfirm: true,
             preConfirm: function preConfirm(data) {
-              axios.post('/teams', {
+              axios.post('/actividades-deportivas/teams', {
                 tournament_id: _this.branch.id,
                 name: data
               }).then(function (response) {
@@ -5637,7 +5636,7 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: 'Cancelar'
       }).then(function (result) {
         if (result.value) {
-          axios.post('/teams/' + team.id).then(function (response) {
+          axios.post('/actividades-deportivas/teams/' + team.id).then(function (response) {
             console.log(response);
 
             if (response.status !== 200 && response.status !== 201) {
@@ -5756,7 +5755,7 @@ __webpack_require__.r(__webpack_exports__);
       this.showList = false;
       this.loading = true;
       var id = $(event.target).data('id');
-      axios.get('/historico/' + id).then(function (response) {
+      axios.get('/actividades-deportivas/historico/' + id).then(function (response) {
         if (response.statusText === "OK") {
           _this.data = response.data;
           _this.loading = false;
@@ -54710,7 +54709,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.14.4
+ * @version 1.14.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -54807,7 +54806,8 @@ function getStyleComputedProperty(element, property) {
     return [];
   }
   // NOTE: 1 DOM access here
-  var css = getComputedStyle(element, null);
+  var window = element.ownerDocument.defaultView;
+  var css = window.getComputedStyle(element, null);
   return property ? css[property] : css;
 }
 
@@ -54895,7 +54895,7 @@ function getOffsetParent(element) {
   var noOffsetParent = isIE(10) ? document.body : null;
 
   // NOTE: 1 DOM access here
-  var offsetParent = element.offsetParent;
+  var offsetParent = element.offsetParent || null;
   // Skip hidden elements which don't have an offsetParent
   while (offsetParent === noOffsetParent && element.nextElementSibling) {
     offsetParent = (element = element.nextElementSibling).offsetParent;
@@ -54907,9 +54907,9 @@ function getOffsetParent(element) {
     return element ? element.ownerDocument.documentElement : document.documentElement;
   }
 
-  // .offsetParent will return the closest TD or TABLE in case
+  // .offsetParent will return the closest TH, TD or TABLE in case
   // no offsetParent is present, I hate this job...
-  if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+  if (['TH', 'TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
     return getOffsetParent(offsetParent);
   }
 
@@ -55457,9 +55457,10 @@ function getReferenceOffsets(state, popper, reference) {
  * @returns {Object} object containing width and height properties
  */
 function getOuterSizes(element) {
-  var styles = getComputedStyle(element);
-  var x = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
-  var y = parseFloat(styles.marginLeft) + parseFloat(styles.marginRight);
+  var window = element.ownerDocument.defaultView;
+  var styles = window.getComputedStyle(element);
+  var x = parseFloat(styles.marginTop || 0) + parseFloat(styles.marginBottom || 0);
+  var y = parseFloat(styles.marginLeft || 0) + parseFloat(styles.marginRight || 0);
   var result = {
     width: element.offsetWidth + y,
     height: element.offsetHeight + x
@@ -55911,6 +55912,52 @@ function applyStyleOnLoad(reference, popper, options, modifierOptions, state) {
 
 /**
  * @function
+ * @memberof Popper.Utils
+ * @argument {Object} data - The data object generated by `update` method
+ * @argument {Boolean} shouldRound - If the offsets should be rounded at all
+ * @returns {Object} The popper's position offsets rounded
+ *
+ * The tale of pixel-perfect positioning. It's still not 100% perfect, but as
+ * good as it can be within reason.
+ * Discussion here: https://github.com/FezVrasta/popper.js/pull/715
+ *
+ * Low DPI screens cause a popper to be blurry if not using full pixels (Safari
+ * as well on High DPI screens).
+ *
+ * Firefox prefers no rounding for positioning and does not have blurriness on
+ * high DPI screens.
+ *
+ * Only horizontal placement and left/right values need to be considered.
+ */
+function getRoundedOffsets(data, shouldRound) {
+  var _data$offsets = data.offsets,
+      popper = _data$offsets.popper,
+      reference = _data$offsets.reference;
+
+
+  var isVertical = ['left', 'right'].indexOf(data.placement) !== -1;
+  var isVariation = data.placement.indexOf('-') !== -1;
+  var sameWidthOddness = reference.width % 2 === popper.width % 2;
+  var bothOddWidth = reference.width % 2 === 1 && popper.width % 2 === 1;
+  var noRound = function noRound(v) {
+    return v;
+  };
+
+  var horizontalToInteger = !shouldRound ? noRound : isVertical || isVariation || sameWidthOddness ? Math.round : Math.floor;
+  var verticalToInteger = !shouldRound ? noRound : Math.round;
+
+  return {
+    left: horizontalToInteger(bothOddWidth && !isVariation && shouldRound ? popper.left - 1 : popper.left),
+    top: verticalToInteger(popper.top),
+    bottom: verticalToInteger(popper.bottom),
+    right: horizontalToInteger(popper.right)
+  };
+}
+
+var isFirefox = isBrowser && /Firefox/i.test(navigator.userAgent);
+
+/**
+ * @function
  * @memberof Modifiers
  * @argument {Object} data - The data object generated by `update` method
  * @argument {Object} options - Modifiers configuration and options
@@ -55939,15 +55986,7 @@ function computeStyle(data, options) {
     position: popper.position
   };
 
-  // Avoid blurry text by using full pixel integers.
-  // For pixel-perfect positioning, top/bottom prefers rounded
-  // values, while left/right prefers floored values.
-  var offsets = {
-    left: Math.floor(popper.left),
-    top: Math.round(popper.top),
-    bottom: Math.round(popper.bottom),
-    right: Math.floor(popper.right)
-  };
+  var offsets = getRoundedOffsets(data, window.devicePixelRatio < 2 || !isFirefox);
 
   var sideA = x === 'bottom' ? 'top' : 'bottom';
   var sideB = y === 'right' ? 'left' : 'right';
@@ -63726,7 +63765,9 @@ var render = function() {
                         "form",
                         {
                           attrs: {
-                            action: "/admin/events/" + event.id,
+                            action:
+                              "/actividades-deportivas/admin/events/" +
+                              event.id,
                             method: "post"
                           }
                         },
@@ -63884,7 +63925,9 @@ var render = function() {
                               "form",
                               {
                                 attrs: {
-                                  action: "/admin/events/" + event.id,
+                                  action:
+                                    "/actividades-deportivas/admin/events/" +
+                                    event.id,
                                   method: "post"
                                 }
                               },
@@ -63974,7 +64017,12 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "form",
-                { attrs: { action: "/admin/events", method: "post" } },
+                {
+                  attrs: {
+                    action: "/actividades-deportivas/admin/events",
+                    method: "post"
+                  }
+                },
                 [
                   _c("div", { staticClass: "modal-body" }, [
                     _c("input", {
@@ -64161,7 +64209,9 @@ var render = function() {
                         "form",
                         {
                           attrs: {
-                            action: "/admin/notices/" + notice.id,
+                            action:
+                              "/actividades-deportivas/admin/notices/" +
+                              notice.id,
                             method: "post"
                           }
                         },
@@ -64285,7 +64335,9 @@ var render = function() {
                               "form",
                               {
                                 attrs: {
-                                  action: "/admin/notices/" + notice.id,
+                                  action:
+                                    "/actividades-deportivas/admin/notices/" +
+                                    notice.id,
                                   method: "post"
                                 }
                               },
@@ -64375,7 +64427,12 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "form",
-                { attrs: { action: "/admin/notices", method: "post" } },
+                {
+                  attrs: {
+                    action: "/actividades-deportivas/admin/notices",
+                    method: "post"
+                  }
+                },
                 [
                   _c("div", { staticClass: "modal-body" }, [
                     _c("input", {
@@ -64583,9 +64640,9 @@ var render = function() {
             _c("h2", [
               _vm._v(
                 "\n                \n                " +
-                  _vm._s(_vm.tournament.name) +
+                  _vm._s(_vm.team.branch.tournament.name) +
                   "\n                - rama \n                " +
-                  _vm._s(_vm.tournament.branch) +
+                  _vm._s(_vm.team.branch.branch) +
                   "\n            "
               )
             ])
@@ -64600,12 +64657,12 @@ var render = function() {
                   _c("b", [_vm._v("Nombre: ")]),
                   _vm._v(
                     "\n                        " +
-                      _vm._s(_vm.tournament.name) +
+                      _vm._s(_vm.team.branch.tournament.name) +
                       "\n                    "
                   )
                 ]),
                 _vm._v(" "),
-                _vm.tournament.deleted_at !== null
+                _vm.team.branch.tournament.deleted_at !== null
                   ? _c("p", [
                       _c("b", { staticClass: "text-danger" }, [
                         _vm._v("Este torneo fue eliminado")
@@ -64617,16 +64674,16 @@ var render = function() {
                   _c("b", [_vm._v("Deporte: ")]),
                   _vm._v(
                     "\n                            " +
-                      _vm._s(_vm.tournament.sport.name) +
+                      _vm._s(_vm.team.branch.tournament.sport.name) +
                       "\n                        "
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", [
-                  _c("b", [_vm._v("Máximo disponibles: ")]),
+                  _c("b", [_vm._v("Máximo de equipos: ")]),
                   _vm._v(
                     "\n                            " +
-                      _vm._s(_vm.tournament.max_room) +
+                      _vm._s(_vm.team.branch.tournament.max_room) +
                       "\n                        "
                   )
                 ]),
@@ -64635,7 +64692,7 @@ var render = function() {
                   _c("b", [_vm._v("Lugares disponibles: ")]),
                   _vm._v(
                     "\n                        " +
-                      _vm._s(_vm.tournament.roomLeft) +
+                      _vm._s(_vm.team.branch.tournament.roomLeft) +
                       "\n                    "
                   )
                 ]),
@@ -64647,7 +64704,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("date-format", {
                       attrs: {
-                        date: _vm.tournament.date,
+                        date: _vm.team.branch.tournament.date,
                         format: "dddd D [de] MMMM [de] YYYY"
                       }
                     })
@@ -64656,135 +64713,156 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-sm-12 col-md-6 p-2 text-center" }, [
-                _c("h5", [_vm._v("Datos del alumno:")]),
+              _c("div", { staticClass: "container" }, [
+                _c("h5", [_vm._v("Datos de los alumnos:")]),
                 _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Nombre: ")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.name + " " + _vm.user.last_name) +
-                      "\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _vm.user.deleted_at !== null
-                  ? _c("p", [
-                      _c("b", { staticClass: "text-danger" }, [
-                        _vm._v("Este cuenta fue eliminada")
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Correo electróncico")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.email) +
-                      "\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Altura: ")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.height) +
-                      "\n                        cm\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Peso: ")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.weight) +
-                      "\n                        kg\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Edad: ")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.age) +
-                      "\n                        años\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Carrera: ")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.career) +
-                      "\n                        " +
-                      _vm._s(_vm.user.semester) +
-                      "\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Servicio médico: ")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.medical_service) +
-                      "\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Tipo sanguineo: ")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.blood_type) +
-                      "\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Número de carnet: ")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.medical_card_no) +
-                      "\n\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _c("b", [_vm._v("Número telefonico: ")]),
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.user.phone_number) +
-                      "\n                    "
-                  )
-                ])
+                _c(
+                  "div",
+                  { staticClass: "row" },
+                  _vm._l(_vm.team.accepted_users, function(user) {
+                    return _c(
+                      "div",
+                      { key: user.id, staticClass: "col-auto" },
+                      [
+                        _c("div", { staticClass: "card p-2" }, [
+                          _c("p", [
+                            _c("b", [_vm._v("Nombre: ")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(
+                                  user.user.name + " " + user.user.last_name
+                                ) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          user.user.deleted_at !== null
+                            ? _c("p", [
+                                _c("b", { staticClass: "text-danger" }, [
+                                  _vm._v("Este cuenta fue eliminada")
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Correo electróncico")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(user.user.email) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Altura: ")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(user.user.height) +
+                                "\n                                    cm\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Peso: ")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(user.user.weight) +
+                                "\n                                    kg\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Edad: ")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(user.user.age) +
+                                "\n                                    años\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Carrera: ")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(user.user.career) +
+                                "\n                                    " +
+                                _vm._s(user.user.semester) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Servicio médico: ")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(user.user.medical_service) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Tipo sanguineo: ")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(user.user.blood_type) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Número de carnet: ")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(user.user.medical_card_no) +
+                                "\n\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Número telefonico: ")]),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(user.user.phone_number) +
+                                "\n                                "
+                            )
+                          ])
+                        ])
+                      ]
+                    )
+                  }),
+                  0
+                )
               ])
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-footer" }, [
             _c("span", [
-              _vm._v("\n                Estado: \n                "),
-              _vm.user.status == "Pendiente"
-                ? _c("b", { staticClass: "text-danger" }, [_vm._v("Pendiente")])
-                : _vm.user.status == "Completada"
-                  ? _c("b", { staticClass: "text-success" }, [
-                      _vm._v("Completada")
-                    ])
-                  : _vm.user.status == "Eliminada"
-                    ? _c("b", { staticClass: "text-danger" }, [
-                        _vm._v("Eliminada")
-                      ])
-                    : _vm._e()
+              _vm._v(
+                "\n                Estado de inscipción: \n                "
+              ),
+              _vm.team.completed
+                ? _c("b", { staticClass: "text-success" }, [
+                    _vm._v("Completado")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.team.completed
+                ? _c("b", { staticClass: "text-danger" }, [
+                    _vm._v("Incompleto")
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
-            _vm.user.status == "Pendiente"
+            !_vm.team.completed
               ? _c("div", [
                   _c(
                     "form",
                     {
                       attrs: {
-                        action: "/torneos/completar/" + _vm.validFolio,
+                        action:
+                          "/actividades-deportivas/torneos/completar/" +
+                          _vm.validFolio,
                         method: "post"
                       }
                     },
@@ -64795,23 +64873,10 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("input", {
-                        attrs: { type: "hidden", name: "_method", value: "PUT" }
-                      }),
-                      _vm._v(" "),
-                      _c("input", {
                         staticClass: "btn btn-success float-right",
                         attrs: {
                           type: "submit",
                           value: "Completar",
-                          name: "action"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("input", {
-                        staticClass: "btn btn-outline-danger float-right",
-                        attrs: {
-                          type: "submit",
-                          value: "Eliminar",
                           name: "action"
                         }
                       })
@@ -64865,7 +64930,10 @@ var render = function() {
       _c(
         "form",
         {
-          attrs: { action: "/torneos/nuevo", method: "post" },
+          attrs: {
+            action: "/actividades-deportivas/torneos/nuevo",
+            method: "post"
+          },
           on: { submit: _vm.validateForm }
         },
         [
@@ -66003,7 +66071,8 @@ var render = function() {
                   "form",
                   {
                     attrs: {
-                      action: "/admin/slides/" + slide.id,
+                      action:
+                        "/actividades-deportivas/admin/slides/" + slide.id,
                       method: "post",
                       enctype: "multipart/form-data"
                     }
@@ -66116,7 +66185,9 @@ var render = function() {
                           "form",
                           {
                             attrs: {
-                              action: "/admin/slides/" + slide.id,
+                              action:
+                                "/actividades-deportivas/admin/slides/" +
+                                slide.id,
                               method: "post"
                             }
                           },
@@ -66155,14 +66226,23 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("div", { staticClass: "card" }, [
-            _c("form", { attrs: { action: "/admin/slides", method: "post" } }, [
-              _c("input", {
-                attrs: { type: "hidden", name: "_token" },
-                domProps: { value: _vm.csrf }
-              }),
-              _vm._v(" "),
-              _vm._m(1)
-            ])
+            _c(
+              "form",
+              {
+                attrs: {
+                  action: "/actividades-deportivas/admin/slides",
+                  method: "post"
+                }
+              },
+              [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf }
+                }),
+                _vm._v(" "),
+                _vm._m(1)
+              ]
+            )
           ])
         ],
         2
@@ -66432,8 +66512,8 @@ var render = function() {
                                 team.status == "accepted"
                                   ? "Ya eres parte del equipo"
                                   : _vm.teams.status == "pending"
-                                    ? "Solicitud pendiente"
-                                    : "Rechazado"
+                                    ? "Rechazado"
+                                    : "Solicitud pendiente"
                               ) +
                               "\n                            "
                           )
@@ -82160,8 +82240,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/ardz9/dev/ssa/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/ardz9/dev/ssa/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/adrianrodriguez/Desktop/dev/ssa/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/adrianrodriguez/Desktop/dev/ssa/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Este arreglo contiente las posibles transiciones entre estados de una solicitud para unirse a un equipo
+ */
+
 return [
     'userInTeam' => [
         'class' => \App\UserInTeam::class,

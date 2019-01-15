@@ -34,9 +34,9 @@
         <div class="card-header text-center" >
             <h2>
                 
-                {{tournament.name}}
+                {{team.branch.tournament.name}}
                 - rama 
-                {{tournament.branch}}
+                {{team.branch.branch}}
             </h2>
         </div>
         <div class="card-body">
@@ -45,106 +45,107 @@
                     <h5>Datos del torneo: </h5>
                     <p>
                         <b>Nombre: </b>
-                        {{tournament.name}}
+                        {{team.branch.tournament.name}}
                     </p>
 
-                    <p v-if="tournament.deleted_at !== null">
+                    <p v-if="team.branch.tournament.deleted_at !== null">
                         <b class="text-danger">Este torneo fue eliminado</b>
                     </p>
 
                     <p>
                         <b>Deporte: </b>
-                            {{tournament.sport.name}}
+                            {{team.branch.tournament.sport.name}}
                         </p>
                     <p>
-                        <b>Máximo disponibles: </b>
-                            {{tournament.max_room}}
+                        <b>Máximo de equipos: </b>
+                            {{team.branch.tournament.max_room}}
                         </p>
                     <p>
                         <b>Lugares disponibles: </b>
-                        {{tournament.roomLeft}}
+                        {{team.branch.tournament.roomLeft}}
                     </p>
 
                     <p>
                         <b>Fecha: </b>
-                        <date-format :date="tournament.date" :format="'dddd D [de] MMMM [de] YYYY'"></date-format>
+                        <date-format :date="team.branch.tournament.date" :format="'dddd D [de] MMMM [de] YYYY'"></date-format>
                     </p>
                 </div>
 
-                <div class="col-sm-12 col-md-6 p-2 text-center">
-                    <h5 >Datos del alumno:</h5>
-                    
-                    <p>
-                        <b>Nombre: </b>
-                        {{user.name+' '+user.last_name}}
-                    </p>
+                <div class="container">
+                    <h5 >Datos de los alumnos:</h5>
+                    <div class="row">
+                        <div class="col-auto" v-for="user in team.accepted_users" :key="user.id">
+                            <div class="card p-2">
+                                <p>
+                                    <b>Nombre: </b>
+                                    {{user.user.name+' '+user.user.last_name}}
+                                </p>
 
-                    <p v-if="user.deleted_at !== null">
-                        <b class="text-danger">Este cuenta fue eliminada</b>
-                    </p>
+                                <p v-if="user.user.deleted_at !== null">
+                                    <b class="text-danger">Este cuenta fue eliminada</b>
+                                </p>
 
-                    <p>
-                        <b>Correo electróncico</b>
-                        {{user.email}}
-                    </p>
-                    <p>
-                        <b>Altura: </b>
-                        {{user.height}}
-                        cm
-                    </p>
-                    <p>
-                        <b>Peso: </b>
-                        {{user.weight}}
-                        kg
-                    </p>
+                                <p>
+                                    <b>Correo electróncico</b>
+                                    {{user.user.email}}
+                                </p>
+                                <p>
+                                    <b>Altura: </b>
+                                    {{user.user.height}}
+                                    cm
+                                </p>
+                                <p>
+                                    <b>Peso: </b>
+                                    {{user.user.weight}}
+                                    kg
+                                </p>
 
-                    <p>
-                        <b>Edad: </b>
-                        {{user.age}}
-                        años
-                    </p>
+                                <p>
+                                    <b>Edad: </b>
+                                    {{user.user.age}}
+                                    años
+                                </p>
 
-                    <p>
-                        <b>Carrera: </b>
-                        {{user.career}}
-                        {{user.semester}}
-                    </p>
+                                <p>
+                                    <b>Carrera: </b>
+                                    {{user.user.career}}
+                                    {{user.user.semester}}
+                                </p>
 
-                    <p>
-                        <b>Servicio médico: </b>
-                        {{user.medical_service}}
-                    </p>
-                    <p>
-                        <b>Tipo sanguineo: </b>
-                        {{user.blood_type}}
-                    </p>
-                    <p>
-                        <b>Número de carnet: </b>
-                        {{user.medical_card_no}}
+                                <p>
+                                    <b>Servicio médico: </b>
+                                    {{user.user.medical_service}}
+                                </p>
+                                <p>
+                                    <b>Tipo sanguineo: </b>
+                                    {{user.user.blood_type}}
+                                </p>
+                                <p>
+                                    <b>Número de carnet: </b>
+                                    {{user.user.medical_card_no}}
 
-                    </p>
+                                </p>
 
-                    <p>
-                        <b>Número telefonico: </b>
-                        {{user.phone_number}}
-                    </p>
-                
+                                <p>
+                                    <b>Número telefonico: </b>
+                                    {{user.user.phone_number}}
+                                </p>
+                            </div>
+                        </div> 
+                    </div>
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <span>
-                Estado: 
-                <b class="text-danger" v-if="user.status == 'Pendiente'">Pendiente</b>
-                <b class="text-success" v-else-if="user.status == 'Completada'">Completada</b>
-                <b class="text-danger" v-else-if="user.status == 'Eliminada'">Eliminada</b>
+                Estado de inscipción: 
+                <b class="text-success" v-if="team.completed">Completado</b>
+                <b class="text-danger" v-if="!team.completed">Incompleto</b>
             </span>
-            <div v-if="user.status == 'Pendiente'">
-                <form :action="'/torneos/completar/'+validFolio" method="post">
+            <div v-if="!team.completed">
+                <form :action="'/actividades-deportivas/torneos/completar/'+validFolio" method="post">
                     <input type="hidden" name="_token" :value="csrf">
-                    <input type="hidden" name="_method" value="PUT">
                     <input type="submit" value="Completar" name="action" class="btn btn-success float-right">
-                    <input type="submit" value="Eliminar" name="action" class="btn btn-outline-danger float-right">
                 </form>
             </div>
            
@@ -166,8 +167,7 @@ export default {
             folio: "",
             validFolio: "",
             dataAvailable: false,
-            user: {},
-            tournament: {},
+            team: {},
             decoded: false,
             error: ""
         }
@@ -185,22 +185,23 @@ export default {
         onSubmit(event){
             if(event)
                 event.preventDefault();
-            axios.get('/torneos/completar/'+this.folio).then((response)=>{
+
+            axios.get('/actividades-deportivas/torneos/completar/'+this.folio).then((response)=>{
                 if(response.data){
-                    this.tournament = response.data.tournament;
-                    this.user = response.data.user;
-                    this.user.status = response.data.status;
+                    console.log(response.data);
+                    
+                    this.team = response.data;
                     this.dataAvailable = true;
                     this.paused = true
                     this.decoded = true;
                     this.validFolio = this.folio;
-                    console.log(response.data);
                     
                 }else{
                     this.error = "No hay ningun registro con ese folio.";
                 }
             }).catch((err) => {
-                this.error = "Ocurrio un error inesperado.";
+                this.error = "Ocurrio un error inesperado.";    
+                log(err);
             })
         }
     }
