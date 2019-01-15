@@ -21,14 +21,18 @@
 
                         <p>
                             <b>Deporte: </b>
-                                {{$tournament->sport->name}}
-                            </p>
+                            {{$tournament->sport->name}}
+                        </p>
                         <p>
-                            <b>Máximo disponibles: </b>
-                                {{$tournament->max_room}}
-                            </p>
+                            <b>Máximo de integrantes por equipo: </b>
+                            {{$tournament->max_per_team}} <br>
+                            <b>Minimo de integrantes por equipo: </b>
+                            {{$tournament->min_per_team}} <br>
+                            <b>Máximo de equipos: </b>
+                            {{$tournament->max_teams}}
+                        </p>
                         <p>
-                            <b>Lugares disponibles: </b>
+                            <b>Número de equipos que aun se pueden inscribir: </b>
                             {{$branch->roomLeft()}}
                         </p>
 
@@ -99,8 +103,7 @@
             @if ($branch->userSignedUp($user->id))
                 <p class="d-block text-center">
                     Ya estas inscrito a este torneo
-                    <br>
-                    <a href="{{ route('tournamentVoucher', ['id' => $branch->id] )}}">Descargar comprobante</a>
+                    <a href="{{route('teamsIndex')}}">Ver mis equipos</a>
                 </p>
             @else
                 <a href="{{route('teamSelect', ['id' => $branch->id ])}}" class="card-footer btn btn-info bg-info w-100">Elegir/crear equipo para inscribirme</a>

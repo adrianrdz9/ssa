@@ -91,7 +91,7 @@ export default {
             this.showList= false;
             this.loading = true;
             const id = $(event.target).data('id');
-            axios.get('/historico/'+id)
+            axios.get('/actividades-deportivas/historico/'+id)
                 .then(response => {
                     if(response.statusText === "OK"){
                         this.data = response.data;

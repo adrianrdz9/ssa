@@ -11,20 +11,49 @@ use App\Carusel;
 use Alert;
 class admiController extends Controller
 {
+    /**
+      * Metodo constructor utilizado para limitar el acceso a solo al administrador (SSA)
+      *
+      * @return void
+    */
     public function construct(){
       $this->middleware('auth');
     }
-
+    /**
+      * Metodo utilizado para mostrar las noticias al administrador
+      * dando la posibilidad de ocultar o mostrar Noticias
+      *
+      * @return view
+    */
     public function Noticias(){
-      $data = DB:: select("SELECT Folio,Titulo,DescripcionCorta,Disponible,ImagenC FROM noticias ORDER BY Folio DESC");
+      $data = \App\Noticias::orderBy('Folio','desc')->get();
       return view('Admis.NoticiasAdmi',['data' => $data]);
     }
+    /**
+      * Metodo utilizado para ocultar noticias de la página principal de visitantes
+      *
+      * @param Integer $id Id de la noticia seleccionada
+      *
+      * AJAX
+    */
     public function ONoticia($id){
-      DB::update("UPDATE Noticias SET Disponible = '0' where Folio='$id'");
+      \App\Noticias::where('Folio',$id)->update(['Disponible' => 0]);
     }
+    /**
+      * Metodo utilizado para mostrar noticias de la página principal de visitantes
+      *
+      * @param Integer $id Id de la noticia seleccionada
+      *
+      * AJAX
+    */
     public function MNoticia($id){
-      DB::update("UPDATE Noticias SET Disponible = '1' where Folio='$id'");
+      \App\Noticias::where('Folio',$id)->update(['Disponible' => 1]);
     }
+    /**
+      * Metodo utilizado para mostrar el formulario de noticias.
+      *
+      * @return view
+    */
     public function index(){
       if(\Session::get('Noticias')){
         $msg = "Se guardo la notica con exito";
@@ -32,9 +61,23 @@ class admiController extends Controller
       }else{
         $msg = "No fue posible guardar la noticia";
       }
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
         return view('Admis.formNoti', ['msg'=>$msg]);
+      }
     }
+    /**
+      * Metodo utilizado para guardar los datos registrados el formulario de noticias.
+      *
+      *@param Request $request Peticion con los dato
+      *
+      * @return redirect
+    */
     public function store(Request $request){
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
         \Session::forget('Noticias');
         $this->validate($request, array(
           'Titulo' => 'required|max:191' ,
@@ -66,7 +109,7 @@ class admiController extends Controller
             $noti->ImagenR = $filename;
           }
           $noti->save();
-          $fol = DB:: select("SELECT Folio FROM noticias WHERE Titulo = '$request->Titulo'");
+          $fol = \App\Noticias::where('Titulo',$request->Titulo)->get();
           if ($request->carusel == "S" && $request->hasFile('ImagenR')) {
               $carusel = new Carusel;
               $carusel->Titulo = $request->Titulo;
@@ -82,88 +125,212 @@ class admiController extends Controller
                 $carusel->Imagen = $filename;
               $carusel->save();
           }
-        return redirect('Admi');
+            return redirect('Admi');
+          }
     }
+    /**
+      * Metodo utilizado para mostrar el carrusel, dando la oportunidad de ocultar o mostrar
+      *imagenes en la página principal de visitantes,
+      *
+      * @return view
+    */
     public function VerCarusel(){
-      $data = DB:: select("SELECT id,Titulo,Descripcion,Imagen,Estado FROM carusels ORDER BY id DESC");
-      return view('Admis.AdmiCaruselEdit',['data' => $data]);
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        $data = \App\Carusel::orderBy('id','desc')->get(['id', 'Titulo','Descripcion','Imagen','Estado']);
+        return view('Admis.AdmiCaruselEdit',['data' => $data]);
+     }
     }
+    /**
+      * Metodo utilizado para ocular imagenes del carrusel.
+      *
+      *@param Integer $id Id de la imagen seleccionada
+      *
+      * AJAX
+    */
     public function OImagenC($id){
-      DB::update("UPDATE carusels SET Estado = '0' where id='$id'");
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        \App\Carusel::where('id',$id)->update(['Estado' => 0]);
+      }
     }
+    /**
+      * Metodo utilizado para mostrar imagenes en el carrusel.
+      *
+      *@param Integer $id Id de la imagen seleccionada
+      *
+      * AJAX
+    */
     public function MImagenC($id){
-      DB::update("UPDATE carusels SET Estado = '1' where id='$id'");
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        \App\Carusel::where('id',$id)->update(['Estado' => 1]);
+      }
     }
+    /**
+      * Metodo utilizado para mostrar el formulario para agregar imagenes al carrusel
+      *
+      * @return view
+    */
     public function Carusel(){
-      return view('Admis.Carusel');
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        return view('Admis.Carusel');
+      }
     }
+    /**
+      * Metodo utilizado para mostrar guardar en la BD la informacion registrada en
+      * el formulario de Carusel
+      *
+      * @param Request $request Peticion con los dato
+      *
+      * @return redirect
+    */
     public function NCarusel(Request $request){
-      $carusel = new Carusel;
-        $carusel->Titulo = $request->Titulo;
-        $carusel->Descripcion = $request->Descripcion;
-        $carusel->Link = $request->Link;
-        $carusel->Tipo = $request->Tipo;
-        $image = $request->file('Imagen');
-        $filename = time() . '.' . $image->getClientOriginalExtension();
-        $location = public_path('images/Carusel/'. $filename);
-          Image::make($image)->resize(600,309)->save($location);
-        $carusel->Imagen = $filename;
-      $carusel->save();
-      alert()->success('Imagen agregada','Exito!','success');
-      return redirect('Admi/NICarusel');
-    }
-        public function Propuestas(){
-            $data = DB:: select("SELECT id,Siglas,Titulo,Descripcion,Estado FROM Propuestas");
-            foreach ($data as $key => $value)
-                  $siglas[] = $value->Siglas;
-            $presi = DB:: select("SELECT Nombre,Email,Numero FROM Integrantes WHERE Cargo ='Presidente' AND Siglas ='$siglas[0]'");
-            $msg = "";
-            if($data == []){
-              $f = DB:: select("SELECT Limite FROM Ferias ORDER BY Limite DESC LIMIT 1");
-              $hoy[0]= date("Y-m-d");
-              //Convert stdClass object to array in PHP
-              foreach ($f as $key => $value) {
-                  $limite[] = $value->Limite;
-              }
-              if($limite === $hoy){
-                $msg = "Hoy es el último día para enviar propuestas.";
-              }elseif ($limite > $hoy) {
-                $msg = "Aún no hay propuestas.";
-              }elseif ($limite < $hoy) {
+        if(is_null(auth()->user()))
+          return redirect('/');
+        else {
+          $carusel = new Carusel;
+            $carusel->Titulo = $request->Titulo;
+            $carusel->Descripcion = $request->Descripcion;
+            $carusel->Link = $request->Link;
+            $carusel->Tipo = $request->Tipo;
+            $image = $request->file('Imagen');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/Carusel/'. $filename);
+              Image::make($image)->resize(600,309)->save($location);
+            $carusel->Imagen = $filename;
+          $carusel->save();
+          alert()->success('Imagen agregada','Exito!','success');
+          return redirect('Admi/NICarusel');
+        }
+      }
+      /**
+        * Metodo utilizado para mostrar las propuestas par la feria de Agrupaciones.
+        *
+        * @return view
+      */
+    public function Propuestas(){
+      if(is_null(auth()->user()))
+        return redirect('/');
+      else {
+        $data = \App\Propuestas::get(['id', 'Siglas','Titulo','Descripcion','Estado']);
+        if(count($data)>=1){
+         foreach ($data as $key => $value)
+              $siglas[] = $value->Siglas;
+          $presi = \App\Integrantes::where([['Cargo','Presidente'],['Siglas',$siglas]])
+                                    ->get(['Nombre', 'Email','Numero']);
+        }else{
+          $presi = [];
+          $data = [];
+        }
+        $msg = "";
+        $f = \App\Ferias::orderBy('Limite','desc')->take(1)->get();
+        $hoy[0]= date("Y-m-d");
+        if(count($f)>=1){
+          foreach ($f as $key => $value) {
+              $limite[] = $value->Limite;
+          }
+          if($limite === $hoy){
+            $msg = "Hoy es el último día para enviar propuestas.";
+          }elseif ($limite > $hoy) {
+              $msg = "Aún no hay propuestas.";
+          }elseif ($limite < $hoy) {
                 $msg = "Ya no se recibiran propuestas.";
-              }
-            }
-            return view('Admis.PropuestaAdmi',[
-              'Propuestas' => $data,
-              'Mensaje' => $msg,
-              'Presidente'=>$presi,
-            ]);
+          }
+        }else{
+          $msg = "Aún no hay fechas.";
         }
-        public function Feria(Request $request){
-          $feria = new Ferias;
-          $feria ->Nombre = $request->Nombre;
-          $feria ->Inicio = $request->FInicio;
-          $feria ->Limite = $request->FLimite;
-          $feria->save();
-          return redirect('Admi/Propuestas');
-        }
-        public function StatusA($id){
-          DB::update("UPDATE Propuestas SET Estado = 'Aprobada' where id='$id'");
-        }
-        public function StatusC($id){
-          DB::update("UPDATE Propuestas SET Estado = 'Comunicate' where id='$id'");
-        }
-
-        public function Agrupaciones(){
-            $data = DB:: select("SELECT id,Siglas,Nombre,Logo FROM Users ORDER BY Siglas ASC" );
-            return view('Admis.Contraseñas',['data' => $data]);
-        }
-        public function NPassword(Request $request){
-          $id = $request->Id;
-          $c = bcrypt($request->pass);
-          DB::update("UPDATE Users SET password = '$c' where id='$id'");
-          alert()->success('Exito!','Contraseña actualizada','success');
-          return redirect('Admi/Contraseñas');
-        }
+        return view('Admis.PropuestaAdmi',[
+          'Propuestas' => $data,
+          'Mensaje' => $msg,
+          'Presidente'=>$presi,
+        ]);
+      }
+  }
+  /**
+    * Metodo utilizado para guardar en la BD la informacion referente a la feria de agrupaciones
+    *
+    *@param Request $request Peticion con los dato
+    *
+    * @return redirect
+  */
+  public function Feria(Request $request){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      $feria = new Ferias;
+      $feria ->Nombre = $request->Nombre;
+      $feria ->Inicio = $request->FInicio;
+      $feria ->Limite = $request->FLimite;
+      $feria->save();
+      return redirect('Admi/Propuestas');
+    }
+  }
+  /**
+    * Metodo utilizado para acepar propuestas.
+    *
+    *@param Integer $id Id de la noticia a eliminar
+    *
+    * AJAX
+  */
+  public function StatusA($id){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      \App\Propuestas::where('id',$id)->update(['Estado' => 'Aprobada']);
+    }
+  }
+  /**
+    * Metodo utilizado para pedirle a una agrupacion que se comunique con la SSA
+    *
+    * @param Integer $id Id de la noticia a eliminar
+    *
+    * AJAX
+  */
+  public function StatusC($id){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      \App\Propuestas::where('id',$id)->update(['Estado' => 'Comunicate']);
+    }
+  }
+  /**
+    * Metodo utilizado para mostrar la lista de agrupaciones y poder cambiar
+    *su contraseña
+    *
+    * @return view
+  */
+  public function Agrupaciones(){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      $data = \App\User::orderBy('Siglas','asc')->get(['id', 'Siglas','Nombre','Logo']);
+      return view('Admis.Contraseñas',['data' => $data]);
+    }
+  }
+  /**
+    * Metodo utilizado para guardar en la base de datos la nueva contraseñas
+    * de las agrupaciones
+    *
+    *@param Request $request Peticion con los dato
+    *
+    * @return view
+  */
+  public function NPassword(Request $request){
+    if(is_null(auth()->user()))
+      return redirect('/');
+    else {
+      $id = $request->Id;
+      $c = bcrypt($request->pass);
+      \App\User::where('id',$id)->update(['password' => $c]);
+      alert()->success('Exito!','Contraseña actualizada','success');
+      return redirect('Admi/Contraseñas');
+    }
+  }
 
 }

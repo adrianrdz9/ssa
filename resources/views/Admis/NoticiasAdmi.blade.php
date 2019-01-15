@@ -38,6 +38,7 @@
             'Se oculto la noticia',
             'success'
         )
+          $(this).parent().append('<button type="button" class="btn btn-info Mostrar">Mostrar</button>');
           $(this).closest('.Ocultar').remove();
       });
     });
@@ -52,7 +53,8 @@
             'Se mostrara la noticia',
             'success'
         )
-          $(this).closest('.Mostrar').remove();
+        $(this).parent().append('<button type="button" class="btn btn-danger Ocultar">Ocultar</button>');
+        $(this).closest('.Mostrar').remove();
       });
     });
   </script>

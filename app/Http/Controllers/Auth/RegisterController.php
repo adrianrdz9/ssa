@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'birthdate' => 'nullable|date',
             'semester' => 'nullable|string|max:255',
             'career' => 'nullable|string|max:255',
-            'username' => 'required|string|unique:users',
+            'username' => 'nullable|string|unique:users',
             'curp' => 'nullable|string|max:255',
             'address' => 'nullable|string',
             'medical_service' => 'nullable|string|max:255',
@@ -91,14 +91,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-        if(  ctype_digit($data['username'])  ){
-            $accountNum = $data['username'];
-            $siglas = NULL;
+        $username;
+        if(isset($data['account_number'])){
+            $username = $data['account_number'];
         }else{
-            $accountNum = NULL;
-            $siglas = $data['username'];
+            $username = $data['siglas'];
         }
+
+        
 
         return User::create([
             'name' => $data['name'],
@@ -109,7 +109,7 @@ class RegisterController extends Controller
             'birthdate'=>$data['birthdate'],
             'semester'=>$data['semester'],
             'career'=>$data['career'],
-            'username'=>$data['username'],
+            'username'=>$username,
             'curp'=>$data['curp'],
             'address'=>$data['address'],
             'medical_service'=>$data['medical_service'],
