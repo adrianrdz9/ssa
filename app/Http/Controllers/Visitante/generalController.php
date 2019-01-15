@@ -4,48 +4,90 @@ namespace App\Http\Controllers\Visitante;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Noticias;
 class generalController extends Controller
 {
-    //index
+  /**
+    * Metodo utilizado para mostrar la página principal
+    *
+    * @return view
+  */
     public function index(){
-        $data = DB:: select("SELECT Folio,Titulo,DescripcionCorta,Fecha,ImagenC
-                FROM noticias WHERE Disponible = '1' ORDER BY Folio DESC LIMIT 9");
-        $caru = DB:: select("SELECT Titulo,Descripcion,Imagen,Link
-                FROM carusels WHERE Estado = '1' ORDER BY id DESC LIMIT 5");
+        $data = \App\Noticias::where('Disponible', 1)
+               ->orderBy('Folio', 'desc')
+               ->take(9)
+               ->get();
+        $caru = \App\Carusel::where('Estado',1)
+              ->orderBy('id','desc')
+              ->take(5)
+              ->get();
         $num = count($caru);
-        return view('Visitante.Noticias',['data' => $data, 'images' => $caru ,  'numero' => $num]);
+        return view('Visitante.Noticias',['data' => $data,
+                    'images' => $caru ,
+                    'numero' => $num]);
     }
+    /**
+      * Metodo utilizado para mostrar un listado de todas las noticias
+      *
+      * @return view
+    */
     public function Historial(){
-      $data = DB:: select("SELECT Folio,Titulo,DescripcionCorta,Disponible,ImagenC FROM noticias ORDER BY Folio DESC");
+      $data = \App\Noticias::orderBy('Folio','desc')->get();
       return view('Visitante.Historial',['data' => $data]);
     }
-    //Notica (individual)
+    /**
+      * Metodo utilizado para mostrar un listado de todas las noticias
+      *
+      * @param Integer $id Id de la noticia seleccionada
+      *
+      * @return view
+    */
     public function noticia($id){
-      $des = DB:: select("SELECT Descripcion FROM noticias WHERE Folio = '$id'" );
-      $data = DB:: select("SELECT Titulo,Fecha, ImagenR
-                             FROM noticias WHERE Folio = '$id'" );
+      $des = \App\Noticias::where('Folio',$id)->get();
+      $data = \App\Noticias::where('Folio',$id)->get();
       return view('Visitante.Noticia',[
         'data' => $data,
         'des' => $des]);
      }
-    //Listado de Agrupaciones
+     /**
+       * Metodo utilizado para mostrar un listado de las agrupaciones
+       *
+       * @return view
+     */
     public function agrupaciones(){
-        //$data = DB:: select("SELECT * FROM Users ORDER BY Siglas ASC" );
-	$data = \App\User::all();
+        $data = \App\User::orderBy('Siglas','asc')->get();
         return view('Visitante.Agrupaciones',['data' => $data]);
     }
-
-    //Vista de cada agrupación
+    /**
+      * Metodo utilizado para mostrar la informacion de una agrupacion
+      *
+      * @param Integer $id Id de la agrupacion seleccionada
+      *
+      * @return view
+    */
     public function individual($id){
-        $data = DB:: select("SELECT * FROM Users WHERE Siglas = '$id'" );
-        $coun = DB:: select("SELECT COUNT(*) FROM Integrantes WHERE SIGLAS='$id'" );
-        if($coun < 3){
-          $int1 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo ASC LIMIT 3" );
-          $int2 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo DESC LIMIT 3" );
+        $data = \App\User::where('Siglas',$id)->get();
+        $coun = \App\Integrantes::where('Siglas',$id)->get();
+        $coun = count($coun);
+        if($coun > 3){
+          $int1 = \App\Integrantes::where('Siglas',$id)
+                  ->orderBy('NCargo','asc')
+                  ->take(3)
+                  ->get();
+          $lim = $coun - count($int1);
+          $int2 =  \App\Integrantes::where('Siglas',$id)
+                  ->orderBy('NCargo','desc')
+                  ->take($lim)
+                  ->get();
         }else {
-          $int1 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = '$id' ORDER BY NCargo ASC LIMIT 3" );
-          $int2 = DB:: select("SELECT * FROM Integrantes WHERE Siglas = 'Hola' ORDER BY NCargo ASC LIMIT 3" );
+          $int1 = \App\Integrantes::where('Siglas',$id)
+                  ->orderBy('NCargo','asc')
+                  ->take(3)
+                  ->get();
+          $int2 =  \App\Integrantes::where('Siglas','Hola')
+                  ->orderBy('NCargo','desc')
+                  ->take(0)
+                  ->get();
         }
         return view('Visitante.AgruIndividual', [
           'data' => $data,
