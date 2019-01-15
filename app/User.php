@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo el usuario
+ * Modelo del usuario
  * 
  * Role
  * ^ Belongs to many throu
