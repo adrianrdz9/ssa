@@ -95,4 +95,28 @@ class generalController extends Controller
           'Inte2' => $int2,
         ]);
     }
+    /**
+      * Metodo utilizado para mostrar la lista de reclutamientos
+      *
+      * @return view
+    */
+    public function Reclutamientos(){
+      $data = \App\Reclutamientos::orderBy('Fecha','desc')
+            ->get();
+      return view('Visitante.Reclutamientos',['data'=> $data]);
+    }
+    /**
+      * Metodo utilizado para mostrar la informacion del reclutamiento
+      *
+      * @param Integer $id Id del reclutamiento
+      *
+      * @return view
+    */
+    public function Reclutamiento($id){
+      $data = \App\Reclutamientos::where('id',$id)->get();
+      $u = $data[0]->Siglas;
+      $agrupa = \App\User::where('Siglas',$u)->get(['Nombre']);
+      return view('Visitante.RecluIndividual',[
+        'data' => $data, 'Agrupa'=> $agrupa]);
+     }
 }
