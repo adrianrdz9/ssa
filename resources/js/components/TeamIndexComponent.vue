@@ -39,7 +39,7 @@
                                     'btn-warning': team.status == 'pending',
                                     'btn-danger': team.status == 'denied'
                                 }">
-                                    {{team.status == 'accepted' ? "Ya eres parte del equipo" : teams.status == 'pending' ? "Solicitud pendiente" : "Rechazado"}}
+                                    {{team.status == 'accepted' ? "Ya eres parte del equipo" : teams.status == 'pending' ? "Rechazado" : "Solicitud pendiente"}}
                                 </button>
                             </div>
                             <div v-else>
@@ -101,7 +101,7 @@ export default {
                         confirmButtonText: 'Crear',
                         showLoaderOnConfirm: true,
                         preConfirm: (data) => {
-                            axios.post('/teams', {
+                            axios.post('/actividades-deportivas/teams', {
                                 tournament_id: this.branch.id,
                                 name: data
                             }).then(response => {
@@ -140,7 +140,7 @@ export default {
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.value) {
-                    axios.post('/teams/'+team.id).then(response => {
+                    axios.post('/actividades-deportivas/teams/'+team.id).then(response => {
                         console.log(response);
                                 
                         if(response.status !== 200 && response.status !== 201){

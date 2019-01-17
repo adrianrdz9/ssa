@@ -7,8 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-<<<<<<< HEAD
-=======
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -18,7 +16,6 @@ use Illuminate\Support\Facades\Config;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
->>>>>>> sports
 
 class RegisterController extends Controller
 {
@@ -40,31 +37,21 @@ class RegisterController extends Controller
      *
      * @var string
      */
-<<<<<<< HEAD
-    protected $redirectTo = '/home';
-=======
     protected $redirectTo = '/';
     protected $auth;
 
->>>>>>> sports
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-<<<<<<< HEAD
-    public function __construct()
-    {
-        $this->middleware('guest');
-=======
     public function __construct(Guard $auth)
     {
         $this->middleware('guest');
         $this->auth = $auth;
         Session::put('backUrl', URL::previous());
 
->>>>>>> sports
     }
 
     /**
@@ -76,26 +63,22 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-<<<<<<< HEAD
-            'email' => 'required|string|email|max:255|unique:users',
-=======
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'height' => 'required|string|max:255',
-            'weight' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'semester' => 'required|string|max:255',
-            'career' => 'required|string|max:255',
-            'account_number' => 'required|integer|unique:users',
+            'name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:users',
+            'height' => 'nullable|string|max:255',
+            'weight' => 'nullable|string|max:255',
+            'birthdate' => 'nullable|date',
+            'semester' => 'nullable|string|max:255',
+            'career' => 'nullable|string|max:255',
+            'username' => 'nullable|string|unique:users',
             'curp' => 'nullable|string|max:255',
             'address' => 'nullable|string',
-            'medical_service' => 'required|string|max:255',
-            'blood_type' => 'required|string|max:255',
-            'medical_card_no' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
+            'medical_service' => 'nullable|string|max:255',
+            'blood_type' => 'nullable|string|max:255',
+            'medical_card_no' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|string|max:255',
 
->>>>>>> sports
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -108,14 +91,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $username;
+        if(isset($data['account_number'])){
+            $username = $data['account_number'];
+        }else{
+            $username = $data['siglas'];
+        }
+
+        
+
         return User::create([
             'name' => $data['name'],
-<<<<<<< HEAD
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
-=======
             'last_name'=>$data['last_name'],
             'email' => $data['email'],
             'height'=>$data['height'],
@@ -123,7 +109,7 @@ class RegisterController extends Controller
             'birthdate'=>$data['birthdate'],
             'semester'=>$data['semester'],
             'career'=>$data['career'],
-            'account_number'=>$data['account_number'],
+            'username'=>$username,
             'curp'=>$data['curp'],
             'address'=>$data['address'],
             'medical_service'=>$data['medical_service'],
@@ -156,5 +142,4 @@ class RegisterController extends Controller
         return view('auth.register', ['careers' => $careers, 'bloodTypes' => $bloodTypes]);
     }
 
->>>>>>> sports
 }
