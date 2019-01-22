@@ -9893,3 +9893,7 @@ main {
   visibility: hidden;
 }
 
+nav.navbar {
+  background-color: #CC1414 !important;
+}
+
