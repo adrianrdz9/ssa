@@ -95,4 +95,23 @@ class generalController extends Controller
           'Inte2' => $int2,
         ]);
     }
-}
+    public function Reclutamientos(){
+          $data = \App\Reclutamientos::orderBy('Fecha','desc')->get();
+          $count = count($data);
+            for ($i=0; $i < $count ; $i++) {
+                $Fecha = explode("-", $data[$i]->Fecha);
+                 $data[$i]->Fecha = $Fecha[2] . "/" . $Fecha[1] . "/" . $Fecha[0];
+              }
+          return view('Visitante.Reclutamientos',['data'=> $data]);
+        }
+        public function Reclutamiento($id){
+          $data = \App\Reclutamientos::where('id',$id)->get();
+          $u = $data[0]->Siglas;
+          $Fecha = explode("-", $data[0]->Fecha);
+          //Dar formato a fecha dd/mm/aaaa
+          $data[0]->Fecha = $Fecha[2] . "/" . $Fecha[1] . "/" . $Fecha[0];
+          $agrupa = \App\User::where('Siglas',$u)->get(['Nombre']);
+          return view('Visitante.RecluIndividual',[
+            'data' => $data, 'Agrupa'=> $agrupa]);
+         }
+    }

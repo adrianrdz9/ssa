@@ -40,7 +40,10 @@
             <a class="navbar-brand" href="../semiAdmi">Información</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="#">Reclutamientos</a>
+            <a class="navbar-brand" href="../semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
+          </li>
+          <li class="nav-item">
+            <a class="navbar-brand" href="../semiAdmi/VerReclutamientos">Reclutamientos</a>
           </li>
           <li class="nav-item">
             <a class="navbar-brand" href="../semiAdmi/Propuesta">Propuestas</a>

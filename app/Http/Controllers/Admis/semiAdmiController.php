@@ -250,4 +250,64 @@ class semiAdmiController extends Controller
       }
     }
 
-}
+    public function VerReclutamientos(){
+        if(is_null(auth()->user()))
+          return redirect('/');
+        else {
+          $u = auth()->user()->Siglas;
+          $data= \App\Reclutamientos::where('Siglas',$u)
+                  ->get();
+          $count = count($data);
+            for ($i=0; $i < $count ; $i++) {
+                $Fecha = explode("-", $data[$i]->Fecha);
+                $data[$i]->Fecha = $Fecha[2] . "/" . $Fecha[1] . "/" . $Fecha[0];
+            }
+          return view('Admis.VerReclutamientos',['data'=> $data]);
+        }
+      }
+      public function ReclutamientosF(){
+        if(is_null(auth()->user()))
+          return redirect('/');
+        else {
+          return view('Admis.Reclutamientos');
+        }
+      }
+      public function NReclutamiento(Request $request){
+        if(is_null(auth()->user()))
+          return redirect('/');
+        else {
+          $this->validate($request, array(
+            'Cargo' => 'required|max:191' ,
+            'Descripcion' => 'required',
+            'Fecha' => 'required|after:today',
+          ));
+          $u = auth()->user()->Siglas;
+
+          $reclu = new Reclutamientos;
+          $reclu ->Siglas = $u;
+          $reclu ->Cargo = $request->Cargo;
+          $reclu ->Descripcion = $request->Descripcion;
+          $reclu ->Semestre = $request->Semes;
+          if($request->Pro == "No es necesario"){
+            $reclu ->Promedio = 0;
+          }else {
+            $reclu ->Promedio = $request->Pro;
+          }
+          if($request->Cono != ""){
+            $reclu ->Conocimientos = $request->Cono;
+          }
+          if($request->Disponibilidad == "S"){
+            $reclu ->Disponibilidad = $request->Disponibilidad;
+          }
+          $reclu ->Fecha = $request->Fecha;
+          $reclu ->Hora = $request->Hora;
+          $reclu ->Lugar = $request->Lugar;
+
+          $reclu ->save();
+
+          alert()->success('Reclutamiento','Se ha creado con exito','success');
+
+          return redirect('semiAdmi/Reclutamientos');
+        }
+      }
+  }
