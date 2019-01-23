@@ -26,8 +26,8 @@
   @include('sweet::alert')
   <div class='container-fluid'>
     <div class="container-fluid" id="DivLogo">
-      <img src="{{asset('images/UNAM.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
-      <img src="{{asset('images/FI.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
+      <img src="{{asset('images/logo_unam.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
+      <img src="{{asset('images/logo_fi.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
       <label id="In">Facultad de Ingeniería</label>
     </div>
     <nav class="navbar navbar-expand-md navbar-dark">

@@ -59,7 +59,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     //Agrupaciones lista
     Route::get('/Agrupaciones','Visitante\generalController@agrupaciones');
     //Agrupaciones individual
-    Route::get('Agrupacion/id/{id}','Visitante\generalController@individual');
+    Route::get('/Agrupacion/id/{id}','Visitante\generalController@individual');
     //Reclutammientos
     Route::get('/Reclutamientos','Visitante\generalController@Reclutamientos');
     //semiAdmi
