@@ -105,7 +105,7 @@ class generalController extends Controller
                 $Fecha = explode("-", $data[$i]->Fecha);
                  $data[$i]->Fecha = $Fecha[2] . "/" . $Fecha[1] . "/" . $Fecha[0];
               }
-          return view('Visitante.Reclutamientos',['data'=> $data]);
+          return view('Visitante.Reclutamientos',['data'=> $data, 'num' => $count]);
         }
         public function Reclutamiento($id){
           $data = \App\Reclutamientos::where('id',$id)->get();
