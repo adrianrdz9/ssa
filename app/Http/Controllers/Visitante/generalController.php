@@ -55,7 +55,10 @@ class generalController extends Controller
        * @return view
      */
     public function agrupaciones(){
-        $data = \App\User::orderBy('Siglas','asc')->get();
+        $data = \App\User::where('Siglas','!=','SSA')
+                ->whereNotNull('Siglas')
+                ->orderBy('Siglas','asc')
+                ->get();
         return view('Visitante.Agrupaciones',['data' => $data]);
     }
     /**
