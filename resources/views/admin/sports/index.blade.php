@@ -43,25 +43,25 @@
                 </div>
             </div>
             <div class="card-body">
-                {{$sport->uniqueTournaments()->count()}}
+                {{$sport->tournaments->count()}}
                 torneo(s) de este deporte:
 
-                @foreach ($sport->uniqueTournaments() as $tournamentName=>$tournamentGroup)
+                @foreach ($sport->tournaments as $tournament)
                     <div class="accordion" id="sport-{{$sport->id}}">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tournament-info-{{$tournamentGroup[0]->id}}" aria-expanded="false" aria-controls="#tournament-info-{{$tournamentGroup[0]->id}}">
-                                        {{$tournamentName}}
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tournament-info-{{$tournament->id}}" aria-expanded="false" aria-controls="#tournament-info-{{$tournament->id}}">
+                                        {{$tournament->name}}
                                     </button>
                                 </h5>
                             </div>
-                            <div class="collapse" id="tournament-info-{{$tournamentGroup[0]->id}}">
+                            <div class="collapse" id="tournament-info-{{$tournament->id}}">
                                 <div class="card-body">
-                                    Fecha: {{$tournamentGroup[0]->date}}
+                                    Fecha: {{$tournament->date}}
                                     <br>
                                     Ramas: 
-                                    @foreach ($tournamentGroup as $branch)
+                                    @foreach ($tournament->branches as $branch)
                                         @switch($branch->branch)
                                             @case('varonil')
                                                 <span class="badge badge-pill badge-primary">Varonil</span>                                            

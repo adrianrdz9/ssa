@@ -39,119 +39,61 @@
         </div>
     @endif
     <div id="app">
-        <div class="row bg-grey p-2">
-            <div class="col-sm-7 col-md-8">
-                <a class="mx-4" href="https://www.unam.mx/">
-                    <img src="{{asset('images/logo_unam.png')}}" alt="Logo UNAM" height="120" >
-                </a>
-                <a href="http://www.ingenieria.unam.mx/">
-                    <img src="{{asset('images/logo_fi.png')}}" alt="Logo FI" height="120" >
-                </a>
-            </div>
-
-            <div class="col-sm-5 col-md-4 text-right">
-                <h1>Secretaria de Servicios Academicos</h1>
+        
+        @component('partials.navbar')
+            @slot('underLogo')
                 @role('admin')
                     <span>Panel de administrador</span>
                 @endrole
                 @role('eval')
                     <span>Panel de evaluador</span>
                 @endrole
-            </div>
-        </div>
-        <nav class="navbar navbar-expand-md navbar-dark bg-grey">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="container-fluid">
+            @endslot
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        
+            @slot('leftSide')
+                @role('admin')
+                    <li class="navbar-item">
+                        <a href="{{ route('actividadesDeportivasIndex') }}" class="nav-link">Carrusel</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ route('events') }}" class="nav-link">Eventos y avisos</a>
+                    </li>
+                    <li class="navbar-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="tournamentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Torneos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="tournamentDropdown">
+                            <a class="dropdown-item" href="{{ route('newTournament') }}">Crear torneo</a>
+                            <a class="dropdown-item" href="{{ route('tournamentsIndex') }}">Ver todos los torneos</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('historicIndex') }}" class="dropdown-item">Historico</a>
+                            <a href="{{ route('cedulaIndex') }}" class="dropdown-item">Cédulas de inscripciones</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('completeSignup') }}">Completar inscripción</a>
+                        </div>
+                    </li>
+                @else
+                    @role('eval')
                         <li class="nav-item">
-                            <a href="/" class="nav-link">Volver al inicio SSA</a>
+                            <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
                         </li>
-                        @role('admin')
-                            <li class="navbar-item">
-                                <a href="{{ route('actividadesDeportivasIndex') }}" class="nav-link">Carrusel</a>
-                            </li>
-                            <li class="navbar-item">
-                                <a href="{{ route('events') }}" class="nav-link">Eventos y avisos</a>
-                            </li>
-                            <li class="navbar-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="tournamentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Torneos
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="tournamentDropdown">
-                                    <a class="dropdown-item" href="{{ route('newTournament') }}">Crear torneo</a>
-                                    <a class="dropdown-item" href="{{ route('tournamentsIndex') }}">Ver todos los torneos</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="{{ route('historicIndex') }}" class="dropdown-item">Historico</a>
-                                    <a href="{{ route('cedulaIndex') }}" class="dropdown-item">Cédulas de inscripciones</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('completeSignup') }}">Completar inscripción</a>
-                                </div>
-                            </li>
-                        @else
-                            @role('eval')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
-                                </li>
-                            @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('teamsIndex') }}" class="nav-link">Equipos</a>
-                                </li>
-                            @endrole
-                        @endrole
+                    @else
                         <li class="nav-item">
-                            <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
+                            <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
                         </li>
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                @if (Route::has('register'))
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                @endif
-                            </li>
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a href="{{ route('updateAccount') }}" class="dropdown-item">Editar cuenta</a>
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                        <li class="nav-item">
+                            <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('teamsIndex') }}" class="nav-link">Equipos</a>
+                        </li>
+                    @endrole
+                @endrole
+                <li class="nav-item">
+                    <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
+                </li>
+            @endslot
+        @endcomponent
 
         <main class="py-4 bg-white">
             @yield('content')

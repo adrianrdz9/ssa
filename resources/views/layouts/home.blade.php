@@ -17,44 +17,35 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{asset('css/noticas.css')}}" rel="stylesheet"/>
     <style>
-          nav.navbar {
-              background-color: #CC1414;
-          }
-          body{
-            background-color: #ecf0f1;
-          }
-        </style>
-      </head>
-      <body>
-      <div class='container-fluid'>
-        <div class="container-fluid" id="DivLogo">
-          <img src="{{asset('images/logo_unam.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
-          <img src="{{asset('images/logo_fi.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
-          <label id="In">Facultad de Ingeniería</label>
-        </div>
-        <nav class="navbar navbar-expand-md navbar-dark">
-          <a class="navbar-brand" href="">Inicio</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="navbar-brand" href="{{route('actividadesDeportivasIndex')}}">Actividades deportivas</a>
-              </li>
-              <li class="nav-item">
-                <a class="navbar-brand" href="{{route('agrupacionesIndex')}}">Agrupaciones estudiantiles</a>
-              </li>
-              <li class="nav-item">
-                <a class="navbar-brand" href="{{route('bolsaIndex')}}">Bolsa de trabajo</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-    <div class='container-fluid' id="app">
-      @yield('content')
-    </div>
+        nav.navbar {
+            background-color: #CC1414;
+        }
+        body{
+          background-color: #ecf0f1;
+        }
+      </style>
+    </head>
+    <body>
+      @component('partials.navbar')
+          @slot('underLogo')
+            <label>Facultad de Ingeniería</label>
+          @endslot
+
+          @slot('leftSide')
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('actividadesDeportivasIndex')}}">Actividades deportivas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('agrupacionesIndex')}}">Agrupaciones estudiantiles</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('bolsaIndex')}}">Bolsa de trabajo</a>
+            </li>
+          @endSlot
+      @endcomponent
+      <div class='container-fluid' id="app">
+        @yield('content')
+      </div>
   </body>
 </html>

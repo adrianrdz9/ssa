@@ -67,54 +67,48 @@
           </div>
         </div>
    </div>
-      <br/>
+      <hr>
       <section class="details-card">
               <div class="row">
                   <div class="col-sm-4">
-                      <div class="card-content">
-                          <div class="card-img">
-                              <img src="{{asset('images/deportes.jpeg')}}" alt="">
-                          </div>
-                          <div class="card-desc" style="text-align:center;">
-                              <h3>Alumna de Ingeniería, al mundial de natación</h3>
-                              <p>Teresa Alonso García, alumna de la Facultad de Ingeniería, se prepara como seleccionada
+                      <div class="card">
+                          <img class="card-img-top" src="{{asset('images/deportes.jpeg')}}" alt="">
+                          <div class="card-body" style="text-align:center;">
+                              <h3 class="card-title">Alumna de Ingeniería, al mundial de natación</h3>
+                              <p class="card-text">Teresa Alonso García, alumna de la Facultad de Ingeniería, se prepara como seleccionada
                                  nacional de nado sincronizado para competir en el Campeonato Mundial de Natación que se
                                  celebrará en Budapest, Hungría, en julio.</p>
                               <!-- <h6>Un día</h6> -->
-                              <a href='#'><button class="btn btn-danger">Ver más</button></a>
+                              <a href='#' class="btn btn-danger">Ver más</a>
                           </div>
                       </div>
                       <br/>
                   </div>
                   <div class="col-sm-4">
-                      <div class="card-content">
-                          <div class="card-img">
-                              <img src="{{asset('images/agrupaciones.jpeg')}}" alt="">
-                          </div>
-                          <div class="card-desc"style="text-align:center;">
-                              <h3>Tricampeonato en el PetroBowl Internacional</h3>
-                              <p>Estudiantes de la Facultad de Ingeniería (FI) ganaron el primer lugar del PetroBowl
+                      <div class="card">
+                          <img class="card-img-top" src="{{asset('images/agrupaciones.jpeg')}}" alt="">
+                          <div class="card-body"style="text-align:center;">
+                              <h3 class="card-title">Tricampeonato en el PetroBowl Internacional</h3>
+                              <p class="card-text">Estudiantes de la Facultad de Ingeniería (FI) ganaron el primer lugar del PetroBowl
                                  Internacional  2018, organizado por la Society of Petroleum Engineers, agrupación mundial que congrega
                                  a ingenieros y científicos de la industria del gas y el petróleo.</p>
                               <!-- <h6>Un día</h6> -->
-                              <a href='#' style="margin:auto;"><button class="btn btn-warning">Ver más</button></a>
+                              <a href='#' class="btn btn-warning">Ver más</a>
                           </div>
                       </div>
                       <br/>
                   </div>
                   <div class="col-sm-4">
-                      <div class="card-content">
-                          <div class="card-img">
-                              <img src="{{asset('images/bolsa.jpeg')}}" alt="">
-                          </div>
-                          <div class="card-desc" style="text-align:center;">
-                              <h3>Oportunidad de alto crecimiento</h3>
-                              <p>Tras conseguir una certificación, el 23 % de tecnólogos certificados de Microsoft informó de haber recibido
+                      <div class="card">
+                          <img class="card-img-top" src="{{asset('images/bolsa.jpeg')}}" alt="">
+                          <div class="card-body" style="text-align:center;">
+                              <h3 class="card-title">Oportunidad de alto crecimiento</h3>
+                              <p class="card-text">Tras conseguir una certificación, el 23 % de tecnólogos certificados de Microsoft informó de haber recibido
                                 un aumento de sueldo del 20 %. Además, a los empleados con certificación, a menudo, se les encarga que
                                 supervisen a sus compañeros.
                               </p>
-                              <!-- <h6>Un día</h6> -->
-                              <a href='#'><button class="btn btn-primary">Ver más</button></a>
+                              <!- -->
+                              <a href='#' class="btn btn-primary">Ver más</a>
                           </div>
                       </div>
                       <br/>

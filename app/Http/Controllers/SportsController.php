@@ -96,6 +96,7 @@ class SportsController extends Controller
     public function delete($id){
         // Buscar y eliminar el deporte
         Sport::find($id)->delete();
+        return redirect()->back()->with(['notice' => 'Deporte eliminado']);
     }
     
 }
