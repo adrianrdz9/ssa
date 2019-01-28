@@ -7,9 +7,6 @@ Route::get('/', function(){
 Auth::routes();
 
 Route::group(['prefix' => 'agrupaciones'], function () { 
-    //login
-    Route::get('/Agrupa','Auth\LoginController@showLoginForm' );
-    Route::post('Agrupa','Auth\LoginController@login')->name('Agrupa');
     //Administrador
     Route::any('Admi','Admis\admiController@index')->name('Admi');
     //semiAdmis

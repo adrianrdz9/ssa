@@ -18,7 +18,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/');
+            //return "Hola mund"; redirect()->back()->with(['notice' => 'Ya iniciaste sesion']);
         }
 
         return $next($request);
