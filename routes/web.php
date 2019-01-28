@@ -85,14 +85,20 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     Route::post('/admin/sports', 'SportsController@store');
     Route::post('/admin/requirements', 'TournamentsController@requirementCreate');
     
+    Route::get('/cedula', 'HistoricController@cedula')->name('cedulaIndex');
+
     Route::group(['prefix' => '/torneos'], function () {
         Route::get('/', 'TournamentsController@index')->name('tournamentsIndex');
         Route::get('/nuevo', 'TournamentsController@new')->name('newTournament');
         Route::post('/nuevo', 'TournamentsController@store')->name('newTournament');
+
     
         Route::put('/{id}', 'TournamentsController@update')->name('updateTournament');
         Route::get('/{id}/editar', 'TournamentsController@edit')->name('editTournament');
-        
+        Route::get('/{id}/cedula', 'TournamentsController@cedula')->name('tournamentCedula');
+
+        Route::get('/ramas/{id}/cedula', 'TournamentsController@branchCedula')->name('branchCedula');
+
         Route::get('/completar', 'TeamsController@complete')->name('completeSignup');
         Route::get('/completar/{id}', 'TeamsController@teamDetails');
         Route::post('/completar/{id}', 'TeamsController@markComplete');
@@ -105,6 +111,8 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     
     Route::post('/teams', 'TeamsController@store');
     Route::post('/teams/{id}', 'TeamsController@request');
+
+    Route::get('/equipos/{id}/cedula', 'TeamsController@cedula')->name('teamCedula');
     
     Route::get('/mis_equipos', 'TeamsController@index')->name('teamsIndex');
     Route::put('/mis_equipos/{id}', 'TeamsController@update')->name('updateUserTeam');
@@ -113,6 +121,8 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     
     
     Route::get('/deportes', 'SportsController@index')->name('sportsIndex');
+    Route::get('/deportes/{id}/cedula', 'SportsController@cedula')->name('sportCedula');
+
     Route::put('/deportes/{sportName}', 'SportsController@update')->name('updateSport');
     Route::delete('/deportes/{sportName}', 'SportsController@delete')->name('deleteSport');
     

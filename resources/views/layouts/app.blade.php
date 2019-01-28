@@ -88,6 +88,7 @@
                                     <a class="dropdown-item" href="{{ route('tournamentsIndex') }}">Ver todos los torneos</a>
                                     <div class="dropdown-divider"></div>
                                     <a href="{{ route('historicIndex') }}" class="dropdown-item">Historico</a>
+                                    <a href="{{ route('cedulaIndex') }}" class="dropdown-item">Cédulas de inscripciones</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('completeSignup') }}">Completar inscripción</a>
                                 </div>

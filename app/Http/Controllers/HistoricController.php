@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \Lava;
 use \App\Tournament;
-use \App\UserInTournament;
+use \App\Team;
+use \App\UserInTeam;
+use \App\Branch;
+
+use \App\Sport;
 
 class HistoricController extends Controller
 {
@@ -25,74 +29,73 @@ class HistoricController extends Controller
      * @return View
      */
     public function index(){
-        $tournamentsCount = Tournament::all()->groupBy('name')->count();
-        $userInTournamentsCount = UserInTournament::all()->count();
-        $completedSignupsCount = UserInTournament::where('status', 'Completada')->count();
-        $deletedSignupsCount = UserInTournament::where('status', 'Eliminada')->count();
-
-        $averageUsersInTournaments = $userInTournamentsCount / ($tournamentsCount > 0 ? $tournamentsCount : 1);
-
-        $usersInBranch = Tournament::select([ 'branch', 'id'])->with('users')->get();
-        $usersInBranch = $usersInBranch->groupBy('branch');
-
-        foreach ($usersInBranch as $branch => $tournaments) {
-            if(!isset($usersInBranch['total'])){
-                $usersInBranch['total'] = 0;
-            }
-            if(!isset($usersInBranch['varonil'])){
-                $usersInBranch['varonil'] = 0;
-            }
-            if(!isset($usersInBranch['femenil'])){
-                $usersInBranch['femenil'] = 0;
-            }
-            if(!isset($usersInBranch['mixto'])){
-                $usersInBranch['mixto'] = 0;
-            }
-            $usersInBranch[$branch]['users'] = 0;
-            foreach ($tournaments as $tournament) {
-                if(isset($tournament['users'])){
-                    $usersInBranch[$branch]['users'] += count($tournament['users']);
-                    $usersInBranch['total'] += count($tournament['users']);
-                }
-            }
-            
-            $usersInBranch[$branch] = $usersInBranch[$branch]->get('users');
+        // Número de torneos
+        $tournamentsCount = Tournament::count();
+        // Numero de equipos
+        $teamsCount = Team::count();
+        // Numero de usuarios inscritos
+        $userCount = UserInTeam::count();
+        // Número de inscripciones completadas
+        $completedTeams = Team::where('completed', 1)->with('accepted_users')->get();
+        $completedUserCount = 0;
+        foreach ($completedTeams as $team) {
+            $completedUserCount = $team->accepted_users->count();
         }
 
+        // Promedio de equipos por torneo
+        $averageTeamsPerTournament = $teamsCount / $tournamentsCount;
+        // Promedio de alumnos por equipo
+        $averageUsersPerTeam = $userCount / $teamsCount;
+        // Promedio de alumnos por torneo
+        $averageUsersPerTournament = $userCount / $tournamentsCount;
+
+        // Usuarios por rama
+        $teamsPerBranch ;
+        foreach(Branch::with('teams')->get()->groupBy('branch') as $branch){
+            foreach ($branch as $tournament) {
+                if(isset($teamsPerBranch[$tournament->branch])){
+                    $teamsPerBranch[$tournament->branch] += count($tournament->teams);
+                }else{
+                    $teamsPerBranch[$tournament->branch] = 0;
+                }
+            }
+        }
+        // Grafica de registros completados-no completados
         $completedSignupsChart = Lava::DataTable();
-        $completedSignupsChart->addStringColumn('Razon')
+        $completedSignupsChart->addStringColumn("Razón")
                             ->addNumberColumn('Porcentaje')
-                            ->addRow(['Registros incompletos',  ($userInTournamentsCount - $completedSignupsCount - $deletedSignupsCount)])
-                            ->addRow(['Registros eliminados',  $deletedSignupsCount])
-                            ->addRow(['Registros completados',  $completedSignupsCount]);
-        
+                            ->addRow(['Registros incompletos', $userCount-$completedUserCount])
+                            ->addRow(['Registros completados', $completedUserCount]);
+
         Lava::PieChart('completed-signups', $completedSignupsChart, [
-            'title' => 'Proporcion de registros completos e incompletos',
-            'is3D' =>true,
+            'title' => 'Proporción de registros completos e incompletos',
+            'is3D' => true
         ]);
 
+        // Grafica de usuarios por rama
+        $teamsPerBranchChart = Lava::DataTable();
+        $teamsPerBranchChart->addStringColumn('Razon')
+                            ->addNumberColumn('Porcentaje')
+                            ->addRow(['Rama femenil', count($teamsPerBranch['femenil']) ])
+                            ->addRow(['Rama varonil', count($teamsPerBranch['varonil'])])
+                            ->addRow(['Rama mixta', count($teamsPerBranch['mixto'])]);
 
-        $branchPieChart = Lava::DataTable();
-        $branchPieChart->addStringColumn('Razon')
-                        ->addNumberColumn('Porcentaje')
-                        ->addRow(['Varonil', ($usersInBranch['varonil'] / ($usersInBranch['total'] > 0 ? $usersInBranch['total'] : 1 ))*100 ])
-                        ->addRow(['Femenil', ($usersInBranch['femenil'] / ($usersInBranch['total'] > 0 ? $usersInBranch['total'] : 1 ))*100])
-                        ->addRow(['Mixta', ($usersInBranch['mixto'] / ($usersInBranch['total'] > 0 ? $usersInBranch['total'] : 1 ))*100]);
-
-        Lava::PieChart('users-branch', $branchPieChart, [
-            'title' => 'Proporcion de alumnos en distintas ramas',
-            'is3D' => true,
+        Lava::PieChart('teams-per-branch', $teamsPerBranchChart, [
+            'title' => 'Proporcion de total de equipos por rama',
+            'is3D' => true
         ]);
 
-
+        // Union de datos
         $data = [
             'tournamentsCount' => $tournamentsCount,
-            'userInTournamentsCount' => $userInTournamentsCount,
-            'completedSignupsCount' => $completedSignupsCount,
-            'averageUsersInTournaments' => $averageUsersInTournaments,
-            'usersInBranch' => $usersInBranch,
-            'tournaments' => Tournament::select(['name', 'id', 'branch'])->get(),
-            'deletedSignupsCount' => $deletedSignupsCount
+            'teamsCount' => $teamsCount,
+            'userCount' => $userCount,
+            'completedUserCount' => $completedUserCount,
+            'averageTeamsPerTournament' => $averageTeamsPerTournament,
+            'averageUsersPerTeam' => $averageUsersPerTeam,
+            'averageUsersPerTournament' => $averageUsersPerTournament,
+            'teamsPerBranch' => $teamsPerBranch,
+            'tournaments' => Tournament::all()
         ];
 
         return view('historic.index', $data);
@@ -104,29 +107,13 @@ class HistoricController extends Controller
      * @return Data
      */
     public function show($id){
-        $data = Tournament::where('id', $id)->with('users')->with('sport')->with('sport.tournaments')->get()[0];
-        $groupedTournaments = (object)collect($data->sport->tournaments)->groupBy('name');
-        unset($data->sport->tournaments);
-        $data->sport->tournaments = (object) ['counts' => ['_total' => 0]];
-        foreach ($groupedTournaments as $name => $tournament) {
-            $data->sport->tournaments = (object) array_merge((array)$data->sport->tournaments, (array)[$name => $tournament]);
-        }
-        
-        
-        foreach ($data->sport->tournaments as $name => $tournament) {
-            if(isset($tournament[0]->id )){
-                $data->sport->tournaments->counts =  (object) array_merge( [$name => 0], (array)$data->sport->tournaments->counts  );
-                foreach ($tournament as $branch) {
-                    //return $data->sport->tournaments;;
-                    $data->sport->tournaments->counts->_total += $branch->users->count();
-                    $data->sport->tournaments->counts->$name += $branch->users->count();
-                }
-            }
-        }
-
-
-
+        $data = Tournament::where('id', $id)->with('branches.teams.accepted_users')->with('sport.tournaments')->get()[0];
 
         return $data;
+    }
+
+    public function cedula(){
+        $sports = Sport::with('tournaments.branches.teams.accepted_users')->get();
+        return view('historic.cedula', ['sports' => $sports]);
     }
 }

@@ -53,10 +53,4 @@ class Tournament extends Model
     public function branches(){
         return $this->hasMany('App\Branch', 'tournament_id', 'id');
     }
-
-    
-
-    
-
-    
 }

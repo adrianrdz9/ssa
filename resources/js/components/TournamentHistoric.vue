@@ -4,7 +4,7 @@
             <a href="" v-for="tournament in tournaments" :key="tournament.id" 
                 :data-id="tournament.id" class="list-group-item list-group-item-action btn"
                 @click.stop="onClick($event)" >
-                {{tournament.name}} - {{tournament.branch}}
+                {{tournament.name}}
             </a>
         </div>
         <div class="d-block text-center" v-if="loading">
@@ -12,58 +12,25 @@
         </div>
 
         <div v-if="showData" class="position-relative">
-            <div class="position-fixed" style="top:10px; z-index:100">
-                <a href="#" class="btn btn-secondary" style="font-size: 1.5em;" id="backArrow" @click.stop="back($event)"> <i class="fas fa-arrow-left"></i> </a>
-            </div>
-            <h3 class="d-block text-center">
-                {{this.data.name}} - Rama {{this.data.branch}}
-            </h3>
-            <h4 class="d-block text-center">
-                Fecha: <date-format :date="this.data.date" format="dddd D [de] MMMM [de] YYYY "></date-format>
-                <span class="badge badge-danger" v-if="isPast()" >Terminó</span>
-                <span class="badge badge-success" v-else >Próximo</span>                
-            </h4>
- 
-            <h4 class="d-block text-center">
-                Datos de los participantes              
-            </h4>
-            <GChart
-                type="PieChart"
-                :data="ageGraphData()"
-                :options="ageGraphOptions"
-            />
-            <GChart
-                type="PieChart"
-                :data="careerGraphData()"
-                :options="careerGraphOptions"
-            />
-
-            <h4 class="d-block text-center">
-                Datos del torneo              
-            </h4>
-
-            <p>
-                <b>Nombre del torneo: </b>{{ this.data.name }} <br>
-                <b>Rama: </b>{{ this.data.branch }} <br>
-                <b>Fecha: </b><date-format :date="this.data.date" format="dddd D [de] MMMM [de] YYYY "></date-format> <br>
-                <b>Número de participantes: </b>{{ this.data.users.length }} <br>
-                <b>Maximo de inscripciones: </b>{{this.data.max_room}} <br>
-                <b>Deporte: </b>{{ this.data.sport.name }} <br>
-            </p>
-
-            <h4 class="d-block text-center">
-                Datos del deporte ({{this.data.sport.name}})              
-            </h4>
-
-            <p>
-                <b>Torneos de {{this.data.sport.name}}:</b>{{Object.keys(this.data.sport.tournaments).length -1 }} <br>
-                <b>Total de inscripciones: </b>{{this.data.sport.tournaments.counts._total}}
-                <GChart
-                    type="PieChart"
-                    :data="sportGraphData()"
-                    :options="{title: 'Inscripciones en los torneos de '+this.data.sport.name}"
-                />
-            </p>
+            <!-- 
+                Nombre del torneo
+                Fecha
+                Pasado o proximo
+                Datos de participantes
+                    Grafica de edades
+                    Grafica de carreras
+                Datos del torneo
+                    Nombre
+                    Ramas
+                    Fecha
+                    Equipos inscritos
+                    Maximo de equipos
+                    Deporte
+                Datos del deporte
+                    Torneos de ese deporte
+                    Numero de equipos en diferentes torneos
+            -->
+            
 
         </div>
     </div>
@@ -113,12 +80,14 @@ export default {
         
         ageGraphData(){
             let ageCounts = {};
-            this.data.users.forEach(user => {
-                let age = moment(user.birthdate).fromNow(true);
-                if(ageCounts[age])
-                    ageCounts[age]++;
-                else
-                    ageCounts[age] = 1;
+            this.data.teams.foreach(users => {
+                users.foreach(user => {
+                    let age = moment(user.birthdate).fromNow(true);
+                    if(ageCounts[age])
+                        ageCounts[age]++;
+                    else
+                        ageCounts[age] = 1;
+                })
             });                        
 
             let data = [
@@ -138,12 +107,14 @@ export default {
 
         careerGraphData(){
             let careers = {};
-            this.data.users.forEach(user => {
-                let career = user.career;
-                if(careers[career])
-                    careers[career]++;
-                else
-                    careers[career] = 1;
+            this.data.teams.forEach(users => {
+                users.foreach(user => {
+                    let career = user.career;
+                    if(careers[career])
+                        careers[career]++;
+                    else
+                        careers[career] = 1;
+                })
             });                        
 
             let data = [

@@ -5705,39 +5705,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -5773,9 +5740,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     ageGraphData: function ageGraphData() {
       var ageCounts = {};
-      this.data.users.forEach(function (user) {
-        var age = moment(user.birthdate).fromNow(true);
-        if (ageCounts[age]) ageCounts[age]++;else ageCounts[age] = 1;
+      this.data.teams.foreach(function (users) {
+        users.foreach(function (user) {
+          var age = moment(user.birthdate).fromNow(true);
+          if (ageCounts[age]) ageCounts[age]++;else ageCounts[age] = 1;
+        });
       });
       var data = [['Edad', 'Participantes']];
 
@@ -5790,9 +5759,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     careerGraphData: function careerGraphData() {
       var careers = {};
-      this.data.users.forEach(function (user) {
-        var career = user.career;
-        if (careers[career]) careers[career]++;else careers[career] = 1;
+      this.data.teams.forEach(function (users) {
+        users.foreach(function (user) {
+          var career = user.career;
+          if (careers[career]) careers[career]++;else careers[career] = 1;
+        });
       });
       var data = [['Carrera', 'Participantes']];
 
@@ -66606,11 +66577,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n            " +
-                    _vm._s(tournament.name) +
-                    " - " +
-                    _vm._s(tournament.branch) +
-                    "\n        "
+                  "\n            " + _vm._s(tournament.name) + "\n        "
                 )
               ]
             )
@@ -66628,174 +66595,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.showData
-      ? _c(
-          "div",
-          { staticClass: "position-relative" },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "position-fixed",
-                staticStyle: { top: "10px", "z-index": "100" }
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-secondary",
-                    staticStyle: { "font-size": "1.5em" },
-                    attrs: { href: "#", id: "backArrow" },
-                    on: {
-                      click: function($event) {
-                        $event.stopPropagation()
-                        _vm.back($event)
-                      }
-                    }
-                  },
-                  [_c("i", { staticClass: "fas fa-arrow-left" })]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("h3", { staticClass: "d-block text-center" }, [
-              _vm._v(
-                "\n            " +
-                  _vm._s(this.data.name) +
-                  " - Rama " +
-                  _vm._s(this.data.branch) +
-                  "\n        "
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "h4",
-              { staticClass: "d-block text-center" },
-              [
-                _vm._v("\n            Fecha: "),
-                _c("date-format", {
-                  attrs: {
-                    date: this.data.date,
-                    format: "dddd D [de] MMMM [de] YYYY "
-                  }
-                }),
-                _vm._v(" "),
-                _vm.isPast()
-                  ? _c("span", { staticClass: "badge badge-danger" }, [
-                      _vm._v("Terminó")
-                    ])
-                  : _c("span", { staticClass: "badge badge-success" }, [
-                      _vm._v("Próximo")
-                    ])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("h4", { staticClass: "d-block text-center" }, [
-              _vm._v(
-                "\n            Datos de los participantes              \n        "
-              )
-            ]),
-            _vm._v(" "),
-            _c("GChart", {
-              attrs: {
-                type: "PieChart",
-                data: _vm.ageGraphData(),
-                options: _vm.ageGraphOptions
-              }
-            }),
-            _vm._v(" "),
-            _c("GChart", {
-              attrs: {
-                type: "PieChart",
-                data: _vm.careerGraphData(),
-                options: _vm.careerGraphOptions
-              }
-            }),
-            _vm._v(" "),
-            _c("h4", { staticClass: "d-block text-center" }, [
-              _vm._v("\n            Datos del torneo              \n        ")
-            ]),
-            _vm._v(" "),
-            _c(
-              "p",
-              [
-                _c("b", [_vm._v("Nombre del torneo: ")]),
-                _vm._v(_vm._s(this.data.name) + " "),
-                _c("br"),
-                _vm._v(" "),
-                _c("b", [_vm._v("Rama: ")]),
-                _vm._v(_vm._s(this.data.branch) + " "),
-                _c("br"),
-                _vm._v(" "),
-                _c("b", [_vm._v("Fecha: ")]),
-                _c("date-format", {
-                  attrs: {
-                    date: this.data.date,
-                    format: "dddd D [de] MMMM [de] YYYY "
-                  }
-                }),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("b", [_vm._v("Número de participantes: ")]),
-                _vm._v(_vm._s(this.data.users.length) + " "),
-                _c("br"),
-                _vm._v(" "),
-                _c("b", [_vm._v("Maximo de inscripciones: ")]),
-                _vm._v(_vm._s(this.data.max_room) + " "),
-                _c("br"),
-                _vm._v(" "),
-                _c("b", [_vm._v("Deporte: ")]),
-                _vm._v(_vm._s(this.data.sport.name) + " "),
-                _c("br")
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("h4", { staticClass: "d-block text-center" }, [
-              _vm._v(
-                "\n            Datos del deporte (" +
-                  _vm._s(this.data.sport.name) +
-                  ")              \n        "
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "p",
-              [
-                _c("b", [
-                  _vm._v("Torneos de " + _vm._s(this.data.sport.name) + ":")
-                ]),
-                _vm._v(
-                  _vm._s(Object.keys(this.data.sport.tournaments).length - 1) +
-                    " "
-                ),
-                _c("br"),
-                _vm._v(" "),
-                _c("b", [_vm._v("Total de inscripciones: ")]),
-                _vm._v(
-                  _vm._s(this.data.sport.tournaments.counts._total) +
-                    "\n            "
-                ),
-                _c("GChart", {
-                  attrs: {
-                    type: "PieChart",
-                    data: _vm.sportGraphData(),
-                    options: {
-                      title:
-                        "Inscripciones en los torneos de " +
-                        this.data.sport.name
-                    }
-                  }
-                })
-              ],
-              1
-            )
-          ],
-          1
-        )
-      : _vm._e()
+    _vm.showData ? _c("div", { staticClass: "position-relative" }) : _vm._e()
   ])
 }
 var staticRenderFns = []

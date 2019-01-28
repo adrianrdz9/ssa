@@ -101,7 +101,6 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
      */
     public function avatarPath(){
         $avatarUrl = str_replace('public/', '', $this->avatar->url());
-        return $avatarUrl;
         if(file_exists($avatarUrl))
             return $avatarUrl;
         else return asset('images/missing_avatar.png');
