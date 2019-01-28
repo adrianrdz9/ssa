@@ -25,8 +25,8 @@
   @include('sweet::alert')
   <div class='container-fluid'>
     <div class="container-fluid" id="DivLogo">
-      <img src="{{asset('images/UNAM.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
-      <img src="{{asset('images/FI.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
+      <img src="{{asset('images/logo_unam.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
+      <img src="{{asset('images/logo_fi.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
       <label id="In">Facultad de Ingeniería</label>
     </div>
     <nav class="navbar navbar-expand-md navbar-dark">
@@ -40,7 +40,10 @@
             <a class="navbar-brand" href="../semiAdmi">Información</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="#">Reclutamientos</a>
+            <a class="navbar-brand" href="../semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
+          </li>
+          <li class="nav-item">
+            <a class="navbar-brand" href="../semiAdmi/VerReclutamientos">Reclutamientos</a>
           </li>
           <li class="nav-item">
             <a class="navbar-brand" href="../semiAdmi/Propuesta">Propuestas</a>

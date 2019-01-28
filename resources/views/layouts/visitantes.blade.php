@@ -23,12 +23,12 @@
   <body>
   <div class='container-fluid'>
   <div class="container-fluid" id="DivLogo">
-    <img src="{{asset('images/UNAM.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
-    <img src="{{asset('images/FI.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%; margin-left:.5%;" align="left">
+    <img src="{{asset('images/logo_unam.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
+    <img src="{{asset('images/logo_fi.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%; margin-left:.5%;" align="left">
     <label id="In">Facultad de Ingeniería</label>
   </div>
   <nav class="navbar navbar-expand-md navbar-dark">
-    <a class="navbar-brand" href="/agrupaciones/">Inicio</a>
+    <a class="navbar-brand" href="../../">Inicio</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -41,7 +41,7 @@
           <a class="navbar-brand" href="/agrupaciones/Historial">Historial</a>
         </li>
         <li class="nav-item">
-          <a class="navbar-brand" href="#">Reclutamientos</a>
+          <a class="navbar-brand" href="/agrupaciones/Reclutamientos">Reclutamientos</a>
         </li>
       </ul>
     </div>
