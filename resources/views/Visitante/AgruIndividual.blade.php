@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-sm-4" style="margin-left: auto; text-align:center;">
       @if($data[0]->Foto == "")
-        <img style="margin-left:5%;"src="{{asset('images/FI.png')}}"
+        <img style="margin-left:5%;"src="{{asset('images/logo_fi.png')}}"
              class="img-responsive" width="80%" height="85%"/>
       @else
         <img style="margin-left:5%;"src="{{asset('images/Agrupaciones/Fotos/'. $data[0]->Foto )}}"
@@ -42,7 +42,7 @@
       </div>
       <div align="center">
         <img src="{{asset('images/Agrupaciones/Logos/'. $data[0]->Logo )}}"
-            class="img-responsive" style="margin:auto;"
+            class="img-responsive" style="margin:auto;" alt="Logo de la agrupación"
             width="30%" height="100%">
       </div>
     </div>
