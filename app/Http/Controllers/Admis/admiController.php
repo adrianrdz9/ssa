@@ -125,7 +125,7 @@ class admiController extends Controller
                 $carusel->Imagen = $filename;
               $carusel->save();
           }
-            return redirect('Admi');
+            return redirect('agrupaciones/Admi');
           }
     }
     /**
@@ -206,7 +206,7 @@ class admiController extends Controller
             $carusel->Imagen = $filename;
           $carusel->save();
           alert()->success('Imagen agregada','Exito!','success');
-          return redirect('Admi/NICarusel');
+          return redirect('agrupaciones/Admi/NICarusel');
         }
       }
       /**
@@ -268,7 +268,7 @@ class admiController extends Controller
       $feria ->Inicio = $request->FInicio;
       $feria ->Limite = $request->FLimite;
       $feria->save();
-      return redirect('Admi/Propuestas');
+      return redirect('agrupaciones/Admi/Propuestas');
     }
   }
   /**
@@ -309,7 +309,9 @@ class admiController extends Controller
     if(is_null(auth()->user()))
       return redirect('/');
     else {
-      $data = \App\User::orderBy('Siglas','asc')->get(['id', 'Siglas','Nombre','Logo']);
+      $data = \App\User::whereNotNull('Siglas')
+          ->orderBy('Siglas','asc')
+          ->get(['id', 'Siglas','Nombre','Logo']);
       return view('Admis.Contraseñas',['data' => $data]);
     }
   }
@@ -329,7 +331,7 @@ class admiController extends Controller
       $c = bcrypt($request->pass);
       \App\User::where('id',$id)->update(['password' => $c]);
       alert()->success('Exito!','Contraseña actualizada','success');
-      return redirect('Admi/Contraseñas');
+      return redirect('agrupaciones/Admi/Contraseñas');
     }
   }
 

@@ -6,36 +6,36 @@ Route::get('/', function(){
 
 Auth::routes();
 
-Route::group(['prefix' => 'agrupaciones'], function () { 
+Route::group(['prefix' => 'agrupaciones'], function () {
     //Administrador
-    Route::any('Admi','Admis\admiController@index')->name('Admi');
+    Route::any('/Admi','Admis\admiController@index')->name('Admi');
     //semiAdmis
-    Route::any('semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
+    Route::any('/semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
 
     //logout
-    Route::post('logout','Auth\LoginController@logout')->name('logout');
+    Route::post('/logout','Auth\LoginController@logout')->name('logout');
 
     //Administrador
     //Noticias - Admi
-    Route::get('ANoticias','Admis\admiController@Noticias')->name('ANoticias');
-    Route::post('AdmiP','Admis\admiController@store')->name('AdmiP');
+    Route::get('/ANoticias','Admis\admiController@Noticias')->name('ANoticias');
+    Route::post('/AdmiP','Admis\admiController@store')->name('AdmiP');
     Route::get('/oNoticia/id/{id}','Admis\admiController@ONoticia');
     Route::get('/mNoticia/id/{id}','Admis\admiController@MNoticia');
     //Carusel
-    Route::get('Admi/Carusel','Admis\admiController@VerCarusel');
-    Route::get('Admi/NICarusel','Admis\admiController@Carusel');
-    Route::post('NCarusel','Admis\admiController@NCarusel');
+    Route::get('/Admi/Carusel','Admis\admiController@VerCarusel');
+    Route::get('/Admi/NICarusel','Admis\admiController@Carusel');
+    Route::post('/NCarusel','Admis\admiController@NCarusel')->name('NCarusel');
     Route::get('/OImagenC/id/{id}','Admis\admiController@OImagenC');
     Route::get('/MImagenC/id/{id}','Admis\admiController@MImagenC');
     //Ver propuestas
     Route::get('Admi/Propuestas','Admis\admiController@Propuestas');
-    Route::post('NFeria','Admis\admiController@Feria');
+    Route::post('/NFeria','Admis\admiController@Feria')->name('NFeria');
     //Status propuestas
     Route::get('/statusA/id/{id}','Admis\admiController@StatusA');
     Route::get('/statusC/id/{id}','Admis\admiController@StatusC');
     //contraseñas
-    Route::get('Admi/Contraseñas','Admis\admiController@Agrupaciones');
-    Route::post('NPassword','Admis\admiController@NPassword');
+    Route::get('/Admi/Contraseñas','Admis\admiController@Agrupaciones');
+    Route::post('/NPassword','Admis\admiController@NPassword')->name('NPassword');
     //semiAdmi
     //Información general
     Route::post('InfoGeneral','Admis\semiAdmiController@InfoGeneral');
@@ -89,7 +89,7 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
 
     Route::post('/admin/sports', 'SportsController@store');
     Route::post('/admin/requirements', 'TournamentsController@requirementCreate');
-    
+
     Route::get('/cedula', 'HistoricController@cedula')->name('cedulaIndex');
 
     Route::group(['prefix' => '/torneos'], function () {
@@ -97,7 +97,7 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
         Route::get('/nuevo', 'TournamentsController@new')->name('newTournament');
         Route::post('/nuevo', 'TournamentsController@store')->name('newTournament');
 
-    
+
         Route::put('/{id}', 'TournamentsController@update')->name('updateTournament');
         Route::get('/{id}/editar', 'TournamentsController@edit')->name('editTournament');
         Route::get('/{id}/cedula', 'TournamentsController@cedula')->name('tournamentCedula');
@@ -118,7 +118,7 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     Route::post('/teams/{id}', 'TeamsController@request');
 
     Route::get('/equipos/{id}/cedula', 'TeamsController@cedula')->name('teamCedula');
-    
+
     Route::get('/mis_equipos', 'TeamsController@index')->name('teamsIndex');
     Route::put('/mis_equipos/{id}', 'TeamsController@update')->name('updateUserTeam');
     Route::post('/mis_equipos/{id}/close', 'TeamsController@close')->name('closeTeam');
