@@ -102,94 +102,94 @@ class semiAdmiController extends Controller
       * @return redirect
     */
     public function Integrantes(Request $request){
-      if(is_null(auth()->user()))
-        return redirect('/');
-      else {
-        $u = auth()->user()->Siglas;
-        $Cargos = Array
-        (
-            Array(
-                    'NCargo'=> 1,
-                    'Cargo'=> 'Presidente',
-                    'Nombre' => $request->NPresi,
-                    'Telefono' => $request->TPresi,
-                    'Correo' => $request->CPresi,
-            ),
-            Array(
-                    'NCargo'=> 2,
-                    'Cargo'=> 'Vicepresidente',
-                    'Nombre' => $request->NVice,
-                    'Telefono' => $request->TVice,
-                    'Correo' => $request->CVice,
-            ),
-            Array(
-                    'NCargo'=> 3,
-                    'Cargo'=> $request->Cargo3,
-                    'Nombre' => $request->NCargo3,
-                    'Telefono' => $request->TCargo3,
-                    'Correo' => $request->CCargo3,
-            ),
-            Array(
-                    'NCargo'=> 4,
-                    'Cargo'=> $request->Cargo4,
-                    'Nombre' => $request->NCargo4,
-                    'Telefono' => $request->TCargo4,
-                    'Correo' => $request->CCargo4,
-            ),
-            Array(
-                    'NCargo'=> 5,
-                    'Cargo'=> $request->Cargo5,
-                    'Nombre' => $request->NCargo5,
-                    'Telefono' => $request->TCargo5,
-                    'Correo' => $request->CCargo5,
-            ),
-            Array(
-                    'NCargo'=> 6,
-                    'Cargo'=> $request->Cargo6,
-                    'Nombre' => $request->NCargo6,
-                    'Telefono' => $request->TCargo6,
-                    'Correo' => $request->CCargo6,
-            ),
-        );
-        foreach ($Cargos as $row) {
-            $nC = $row['NCargo'];
-            $Cargo = $row["Cargo"];
-            $Nombre = $row["Nombre"];
-            $Correo = $row["Correo"];
-            $Tel = $row["Telefono"];
-            $find = \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])->get(['Nombre']);
-            if($find == [] && $Cargo != "" && $Nombre != ""){
-                $integrante = new Integrantes;
-                $integrante ->Siglas = $u;
-                $integrante ->NCargo = $nC;
-                $integrante ->Cargo = $row['Cargo'];
-                $integrante ->Nombre = $row['Nombre'];
-                $integrante ->Email = $row['Correo'];
-                $integrante ->Numero = $row['Telefono'];
-                $integrante->save();
-            }else if($find != []){
-                if($row['Cargo'] != ""){
-                  \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                                    ->update(['Cargo' => $Cargo]);
-                }
-                if ($row['Nombre'] != "") {
-                  \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                                    ->update(['Nombre' => $Nombre]);
-                }
-                if ($row['Correo'] != "") {
-                  \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                                    ->update(['Email' => $Correo]);
-                }
-                if ($row['Telefono'] != "") {
-                  \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                                    ->update(['Numero' => $Tel]);
+          if(is_null(auth()->user()))
+            return redirect('/');
+          else {
+            $u = auth()->user()->Siglas;
+            $Cargos = Array
+            (
+                Array(
+                        'NCargo'=> 1,
+                        'Cargo'=> 'Presidente',
+                        'Nombre' => $request->NPresi,
+                        'Telefono' => $request->TPresi,
+                        'Correo' => $request->CPresi,
+                ),
+                Array(
+                        'NCargo'=> 2,
+                        'Cargo'=> 'Vicepresidente',
+                        'Nombre' => $request->NVice,
+                        'Telefono' => $request->TVice,
+                        'Correo' => $request->CVice,
+                ),
+                Array(
+                        'NCargo'=> 3,
+                        'Cargo'=> $request->Cargo3,
+                        'Nombre' => $request->NCargo3,
+                        'Telefono' => $request->TCargo3,
+                        'Correo' => $request->CCargo3,
+                ),
+                Array(
+                        'NCargo'=> 4,
+                        'Cargo'=> $request->Cargo4,
+                        'Nombre' => $request->NCargo4,
+                        'Telefono' => $request->TCargo4,
+                        'Correo' => $request->CCargo4,
+                ),
+                Array(
+                        'NCargo'=> 5,
+                        'Cargo'=> $request->Cargo5,
+                        'Nombre' => $request->NCargo5,
+                        'Telefono' => $request->TCargo5,
+                        'Correo' => $request->CCargo5,
+                ),
+                Array(
+                        'NCargo'=> 6,
+                        'Cargo'=> $request->Cargo6,
+                        'Nombre' => $request->NCargo6,
+                        'Telefono' => $request->TCargo6,
+                        'Correo' => $request->CCargo6,
+                ),
+            );
+            foreach ($Cargos as $row) {
+                $nC = $row['NCargo'];
+                $Cargo = $row["Cargo"];
+                $Nombre = $row["Nombre"];
+                $Correo = $row["Correo"];
+                $Tel = $row["Telefono"];
+                $find = \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])->get(['Nombre']);
+                if($find == [] && $Cargo != "" && $Nombre != ""){
+                    $integrante = new Integrantes;
+                    $integrante ->Siglas = $u;
+                    $integrante ->NCargo = $nC;
+                    $integrante ->Cargo = $row['Cargo'];
+                    $integrante ->Nombre = $row['Nombre'];
+                    $integrante ->Email = $row['Correo'];
+                    $integrante ->Numero = $row['Telefono'];
+                    $integrante->save();
+                }else if($find != []){
+                    if($row['Cargo'] != ""){
+                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                        ->update(['Cargo' => $Cargo]);
+                    }
+                    if ($row['Nombre'] != "") {
+                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                        ->update(['Nombre' => $Nombre]);
+                    }
+                    if ($row['Correo'] != "") {
+                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                        ->update(['Email' => $Correo]);
+                    }
+                    if ($row['Telefono'] != "") {
+                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                        ->update(['Numero' => $Tel]);
+                    }
                 }
             }
+            alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
+            return redirect('agrupaciones/semiAdmi');
+          }
         }
-        alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
-        return redirect('semiAdmi');
-      }
-    }
     /**
       * Metodo utilizado para guardar/actualizar la informacion general de la
       * agrupacion
@@ -234,7 +234,7 @@ class semiAdmiController extends Controller
           }
         }
         alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
-        return redirect('semiAdmi');
+        return redirect('agrupaciones/semiAdmi');
       }
     }
     /**

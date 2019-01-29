@@ -43,7 +43,7 @@
     <button style="margin-top:5%;"type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#ejemplo">
         ORDEN DEL DÍA SUGERIDO
     </button>
-    <a href="{{asset('PDF/Cambio de Mesa - procedimiento 2018')}}" download="Cambio_Mesa">
+    <a href="{{asset('PDF/Cambio de Mesa - procedimiento 2018.pdf')}}" download="Cambio_Mesa">
       <button style="margin-top:3%;" type="button" class="btn btn-danger btn-block">
         DESCARGAR ARCHIVO
       </button>

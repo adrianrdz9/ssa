@@ -38,15 +38,15 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::post('/NPassword','Admis\admiController@NPassword')->name('NPassword');
     //semiAdmi
     //Información general
-    Route::post('InfoGeneral','Admis\semiAdmiController@InfoGeneral');
+    Route::post('/InfoGeneral','Admis\semiAdmiController@InfoGeneral')->name('InfoGeneral');
     //Integrantes
-    Route::post('Integrantes','Admis\semiAdmiController@Integrantes');
+    Route::post('/Integrantes','Admis\semiAdmiController@Integrantes')->name('Integrantes');
     //status propuesta
-    Route::get('semiAdmi/Propuesta','Admis\semiAdmiController@Propuesta')->name('PropuestaSemi');
+    Route::get('/semiAdmi/Propuesta','Admis\semiAdmiController@Propuesta')->name('PropuestaSemi');
     //Nueva propuesta
-    Route::post('NPropuesta','Admis\semiAdmiController@NPropuesta');
+    Route::post('/NPropuesta','Admis\semiAdmiController@NPropuesta');
     //Cambio de Mesa
-    Route::view('/semiAdmi/CambioMesa','Admis.cambioMesa');
+    Route::get('/semiAdmi/CambioMesa','Admis\semiAdmiController@Mesa');
     //Visitante
     //Noticias - 9 (index)
     Route::get('/','Visitante\generalController@index')->name('agrupacionesIndex');
