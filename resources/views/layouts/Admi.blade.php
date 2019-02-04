@@ -38,22 +38,22 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="navbar-brand" href="../ANoticias">Noticias</a>
+            <a class="navbar-brand" href="../../agrupaciones/ANoticias">Noticias</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../Admi">Nueva noticia</a>
+            <a class="navbar-brand" href="../../agrupaciones/Admi">Nueva noticia</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../Admi/Carusel">Carusel</a>
+            <a class="navbar-brand" href="../../agrupaciones/Admi/Carusel">Carusel</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../Admi/NICarusel">Nueva Imagen Carusel</a>
+            <a class="navbar-brand" href="../../agrupaciones/Admi/NICarusel">Nueva Imagen Carusel</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../Admi/Contraseñas">Contraseñas</a>
+            <a class="navbar-brand" href="../../agrupaciones/Admi/Contraseñas">Contraseñas</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../Admi/Propuestas">Propuestas</a>
+            <a class="navbar-brand" href="../../agrupaciones/Admi/Propuestas">Propuestas</a>
           </li>
           <li class="nav-item">
             <form method="POST" action=" {{ route('logout') }} ">

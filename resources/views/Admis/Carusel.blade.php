@@ -3,7 +3,7 @@
 @section('content')
 <div class="container" style="margin-top:1%;">
   <h2>Imagenes para el carusel</h2>
-<form method="post" action="{{ url('NCarusel') }}" enctype="multipart/form-data">
+<form method="post" action="{{ url('agrupaciones/NCarusel') }}" enctype="multipart/form-data">
   {{ csrf_field() }}
     <div class="row" style="text-align:left;">
       <div class="col-md-6">

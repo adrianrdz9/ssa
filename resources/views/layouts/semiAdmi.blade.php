@@ -30,26 +30,26 @@
       <label id="In">Facultad de Ingeniería</label>
     </div>
     <nav class="navbar navbar-expand-md navbar-dark">
-      <a class="navbar-brand" href="../semiAdmi/Propuesta">{{ auth()->user()->Siglas }}</a>
+      <a class="navbar-brand" href="../../agrupaciones/semiAdmi/Propuesta">{{ auth()->user()->Siglas }}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="navbar-brand" href="../semiAdmi">Información</a>
+            <a class="navbar-brand" href="../../agrupaciones/semiAdmi">Información</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
+            <a class="navbar-brand" href="../../agrupaciones/semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../semiAdmi/VerReclutamientos">Reclutamientos</a>
+            <a class="navbar-brand" href="../../agrupaciones/semiAdmi/VerReclutamientos">Reclutamientos</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../semiAdmi/Propuesta">Propuestas</a>
+            <a class="navbar-brand" href="../../agrupaciones/semiAdmi/Propuesta">Propuestas</a>
           </li>
           <li class="nav-item">
-            <a class="navbar-brand" href="../semiAdmi/CambioMesa">Cambio de Mesa</a>
+            <a class="navbar-brand" href="../../agrupaciones/semiAdmi/CambioMesa">Cambio de Mesa</a>
           </li>
           <li class="nav-item">
             <form method="POST" action=" {{ route('logout') }} ">

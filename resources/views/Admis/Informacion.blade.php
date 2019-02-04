@@ -2,7 +2,7 @@
 @section('title','Información de la agrupación')
 @section('content')
 <h3 style="text-align:center;">{{ auth()->user()->Nombre }}</h3>
-<form method="post" action="{{ url('InfoGeneral') }}" enctype="multipart/form-data">
+<form method="post" action="{{ url('agrupaciones/InfoGeneral') }}" enctype="multipart/form-data">
   {{ csrf_field() }}
     <div class="row" style="text-align:left;">
       <div class="col-md-6">
@@ -35,7 +35,7 @@
    </div>
 </form>
 
-<form method="post" action="{{ url('Integrantes') }}">
+<form method="post" action="{{ url('agrupaciones/Integrantes') }}">
   {{ csrf_field() }}
     <div class="row" style="text-align:left;">
       <div class="col-md-6">

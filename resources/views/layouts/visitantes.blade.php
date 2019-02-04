@@ -28,7 +28,7 @@
     <label id="In">Facultad de Ingeniería</label>
   </div>
   <nav class="navbar navbar-expand-md navbar-dark">
-    <a class="navbar-brand" href="../../">Inicio</a>
+    <a class="navbar-brand" href="/agrupaciones/">Inicio</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -43,21 +43,24 @@
         <li class="nav-item">
           <a class="navbar-brand" href="/agrupaciones/Reclutamientos">Reclutamientos</a>
         </li>
-        {{-- @guest --}}
+        <li class="nav-item">
+          <a class="navbar-brand" href="../../">Apoyo a la comunidad</a>
+        </li>
+        @guest
           {{-- Todo lo que este dentro del @guest solo se mostrará si el usuario NO ha iniciado sesión. --}}
-          {{-- 
+          {{--
             Este es el link para iniciar sesión, debe ser este link ya que el hecho de tener dos rutas que daban a la misma acción
-            (LoginController) estaba generando un problema al obtener la ruta anterior (lo que permite que se redirija a la pagina 
-            de la que se viene -agrupaciones o actividades-deportivas- despues del login). Ahora ya debería de funcionar, pero este es 
+            (LoginController) estaba generando un problema al obtener la ruta anterior (lo que permite que se redirija a la pagina
+            de la que se viene -agrupaciones o actividades-deportivas- despues del login). Ahora ya debería de funcionar, pero este es
             el link que se debe de utilizar en cualquier lado que se quiera dirigir al inicio de sesión. Le puedes dar el estilo que quieras
             y el texto que sea mientras se conserve la ruta.
           --}}
           <a href="{{ route('login') }}">
             Login
           </a>
-        {{-- @else --}}
+        @else
           {{-- Todo lo que este dentro del @else solo se mostrará si el usuario YA inicio sesión. --}}
-          {{-- 
+          {{--
             Como recomendación, es buena practica tener siempre disponibles los botones de login/logout segun corresponda,
             Si quieres implementarlo descomenta el "@guest", "@else" y "@endguest".
           --}}
@@ -65,7 +68,7 @@
             @csrf
             <input type="submit" value="Cerrar sesión">
           </form>
-        {{-- @endguest --}}
+        @endguest
       </ul>
     </div>
   </nav>
