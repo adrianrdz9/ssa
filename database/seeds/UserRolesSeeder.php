@@ -26,6 +26,14 @@ class UserRolesSeeder extends Seeder
             'password' => Hash::make('secret')
         ]);
 
+        User::create([
+            'username' => 'Aero Design',
+            'Siglas' => 'Aero Design',
+            'Nombre' => 'Aero Design',
+            'Logo' => 'Logo.png',
+            'password' => Hash::make('secret')
+        ]);
+
         //Actividades deportivas
 
         $user = User::create([
@@ -67,7 +75,7 @@ class UserRolesSeeder extends Seeder
             'phone_number'=>' ',
             'password' => Hash::make('Xaya2412'),
         ]);
-            
+
         $user->syncRoles(['admin']);
 
         $user = User::create([

@@ -1,7 +1,14 @@
 <?php
 
 Route::get('/', function(){
+  if(is_null(auth()->user()))
     return view('home');
+  else{
+    if(auth()->user()->Siglas=='SSA'){
+      return view('Admis.formNoti');
+    }elseif (auth()->user()->Siglas != "")
+      return view('Admis.Informacion');
+    }
 });
 
 Auth::routes();

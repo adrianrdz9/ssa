@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admis;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -55,16 +56,11 @@ class admiController extends Controller
       * @return view
     */
     public function index(){
-      if(\Session::get('Noticias')){
-        $msg = "Se guardo la notica con exito";
-        \Session::forget('Noticias');
-      }else{
-        $msg = "No fue posible guardar la noticia";
-      }
       if(is_null(auth()->user()))
         return redirect('/');
       else {
-        return view('Admis.formNoti', ['msg'=>$msg]);
+        alert()->success('Se guardó la noticia con exito','Exito!','success');
+        return view('Admis.formNoti');
       }
     }
     /**
@@ -328,7 +324,7 @@ class admiController extends Controller
       return redirect('/');
     else {
       $id = $request->Id;
-      $c = bcrypt($request->pass);
+      $c = Hash::make($request->pass);
       \App\User::where('id',$id)->update(['password' => $c]);
       alert()->success('Exito!','Contraseña actualizada','success');
       return redirect('agrupaciones/Admi/Contraseñas');
