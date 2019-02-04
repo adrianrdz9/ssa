@@ -157,8 +157,9 @@ class semiAdmiController extends Controller
                 $Nombre = $row["Nombre"];
                 $Correo = $row["Correo"];
                 $Tel = $row["Telefono"];
-                $find = \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])->get(['Nombre']);
-                if($find == [] && $Cargo != "" && $Nombre != ""){
+                $find = \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])->get();
+                //cambiar condicion $find
+                if($Cargo != "" && $Nombre != "" && $find == []){
                     $integrante = new Integrantes;
                     $integrante ->Siglas = $u;
                     $integrante ->NCargo = $nC;
@@ -167,27 +168,28 @@ class semiAdmiController extends Controller
                     $integrante ->Email = $row['Correo'];
                     $integrante ->Numero = $row['Telefono'];
                     $integrante->save();
-                }else if($find != []){
-                    if($row['Cargo'] != ""){
-                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                                        ->update(['Cargo' => $Cargo]);
-                    }
-                    if ($row['Nombre'] != "") {
-                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                                        ->update(['Nombre' => $Nombre]);
-                    }
-                    if ($row['Correo'] != "") {
-                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                                        ->update(['Email' => $Correo]);
-                    }
-                    if ($row['Telefono'] != "") {
-                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                                        ->update(['Numero' => $Tel]);
-                    }
-                }
+                 }
+                 dd("o");//else if($find != []){
+                //     if($row['Cargo'] != ""){
+                //       \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                //                         ->update(['Cargo' => $Cargo]);
+                //     }
+                //     if ($row['Nombre'] != "") {
+                //       \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                //                         ->update(['Nombre' => $Nombre]);
+                //     }
+                //     if ($row['Correo'] != "") {
+                //       \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                //                         ->update(['Email' => $Correo]);
+                //     }
+                //     if ($row['Telefono'] != "") {
+                //       \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                //                         ->update(['Numero' => $Tel]);
+                //     }
+                // }
             }
-            alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
-            return redirect('agrupaciones/semiAdmi');
+            // alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
+            // return redirect('agrupaciones/semiAdmi');
           }
         }
     /**
