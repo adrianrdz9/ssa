@@ -78,4 +78,8 @@ class Branch extends Model
         }
         return false;
     }
+
+    public function hasSignups(){
+        return $this->teams->count() > 0;
+    }
 }

@@ -6,33 +6,45 @@
         @foreach ($sports as $sport)
             <hr>
             <div class="card">
+                @if($sport->hasSignups())
                 <div class="card-header bg-warning">
+                @else
+                <div class="card-header bg-secondary">
+                @endif
                     <h2>
                         {{$sport->name}}
+                        {{$sport->hasSignups() ? "" : "(Nadie se ha inscrito a un torneo de este deporte)"}}
                     </h2>
                 </div>
 
                 <div class="card-body">
                     <div class="d-block text-right">
+                        @if($sport->hasSignups())
                         <a href="{{route('sportCedula', ['id'=>$sport->id])}}">Generar cedula de este deporte</a>
+                        @endif 
                     </div>
                     <h3>
                         Torneos:
                     </h3>
+                    
                     @foreach ($sport->tournaments as $tournament)
                         <div class="accordion" id="a{{$tournament->id}}">
                             <div class="card">
-                                <button class="card-header btn bg-primary" id="th{{$tournament->id}}"
+                                <button class="card-header btn bg-primary " 
+                                        {{$tournament->hasSignups() ?: "disabled"}}
+                                        id="th{{$tournament->id}}"
                                         type="button" data-toggle="collapse" data-target="#c{{$tournament->id}}"
                                         aria-expanded="false" aria-controls="c{{$tournament->id}}">
                                     {{$tournament->name}}
+                                    {{$tournament->hasSignups() ? "" : "(Sin inscripciones)"}}
                                 </button>
-
                                 <div id="c{{$tournament->id}}" class="collapse" data-parent="#a{{$tournament->id}}"
                                     aria-labelledby="th{{$tournament->id}}">
                                     <div class="card-body">
                                         <div class="d-block text-right">
+                                            @if($tournament->hasSignups())
                                             <a href="{{route('tournamentCedula', ['id'=>$tournament->id])}}">Generar cedula de este torneo</a>
+                                            @endif
                                         </div>
                                         <h3>
                                             Ramas:
@@ -41,11 +53,12 @@
                                             <div class="accordion" id="ab{{$branch->id}}">
                                                 <div class="card">
                                                     <button class="card-header btn bg-info" id="hb{{$branch->id}}"
+                                                            {{$branch->hasSignups() ?: "disabled"}}
                                                             type="button" data-toggle="collapse" data-target="#bc{{$branch->id}}"
                                                             aria-expanded="false" aria-controls="bc{{$branch->id}}">
                                                             {{$branch->branch}}
+                                                            {{$branch->hasSignups() ? "" : "(Sin inscripciones)"}}
                                                     </button>
-
                                                     <div class="collapse" id="bc{{$branch->id}}" data-parent="#ab{{$branch->id}}"
                                                         aria-labelledby="hb{{$branch->id}}">
                                                         <div class="card-body">
@@ -59,6 +72,7 @@
                                                                 <div class="accordion" id="at{{$team->id}}">
                                                                     <div class="card">
                                                                         <button class="card-header btn bg-success" id="ht{{$team->id}}"
+                                                                                {{$branch->hasSignups() ?: "disabled"}}
                                                                                 type="button" data-toggle="collapse" data-target="#tc{{$team->id}}"
                                                                                 aria-expanded="false" aria-controls="tc{{$team->id}}">
                                                                                 {{$team->name}}

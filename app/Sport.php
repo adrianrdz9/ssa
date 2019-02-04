@@ -44,4 +44,23 @@ class Sport extends Model
     public function tournaments(){
         return $this->hasMany('\App\Tournament');
     }
+
+    /**
+     * Devuelve verdadero si algún torneo tiene por lo menos un equipo inscrito
+     * 
+     * @return Boolean
+     */
+    public function hasSignups(){
+        $tournaments = $this->tournaments;
+        foreach ($tournaments as $tournament) {
+            foreach ($tournament->branches as $branch) {
+                if($branch->teams->count() > 0){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }
 }

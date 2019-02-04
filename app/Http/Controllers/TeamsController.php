@@ -214,4 +214,9 @@ class TeamsController extends Controller
 
         return redirect()->back()->with(['notice' => 'Equipo inscrito']);
     }
+
+    public function cedula($id){
+        $team = Team::where('id', $id)->with('accepted_users')->with('captain')->first();
+        return view('teams.cedula', ['team' => $team]);
+    }
 }

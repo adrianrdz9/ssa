@@ -53,4 +53,15 @@ class Tournament extends Model
     public function branches(){
         return $this->hasMany('App\Branch', 'tournament_id', 'id');
     }
+
+    public function hasSignups(){
+        $branches = $this->branches;
+        foreach ($branches as $branch) {
+            if($branch->teams->count() > 0){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

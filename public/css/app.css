@@ -9532,6 +9532,10 @@ main {
   min-height: 300px;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .bg-blue {
   background-color: #3490dc !important;
 }
