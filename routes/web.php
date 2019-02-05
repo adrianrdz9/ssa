@@ -51,9 +51,14 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     //status propuesta
     Route::get('/semiAdmi/Propuesta','Admis\semiAdmiController@Propuesta')->name('PropuestaSemi');
     //Nueva propuesta
-    Route::post('/NPropuesta','Admis\semiAdmiController@NPropuesta');
+    Route::post('/NPropuesta','Admis\semiAdmiController@NPropuesta')->name('NPropuesta');
     //Cambio de Mesa
     Route::get('/semiAdmi/CambioMesa','Admis\semiAdmiController@Mesa');
+    //Reclutamientos
+    Route::get('/semiAdmi/Reclutamientos','Admis\semiAdmiController@ReclutamientosF');
+    Route::post('/reclutamientoF','Admis\semiAdmiController@NReclutamiento')->name('reclutamientoF');
+    Route::get('/semiAdmi/VerReclutamientos','Admis\semiAdmiController@VerReclutamientos');
+    Route::get('/Reclutamiento/id/{id}','Visitante\generalController@Reclutamiento');
     //Visitante
     //Noticias - 9 (index)
     Route::get('/','Visitante\generalController@index')->name('agrupacionesIndex');
@@ -66,11 +71,6 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/Agrupacion/id/{id}','Visitante\generalController@individual');
     //Reclutammientos
     Route::get('/Reclutamientos','Visitante\generalController@Reclutamientos');
-    //semiAdmi
-    Route::get('/semiAdmi/Reclutamientos','Admis\semiAdmiController@ReclutamientosF');
-    Route::post('reclutamientoF','Admis\semiAdmiController@NReclutamiento')->name('reclutamientoF');
-    Route::get('/semiAdmi/VerReclutamientos','Admis\semiAdmiController@VerReclutamientos');
-    Route::get('Reclutamiento/id/{id}','Visitante\generalController@Reclutamiento');
 
 });
 

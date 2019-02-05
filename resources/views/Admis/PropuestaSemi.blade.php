@@ -43,7 +43,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form method="post" action="{{ url('NPropuesta') }}">
+          <form method="post" action="{{ url('agrupaciones/NPropuesta') }}">
             {{ csrf_field() }}
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Titulo:</label>

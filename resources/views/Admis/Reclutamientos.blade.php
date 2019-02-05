@@ -3,7 +3,7 @@
 @section('content')
 <h3>Crea un nuevo reclutamiento</h3>
 <div class="container">
-<form method="post" action="{{ url('reclutamientoF') }}" enctype="multipart/form-data">
+<form method="post" action="{{ url('agrupaciones/reclutamientoF') }}" enctype="multipart/form-data">
   {{ csrf_field() }}
   <div class="form-row">
     <div class="form-group col-md-6">

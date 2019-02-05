@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Propuestas;
 use App\Integrantes;
+use App\Reclutamientos;
 use Alert;
 class semiAdmiController extends Controller
 {
@@ -90,7 +91,7 @@ class semiAdmiController extends Controller
          $propu->save();
 
          alert()->success('Propuesta','Se ha enviado tu propuesta','success');
-         return redirect('semiAdmi/Propuesta');
+         return redirect('agrupaciones/semiAdmi/Propuesta');
       }
     }
     /**
@@ -158,8 +159,8 @@ class semiAdmiController extends Controller
                 $Correo = $row["Correo"];
                 $Tel = $row["Telefono"];
                 $find = \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])->get();
-                //cambiar condicion $find
-                if($Cargo != "" && $Nombre != "" && $find == []){
+                $f = count($find);
+                if($Cargo != "" && $Nombre != "" && $f == 0){
                     $integrante = new Integrantes;
                     $integrante ->Siglas = $u;
                     $integrante ->NCargo = $nC;
@@ -169,27 +170,27 @@ class semiAdmiController extends Controller
                     $integrante ->Numero = $row['Telefono'];
                     $integrante->save();
                  }
-                 dd("o");//else if($find != []){
-                //     if($row['Cargo'] != ""){
-                //       \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                //                         ->update(['Cargo' => $Cargo]);
-                //     }
-                //     if ($row['Nombre'] != "") {
-                //       \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                //                         ->update(['Nombre' => $Nombre]);
-                //     }
-                //     if ($row['Correo'] != "") {
-                //       \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                //                         ->update(['Email' => $Correo]);
-                //     }
-                //     if ($row['Telefono'] != "") {
-                //       \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
-                //                         ->update(['Numero' => $Tel]);
-                //     }
-                // }
+                else if($find != []){
+                    if($row['Cargo'] != ""){
+                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                        ->update(['Cargo' => $Cargo]);
+                    }
+                    if ($row['Nombre'] != "") {
+                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                        ->update(['Nombre' => $Nombre]);
+                    }
+                    if ($row['Correo'] != "") {
+                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                        ->update(['Email' => $Correo]);
+                    }
+                    if ($row['Telefono'] != "") {
+                      \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
+                                        ->update(['Numero' => $Tel]);
+                    }
+                }
             }
-            // alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
-            // return redirect('agrupaciones/semiAdmi');
+            alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
+            return redirect('agrupaciones/semiAdmi');
           }
         }
     /**
@@ -309,7 +310,7 @@ class semiAdmiController extends Controller
 
           alert()->success('Reclutamiento','Se ha creado con exito','success');
 
-          return redirect('semiAdmi/Reclutamientos');
+          return redirect('agrupaciones/semiAdmi/Reclutamientos');
         }
       }
   }
