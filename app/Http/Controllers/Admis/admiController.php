@@ -59,7 +59,6 @@ class admiController extends Controller
       if(is_null(auth()->user()))
         return redirect('/');
       else {
-        alert()->success('Se guardó la noticia con exito','Exito!','success');
         return view('Admis.formNoti');
       }
     }
@@ -74,7 +73,6 @@ class admiController extends Controller
       if(is_null(auth()->user()))
         return redirect('/');
       else {
-        \Session::forget('Noticias');
         $this->validate($request, array(
           'Titulo' => 'required|max:191' ,
           'Descripcion' => 'required',
@@ -121,6 +119,7 @@ class admiController extends Controller
                 $carusel->Imagen = $filename;
               $carusel->save();
           }
+            alert()->success('Se guardó la noticia con exito','Exito!','success');
             return redirect('agrupaciones/Admi');
           }
     }

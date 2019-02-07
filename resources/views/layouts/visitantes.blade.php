@@ -46,7 +46,7 @@
         <li class="nav-item">
           <a class="navbar-brand" href="../../">Apoyo a la comunidad</a>
         </li>
-        @guest
+        <!-- @guest
           {{-- Todo lo que este dentro del @guest solo se mostrará si el usuario NO ha iniciado sesión. --}}
           {{--
             Este es el link para iniciar sesión, debe ser este link ya que el hecho de tener dos rutas que daban a la misma acción
@@ -68,7 +68,7 @@
             @csrf
             <input type="submit" value="Cerrar sesión">
           </form>
-        @endguest
+        @endguest -->
       </ul>
     </div>
   </nav>

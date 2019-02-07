@@ -31,7 +31,7 @@
       <label id="In">Facultad de Ingeniería</label>
     </div>
     <nav class="navbar navbar-expand-md navbar-dark">
-      <a class="navbar-brand" href="../ANoticias">{{ auth()->user()->Siglas }}</a>
+      <a class="navbar-brand" href="../../agrupaciones/ANoticias">{{ auth()->user()->Siglas }}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -54,6 +54,12 @@
           </li>
           <li class="nav-item">
             <a class="navbar-brand" href="../../agrupaciones/Admi/Propuestas">Propuestas</a>
+          </li>
+          <li class="nav-item">
+            <a class="navbar-brand" href="../../agrupaciones/Admi/AdmiMsj">Mensajes</a>
+          </li>
+          <li class="nav-item">
+            <a class="navbar-brand" href="../../agrupaciones/Admi/EventosFeria">Eventos Feria</a>
           </li>
           <li class="nav-item">
             <form method="POST" action=" {{ route('logout') }} ">
