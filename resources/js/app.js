@@ -37,6 +37,7 @@ Vue.component('complete-signup', require('./components/CompleteSignUp.vue').defa
 Vue.component('profile-avatar-input', require('./components/ProfileAvatarInput.vue').default);
 Vue.component('tournament-historic', require('./components/TournamentHistoric.vue').default);
 Vue.component('team-index', require('./components/TeamIndexComponent.vue').default);
+Vue.component('responsive-finder', require('./components/ResponsiveFinder.vue').default);
 
 const app = new Vue({
     el: '#app'

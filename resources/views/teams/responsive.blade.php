@@ -26,6 +26,8 @@ loadUnamLogo(()=>{
         loadTable();
         loadUsersTable();
         loadPDF();
+        doc.addPage();
+        loadResponsive();
     })
 })
     
@@ -40,7 +42,7 @@ function loadUsersTable(){
         tableLineColor: 0,
         tableLineWidth: .2,
         head: [[{
-            content: 'Datos de los integrantes', 
+            content: 'Datos del usuario', 
             colSpan: 6, 
             styles: {
                 halign: 'center',
@@ -64,8 +66,6 @@ function loadUsersTable(){
         ]
     });
 
-    @foreach($team->accepted_users as $user)
-        <?php $user = $user->user ?>
         doc.autoTable({
             body: [
                 [
@@ -207,7 +207,6 @@ function loadUsersTable(){
                 
             ]
         })
-    @endforeach
 }
 
 function loadTable(){

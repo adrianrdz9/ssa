@@ -14,6 +14,8 @@ use \App\Sport;
 use \App\Requirement;
 use \App\RequirementInTournament;
 use \App\Branch;
+use \App\User;
+use \App\UserInTeam;
 
 class TournamentsController extends Controller
 {
@@ -272,6 +274,34 @@ class TournamentsController extends Controller
         return Requirement::create([
             'name' => $request->name
         ]);
+    }
+
+    public function getResponsive(){
+        $tournaments = Tournament::all();
+        return view('admin.tournaments.responsives', ['tournaments' => $tournaments ]);
+    }
+
+    public function findResponsive(Request $request){
+        $tournament = Tournament::find($request->tournament_id);
+
+        $branches = $tournament->branches;
+
+        $results = [];
+
+        $posibleUsers = User::where('name', 'like', '%'.$request->name.'%')->select('id', 'name')->get();
+        $posibleIds = [];
+        foreach ($posibleUsers as $u) {
+            array_push($posibleIds, $u->id);
+        }
+
+        foreach ($branches as $branch) {
+            $teams = $branch->teams;
+            foreach ($teams as $team) {
+                array_push($results, UserInTeam::where('status', 'accepted')->where('team_id', $team->id)->whereIn('user_id', $posibleIds)->with('team.branch.tournament')->with('user')->get());
+            }
+        }
+
+        return $results;
     }
 
 }

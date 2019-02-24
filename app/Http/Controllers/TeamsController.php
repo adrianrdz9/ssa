@@ -215,8 +215,17 @@ class TeamsController extends Controller
         return redirect()->back()->with(['notice' => 'Equipo inscrito']);
     }
 
+    //!Remplazar
     public function cedula($id){
-        $team = Team::where('id', $id)->with('accepted_users')->with('captain')->first();
+        $team = Team::where('id', $id)->with('accepted_users')->with('captain')->with('branch.tournament')->first();
         return view('teams.cedula', ['team' => $team]);
     }
+
+    //?Remplazo
+    public function responsive($userInTeamId){
+        $userInTeam = UserInTeam::where('id', $userInTeamId)->with('user')->first();
+        $team = Team::where('id', $userInTeam->team_id)->with('branch.tournament')->first();
+        return view('teams.responsive', ['user' => $userInTeam->user, 'team' => $team]);
+    }
 }
+

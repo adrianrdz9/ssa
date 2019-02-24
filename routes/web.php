@@ -117,7 +117,11 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     Route::post('/teams', 'TeamsController@store');
     Route::post('/teams/{id}', 'TeamsController@request');
 
+    //! Remplazar totalmente por responsiva individual
     Route::get('/equipos/{id}/cedula', 'TeamsController@cedula')->name('teamCedula');
+
+    //? Remplazo implementandose
+    Route::get('/responsiva/{userInTeamId}', 'TeamsController@responsive')->name('responsive');
 
     Route::get('/mis_equipos', 'TeamsController@index')->name('teamsIndex');
     Route::put('/mis_equipos/{id}', 'TeamsController@update')->name('updateUserTeam');
@@ -136,6 +140,9 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
 
     Route::get('/historico', 'HistoricController@index')->name('historicIndex');
     Route::get('/historico/{id}', 'HistoricController@show')->name('tournamentHistoric');
+
+    Route::get('/admin/responsiva', 'TournamentsController@getResponsive')->name('getResponsive');
+    Route::post('/admin/getResponsive', 'TournamentsController@findResponsive');
 });
 
 Route::group(['prefix' => 'bolsa'], function () {

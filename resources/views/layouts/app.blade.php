@@ -70,6 +70,7 @@
                             <a href="{{ route('cedulaIndex') }}" class="dropdown-item">Cédulas de inscripciones</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('completeSignup') }}">Completar inscripción</a>
+                            <a class="dropdown-item" href="{{ route('getResponsive') }}">Obtener responsiva de alumno</a>
                         </div>
                     </li>
                 @else
