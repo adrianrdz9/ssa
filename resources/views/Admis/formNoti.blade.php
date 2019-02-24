@@ -3,11 +3,6 @@
 @section('content')
 <h3>Nueva noticia</h3>
 <div class="container">
-@if($msg=="Se guardo la notica con exito")
-  <div class="alert alert-success" role="alert">
-    {{ $msg }}
-  </div>
-@endif
 <form method="post" action="{{ url('agrupaciones/AdmiP') }}" enctype="multipart/form-data">
   {{ csrf_field() }}
   <div class="form-row">

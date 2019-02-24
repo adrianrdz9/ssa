@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Propuestas;
 use App\Integrantes;
+use App\Reclutamientos;
 use Alert;
 class semiAdmiController extends Controller
 {
@@ -90,7 +91,7 @@ class semiAdmiController extends Controller
          $propu->save();
 
          alert()->success('Propuesta','Se ha enviado tu propuesta','success');
-         return redirect('semiAdmi/Propuesta');
+         return redirect('agrupaciones/semiAdmi/Propuesta');
       }
     }
     /**
@@ -157,8 +158,9 @@ class semiAdmiController extends Controller
                 $Nombre = $row["Nombre"];
                 $Correo = $row["Correo"];
                 $Tel = $row["Telefono"];
-                $find = \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])->get(['Nombre']);
-                if($find == [] && $Cargo != "" && $Nombre != ""){
+                $find = \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])->get();
+                $f = count($find);
+                if($Cargo != "" && $Nombre != "" && $f == 0){
                     $integrante = new Integrantes;
                     $integrante ->Siglas = $u;
                     $integrante ->NCargo = $nC;
@@ -167,7 +169,8 @@ class semiAdmiController extends Controller
                     $integrante ->Email = $row['Correo'];
                     $integrante ->Numero = $row['Telefono'];
                     $integrante->save();
-                }else if($find != []){
+                 }
+                else if($find != []){
                     if($row['Cargo'] != ""){
                       \App\Integrantes::where([['Siglas',$u],['NCargo',$nC]])
                                         ->update(['Cargo' => $Cargo]);
@@ -307,7 +310,7 @@ class semiAdmiController extends Controller
 
           alert()->success('Reclutamiento','Se ha creado con exito','success');
 
-          return redirect('semiAdmi/Reclutamientos');
+          return redirect('agrupaciones/semiAdmi/Reclutamientos');
         }
       }
   }
