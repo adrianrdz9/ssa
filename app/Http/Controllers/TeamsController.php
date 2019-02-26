@@ -187,6 +187,14 @@ class TeamsController extends Controller
     }
 
     public function voucher($id){
+        $userInTeamId = UserInTeam::where([
+            ['team_id', $id],
+            ['user_id', Auth::user()->id]
+        ])->first()->id;
+        $userInTeam = UserInTeam::where('id', $userInTeamId)->with('user')->first();
+        $team = Team::where('id', $userInTeam->team_id)->with('branch.tournament')->first();
+        return view('teams.responsive', ['user' => $userInTeam->user, 'team' => $team]);
+
         $team = Team::find($id);
         $tournament = Team::find($id)->branch->tournament;
         $branch = Team::find($id)->branch;

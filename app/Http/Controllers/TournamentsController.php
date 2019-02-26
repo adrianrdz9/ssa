@@ -304,4 +304,10 @@ class TournamentsController extends Controller
         return $results;
     }
 
+    public function cedula($id){
+        $tournament = Tournament::find($id);
+        
+        return view('tournaments.cedula', ['tournament'=>$tournament]);
+    }
+
 }

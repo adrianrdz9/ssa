@@ -64,4 +64,14 @@ class Tournament extends Model
 
         return false;
     }
+
+    public function teams(){
+        $teams = [];
+        foreach($this->branches as $branch){
+            if(isset($branch->teams[0]))
+                array_push($teams, $branch->teams);
+        }
+
+        return $teams;
+    }
 }

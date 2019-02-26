@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
     <script src="https://unpkg.com/jspdf-autotable"></script>
 </head>
 <body>
@@ -18,18 +18,62 @@ var doc = new jsPDF({
 // Header background
 doc.setFillColor(204,204,204);
 doc.rect(0,0,210, 38.1, 'F');
-
+doc.setFontSize(14);
 //Header logos
 loadUnamLogo(()=>{
     loadFILogo(()=>{
         loadRightTopText();
         loadTable();
         loadUsersTable();
-        loadPDF();
         doc.addPage();
-        loadResponsive();
+        doc.setFillColor(204,204,204);
+        doc.rect(0,0,210, 38.1, 'F');
+        loadUnamLogo(()=>{
+            loadFILogo(()=>{
+                loadResponsive(()=>{
+                    loadPDF();
+                });
+            });
+        });
     })
 })
+
+function loadResponsive(next){
+    doc.setFontSize(26);
+    centeredText('Responsiva', 60);
+    doc.setFontSize(12);
+
+
+    doc.text(`Declaro estar sano y apto para participar en el evento deportivo {{$team->branch->tournament->name}} reconozco los riesgos inhertes a la práctica
+            deportiva, por lo que voluntariamente y con conocimiento pleno de esto, acepto y asumo la responsabilidad de mi integridad física y
+            libero de toda responsabilidad a la Universidad Nacional Autónoma de México, a la 
+           Dirección General del Deporte Universitario y al Comité Organizador.`, 15,75, {maxWidth: 175, align: "justify"});
+    doc.setLineWidth(0.5)
+    doc.setDrawColor(0,0,0);
+    doc.line(20, 145, 85, 145)
+    centeredText('Firma del alumno', 150, 65, 20)
+    centeredText('({{$user->name}} {{$user->last_name}})', 155, 65, 20)
+
+    doc.line(120, 145, 190, 145)
+    centeredText('Firma del padre o tutor', 150, 70, 120)
+    centeredText('(alumnos menores de edad)', 155, 70, 120)
+
+    var unamLogo = new Image();
+    unamLogo.onload = function (){
+        var canvas = document.createElement('canvas');
+        canvas.width = this.naturalWidth; 
+        canvas.height = this.naturalHeight; 
+
+        var ctx = canvas.getContext('2d');
+        ctx.globalAlpha = 0.2;
+        ctx.drawImage(this, 0, 0);
+        var center = (doc.internal.pageSize.width)/2;
+        doc.addImage(canvas.toDataURL('image/png'), 'PNG', center-50, 80,100, 100);
+        next();
+    }
+    unamLogo.src = "{{asset('images/logo_unam.png')}}"
+
+}
     
 function loadUsersTable(){
     doc.autoTable({
@@ -220,7 +264,7 @@ function loadTable(){
         tableLineColor: 0,
         tableLineWidth: .2,
         head: [[{
-            content: 'Cédula de registro del equipo: {{$team->name}}', 
+            content: 'Cédula de registro', 
             colSpan: 6, 
             styles: {
                 halign: 'center',
@@ -257,7 +301,7 @@ function loadTable(){
             ],
             [
                 {
-                    content: "Datos del equipo",
+                    content: "Datos del equipo ({{$team->name}})",
                     colSpan: 6,
                     styles:{
                         halign: 'center',
@@ -331,11 +375,11 @@ function loadTable(){
                     styles:cellStyles
                 },
                 {
-                    content: "",
+                    content: "Voucher: ",
                     styles:cellStyles
                 },
                 {
-                    content: "",
+                    content: "{{$team->voucher}}",
                     styles:cellStyles
                 },
             ],
@@ -389,10 +433,10 @@ function loadPDF(){
     pdfFrame.src = doc.output('bloburi')
 }
 
-var centeredText = function(text, y) {
+var centeredText = function(text, y, limit = doc.internal.pageSize.width, offset = 0) {
     var textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-    var textOffset = (doc.internal.pageSize.width - textWidth) / 2;
-    doc.text(textOffset, y, text);
+    var textOffset = (limit - textWidth) / 2;
+    doc.text(textOffset+offset, y, text);
 }
 
 
