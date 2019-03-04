@@ -277,7 +277,10 @@
                     </div>         
                     <hr>
                     <profile-avatar-input src="{{ $user->avatarPath() }}"></profile-avatar-input>
-                    
+                    <div class="mt-2"></div>
+                    <carnet-input src="{{$user->carnetUrl()}}"></carnet-input>
+                    <div class="mt-2"></div>
+                    <credencial-input src="{{$user->credencialUrl()}}"></credencial-input>
 
                     <hr>
                     <span>Cambiar contaseña, si no quieres cambiarla deja esta parte en blanco</span>

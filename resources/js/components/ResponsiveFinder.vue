@@ -29,7 +29,9 @@
                         <span><b>Torneo: </b>{{result[0].team.branch.tournament.name}}</span><br>
                         <span><b>Rama: </b>{{result[0].team.branch.branch}}</span><br>
                         <span><b>Equipo: </b>{{result[0].team.name}}</span><br>
-                        <a :href="'/actividades-deportivas/responsiva/'+result[0].id">Descargar responsiva</a>
+                        <a target="_blank" :href="'/actividades-deportivas/responsiva/'+result[0].id">Descargar responsiva <i class="fas fa-external-link-alt"></i></a> <br>
+                        <a target="_blank" :href="'/actividades-deportivas/carnet-imss/'+result[0].user.id">Descargar carnet <i class="fas fa-external-link-alt"></i></a><br>
+                        <a target="_blank" :href="'/actividades-deportivas/credencial/'+result[0].user.id">Descargar credencial <i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
             </div>

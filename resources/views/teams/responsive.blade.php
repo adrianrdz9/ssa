@@ -19,9 +19,16 @@ var doc = new jsPDF({
 doc.setFillColor(204,204,204);
 doc.rect(0,0,210, 38.1, 'F');
 doc.setFontSize(14);
+const d = new Date();
+const date = (d.getDate() > 9 ? (d.getDate()) : ('0'+(d.getDate())) ) +  
+            '/' + ((d.getMonth()+1) > 9 ? (d.getMonth()+1) : ('0'+(d.getMonth()+1)) ) + 
+            '/' + d.getFullYear() + 
+            '    ' + (d.getHours() > 9 ? (d.getHours()) : ('0'+(d.getHours())) ) + 
+            ':' + ( d.getMinutes() > 9 ? (d.getMinutes()) : ('0'+(d.getMinutes())) ) ;
 //Header logos
 loadUnamLogo(()=>{
     loadFILogo(()=>{
+        doc.text(150,285, date);
         loadRightTopText();
         loadTable();
         loadUsersTable();
@@ -30,7 +37,9 @@ loadUnamLogo(()=>{
         doc.rect(0,0,210, 38.1, 'F');
         loadUnamLogo(()=>{
             loadFILogo(()=>{
+                loadRightTopText();
                 loadResponsive(()=>{
+                    doc.text(150,285, date);
                     loadPDF();
                 });
             });

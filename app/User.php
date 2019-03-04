@@ -62,6 +62,9 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
             ],
         ]);
 
+        $this->hasAttachedFile('credencial');
+        $this->hasAttachedFile('carnet');
+
         parent::__construct($attributes);   
     }
 
@@ -101,7 +104,8 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
      */
     public function avatarPath(){
         $avatarUrl = str_replace('public/', '', $this->avatar->url());
-        if(file_exists($avatarUrl))
+
+        if($this->avatar->exists())
             return $avatarUrl;
         else return asset('images/missing_avatar.png');
     }
@@ -149,5 +153,22 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
         }
 
         return $teams;
+    }
+
+    public function carnetUrl(){
+        $carnetUrl = str_replace('public/', '', $this->carnet->url());
+
+        if($this->carnet->exists())
+            return $carnetUrl;
+        else return asset('images/no_image.png');
+
+    }
+
+    public function credencialUrl(){
+        $credencialUrl = str_replace('public/', '', $this->credencial->url());
+
+        if($this->credencial->exists())
+            return $credencialUrl;
+        else return asset('images/no_image.png');
     }
 }

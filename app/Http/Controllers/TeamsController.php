@@ -7,6 +7,7 @@
 namespace App\Http\Controllers;
 
 use App\Branch;
+use App\User;
 use App\Team;
 use App\UserInTeam;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class TeamsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('role:admin', ['only' => ['carnet', 'credencial']]);
     }
 
     /**
@@ -234,6 +236,14 @@ class TeamsController extends Controller
         $userInTeam = UserInTeam::where('id', $userInTeamId)->with('user')->first();
         $team = Team::where('id', $userInTeam->team_id)->with('branch.tournament')->first();
         return view('teams.responsive', ['user' => $userInTeam->user, 'team' => $team]);
+    }
+
+    public function carnet($id){
+        return view('admin.carnet', ['user' => User::find($id)]);
+    }
+
+    public function credencial($id){
+        return view('admin.credencial', ['user' => User::find($id)]);
     }
 }
 

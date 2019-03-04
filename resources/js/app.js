@@ -35,6 +35,8 @@ Vue.component('create-tournament', require('./components/CreateTournamentCompone
 Vue.component('edit-tournament', require('./components/EditTournamentComponent.vue').default);
 Vue.component('complete-signup', require('./components/CompleteSignUp.vue').default);
 Vue.component('profile-avatar-input', require('./components/ProfileAvatarInput.vue').default);
+Vue.component('carnet-input', require('./components/CarnetInput.vue').default);
+Vue.component('credencial-input', require('./components/CredencialInput.vue').default);
 Vue.component('tournament-historic', require('./components/TournamentHistoric.vue').default);
 Vue.component('team-index', require('./components/TeamIndexComponent.vue').default);
 Vue.component('responsive-finder', require('./components/ResponsiveFinder.vue').default);

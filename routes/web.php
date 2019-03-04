@@ -141,6 +141,9 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     //? Remplazo implementandose
     Route::get('/responsiva/{userInTeamId}', 'TeamsController@responsive')->name('responsive');
 
+    Route::get('/carnet-imss/{userInTeamId}', 'TeamsController@carnet')->name('carnetIMSS');
+    Route::get('/credencial/{userInTeamId}', 'TeamsController@credencial')->name('credencial');
+
     Route::get('/mis_equipos', 'TeamsController@index')->name('teamsIndex');
     Route::put('/mis_equipos/{id}', 'TeamsController@update')->name('updateUserTeam');
     Route::post('/mis_equipos/{id}/close', 'TeamsController@close')->name('closeTeam');

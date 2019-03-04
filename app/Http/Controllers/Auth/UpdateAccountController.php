@@ -43,6 +43,8 @@ class UpdateAccountController extends Controller
 
             'password' => 'optional|string|min:6|confirmed',
             'avatar' => 'optional|image',
+            'carnet' => 'optional|image',
+            'credencial' => 'optional|image',
 
             'current_password' => 'required|string|min:6',
         ]);
@@ -67,12 +69,16 @@ class UpdateAccountController extends Controller
         $user->blood_type = $request->blood_type;
         $user->medical_card_no = $request->medical_card_no;
         $user->phone_number = $request->phone_number;
+        
+        
         if($request->password ){
             $user->password =  Hash::make($request->password);
         }
 
-        //if($request->hasFile('avatar') && $request->file('avatar')->isValid())
-            $user->avatar = $request->file('avatar');
+        $user->avatar = $request->file('avatar');
+        $user->carnet = $request->file('carnet');
+        $user->credencial = $request->file('credencial');
+
         $user->update();
         return redirect()->back()->with(['notice' => 'Datos actualizados']);
         
