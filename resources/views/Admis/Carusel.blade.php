@@ -42,7 +42,7 @@
       <div class="col-md-6">
         <div class="form-group">
             <h5>Imagen:</h5>
-            <input type="file" class="form-control-file border" name="Imagen" id="imgInp" required/>
+            <input type="file" class="form-control-file border" name="Imagen" id="imgInp" required accept=".pdf,.jpg,.png"/>
         </div>
         <div class="form-group">
           <img id="preview" alt="Imagen seleccionada" width="100%" height="100%" />

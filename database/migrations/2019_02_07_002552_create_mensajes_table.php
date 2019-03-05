@@ -19,6 +19,7 @@ class CreateMensajesTable extends Migration
             $table->string('Para');
             $table->string('Tipo');
             $table->text('Mensaje');
+            $table->integer('Estado');
             $table->timestamps();
         });
     }

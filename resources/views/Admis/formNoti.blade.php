@@ -26,11 +26,11 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <h4 for="inputCity">Imagen cuadrada:</h4>
-      <input type="file" class="form-control-file border" name="ImagenC">
+      <input type="file" class="form-control-file border" name="ImagenC" accept=".pdf,.jpg,.png">
     </div>
     <div class="form-group col-md-6">
       <h4 for="inputCity">Imagen rectangular:</h4>
-      <input type="file" class="form-control-file border" name="ImagenR">
+      <input type="file" class="form-control-file border" name="ImagenR" accept=".pdf,.jpg,.png">
     </div>
   </div>
   <h4 for="inputCity">¿Mostrar en el carusel?</h4>

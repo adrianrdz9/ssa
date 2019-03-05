@@ -8,11 +8,11 @@
       <div class="col-md-6">
           <div class="form-group">
               <h5>Logo de la Agrupación:</h5>
-              <input type="file" class="form-control-file border" name="Logo">
+              <input type="file" class="form-control-file border" name="Logo" accept=".pdf,.jpg,.png">
           </div>
           <div class="form-group">
              <h5>Fotografía representativa:</h5>
-             <input type="file" class="form-control-file border" name="Foto">
+             <input type="file" class="form-control-file border" name="Foto" accept=".pdf,.jpg,.png">
           </div>
           <div class="form-group">
               <h5>Link red social:</h5>
