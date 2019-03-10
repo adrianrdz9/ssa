@@ -12,14 +12,15 @@
         <!-- Mensajes -->
       </div>
       <div class="card-footer">
-        <form class="form-inline" name="formulario" method="post" action="" enctype="multipart/form-data">
+        <form class="form-inline" method="post" action="{{ url('agrupaciones/AdmiMsjG') }}" enctype="multipart/form-data">
+        {{ csrf_field() }}
           <div class="form-group">
-            <input type="text" class="form-control" size="55">
+            <textarea rows="2" cols="57" class="form-control" name="Mensaje"></textarea>
           </div>
           <div class="form-group" style="margin:auto;">
-            <input type="file" class="form-control-file" name="adjunto" accept=".pdf,.jpg,.png" multiple>
+            <input type="file" class="form-control-file" name="Archivo" accept=".pdf,.jpg,.png">
           </div>
-          <button type="submit" class="btn btn-primary mb-1" style="margin:auto;">Enviar</button>
+          <button type="submit" class="btn btn-primary mb-1" style="margin-top:1%;">Enviar</button>
         </form>
       </div>
     </div>

@@ -78,9 +78,6 @@ class admiController extends Controller
           'Descripcion' => 'required',
           'Fecha' => 'required',
         ));
-        $noticia = "Validando noticia";
-        \Session::push('Noticias',$noticia);
-        $noticias = \Session::get('Noticias');
 
           $noti = new Noticias;
           $noti ->Titulo = $request->Titulo;

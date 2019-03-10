@@ -28,7 +28,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::post('/AdmiP','Admis\admiController@store')->name('AdmiP');
     Route::get('/oNoticia/id/{id}','Admis\admiController@ONoticia');
     Route::get('/mNoticia/id/{id}','Admis\admiController@MNoticia');
-    //Carusel
+    //Carrusel
     Route::get('/Admi/Carusel','Admis\admiController@VerCarusel');
     Route::get('/Admi/NICarusel','Admis\admiController@Carusel');
     Route::post('/NCarusel','Admis\admiController@NCarusel')->name('NCarusel');
@@ -45,6 +45,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::post('/NPassword','Admis\admiController@NPassword')->name('NPassword');
     //Mensajes
     Route::get('/Admi/AdmiMsj','Admis\MensajesControlller@verMensajes');
+    Route::post('/AdmiMsjG','Admis\MensajesControlller@Guardar')->name('AdmiMsjG');
     //FERIAS
     //Ver eventos
     Route::get('/Admi/EventosFeria','Admis\FeriasAdmi@verEventos');
