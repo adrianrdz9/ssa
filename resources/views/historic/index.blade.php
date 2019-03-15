@@ -33,9 +33,9 @@
                 </div>
                 <div  class="col-6 d-flex align-items-center" style="flex-wrap: wrap;">
                     <div>
-                        <b>Total de equipos en ramas varoniles: </b> {{count($teamsPerBranch['varonil'])}} <br>
-                        <b>Total de equipos en ramas femeniles: </b>{{count($teamsPerBranch['femenil'])}}<br>
-                        <b>Total de equipos en ramas mixtas: </b>{{count($teamsPerBranch['mixto'])}}<br>
+                        <b>Total de equipos en ramas varoniles: </b> {{$teamsPerBranch['varonil']}} <br>
+                        <b>Total de equipos en ramas femeniles: </b>{{$teamsPerBranch['femenil']}}<br>
+                        <b>Total de equipos en ramas mixtas: </b>{{$teamsPerBranch['mixto']}}<br>
                     </div>
                 </div>
             </div>
