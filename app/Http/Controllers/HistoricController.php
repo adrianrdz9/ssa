@@ -42,12 +42,27 @@ class HistoricController extends Controller
             $completedUserCount = $team->accepted_users->count();
         }
 
-        // Promedio de equipos por torneo
-        $averageTeamsPerTournament = $teamsCount / $tournamentsCount;
-        // Promedio de alumnos por equipo
-        $averageUsersPerTeam = $userCount / $teamsCount;
-        // Promedio de alumnos por torneo
-        $averageUsersPerTournament = $userCount / $tournamentsCount;
+        if($tournamentsCount > 0){
+            // Promedio de equipos por torneo
+            $averageTeamsPerTournament = $teamsCount / $tournamentsCount;
+        }else {
+            $averageTeamsPerTournament = 0;
+        }
+
+        if($teamsCount > 0){
+            // Promedio de alumnos por equipo
+            $averageUsersPerTeam = $userCount / $teamsCount;
+        }else {
+            $averageUsersPerTeam = 0;
+        }
+        
+        if($tournamentsCount > 0){
+            // Promedio de alumnos por torneo
+            $averageUsersPerTournament = $userCount / $tournamentsCount;
+        }else {
+            $averageUsersPerTournament = 0;
+        }
+        
 
         // Usuarios por rama
         $teamsPerBranch ;
