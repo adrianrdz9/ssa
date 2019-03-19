@@ -9,6 +9,8 @@ Route::get('/', function(){
     }elseif (auth()->user()->Siglas != "")
       return view('Admis.Informacion');
     }
+    return view('home');
+
 });
 
 Auth::routes();

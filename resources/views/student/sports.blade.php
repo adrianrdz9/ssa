@@ -44,7 +44,13 @@
                                                 @if ($branch->roomLeft() > 0)
                                                     <span class="badge badge-success">Lugares disponibles</span>
                                                     @auth
-                                                        <a href="{{route('signUpTournament', ['id' => $branch->id])}}" class="btn btn-info">Inscribirme</a>
+                                                        <a href="{{route('signUpTournament', ['id' => $branch->id])}}" class="btn btn-info">
+                                                            @role('student')
+                                                                Inscribirme
+                                                            @else
+                                                                Ver
+                                                            @endrole
+                                                        </a>
                                                     @else
                                                         <a href="{{route('login')}}">Inicia sesion</a>
                                                         para inscribirte al torneo

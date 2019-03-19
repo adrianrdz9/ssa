@@ -55,6 +55,8 @@ class UserRolesSeeder extends Seeder
             'phone_number'=>'5539155027',
             'password' => Hash::make('Xaya2412'),
         ]);
+        $user->syncRoles(['student']);
+
 
         $user = User::create([
             'name' => 'admin',

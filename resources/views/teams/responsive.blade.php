@@ -32,20 +32,40 @@ loadUnamLogo(()=>{
         loadRightTopText();
         loadTable();
         loadUsersTable();
-        doc.addPage();
-        doc.setFillColor(204,204,204);
-        doc.rect(0,0,210, 38.1, 'F');
-        loadUnamLogo(()=>{
-            loadFILogo(()=>{
-                loadRightTopText();
-                loadResponsive(()=>{
-                    doc.text(150,285, date);
-                    loadPDF();
+        loadQr(()=>{
+            doc.addPage();
+            doc.setFillColor(204,204,204);
+            doc.rect(0,0,210, 38.1, 'F');
+            loadUnamLogo(()=>{
+                loadFILogo(()=>{
+                    loadRightTopText();
+                    loadResponsive(()=>{
+                        doc.text(150,285, date);
+                        loadPDF();
+                    });
                 });
             });
-        });
+        })
     })
 })
+
+function loadQr(next){
+
+    var unamLogo = new Image();
+    unamLogo.onload = function (){
+        var canvas = document.createElement('canvas');
+        canvas.width = this.naturalWidth; 
+        canvas.height = this.naturalHeight; 
+
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(this, 0, 0);
+        
+        doc.addImage("{!! base64_encode(QrCode::format('png')->size(150)->generate($team->voucher)) !!}", 'PNG', 165, 240, 30, 30);
+        next();
+    }
+    unamLogo.src = "{{asset('images/logo_unam.png')}}"
+
+}
 
 function loadResponsive(next){
     doc.setFontSize(26);

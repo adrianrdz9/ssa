@@ -5887,6 +5887,90 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -5922,12 +6006,56 @@ __webpack_require__.r(__webpack_exports__);
     },
     ageGraphData: function ageGraphData() {
       var ageCounts = {};
-      this.data.teams.foreach(function (users) {
-        users.foreach(function (user) {
-          var age = moment(user.birthdate).fromNow(true);
-          if (ageCounts[age]) ageCounts[age]++;else ageCounts[age] = 1;
-        });
-      });
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.data.teams[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var team = _step.value;
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
+
+          try {
+            for (var _iterator2 = team[0].accepted_users[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var user = _step2.value;
+              user = user.user;
+
+              var _age = moment().diff(user.birthdate, 'years');
+
+              if (ageCounts[_age]) ageCounts[_age]++;else ageCounts[_age] = 1;
+            }
+          } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+                _iterator2.return();
+              }
+            } finally {
+              if (_didIteratorError2) {
+                throw _iteratorError2;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
       var data = [['Edad', 'Participantes']];
 
       for (var key in ageCounts) {
@@ -5941,12 +6069,54 @@ __webpack_require__.r(__webpack_exports__);
     },
     careerGraphData: function careerGraphData() {
       var careers = {};
-      this.data.teams.forEach(function (users) {
-        users.foreach(function (user) {
-          var career = user.career;
-          if (careers[career]) careers[career]++;else careers[career] = 1;
-        });
-      });
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = this.data.teams[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var team = _step3.value;
+          var _iteratorNormalCompletion4 = true;
+          var _didIteratorError4 = false;
+          var _iteratorError4 = undefined;
+
+          try {
+            for (var _iterator4 = team[0].accepted_users[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+              var user = _step4.value;
+              user = user.user;
+              var _career = user.career;
+              if (careers[_career]) careers[_career]++;else careers[_career] = 1;
+            }
+          } catch (err) {
+            _didIteratorError4 = true;
+            _iteratorError4 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
+                _iterator4.return();
+              }
+            } finally {
+              if (_didIteratorError4) {
+                throw _iteratorError4;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
+            _iterator3.return();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+
       var data = [['Carrera', 'Participantes']];
 
       for (var key in careers) {
@@ -5960,9 +6130,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     sportGraphData: function sportGraphData() {
       var data = [['Torneo', 'Inscripciones']];
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
 
-      for (var tName in this.data.sport.tournaments.counts) {
-        if (tName !== '_total') data.push([tName, this.data.sport.tournaments.counts[tName]]);
+      try {
+        for (var _iterator5 = this.data.sport.tournaments[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var tournament = _step5.value;
+          data.push([tournament.name, tournament.teams]);
+        }
+      } catch (err) {
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion5 && _iterator5.return != null) {
+            _iterator5.return();
+          }
+        } finally {
+          if (_didIteratorError5) {
+            throw _iteratorError5;
+          }
+        }
       }
 
       return data;
@@ -9952,7 +10141,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#backArrow[data-v-e61331da] {\n  margin-left: 2em;\n  position: relative;\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n#backArrow[data-v-e61331da]::before {\n  content: \"\";\n  position: absolute;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: calc(35px/2) 30px calc(35px/2) 0;\n  border-color: transparent #6c757d transparent transparent;\n  top: -1px;\n  right: 2em;\n  transition: border-color 0.15s ease-in-out;\n}\n#backArrow[data-v-e61331da]:hover::before {\n  border-right-color: #5a6268;\n}\n#content[data-v-e61331da] {\n  min-height: 50vh;\n  max-height: 50vh;\n  overflow-y: scroll;\n}", ""]);
+exports.push([module.i, "#backArrow[data-v-e61331da] {\n  left: 2.5em;\n  position: relative;\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n#backArrow[data-v-e61331da]::before {\n  content: \"\";\n  position: absolute;\n  width: 15px;\n  height: 15px;\n  border-style: solid;\n  border-width: calc(35px/2) 30px calc(35px/2) 0;\n  border-color: transparent #6c757d transparent transparent;\n  top: -1px;\n  left: -2.5em;\n  transition: border-color 0.15s ease-in-out;\n}\n#backArrow[data-v-e61331da]:hover::before {\n  border-right-color: #5a6268;\n}\n#content[data-v-e61331da] {\n  min-height: 50vh;\n  max-height: 50vh;\n  overflow-y: scroll;\n}", ""]);
 
 // exports
 
@@ -67065,7 +67254,172 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.showData ? _c("div", { staticClass: "position-relative" }) : _vm._e()
+    _vm.showData
+      ? _c("div", { staticClass: "position-relative" }, [
+          _vm._v(
+            "\n        " +
+              _vm._s(this.data.sport.tournaments[0].name) +
+              "\n        "
+          ),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "a",
+              {
+                attrs: { href: "#", id: "backArrow" },
+                on: { click: _vm.back }
+              },
+              [_vm._v(" Regresar ")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("h1", { staticClass: "text-center mt-2" }, [
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.data.name) +
+                "\n            (" +
+                _vm._s(_vm.data.sport.name) +
+                ")\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "text-center" }, [
+            _vm._v(
+              "\n            Lugar: " +
+                _vm._s(_vm.data.place) +
+                "\n            -\n            "
+            ),
+            _c("span", { style: { color: _vm.isPast() ? "red" : "green" } }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.data.date) +
+                  " \n                " +
+                  _vm._s(_vm.isPast() ? "(pasado)" : "") +
+                  "\n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c("h4", { staticClass: "text-center" }, [
+                _vm._v("\n                Datos del torneo\n            ")
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c("p", [
+                  _c("b", [_vm._v("Nombre: ")]),
+                  _vm._v(" " + _vm._s(this.data.name) + " ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Ramas: ")]),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    _vm._l(this.data.branches, function(branch) {
+                      return _c("li", { key: branch.id }, [
+                        _vm._v(_vm._s(branch.branch))
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Semestre: ")]),
+                  _vm._v(" " + _vm._s(this.data.semester) + " ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Fecha del torneo: ")]),
+                  _vm._v(" " + _vm._s(this.data.date) + " ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Fecha del cierre de inscripciones: ")]),
+                  _vm._v(" " + _vm._s(this.data.signup_close) + " ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Fecha de reunión técnica: ")]),
+                  _vm._v(" " + _vm._s(this.data.technic_meeting) + " ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Responsable: ")]),
+                  _vm._v(" " + _vm._s(this.data.responsable) + " ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Equipos inscritos: ")]),
+                  _vm._v(" " + _vm._s(this.data.teams.length) + " ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Máximo de equipos: ")]),
+                  _vm._v(_vm._s(this.data.max_teams))
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Deporte: ")]),
+                  _vm._v(" " + _vm._s(this.data.sport.name) + " ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [_vm._v("Sede: ")]),
+                  _vm._v(" " + _vm._s(this.data.place) + " ")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "text-center d-block" }, [
+                _vm._v(
+                  "Inscripciones con respecto a otros torneos de " +
+                    _vm._s(_vm.data.sport.name)
+                )
+              ]),
+              _vm._v(" "),
+              _c("GChart", {
+                attrs: { type: "PieChart", data: _vm.sportGraphData() }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", [
+            _c("h4", { staticClass: "text-center" }, [
+              _vm._v(
+                "\n                Datos de los participantes\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "span",
+              { staticClass: "text-center d-block" },
+              [
+                _vm._v("\n                Edades:\n\n                "),
+                _c("GChart", {
+                  attrs: { type: "PieChart", data: _vm.ageGraphData() }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              { staticClass: "text-center d-block" },
+              [
+                _vm._v("\n                Carreras\n                "),
+                _c("GChart", {
+                  attrs: { type: "PieChart", data: _vm.careerGraphData() }
+                })
+              ],
+              1
+            )
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -82720,8 +83074,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/adrianrodriguez/Desktop/dev/ssa/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/adrianrodriguez/Desktop/dev/ssa/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/ardz9/Desktop/ssa/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/ardz9/Desktop/ssa/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

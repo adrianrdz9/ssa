@@ -129,7 +129,8 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        $user->assignRole('student');
+        if($user->account_number != null)
+            $user->assignRole('student');
     }
 
     public function redirectTo(){

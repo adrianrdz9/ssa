@@ -18,11 +18,6 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="d-block text-right">
-                        @if($sport->hasSignups())
-                        <a href="{{route('sportCedula', ['id'=>$sport->id])}}">Generar cedula de este deporte</a>
-                        @endif 
-                    </div>
                     <h3>
                         Torneos:
                     </h3>
@@ -62,9 +57,6 @@
                                                     <div class="collapse" id="bc{{$branch->id}}" data-parent="#ab{{$branch->id}}"
                                                         aria-labelledby="hb{{$branch->id}}">
                                                         <div class="card-body">
-                                                            <div class="d-block text-right">
-                                                                <a href="{{route('branchCedula', ['id'=>$branch->id])}}">Generar cedula de esta rama</a>
-                                                            </div>
                                                             <h4>
                                                                 Equipos:
                                                             </h4>

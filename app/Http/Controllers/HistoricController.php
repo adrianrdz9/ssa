@@ -42,24 +42,44 @@ class HistoricController extends Controller
             $completedUserCount = $team->accepted_users->count();
         }
 
-        // Promedio de equipos por torneo
-        $averageTeamsPerTournament = $teamsCount / $tournamentsCount;
-        // Promedio de alumnos por equipo
-        $averageUsersPerTeam = $userCount / $teamsCount;
-        // Promedio de alumnos por torneo
-        $averageUsersPerTournament = $userCount / $tournamentsCount;
+        if($tournamentsCount > 0){
+            // Promedio de equipos por torneo
+            $averageTeamsPerTournament = $teamsCount / $tournamentsCount;
+        }else {
+            $averageTeamsPerTournament = 0;
+        }
+
+        if($teamsCount > 0){
+            // Promedio de alumnos por equipo
+            $averageUsersPerTeam = $userCount / $teamsCount;
+        }else {
+            $averageUsersPerTeam = 0;
+        }
+        
+        if($tournamentsCount > 0){
+            // Promedio de alumnos por torneo
+            $averageUsersPerTournament = $userCount / $tournamentsCount;
+        }else {
+            $averageUsersPerTournament = 0;
+        }
+        
 
         // Usuarios por rama
         $teamsPerBranch ;
-        foreach(Branch::with('teams')->get()->groupBy('branch') as $branch){
-            foreach ($branch as $tournament) {
-                if(isset($teamsPerBranch[$tournament->branch])){
-                    $teamsPerBranch[$tournament->branch] += count($tournament->teams);
+        
+        foreach(Branch::with('teams')->get()->groupBy('branch') as $branches){
+
+            foreach ($branches as $branch) {
+                if(isset($teamsPerBranch[$branch->branch])){
+                    
+                    $teamsPerBranch[$branch->branch] += $branch->teams->count();
                 }else{
-                    $teamsPerBranch[$tournament->branch] = 0;
+                    $teamsPerBranch[$branch->branch] = $branch->teams->count();
                 }
             }
         }
+
+
         // Grafica de registros completados-no completados
         $completedSignupsChart = Lava::DataTable();
         $completedSignupsChart->addStringColumn("Razón")
@@ -76,9 +96,9 @@ class HistoricController extends Controller
         $teamsPerBranchChart = Lava::DataTable();
         $teamsPerBranchChart->addStringColumn('Razon')
                             ->addNumberColumn('Porcentaje')
-                            ->addRow(['Rama femenil', count($teamsPerBranch['femenil']) ])
-                            ->addRow(['Rama varonil', count($teamsPerBranch['varonil'])])
-                            ->addRow(['Rama mixta', count($teamsPerBranch['mixto'])]);
+                            ->addRow(['Rama femenil', $teamsPerBranch['femenil'] ])
+                            ->addRow(['Rama varonil', $teamsPerBranch['varonil']])
+                            ->addRow(['Rama mixta', $teamsPerBranch['mixto']]);
 
         Lava::PieChart('teams-per-branch', $teamsPerBranchChart, [
             'title' => 'Proporcion de total de equipos por rama',
@@ -108,7 +128,10 @@ class HistoricController extends Controller
      */
     public function show($id){
         $data = Tournament::where('id', $id)->with('branches.teams.accepted_users')->with('sport.tournaments')->get()[0];
-
+        $data->teams = $data->teams();
+        foreach ($data->sport->tournaments as $n=>$tournament) {
+            $data->sport->tournaments[$n]->teams = count($tournament->teams());
+        }
         return $data;
     }
 
