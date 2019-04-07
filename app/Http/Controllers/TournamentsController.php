@@ -16,6 +16,8 @@ use \App\RequirementInTournament;
 use \App\Branch;
 use \App\User;
 use \App\UserInTeam;
+use \App\QuickSignUp;
+
 
 class TournamentsController extends Controller
 {
@@ -78,7 +80,7 @@ class TournamentsController extends Controller
             'max_teams' => 'required|integer|gte:1',
             'min_per_team' => 'required|integer|gte:1',
             'max_per_team' => 'required|integer|gte:1',
-            'date' => 'required|date|after:today',
+            'date' => 'required|date',
             'signup_close' => 'required|date|after:today',
             'semester' => 'required|string',
             'branch' => 'required'
@@ -308,6 +310,32 @@ class TournamentsController extends Controller
         $tournament = Tournament::find($id);
         
         return view('tournaments.cedula', ['tournament'=>$tournament]);
+    }
+
+    public function quickTournament(){
+        $tournaments = Tournament::with('sport')->with('requirements')->get();
+
+        return view('tournaments.quick.index', ['tournaments' => $tournaments]);
+    }
+
+    public function quickShow($id){
+        $tournament = Tournament::where('id', $id)->with('quickUsers')->with('requirements')->first();
+
+        return view('tournaments.quick.show', ['tournament' => $tournament]);
+    }
+
+    public function quickSignUp($id, Request $request){
+        $request->validate([
+            'name'  => 'required|string',
+            'account_number' => 'required|integer',
+            'tournament_id' => 'required|exists:tournaments,id'
+        ]);
+
+        return QuickSignUp::create([
+            'name' => $request['name'],
+            'account_number' => $request['account_number'],
+            'tournament_id' => $request['tournament_id']
+        ]);
     }
 
 }

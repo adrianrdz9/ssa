@@ -18,7 +18,7 @@ class CreateCartelesFeriasTable extends Migration
             $table->string('Siglas');
             $table->string('Titulo');
             $table->string('Imagen');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

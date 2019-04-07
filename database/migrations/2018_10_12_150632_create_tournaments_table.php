@@ -30,7 +30,7 @@ class CreateTournamentsTable extends Migration
             $table->date('date');
             $table->date('signup_close');
             $table->string('semester');
-            $table->timestamps();
+            $table->nullableTimestamps();
 
             $table->softDeletes();
         });

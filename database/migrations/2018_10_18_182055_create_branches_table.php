@@ -20,7 +20,7 @@ class CreateBranchesTable extends Migration
             $table->foreign('tournament_id')->references('id')->on('tournaments');
 
             $table->string('branch');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

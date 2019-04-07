@@ -74,4 +74,8 @@ class Tournament extends Model
 
         return $teams;
     }
+
+    public function quickUsers(){
+        return $this->hasMany('App\QuickSignUp', 'tournament_id', 'id');
+    }
 }

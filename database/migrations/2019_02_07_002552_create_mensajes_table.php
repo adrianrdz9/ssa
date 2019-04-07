@@ -20,7 +20,7 @@ class CreateMensajesTable extends Migration
             $table->string('Tipo');
             $table->text('Mensaje');
             $table->integer('Estado');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

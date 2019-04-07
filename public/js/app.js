@@ -4708,6 +4708,85 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    u: Array,
+    id: Number
+  },
+  data: function data() {
+    return {
+      name: '',
+      account_number: '',
+      users: this.u
+    };
+  },
+  methods: {
+    validateForm: function validateForm() {
+      if (!this.name || !this.account_number) {
+        alert('Todos los campos son obligatorios');
+        return false;
+      }
+
+      return true;
+    },
+    submitForm: function submitForm() {
+      var _this = this;
+
+      if (this.validateForm()) {
+        axios.post("/actividades-deportivas/torneos/rapido/".concat(this.id), {
+          name: this.name,
+          account_number: this.account_number,
+          tournament_id: this.id
+        }).then(function (response) {
+          _this.name = "";
+          _this.account_number = "";
+          console.log(response.response);
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateTournamentComponent.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateTournamentComponent.vue?vue&type=script&lang=js& ***!
@@ -4744,95 +4823,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     s: Array,
-    r: Array
+    r: Array,
+    oldData: Object
   },
   data: function data() {
     return {
@@ -65292,6 +65287,135 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=template&id=d78bf682&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=template&id=d78bf682& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container mt-4" }, [
+    _c("h3", [_vm._v("Agregar participante")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.name,
+          expression: "name"
+        }
+      ],
+      staticClass: "form-control",
+      attrs: { type: "text", name: "name", id: "name", placeholder: "Nombre" },
+      domProps: { value: _vm.name },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.name = $event.target.value
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.account_number,
+          expression: "account_number"
+        }
+      ],
+      staticClass: "form-control mt-2",
+      attrs: {
+        type: "text",
+        name: "account_number",
+        id: "account_number",
+        placeholder: "Número de cuenta"
+      },
+      domProps: { value: _vm.account_number },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.account_number = $event.target.value
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary mx-auto",
+        attrs: { type: "button" },
+        on: { click: _vm.submitForm }
+      },
+      [_vm._v("Crear")]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "card mt-4" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c(
+          "div",
+          { staticClass: "row p-1" },
+          _vm._l(_vm.users, function(user) {
+            return _c(
+              "div",
+              { key: user.id, staticClass: "card p-2 col-sm-12 col-md-3" },
+              [
+                _c("h5", [
+                  _vm._v(
+                    "\n                       " +
+                      _vm._s(user.name) +
+                      "\n                   "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("span", [
+                  _vm._v(
+                    "\n                       " +
+                      _vm._s(user.account_number) +
+                      "\n                   "
+                  )
+                ])
+              ]
+            )
+          }),
+          0
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", [_vm._v("Usuarios rapidos")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateTournamentComponent.vue?vue&type=template&id=97ffcac6&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateTournamentComponent.vue?vue&type=template&id=97ffcac6& ***!
@@ -65307,158 +65431,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _vm._m(0),
+  return _c("div", [
+    _c("small", [_vm._v("Deporte")]),
     _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
+    _c(
+      "select",
+      {
+        staticClass: "form-control",
+        attrs: { name: "sport_id", id: "sport_id", required: "" }
+      },
+      _vm._l(_vm.sports, function(sport) {
+        return _c("option", { key: sport.id, domProps: { value: sport.id } }, [
+          _vm._v(_vm._s(sport.name))
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "w-100 text-right" }, [
       _c(
-        "form",
-        {
-          attrs: {
-            action: "/actividades-deportivas/torneos/nuevo",
-            method: "post"
-          },
-          on: { submit: _vm.validateForm }
-        },
-        [
-          _c("input", {
-            attrs: { type: "hidden", name: "_token" },
-            domProps: { value: _vm.csrf }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control my-2",
-            attrs: {
-              type: "text",
-              name: "name",
-              id: "name",
-              placeholder: "Nombre del torneo",
-              required: ""
-            }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control my-2",
-            attrs: {
-              type: "text",
-              name: "responsable",
-              id: "responsable",
-              placeholder: "Responsable del torneo",
-              required: ""
-            }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control my-2",
-            attrs: {
-              type: "text",
-              name: "place",
-              id: "place",
-              placeholder: "Sede",
-              required: ""
-            }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control my-2",
-            attrs: {
-              type: "text",
-              name: "semester",
-              id: "semester",
-              placeholder: "Semestre del torneo",
-              required: ""
-            }
-          }),
-          _vm._v(" "),
-          _c("small", [_vm._v("Deporte")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              staticClass: "form-control",
-              attrs: { name: "sport_id", id: "sport_id", required: "" }
-            },
-            _vm._l(_vm.sports, function(sport) {
-              return _c(
-                "option",
-                { key: sport.id, domProps: { value: sport.id } },
-                [_vm._v(_vm._s(sport.name))]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-100 text-right" }, [
-            _c(
-              "a",
-              {
-                attrs: { href: "#", id: "addSport" },
-                on: { click: _vm.addSport }
-              },
-              [_vm._v("Agregar deporte")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-100 px-2" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "row my-4" },
-              [
-                _vm._m(2),
-                _vm._v(" "),
-                _vm._l(_vm.requirements, function(requirement) {
-                  return _c(
-                    "div",
-                    { key: requirement.id, staticClass: "col" },
-                    [
-                      _c("input", {
-                        attrs: {
-                          type: "checkbox",
-                          name: "requirements[]",
-                          id: "requirements"
-                        },
-                        domProps: { value: requirement.id }
-                      }),
-                      _vm._v(" "),
-                      _c("label", { attrs: { for: "requirements" } }, [
-                        _vm._v(_vm._s(requirement.name))
-                      ])
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-12 text-right mb-4" }, [
-                  _c(
-                    "a",
-                    {
-                      attrs: { href: "#", id: "addRequirement" },
-                      on: { click: _vm.addRequirement }
-                    },
-                    [_vm._v("Agregar requerimiento")]
-                  )
-                ])
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _vm._m(3),
-            _vm._v(" "),
-            _vm._m(4)
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success w-75 mx-auto d-block mt-4",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("Crear")]
-          )
-        ]
+        "a",
+        { attrs: { href: "#", id: "addSport" }, on: { click: _vm.addSport } },
+        [_vm._v("Agregar deporte")]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row my-4" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._l(_vm.requirements, function(requirement) {
+          return _c("div", { key: requirement.id, staticClass: "col" }, [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "requirements[]",
+                id: "requirements"
+              },
+              domProps: { value: requirement.id }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "requirements" } }, [
+              _vm._v(_vm._s(requirement.name))
+            ])
+          ])
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 text-right mb-4" }, [
+          _c(
+            "a",
+            {
+              attrs: { href: "#", id: "addRequirement" },
+              on: { click: _vm.addRequirement }
+            },
+            [_vm._v("Agregar requerimiento")]
+          )
+        ])
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = [
@@ -65466,215 +65499,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", [_vm._v("Nuevo torneo")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-12 col-md-6 col-lg-4 px-2" }, [
-        _c("label", { staticClass: "mb-0", attrs: { for: "date" } }, [
-          _c("small", [_vm._v("Fecha del torneo")])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "date", name: "date", id: "date", required: "" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12 col-md-6 col-lg-4 px-2" }, [
-        _c(
-          "label",
-          { staticClass: "mb-0", attrs: { for: "technic_meeting" } },
-          [_c("small", [_vm._v("Fecha de la reunion técnica")])]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "date",
-            name: "technic_meeting",
-            id: "technic_meeting",
-            required: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12 col-md-6 col-lg-4 px-2" }, [
-        _c("label", { staticClass: "mb-0", attrs: { for: "signup_close" } }, [
-          _c("small", [_vm._v("Cierre de inscripciones")])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "date",
-            name: "signup_close",
-            id: "signup_close",
-            required: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12 col-md-6 col-lg-4 px-2" }, [
-        _c("label", { attrs: { for: "max_teams" } }),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "number",
-            name: "max_teams",
-            id: "max_teams",
-            min: "1",
-            placeholder: "Máximo de equipos",
-            required: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12 col-md-6 col-lg-4 px-2" }, [
-        _c("label", { attrs: { for: "min_per_team" } }),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "number",
-            name: "min_per_team",
-            id: "min_per_team",
-            min: "1",
-            placeholder: "Mínimo de integrantes",
-            required: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12 col-md-6 col-lg-4 px-2" }, [
-        _c("label", { attrs: { for: "max_per_team" } }),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "number",
-            name: "max_per_team",
-            id: "max_per_team",
-            min: "1",
-            placeholder: "Máximo de integrantes",
-            required: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 text-center mb-2" }, [
       _c("span", [_vm._v("Requisitos")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-12 text-center" }, [
-        _c("span", [_vm._v("Ramas disponibles")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col checkbox-group form-check" }, [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "branch[]",
-                id: "branch-varonil",
-                value: "varonil"
-              }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "branch-varonil" } }, [
-              _vm._v("Varonil")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col checkbox-group" }, [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "branch[]",
-                id: "branch-femenil",
-                value: "femenil"
-              }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "branch-femenil" } }, [
-              _vm._v("Femenil")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col checkbox-group" }, [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "branch[]",
-                id: "branch-mixto",
-                value: "mixto"
-              }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "branch-mixto" } }, [_vm._v("Mixto")])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "text-red col-12 text-left d-none",
-              attrs: { id: "checkbox-error" }
-            },
-            [
-              _vm._v(
-                "\n                                Debes de elegir al menos una opcion\n                            "
-              )
-            ]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c("div", { staticClass: "row justify-content-around" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "col-sm-12 col-md-6 col-lg-4 checkbox-group form-check"
-            },
-            [
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "only_representative",
-                  id: "only_representative",
-                  value: "true"
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "only_representative" } }, [
-                _vm._v("Solo equipos representativos  ")
-              ])
-            ]
-          )
-        ])
-      ])
     ])
   }
 ]
@@ -81798,6 +81624,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('credencial-input', __webpa
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('tournament-historic', __webpack_require__(/*! ./components/TournamentHistoric.vue */ "./resources/js/components/TournamentHistoric.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('team-index', __webpack_require__(/*! ./components/TeamIndexComponent.vue */ "./resources/js/components/TeamIndexComponent.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('responsive-finder', __webpack_require__(/*! ./components/ResponsiveFinder.vue */ "./resources/js/components/ResponsiveFinder.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('create-quick-signup', __webpack_require__(/*! ./components/CreateQuickSignUpComponent.vue */ "./resources/js/components/CreateQuickSignUpComponent.vue").default);
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app'
 });
@@ -82136,6 +81963,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CompleteSignUp_vue_vue_type_template_id_3f8e167c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CompleteSignUp_vue_vue_type_template_id_3f8e167c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CreateQuickSignUpComponent.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/CreateQuickSignUpComponent.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateQuickSignUpComponent_vue_vue_type_template_id_d78bf682___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateQuickSignUpComponent.vue?vue&type=template&id=d78bf682& */ "./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=template&id=d78bf682&");
+/* harmony import */ var _CreateQuickSignUpComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateQuickSignUpComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreateQuickSignUpComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateQuickSignUpComponent_vue_vue_type_template_id_d78bf682___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateQuickSignUpComponent_vue_vue_type_template_id_d78bf682___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CreateQuickSignUpComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateQuickSignUpComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateQuickSignUpComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateQuickSignUpComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=template&id=d78bf682&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=template&id=d78bf682& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateQuickSignUpComponent_vue_vue_type_template_id_d78bf682___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateQuickSignUpComponent.vue?vue&type=template&id=d78bf682& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateQuickSignUpComponent.vue?vue&type=template&id=d78bf682&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateQuickSignUpComponent_vue_vue_type_template_id_d78bf682___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateQuickSignUpComponent_vue_vue_type_template_id_d78bf682___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

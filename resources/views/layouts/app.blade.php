@@ -72,6 +72,8 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('completeSignup') }}">Completar inscripción</a>
                             <a class="dropdown-item" href="{{ route('getResponsive') }}">Obtener responsiva de alumno</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('quickTournament') }}">Torneo rápido</a>
                         </div>
                     </li>
                 @else

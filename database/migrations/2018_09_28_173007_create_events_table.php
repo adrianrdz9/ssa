@@ -20,7 +20,7 @@ class CreateEventsTable extends Migration
             $table->text('link_to')->nullable();
             $table->date('date')->nullable();
             $table->softDeletes();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

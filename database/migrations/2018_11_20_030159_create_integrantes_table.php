@@ -22,7 +22,7 @@ class CreateIntegrantesTable extends Migration
             $table->string('Nombre');
             $table->string('Email')->nullable();
             $table->string('Numero')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
 
         });
     }

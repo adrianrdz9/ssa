@@ -25,7 +25,7 @@ class CreateReclutamientosTable extends Migration
             $table->date('Fecha');
             $table->time('Hora');
             $table->string('Lugar');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

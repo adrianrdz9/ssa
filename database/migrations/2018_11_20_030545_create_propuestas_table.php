@@ -20,7 +20,7 @@ class CreatePropuestasTable extends Migration
             $table->string('Titulo');
             $table->text('Descripcion');
             $table->string('Estado')->default('Pendiente');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 
