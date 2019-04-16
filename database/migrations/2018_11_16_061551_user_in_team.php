@@ -20,7 +20,7 @@ class UserInTeam extends Migration
             $table->unsignedInteger('team_id');
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
             $table->string('status')->default('pending');
-            $table->timestamps();
+            $table->nullableTimestamps();
 
         });
     }

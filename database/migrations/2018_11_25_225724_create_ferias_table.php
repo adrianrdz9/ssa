@@ -18,7 +18,7 @@ class CreateFeriasTable extends Migration
             $table->string('Nombre');
             $table->date('Inicio');
             $table->date('Limite');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

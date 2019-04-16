@@ -22,7 +22,7 @@ class CreateFeriaEventosTable extends Migration
             $table->date('Dia');
             $table->time('Hora');
             $table->string('Lugar');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

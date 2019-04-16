@@ -19,7 +19,7 @@ class CreateNoticesTable extends Migration
             $table->string('color')->nullable();
             $table->date('max_date')->nullable();
             $table->softDeletes();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

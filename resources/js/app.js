@@ -40,6 +40,7 @@ Vue.component('credencial-input', require('./components/CredencialInput.vue').de
 Vue.component('tournament-historic', require('./components/TournamentHistoric.vue').default);
 Vue.component('team-index', require('./components/TeamIndexComponent.vue').default);
 Vue.component('responsive-finder', require('./components/ResponsiveFinder.vue').default);
+Vue.component('create-quick-signup', require('./components/CreateQuickSignUpComponent.vue').default);
 
 const app = new Vue({
     el: '#app'

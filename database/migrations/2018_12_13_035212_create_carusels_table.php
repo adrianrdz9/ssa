@@ -22,7 +22,7 @@ class CreateCaruselsTable extends Migration
             $table->integer('Estado')->default('1');
             $table->string('Imagen');
 
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

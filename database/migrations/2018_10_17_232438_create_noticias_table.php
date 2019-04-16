@@ -23,7 +23,7 @@ class CreateNoticiasTable extends Migration
             $table->string('Disponible')->default('1');
             $table->string('ImagenC')->nullable();
             $table->string('ImagenR')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

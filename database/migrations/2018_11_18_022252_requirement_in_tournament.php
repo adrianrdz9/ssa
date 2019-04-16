@@ -19,7 +19,7 @@ class RequirementInTournament extends Migration
             $table->foreign('tournament_id')->references('id')->on('tournaments')->onDelete('cascade');
             $table->unsignedInteger('requirement_id');
             $table->foreign('requirement_id')->references('id')->on('requirements')->onDelete('cascade');
-            $table->timestamps();
+            $table->nullableTimestamps();
         
         });
     }

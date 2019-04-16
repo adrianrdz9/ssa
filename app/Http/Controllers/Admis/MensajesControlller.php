@@ -18,7 +18,10 @@ class MensajesControlller extends Controller
     $this->middleware('auth');
   }
   public function verMensajes(){
-    return view('Admis.AdmiMsj');
+    $chats = \App\User::whereNotNull('Siglas')
+            ->orderBy('Siglas','desc')
+            ->get();
+    return view('Admis.AdmiMsj',['chats' => $chats]);
   }
   public function Guardar(Request $request){
     $msj = new Mensajes;

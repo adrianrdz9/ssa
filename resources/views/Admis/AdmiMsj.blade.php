@@ -14,6 +14,7 @@
       <div class="card-footer">
         <form class="form-inline" method="post" action="{{ url('agrupaciones/AdmiMsjG') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
+          <input type="hidden" name="Agrupacion" value="CAMBIAR POR VARIABLE">
           <div class="form-group">
             <textarea rows="2" cols="57" class="form-control" name="Mensaje"></textarea>
           </div>
@@ -25,8 +26,13 @@
       </div>
     </div>
   </div>
-    <!-- For each para chats con mensajes no leidos -->
+  <!-- For each para chats con mensajes no leidos -->
   <div class="col-6 col-md-3" style="background-color:pink;">
+    <select selectclass="selectpicker" data-show-subtext="true" data-live-search="true">
+      @foreach ($chats as $chat)
+        <option data-tokens="{{ $chat->Siglas}}">{{ $chat->Nombre}}</option>
+      @endforeach
+    </select>
   </div>
 </div>
 @stop

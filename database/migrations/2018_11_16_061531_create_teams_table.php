@@ -25,7 +25,7 @@ class CreateTeamsTable extends Migration
             $table->string('voucher')->nullable();
             $table->boolean('completed')->default(false);
             
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

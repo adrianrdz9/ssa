@@ -25,7 +25,7 @@ class CreateSlidesTable extends Migration
             $table->text('caption')->nullable();
             $table->string('link_text')->nullable();
             $table->text('link_to')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

@@ -118,6 +118,9 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
         Route::get('/nuevo', 'TournamentsController@new')->name('newTournament');
         Route::post('/nuevo', 'TournamentsController@store')->name('newTournament');
 
+        Route::get('/rapido', 'TournamentsController@quickTournament')->name('quickTournament');
+        Route::get('/rapido/{id}', 'TournamentsController@quickShow')->name('quickShow');
+        Route::post('/rapido/{id}', 'TournamentsController@quickSignUp')->name('quickSignUp');
 
         Route::put('/{id}', 'TournamentsController@update')->name('updateTournament');
         Route::get('/{id}/editar', 'TournamentsController@edit')->name('editTournament');
