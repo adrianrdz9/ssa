@@ -1,7 +1,7 @@
 <template>
     <div class="contacts-list">
         <ul>
-            <li v-for="contact in contacts" :key="contact.id">
+            <li v-for="(contact, index) in contacts" :key="contact.id" @click = "selectContact(index,contact)" :class="{ 'selected': index == selected }">
                 <div class="avatar">
                     <img :src="'/images/Agrupaciones/Logos/' +  contact.Logo" :alt="contact.Siglas">
                 </div>
@@ -23,17 +23,18 @@
                 default: []
             }
         },
-        // data() {
-        //     return {
-        //         selected: this.contacts.length ? this.contacts[0] : null
-        //     };
-        // },
-        // methods: {
-        //     selectContact(contact) {
-        //         this.selected = contact;
-        //         this.$emit('selected', contact);
-        //     }
-        // },
+        data() {
+            return {
+                selected: 0
+                //selected: this.contacts.length ? this.contacts[0] : null
+            };
+        },
+        methods: {
+            selectContact(index,contact) {
+                this.selected = index;
+                this.$emit('selected', contact);
+            }
+        },
         // computed: {
         //     sortedContacts() {
         //         return _.sortBy(this.contacts, [(contact) => {
@@ -47,7 +48,7 @@
     }
 </script>
 
-<!-- <style lang="scss" scoped>
+<style lang="scss" scoped>
 .contacts-list {
     flex: 2;
     max-height: 600px;
@@ -110,4 +111,4 @@
         }
     }
 }
-</style> -->
+</style>

@@ -24,6 +24,12 @@ class MensajesControlller extends Controller
             ->get();
     return response()->json($contacts);
   }
+  public function getMessagesFor($id){
+    $messages = \App\Mensajes::where('from', $id)
+             ->orWhere('to', $id)
+             ->get();
+   return response()->json($messages);
+  }
 
 
 
