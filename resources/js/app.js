@@ -42,6 +42,8 @@ Vue.component('team-index', require('./components/TeamIndexComponent.vue').defau
 Vue.component('responsive-finder', require('./components/ResponsiveFinder.vue').default);
 Vue.component('create-quick-signup', require('./components/CreateQuickSignUpComponent.vue').default);
 
+//Mensajes
+Vue.component('chat-app', require('./components/ChatApp.vue').default);
 const app = new Vue({
     el: '#app'
 });

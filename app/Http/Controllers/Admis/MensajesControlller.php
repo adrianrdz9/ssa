@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use App\Mensajes;
+use App\User;
 use Alert;
 class MensajesControlller extends Controller
 {
@@ -17,6 +18,18 @@ class MensajesControlller extends Controller
   public function construct(){
     $this->middleware('auth');
   }
+  public function get(){
+    $contacts = \App\User::whereNotNull('Siglas')
+            ->orderBy('Siglas','desc')
+            ->get();
+    return response()->json($contacts);
+  }
+
+
+
+
+
+
   public function verMensajes(){
     $chats = \App\User::whereNotNull('Siglas')
             ->orderBy('Siglas','desc')

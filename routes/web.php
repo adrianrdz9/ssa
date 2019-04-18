@@ -47,7 +47,8 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::post('/NPassword','Admis\admiController@NPassword')->name('NPassword');
     //Mensajes
     Route::get('/Admi/AdmiMsj','Admis\MensajesControlller@verMensajes');
-    Route::post('/AdmiMsjG','Admis\MensajesControlller@Guardar')->name('AdmiMsjG');
+    Route::get('/Admi/AdmiMsj/contacts','Admis\MensajesControlller@get');
+    //Route::post('/AdmiMsjG','Admis\MensajesControlller@Guardar')->name('AdmiMsjG');
     //FERIAS
     //Ver eventos
     Route::get('/Admi/EventosFeria','Admis\FeriasAdmi@verEventos');
@@ -70,7 +71,6 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::post('/reclutamientoF','Admis\semiAdmiController@NReclutamiento')->name('reclutamientoF');
     Route::get('/semiAdmi/VerReclutamientos','Admis\semiAdmiController@VerReclutamientos');
     Route::get('/Reclutamiento/id/{id}','Visitante\generalController@Reclutamiento');
-    //Mensajes
 
 
     //Visitante (publicon en general )
