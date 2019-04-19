@@ -30,7 +30,6 @@
         },
         methods: {
           startConversationWith(contact){
-            console.log(contact.id);
             axios.get('/agrupaciones/Admi/AdmiMsj/conversation/' + contact.id)
               .then((response)=>{
                 this.messages = response.data;

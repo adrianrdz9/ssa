@@ -4535,14 +4535,13 @@ __webpack_require__.r(__webpack_exports__);
     startConversationWith: function startConversationWith(contact) {
       var _this2 = this;
 
-      console.log(contact.id);
       axios.get('/agrupaciones/Admi/AdmiMsj/conversation/' + contact.id).then(function (response) {
         _this2.messages = response.data;
         _this2.selectedContact = contact;
       });
     },
     saveNewMessage: function saveNewMessage(text) {
-      this.messages.push("text");
+      this.messages.push(text);
     }
   },
   components: {

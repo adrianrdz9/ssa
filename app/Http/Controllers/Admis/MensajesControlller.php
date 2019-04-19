@@ -21,6 +21,7 @@ class MensajesControlller extends Controller
 
   public function get(){
     $contacts = \App\User::whereNotNull('Siglas')
+            ->where('id', '!=' , auth()->id())
             ->orderBy('Siglas','desc')
             ->get();
     return response()->json($contacts);
@@ -41,7 +42,7 @@ class MensajesControlller extends Controller
     $msj ->Tipo = "T";
     $msj->save();
     $message = $request->text;
-    return response()->json($message);
+    return response()->json(['Mensaje' => $message]);
   }
 
 
