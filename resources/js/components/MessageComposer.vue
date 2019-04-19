@@ -13,8 +13,7 @@
         },
         methods: {
             send(e) {
-                // e.preventDefault();
-
+                e.preventDefault();
                 if (this.message == '') {
                     return;
                 }

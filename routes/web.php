@@ -49,6 +49,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/Admi/AdmiMsj','Admis\MensajesControlller@verMensajes');
     Route::get('/Admi/AdmiMsj/contacts','Admis\MensajesControlller@get');
     Route::get('/Admi/AdmiMsj/conversation/{id}','Admis\MensajesControlller@getMessagesFor');
+    Route::post('/Admi/AdmiMsj/conversation/send','Admis\MensajesControlller@send');
     //Route::post('/AdmiMsjG','Admis\MensajesControlller@Guardar')->name('AdmiMsjG');
     //FERIAS
     //Ver eventos

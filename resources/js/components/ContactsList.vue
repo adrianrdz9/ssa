@@ -96,7 +96,7 @@
             }
             .contact {
                 flex: 3;
-                font-size: 10px;
+                font-size: 12px;
                 overflow: hidden;
                 display: flex;
                 flex-direction: column;

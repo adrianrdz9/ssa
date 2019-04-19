@@ -18,17 +18,30 @@ class MensajesControlller extends Controller
   public function construct(){
     $this->middleware('auth');
   }
+
   public function get(){
     $contacts = \App\User::whereNotNull('Siglas')
             ->orderBy('Siglas','desc')
             ->get();
     return response()->json($contacts);
   }
+
   public function getMessagesFor($id){
     $messages = \App\Mensajes::where('De', $id)
              ->orWhere('Para', $id)
-             ->get();
+             ->get(['Mensaje']);
    return response()->json($messages);
+  }
+
+  public function send(Request $request){
+    $msj = new Mensajes;
+    $msj ->De = auth()->id();
+    $msj ->Para = $request->contact_id;
+    $msj ->Mensaje = $request->text;
+    $msj ->Tipo = "T";
+    $msj->save();
+    $message = $request->text;
+    return response()->json($message);
   }
 
 

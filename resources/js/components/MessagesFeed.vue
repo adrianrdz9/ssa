@@ -3,7 +3,7 @@
         <ul v-if="contact">
             <li v-for="message in messages" :class="`message${message.to == contact.id ? ' sent' : ' received'}`" :key="message.id">
                 <div class="text">
-                    {{ message.text }}
+                    {{ message.Mensaje }}
                 </div>
             </li>
         </ul>
@@ -43,7 +43,7 @@
 .feed {
     background: #f0f0f0;
     height: 100%;
-    max-height: 470px;
+    max-height: 500px;
     overflow: scroll;
     ul {
         list-style-type: none;
