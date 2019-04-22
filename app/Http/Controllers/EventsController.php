@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 use \App\Event;
 use \App\Notice;
+use \App\AdminChange;
 
 
 class EventsController extends Controller
@@ -54,11 +55,16 @@ class EventsController extends Controller
         ]);
 
         // Realizar creacion
-        Event::create([
+        $event = Event::create([
             'date' => $request->date,
             'event' => $request->event,
             'link_text' => $request->link_text,
             'link_to' => $request->link_to
+        ]);
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Creación de evento: '.$event->event.' para el día: '.$event->date.' con link: '.$event->link_text.'('.$event->link_to.')'
         ]);
 
         // Redireccionar 
@@ -82,8 +88,17 @@ class EventsController extends Controller
             'link_to' => 'nullable|string'
         ]);
 
+        $oEvent = Event::find($id);
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Cambio de evento: '.$oEvent->event.' -> '. $request->event 
+                        .' del día: '.$oEvent->date.' -> '. $request->date 
+                        .' con link: '.$oEvent->link_text.'('.$oEvent->link_to.') -> '.$request->link_text.'('.$request->link_to.')'
+        ]);
+
         // Buscar el evento y actualizarlo
-        Event::find($id)->update([
+        $event = Event::find($id)->update([
             'date'=>$request->date,
             'event'=>$request->event,
             'link_text' => $request->link_text,

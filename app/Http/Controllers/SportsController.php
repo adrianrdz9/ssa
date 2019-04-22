@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use \App\Sport;
+use \App\AdminChange;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -57,9 +58,16 @@ class SportsController extends Controller
         ]);
 
         // Devolver el deporte creado
-        return Sport::create([
+        $sport = Sport::create([
             'name' => $request->name
         ]);
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Creación de deporte: '.$sport->name
+        ]);
+
+        return $sport;
     }
 
     /**
@@ -75,6 +83,12 @@ class SportsController extends Controller
         $request->validate([
             'name'=>'required|string'
         ]);
+        
+        $oSport = Sport::find($id);
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Cambio de deporte: '.$oSport->name.' -> '.$request->name
+        ]);   
 
         // Relizar actualizacion
         Sport::find($id)->update([
@@ -94,6 +108,14 @@ class SportsController extends Controller
      * @return void
      */
     public function delete($id){
+        $oSport =Sport::find($id);
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Eliminación de deporte: '.$oSport->name.' y todos sus torneos'
+        ]);   
+
+
         // Buscar y eliminar el deporte
         Sport::find($id)->delete();
         return redirect()->back()->with(['notice' => 'Deporte eliminado']);

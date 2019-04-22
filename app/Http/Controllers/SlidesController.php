@@ -8,7 +8,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Slide;
+use \App\AdminChange;
 use Image;
+
 
 class SlidesController extends Controller
 {
@@ -37,6 +39,7 @@ class SlidesController extends Controller
             'link_text'=>'nullable|string'
         ]);
 
+        
         // Realizar creacion
         $slide = Slide::create([
             'caption'=>$request->caption,
@@ -44,7 +47,11 @@ class SlidesController extends Controller
             'link_to'=>$request->link_to,
             'link_text'=>$request->link_text
         ]);
-
+            
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Creación de imagen vacía de carrusel'
+        ]);
         // Redireccion
         return redirect()->back()->with('notice', 'Imagen creada');
     }
@@ -78,6 +85,11 @@ class SlidesController extends Controller
             $slide->image = $request->file('image');
         $slide->save();
 
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Cambio de imagen de carrusel con leyenda: '.$slide->caption.', link: '.$slide->link_text.'('.$slide->link_to.'), e imagen: '.$slide->imgPath()
+        ]);
+
         // Redireccionar
         return redirect()->back()->with('notice', 'Imagen actualizada');
     }
@@ -92,6 +104,11 @@ class SlidesController extends Controller
     public function delete($id){
         // Eliminar la imagen del carrusel
         Slide::find($id)->delete();
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Imagen de carrusel eliminada'
+        ]);
 
         // Redireccionar
         return redirect()->back()->with('notice', 'Imagen eliminada');

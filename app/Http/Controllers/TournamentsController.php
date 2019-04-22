@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use \App\Tournament;
 use \App\Sport;
 use \App\Requirement;
+use App\AdminChange;
 use \App\RequirementInTournament;
 use \App\Branch;
 use \App\User;
@@ -94,20 +95,37 @@ class TournamentsController extends Controller
             )
         );
 
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Creación de torneo: '.$tournament->name.
+                        ', con responsable: '.$tournament->responsable.
+                        ', con reunión técnica el día: '. $tournament->technic_meeting.
+                        ', con cierre de inscripciónes el día: '. $tournament->signup_close.
+                        ', dando inicio el día: '.$tournament->date.
+                        ', del deporte: '.$tournament->sport->name.
+                        ', en: '.$tournament->place.
+                        ', del semestre: '.$tournament->semester.
+                        ', con un máximo de: '.$tournament->max_teams.' equipos'.
+                        ', de entre: '.$tournament->min_per_team.' y '.$tournament->max_per_team.' integrantes'
+        ]);   
+
+
         // Crear las ramas del torneo
         foreach($request->branch as $branch){
             Branch::create([
                 'branch' => $branch,
                 'tournament_id' => $tournament->id
-            ]);
-        }
-
-        // Ligar los requerimientos especificos del torneo
-        foreach ($request->requirements as $requirement) {
-            RequirementInTournament::create([
-                'requirement_id' => $requirement,
-                'tournament_id' => $tournament->id,
-            ]);
+                ]);
+            }
+            
+            // Ligar los requerimientos especificos del torneo
+        if(isset($request->requirements)){
+            foreach ($request->requirements as $requirement) {
+                RequirementInTournament::create([
+                    'requirement_id' => $requirement,
+                    'tournament_id' => $tournament->id,
+                ]);
+            }
         }
 
         // Redireccionar
@@ -155,17 +173,32 @@ class TournamentsController extends Controller
         $request->validate([
             'sport_id' => 'required|exists:sports,id',
             'responsable' => 'required|string',
-            'technic_meeting' => 'required|date|after:today',
+            'technic_meeting' => 'required|date',
             'name' => 'required|string',
             'place' => 'required|string',
             'max_teams' => 'required|integer|gte:1',
             'min_per_team' => 'required|integer|gte:1',
             'max_per_team' => 'required|integer|gte:1',
-            'date' => 'required|date|after:today',
-            'signup_close' => 'required|date|after:today',
+            'date' => 'required|date',
+            'signup_close' => 'required|date',
             'semester' => 'required|string',
             'branch' => 'required'
         ]);
+
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Cambio del torneo: '.$tournament->name.' -> '.$request->name.
+                        ', con responsable: '.$tournament->responsable.' -> '.$request->responsable.
+                        ', con reunión técnica el día: '. $tournament->technic_meeting.' -> '.$request->technic_meeting.
+                        ', con cierre de inscripciónes el día: '. $tournament->signup_close.' -> '.$request->signup_close.
+                        ', dando inicio el día: '.$tournament->date.' -> '.$request->date.
+                        ', del deporte: '.$tournament->sport->name.' -> '.Sport::find($request->sport_id)->name.
+                        ', en: '.$tournament->place.' -> '.$request->place.
+                        ', del semestre: '.$tournament->semester.' -> '.$request->semester.
+                        ', con un máximo de: '.$tournament->max_teams.' -> '.$request->max_teams.' equipos'.
+                        ', de entre: '.$tournament->min_per_team.' -> '.$request->min_per_team.' y '.$tournament->max_per_team.' -> '.$request->max_per_team.' integrantes'
+        ]);   
 
         // Obtener las ramas del torneo
         $availableBranches = Branch::where('tournament_id', $tournament->id)->get();
@@ -202,11 +235,13 @@ class TournamentsController extends Controller
         }
 
         // Liga los requerimientos especificos del torneo
-        foreach ($request->requirements as $requirement) {
-            RequirementInTournament::create([
-                'requirement_id' => $requirement,
-                'tournament_id' => $tournament->id,
-            ]);
+        if(isset($request->requirements )){
+            foreach ($request->requirements as $requirement) {
+                RequirementInTournament::create([
+                    'requirement_id' => $requirement,
+                    'tournament_id' => $tournament->id,
+                ]);
+            }
         }
 
         // Redireccion
@@ -273,9 +308,16 @@ class TournamentsController extends Controller
             'name' => 'required|string'
         ]);
 
-        return Requirement::create([
+        $requirement = Requirement::create([
             'name' => $request->name
         ]);
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Creación del requerimieto: '.$requirement->name
+        ]);
+
+        return $requirement;
     }
 
     public function getResponsive(){

@@ -139,7 +139,7 @@ export default {
                 confirmButtonText: 'Agregar',
                 showLoaderOnConfirm: true,
                 preConfirm: (data) => {
-                    axios.post('/admin/sports', {
+                    axios.post('/actividades-deportivas/admin/sports', {
                         name: data
                     }).then(response => {
                         console.log(response);
@@ -177,7 +177,7 @@ export default {
                 confirmButtonText: 'Agregar',
                 showLoaderOnConfirm: true,
                 preConfirm: (data) => {
-                    axios.post('/admin/requirements', {
+                    axios.post('/actividades-deportivas/admin/requirements', {
                         name: data
                     }).then(response => {
                         console.log(response);

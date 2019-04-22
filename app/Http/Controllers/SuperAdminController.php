@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use \App\User;
+use \App\AdminChange;
 use Spatie\Permission\Models\Role;
 use Config;
 use Hash;
@@ -91,5 +92,9 @@ class SuperAdminController extends Controller
         $user->syncRoles([$request->role]);
 
         return redirect('/');
+    }
+
+    public function changelog(){
+        return AdminChange::all();
     }
 }

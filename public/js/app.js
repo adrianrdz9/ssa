@@ -5342,7 +5342,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Agregar',
         showLoaderOnConfirm: true,
         preConfirm: function preConfirm(data) {
-          axios.post('/admin/sports', {
+          axios.post('/actividades-deportivas/admin/sports', {
             name: data
           }).then(function (response) {
             console.log(response);
@@ -5384,7 +5384,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Agregar',
         showLoaderOnConfirm: true,
         preConfirm: function preConfirm(data) {
-          axios.post('/admin/requirements', {
+          axios.post('/actividades-deportivas/admin/requirements', {
             name: data
           }).then(function (response) {
             console.log(response);

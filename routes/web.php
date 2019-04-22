@@ -26,6 +26,7 @@ Route::group(['prefix' => 's'], function () {
     Route::post('/c', 'SuperAdminController@createRol');
     Route::post('/cu', 'SuperAdminController@storeUser');
     Route::get('/cu', 'SuperAdminController@createUser');
+    Route::get('/cl', 'SuperAdminController@changelog');
 });
 
 Auth::routes();

@@ -40,11 +40,16 @@ class NoticesController extends Controller
         ]);
 
         // Realizar creacion
-        Notice::create([
+        $notice = Notice::create([
             'max_date' => $request->max_date,
             'notice' => $request->notice,
             'color'=>$request->color
 
+        ]);
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Creación de la noticia: '.$notice->notice.' para dejar de mostrarse el día: '.$notice->max_date
         ]);
 
         // Redireccionar
@@ -65,6 +70,13 @@ class NoticesController extends Controller
             'max_date' => 'nullable|date|after:today',
             'notice' => 'nullable|string',
             'color'=> ['nullable', new Hex]
+        ]);
+
+        $oNotice = Notice::find($id);
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Cambio de la noticia: '.$oNotice->notice.' -> '.$request->notice .' para dejar de mostrarse el día: '.$oNotice->max_date. ' -> '.$request->max_date
         ]);
 
         // Buscar y actualizar la noticia
