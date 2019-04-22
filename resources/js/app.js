@@ -41,6 +41,7 @@ Vue.component('tournament-historic', require('./components/TournamentHistoric.vu
 Vue.component('team-index', require('./components/TeamIndexComponent.vue').default);
 Vue.component('responsive-finder', require('./components/ResponsiveFinder.vue').default);
 Vue.component('create-quick-signup', require('./components/CreateQuickSignUpComponent.vue').default);
+Vue.component('user-roles-component', require('./components/UserRolesComponent.vue').default);
 
 //Mensajes
 Vue.component('chat-app', require('./components/ChatApp.vue').default);

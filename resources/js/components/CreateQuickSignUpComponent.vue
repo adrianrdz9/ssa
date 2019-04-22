@@ -61,7 +61,7 @@ export default {
                 }).then((response) => {
                     this.name = ""
                     this.account_number = ""
-                    console.log(response.response)
+		    this.users.push(response.data);
                 })
             }
 

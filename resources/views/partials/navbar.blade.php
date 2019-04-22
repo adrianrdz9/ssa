@@ -47,6 +47,8 @@
             <h1>Agrupaciones</h1>
         @elseif(Request::is('bolsa*'))
             <h1>Bolsa de Trabajo</h1>
+        @else
+            <h1>Secretaría de Servicios Académicos</h1>
         @endif
         @if(isset($underLogo))
             {{$underLogo}}

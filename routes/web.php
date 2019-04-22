@@ -1,16 +1,31 @@
 <?php
 
 Route::get('/', function(){
-  if(is_null(auth()->user()))
-    return view('home');
-  else{
-    if(auth()->user()->Siglas=='SSA'){
-      return view('Admis.formNoti');
-    }elseif (auth()->user()->Siglas != "")
-      return view('Admis.Informacion');
+
+    if(auth()->check()){
+      if(auth()->user()->Siglas=='SSA'){
+        return view('Admis.formNoti');
+      }elseif (auth()->user()->Siglas != ""){
+        return view('Admis.Informacion');
+      }
+      if(auth()->user()->hasRole('superAdmin')  ){
+        return redirect('/s');
+      }
     }
+
+
+
     return view('home');
 
+});
+
+Route::group(['prefix' => 's'], function () {
+    Route::get('/', 'SuperAdminController@index');
+
+    Route::post('/u', 'SuperAdminController@changeRole');
+    Route::post('/c', 'SuperAdminController@createRol');
+    Route::post('/cu', 'SuperAdminController@storeUser');
+    Route::get('/cu', 'SuperAdminController@createUser');
 });
 
 Auth::routes();

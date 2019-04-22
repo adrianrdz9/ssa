@@ -4957,7 +4957,8 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           _this.name = "";
           _this.account_number = "";
-          console.log(response.response);
+
+          _this.users.push(response.data);
         });
       }
     }
@@ -6433,6 +6434,144 @@ __webpack_require__.r(__webpack_exports__);
         title: "Carrera de los participantes"
       }
     };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserRolesComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UserRolesComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      users: [],
+      roles: [],
+      loading: true
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('/s').then(function (response) {
+      _this.users = response.data.users;
+      _this.roles = response.data.roles;
+      _this.loading = false;
+    });
+  },
+  methods: {
+    updateRole: function updateRole($event, userId) {
+      $($event.target).attr('disabled', true);
+      axios.post('/s/u', {
+        user_id: userId,
+        role_id: $event.target.value
+      }).then(function (response) {
+        $($event.target).attr('disabled', false);
+      }).catch(function (err) {
+        window.location.reload();
+      });
+    },
+    addRole: function addRole() {
+      var _this2 = this;
+
+      swal({
+        title: 'Agregar rol',
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'on'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Agregar',
+        showLoaderOnConfirm: true,
+        preConfirm: function preConfirm(data) {
+          axios.post('/s/c', {
+            name: data
+          }).then(function (response) {
+            console.log(response);
+
+            if (response.status !== 200 && response.status !== 201) {
+              swal('Error', error.response.data.errors.name[0], 'error');
+              throw new Error();
+            }
+
+            _this2.roles.push(response.data);
+
+            return response;
+          }).catch(function (error) {});
+        },
+        allowOutsideClick: function allowOutsideClick() {
+          return !swal.isLoading();
+        }
+      }).then(function (result) {
+        console.log(result);
+
+        if (result.value) {
+          swal({
+            title: "Rol creado",
+            type: 'success'
+          });
+        }
+      });
+    }
   }
 });
 
@@ -65484,7 +65623,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\r\n                Escanear codigo QR (permitir acceso a la camara) "
+                    "\n                Escanear codigo QR (permitir acceso a la camara) "
                   ),
                   _c("br")
                 ]
@@ -65570,11 +65709,11 @@ var render = function() {
           _c("div", { staticClass: "card-header text-center" }, [
             _c("h2", [
               _vm._v(
-                "\r\n                \r\n                " +
+                "\n                \n                " +
                   _vm._s(_vm.team.branch.tournament.name) +
-                  "\r\n                - rama \r\n                " +
+                  "\n                - rama \n                " +
                   _vm._s(_vm.team.branch.branch) +
-                  "\r\n            "
+                  "\n            "
               )
             ])
           ]),
@@ -65587,9 +65726,9 @@ var render = function() {
                 _c("p", [
                   _c("b", [_vm._v("Nombre: ")]),
                   _vm._v(
-                    "\r\n                        " +
+                    "\n                        " +
                       _vm._s(_vm.team.branch.tournament.name) +
-                      "\r\n                    "
+                      "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -65604,27 +65743,27 @@ var render = function() {
                 _c("p", [
                   _c("b", [_vm._v("Deporte: ")]),
                   _vm._v(
-                    "\r\n                            " +
+                    "\n                            " +
                       _vm._s(_vm.team.branch.tournament.sport.name) +
-                      "\r\n                        "
+                      "\n                        "
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", [
                   _c("b", [_vm._v("Máximo de equipos: ")]),
                   _vm._v(
-                    "\r\n                            " +
+                    "\n                            " +
                       _vm._s(_vm.team.branch.tournament.max_room) +
-                      "\r\n                        "
+                      "\n                        "
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", [
                   _c("b", [_vm._v("Lugares disponibles: ")]),
                   _vm._v(
-                    "\r\n                        " +
+                    "\n                        " +
                       _vm._s(_vm.team.branch.tournament.roomLeft) +
-                      "\r\n                    "
+                      "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -65659,11 +65798,11 @@ var render = function() {
                           _c("p", [
                             _c("b", [_vm._v("Nombre: ")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(
                                   user.user.name + " " + user.user.last_name
                                 ) +
-                                "\r\n                                "
+                                "\n                                "
                             )
                           ]),
                           _vm._v(" "),
@@ -65678,83 +65817,83 @@ var render = function() {
                           _c("p", [
                             _c("b", [_vm._v("Correo electróncico")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(user.user.email) +
-                                "\r\n                                "
+                                "\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Altura: ")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(user.user.height) +
-                                "\r\n                                    cm\r\n                                "
+                                "\n                                    cm\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Peso: ")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(user.user.weight) +
-                                "\r\n                                    kg\r\n                                "
+                                "\n                                    kg\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Edad: ")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(user.user.age) +
-                                "\r\n                                    años\r\n                                "
+                                "\n                                    años\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Carrera: ")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(user.user.career) +
-                                "\r\n                                    " +
+                                "\n                                    " +
                                 _vm._s(user.user.semester) +
-                                "\r\n                                "
+                                "\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Servicio médico: ")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(user.user.medical_service) +
-                                "\r\n                                "
+                                "\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Tipo sanguineo: ")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(user.user.blood_type) +
-                                "\r\n                                "
+                                "\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Número de carnet: ")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(user.user.medical_card_no) +
-                                "\r\n\r\n                                "
+                                "\n\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Número telefonico: ")]),
                             _vm._v(
-                              "\r\n                                    " +
+                              "\n                                    " +
                                 _vm._s(user.user.phone_number) +
-                                "\r\n                                "
+                                "\n                                "
                             )
                           ])
                         ])
@@ -65770,7 +65909,7 @@ var render = function() {
           _c("div", { staticClass: "card-footer" }, [
             _c("span", [
               _vm._v(
-                "\r\n                Estado de inscipción: \r\n                "
+                "\n                Estado de inscipción: \n                "
               ),
               _vm.team.completed
                 ? _c("b", { staticClass: "text-success" }, [
@@ -65922,7 +66061,9 @@ var render = function() {
     { staticClass: "conversation" },
     [
       _c("h1", [
-        _vm._v(_vm._s(_vm.contact ? _vm.contact.Nombre : "Select a Contact"))
+        _vm._v(
+          _vm._s(_vm.contact ? _vm.contact.Nombre : "Inicia una conversación")
+        )
       ]),
       _vm._v(" "),
       _c("MessagesFeed", {
@@ -68001,6 +68142,153 @@ var render = function() {
                 })
               ],
               1
+            )
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserRolesComponent.vue?vue&type=template&id=451ce796&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UserRolesComponent.vue?vue&type=template&id=451ce796& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.loading
+      ? _c("div", { staticClass: "d-block text-center" }, [
+          _c("i", {
+            staticClass: "fas fa-spinner fa-spin",
+            staticStyle: { "font-size": "7em" }
+          })
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.loading
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-6" }, [
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c("h2", [_vm._v("Usuarios")]),
+                _vm._v(" "),
+                _vm._l(_vm.users, function(user) {
+                  return _c("div", { key: user.id, staticClass: "col-12" }, [
+                    user.name != null
+                      ? _c("div", { staticClass: "card" }, [
+                          _c("div", { staticClass: "card-header" }, [
+                            _c("h3", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(user.name) +
+                                  "  " +
+                                  _vm._s(user.last_name) +
+                                  "\n                            "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("span", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(user.account_number) +
+                                  "\n                            "
+                              )
+                            ]),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("span", [_vm._v(" " + _vm._s(user.email) + " ")])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "card-body" }, [
+                            _c("label", { attrs: { for: "role" } }, [
+                              _vm._v(" Rol del usuario ")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                attrs: { name: "role", id: "role" },
+                                on: {
+                                  change: function($event) {
+                                    _vm.updateRole($event, user.id)
+                                  }
+                                }
+                              },
+                              _vm._l(_vm.roles, function(role) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: role.id,
+                                    domProps: {
+                                      value: role.id,
+                                      selected: user.role == role.name
+                                    }
+                                  },
+                                  [_vm._v(" " + _vm._s(role.name) + " ")]
+                                )
+                              }),
+                              0
+                            )
+                          ])
+                        ])
+                      : _vm._e()
+                  ])
+                }),
+                _vm._v(" "),
+                _c("a", { attrs: { href: "/s/cu" } }, [_vm._v("Crear usuario")])
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-6" }, [
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c("h2", [_vm._v("Roles")]),
+                _vm._v(" "),
+                _vm._l(_vm.roles, function(role) {
+                  return _c("div", { key: role.id, staticClass: "col-12" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("div", { staticClass: "card-header" }, [
+                        _c("h3", [_vm._v(" " + _vm._s(role.name) + " ")])
+                      ])
+                    ])
+                  ])
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning",
+                    on: { click: _vm.addRole }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Agregar rol\n                "
+                    )
+                  ]
+                )
+              ],
+              2
             )
           ])
         ])
@@ -82383,7 +82671,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('credencial-input', __webpa
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('tournament-historic', __webpack_require__(/*! ./components/TournamentHistoric.vue */ "./resources/js/components/TournamentHistoric.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('team-index', __webpack_require__(/*! ./components/TeamIndexComponent.vue */ "./resources/js/components/TeamIndexComponent.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('responsive-finder', __webpack_require__(/*! ./components/ResponsiveFinder.vue */ "./resources/js/components/ResponsiveFinder.vue").default);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('create-quick-signup', __webpack_require__(/*! ./components/CreateQuickSignUpComponent.vue */ "./resources/js/components/CreateQuickSignUpComponent.vue").default); //Mensajes
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('create-quick-signup', __webpack_require__(/*! ./components/CreateQuickSignUpComponent.vue */ "./resources/js/components/CreateQuickSignUpComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('user-roles-component', __webpack_require__(/*! ./components/UserRolesComponent.vue */ "./resources/js/components/UserRolesComponent.vue").default); //Mensajes
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('chat-app', __webpack_require__(/*! ./components/ChatApp.vue */ "./resources/js/components/ChatApp.vue").default);
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -84148,6 +84437,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/UserRolesComponent.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/UserRolesComponent.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UserRolesComponent_vue_vue_type_template_id_451ce796___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserRolesComponent.vue?vue&type=template&id=451ce796& */ "./resources/js/components/UserRolesComponent.vue?vue&type=template&id=451ce796&");
+/* harmony import */ var _UserRolesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserRolesComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/UserRolesComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UserRolesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UserRolesComponent_vue_vue_type_template_id_451ce796___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UserRolesComponent_vue_vue_type_template_id_451ce796___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/UserRolesComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/UserRolesComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/UserRolesComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserRolesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./UserRolesComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserRolesComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserRolesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/UserRolesComponent.vue?vue&type=template&id=451ce796&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/UserRolesComponent.vue?vue&type=template&id=451ce796& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserRolesComponent_vue_vue_type_template_id_451ce796___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./UserRolesComponent.vue?vue&type=template&id=451ce796& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserRolesComponent.vue?vue&type=template&id=451ce796&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserRolesComponent_vue_vue_type_template_id_451ce796___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserRolesComponent_vue_vue_type_template_id_451ce796___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -84166,8 +84524,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\ssa\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\ssa\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/ardz9/Desktop/ssa/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/ardz9/Desktop/ssa/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

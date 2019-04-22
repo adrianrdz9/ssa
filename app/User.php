@@ -20,6 +20,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
+use Spatie\Permission\Models\Role;
 
 use Carbon\Carbon;
 
@@ -50,6 +52,7 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
      */
     public function __construct(array $attributes = [])
     {
+        
         $this->hasAttachedFile('avatar', [
             'variants' => [
                 'medium' => [
@@ -170,5 +173,19 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
         if($this->credencial->exists())
             return $credencialUrl;
         else return asset('images/no_image.png');
+    }
+
+    public function role()
+    {
+        $id = $this->id;
+
+        $roleId = DB::select(DB::raw("select role_id from model_has_roles where model_id = '$id' limit 1"));
+        if(isset($roleId[0])){
+            return Role::find($roleId[0]->role_id)->name;
+        }
+        return "";
+
+
+
     }
 }
