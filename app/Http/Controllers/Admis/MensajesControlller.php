@@ -36,10 +36,12 @@ class MensajesControlller extends Controller
 
   public function send(Request $request){
     $msj = new Mensajes;
-    $msj ->De = auth()->id();
-    $msj ->Para = $request->contact_id;
-    $msj ->Mensaje = $request->text;
-    $msj ->Tipo = "T";
+      $msj ->De =  auth()->id();
+      $msj ->Para = $request->contact_id;
+      $msj ->Mensaje = $request->text;
+      $msj ->Tipo = "T";
+      $msj ->Archivo = "uno.png";
+      $msj ->Estado = 1;
     $msj->save();
     $message = $request->text;
     return response()->json(['Mensaje' => $message]);

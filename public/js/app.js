@@ -4527,7 +4527,9 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    console.log(this.user);
     axios.get('/agrupaciones/Admi/AdmiMsj/contacts').then(function (response) {
+      console.log(response.data);
       _this.contacts = response.data;
     });
   },
@@ -4536,11 +4538,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get('/agrupaciones/Admi/AdmiMsj/conversation/' + contact.id).then(function (response) {
+        console.log(response.data);
         _this2.messages = response.data;
         _this2.selectedContact = contact;
       });
     },
     saveNewMessage: function saveNewMessage(text) {
+      console.log("H");
       this.messages.push(text);
     }
   },
@@ -4865,16 +4869,18 @@ __webpack_require__.r(__webpack_exports__);
     sendMessage: function sendMessage(text) {
       var _this = this;
 
+      if (this.contact.Siglas != "SSA") var admi = '/agrupaciones/Admi/AdmiMsj/conversation/send';else {
+        var admi = '/agrupaciones/CAdmi/AdmiMsj/conversation/send';
+      }
+
       if (!this.contact) {
         return;
       }
 
-      axios.post('/agrupaciones/Admi/AdmiMsj/conversation/send', {
+      axios.post(admi, {
         contact_id: this.contact.id,
         text: text
       }).then(function (response) {
-        console.log(response.data);
-
         _this.$emit('new', response.data);
       });
     }
@@ -65623,7 +65629,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                Escanear codigo QR (permitir acceso a la camara) "
+                    "\r\n                Escanear codigo QR (permitir acceso a la camara) "
                   ),
                   _c("br")
                 ]
@@ -65709,11 +65715,11 @@ var render = function() {
           _c("div", { staticClass: "card-header text-center" }, [
             _c("h2", [
               _vm._v(
-                "\n                \n                " +
+                "\r\n                \r\n                " +
                   _vm._s(_vm.team.branch.tournament.name) +
-                  "\n                - rama \n                " +
+                  "\r\n                - rama \r\n                " +
                   _vm._s(_vm.team.branch.branch) +
-                  "\n            "
+                  "\r\n            "
               )
             ])
           ]),
@@ -65726,9 +65732,9 @@ var render = function() {
                 _c("p", [
                   _c("b", [_vm._v("Nombre: ")]),
                   _vm._v(
-                    "\n                        " +
+                    "\r\n                        " +
                       _vm._s(_vm.team.branch.tournament.name) +
-                      "\n                    "
+                      "\r\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -65743,27 +65749,27 @@ var render = function() {
                 _c("p", [
                   _c("b", [_vm._v("Deporte: ")]),
                   _vm._v(
-                    "\n                            " +
+                    "\r\n                            " +
                       _vm._s(_vm.team.branch.tournament.sport.name) +
-                      "\n                        "
+                      "\r\n                        "
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", [
                   _c("b", [_vm._v("Máximo de equipos: ")]),
                   _vm._v(
-                    "\n                            " +
+                    "\r\n                            " +
                       _vm._s(_vm.team.branch.tournament.max_room) +
-                      "\n                        "
+                      "\r\n                        "
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", [
                   _c("b", [_vm._v("Lugares disponibles: ")]),
                   _vm._v(
-                    "\n                        " +
+                    "\r\n                        " +
                       _vm._s(_vm.team.branch.tournament.roomLeft) +
-                      "\n                    "
+                      "\r\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -65798,11 +65804,11 @@ var render = function() {
                           _c("p", [
                             _c("b", [_vm._v("Nombre: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(
                                   user.user.name + " " + user.user.last_name
                                 ) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
@@ -65817,83 +65823,83 @@ var render = function() {
                           _c("p", [
                             _c("b", [_vm._v("Correo electróncico")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.email) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Altura: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.height) +
-                                "\n                                    cm\n                                "
+                                "\r\n                                    cm\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Peso: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.weight) +
-                                "\n                                    kg\n                                "
+                                "\r\n                                    kg\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Edad: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.age) +
-                                "\n                                    años\n                                "
+                                "\r\n                                    años\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Carrera: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.career) +
-                                "\n                                    " +
+                                "\r\n                                    " +
                                 _vm._s(user.user.semester) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Servicio médico: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.medical_service) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Tipo sanguineo: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.blood_type) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Número de carnet: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.medical_card_no) +
-                                "\n\n                                "
+                                "\r\n\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Número telefonico: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.phone_number) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ])
                         ])
@@ -65909,7 +65915,7 @@ var render = function() {
           _c("div", { staticClass: "card-footer" }, [
             _c("span", [
               _vm._v(
-                "\n                Estado de inscipción: \n                "
+                "\r\n                Estado de inscipción: \r\n                "
               ),
               _vm.team.completed
                 ? _c("b", { staticClass: "text-success" }, [
@@ -83196,14 +83202,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./resources/js/components/Conversation.vue ***!
   \**************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Conversation_vue_vue_type_template_id_63f956ee_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Conversation.vue?vue&type=template&id=63f956ee&scoped=true& */ "./resources/js/components/Conversation.vue?vue&type=template&id=63f956ee&scoped=true&");
 /* harmony import */ var _Conversation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Conversation.vue?vue&type=script&lang=js& */ "./resources/js/components/Conversation.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _Conversation_vue_vue_type_style_index_0_id_63f956ee_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Conversation.vue?vue&type=style&index=0&id=63f956ee&lang=scss&scoped=true& */ "./resources/js/components/Conversation.vue?vue&type=style&index=0&id=63f956ee&lang=scss&scoped=true&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Conversation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Conversation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _Conversation_vue_vue_type_style_index_0_id_63f956ee_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Conversation.vue?vue&type=style&index=0&id=63f956ee&lang=scss&scoped=true& */ "./resources/js/components/Conversation.vue?vue&type=style&index=0&id=63f956ee&lang=scss&scoped=true&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -83235,7 +83242,7 @@ component.options.__file = "resources/js/components/Conversation.vue"
 /*!***************************************************************************!*\
   !*** ./resources/js/components/Conversation.vue?vue&type=script&lang=js& ***!
   \***************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84524,8 +84531,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/ardz9/Desktop/ssa/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/ardz9/Desktop/ssa/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\ssa\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\ssa\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

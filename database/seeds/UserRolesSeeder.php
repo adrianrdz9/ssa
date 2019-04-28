@@ -16,24 +16,29 @@ class UserRolesSeeder extends Seeder
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'eval']);
         Role::create(['name' => 'student']);
-	Role::create(['name' => 'superAdmin']);
+	      Role::create(['name' => 'superAdmin']);
+        
+        Role::create(['name' => 'SSA']);
+        Role::create(['name' => 'Agrupacion']);
 
         //Agrupacion
-        User::create([
+  $user = User::create([
             'username' => 'SSA',
             'Siglas' => 'SSA',
             'Nombre' => 'Secretaria de Servicios Academicos',
             'Logo' => 'Logo.png',
             'password' => Hash::make('secret')
         ]);
+        $user->syncRoles(['SSA']);
 
-        User::create([
-            'username' => 'Aero Design',
-            'Siglas' => 'Aero Design',
-            'Nombre' => 'Aero Design',
-            'Logo' => 'Logo.png',
-            'password' => Hash::make('secret')
+  $user = User::create([
+          'username' => 'Aero Design',
+          'Siglas' => 'Aero Design',
+          'Nombre' => 'Aero Design',
+          'Logo' => 'Logo.png',
+          'password' => Hash::make('secret')
         ]);
+        $user->syncRoles(['Agrupacion']);
 
         //Actividades deportivas
 

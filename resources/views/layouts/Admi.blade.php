@@ -1,31 +1,33 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
     <meta charset='utf-8'/>
     <meta http-http-equiv='X-UA-Compatible' content='IE=edge'/>
     <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <title>@yield('title')</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/modrnizer.min.js') }}" defer></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css'>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"> -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{asset('css/noticas.css')}}" rel="stylesheet"/>
-    <style>
+
+    <!-- <style>
       nav.navbar {
           background-color: #CC1414;
       }
       body{
         background-color: #ecf0f1;
       }
-    </style>
+    </style> -->
   </head>
   <body>
   @include('sweet::alert')

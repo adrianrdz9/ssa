@@ -22,14 +22,18 @@
         },
         methods: {
             sendMessage(text) {
+              if(this.contact.Siglas != "SSA")
+                var admi = '/agrupaciones/Admi/AdmiMsj/conversation/send';
+              else {
+                var admi = '/agrupaciones/CAdmi/AdmiMsj/conversation/send';
+              }
                 if (!this.contact) {
                     return;
                 }
-                axios.post('/agrupaciones/Admi/AdmiMsj/conversation/send', {
+                axios.post(admi, {
                     contact_id: this.contact.id,
                     text: text
                 }).then((response) => {
-                    console.log(response.data);
                     this.$emit('new', response.data);
                 })
             }
