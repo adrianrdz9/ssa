@@ -74,6 +74,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
 
 
     //semiAdmi(Agrupaciones)
+      Route::get('/semiAdmi/semiAdmiMsj','Admis\MensajesControlller@verMensajes');
     //Información general
     Route::post('/InfoGeneral','Admis\semiAdmiController@InfoGeneral')->name('InfoGeneral');
     //Integrantes
@@ -95,7 +96,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     //Noticias - 9 (index)
     Route::get('/','Visitante\generalController@index')->name('agrupacionesIndex');
     //Noticias individual
-    Route::get('Noticia/id/{id}','Visitante\generalController@noticia');
+    Route::get('/Noticia/id/{id}','Visitante\generalController@noticia');
     Route::get('/Historial','Visitante\generalController@Historial');
     //Agrupaciones lista
     Route::get('/Agrupaciones','Visitante\generalController@agrupaciones');

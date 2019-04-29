@@ -54,7 +54,7 @@
                         <p>{{ $dato->DescripcionCorta }}</p>
                     <div style="text-align:right;">
                         <h6>{{ $dato->Fecha }}</h6>
-                        <a href='Noticia/id/{{ $dato->Folio }}'><button class="btn btn-card">Ver más</button></a>
+                        <a href='agrupaciones/Noticia/id/{{ $dato->Folio }}'><button class="btn btn-card">Ver más</button></a>
                     </div>
                     </div>
                 </div>

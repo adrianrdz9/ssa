@@ -1,4 +1,4 @@
-@extends('layouts.Admi')
+@extends('layouts.app')
 @section('title','Nueva notica')
 @section('content')
 <h3>Nueva noticia</h3>

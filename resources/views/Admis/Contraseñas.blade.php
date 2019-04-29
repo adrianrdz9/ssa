@@ -1,4 +1,4 @@
-@extends('layouts.Admi')
+@extends('layouts.app')
 @section('title','Restablecer contraseñas')
 @section('content')
 <link href="{{asset('css/AgrupaGnral.css')}}" rel="stylesheet"/>

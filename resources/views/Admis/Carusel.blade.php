@@ -1,4 +1,4 @@
-@extends('layouts.Admi')
+@extends('layouts.app')
 @section('title','Imágenes Carusel')
 @section('content')
 <div class="container" style="margin-top:1%;">

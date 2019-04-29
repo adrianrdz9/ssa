@@ -52,6 +52,9 @@
             <a class="navbar-brand" href="../../agrupaciones/semiAdmi/CambioMesa">Cambio de Mesa</a>
           </li>
           <li class="nav-item">
+            <a class="navbar-brand" href="../../agrupaciones/semiAdmi/semiAdmiMsj">Mensajes</a>
+          </li>
+          <li class="nav-item">
             <form method="POST" action=" {{ route('logout') }} ">
               {{ csrf_field() }}
               <button class="btn btn-danger">Cerrar sesión</button>

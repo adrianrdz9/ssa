@@ -114,18 +114,39 @@
                             <a class="nav-link" href="../../agrupaciones/Admi/EventosFeria">Eventos Feria</a>
                           </li>
                         @else
-                          <li class="nav-item">
-                              <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('teamsIndex') }}" class="nav-link">Equipos</a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
-                          </li>
+                          @role('Agrupacion')
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi">Información</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/VerReclutamientos">Reclutamientos</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/Propuesta">Propuestas</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/CambioMesa">Cambio de Mesa</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/semiAdmiMsj">Mensajes</a>
+                              </li>
+                            @else
+                              <li class="nav-item">
+                                  <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('teamsIndex') }}" class="nav-link">Equipos</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
+                              </li>
+                            @endrole
                         @endrole
                     @endrole
                 @endrole
