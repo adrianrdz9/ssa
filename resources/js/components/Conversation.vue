@@ -22,11 +22,12 @@
         },
         methods: {
             sendMessage(text) {
-              if(this.contact.Siglas != "SSA")
-                var admi = '/agrupaciones/Admi/AdmiMsj/conversation/send';
-              else {
-                var admi = '/agrupaciones/CAdmi/AdmiMsj/conversation/send';
-              }
+              // if(this.contact.Siglas != "SSA")
+              //   var admi = '/agrupaciones/Admi/AdmiMsj/conversation/send';
+              // else {
+              //   var admi = '/agrupaciones/semiAdmi/semiAdmiMsj/conversation/send';
+              // }
+              var admi = '/agrupaciones/Admi/AdmiMsj/conversation/send';
                 if (!this.contact) {
                     return;
                 }

@@ -1,4 +1,4 @@
-@extends('layouts.semiAdmi')
+@extends('layouts.app')
 @section('title','Información de la agrupación')
 @section('content')
 <h3 style="text-align:center;">{{ auth()->user()->Nombre }}</h3>

@@ -34,13 +34,11 @@
           startConversationWith(contact){
             axios.get('/agrupaciones/Admi/AdmiMsj/conversation/' + contact.id)
               .then((response)=>{
-                console.log(response.data);
                 this.messages = response.data;
                 this.selectedContact = contact;
               })
           },
           saveNewMessage(text){
-            console.log("H");
             this.messages.push(text);
           }
         },

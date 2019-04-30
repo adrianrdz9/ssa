@@ -47,43 +47,4 @@ class MensajesControlller extends Controller
     return response()->json(['Mensaje' => $message]);
   }
 
-
-
-
-
-
-  public function verMensajes(){
-    $chats = \App\User::whereNotNull('Siglas')
-            ->orderBy('Siglas','desc')
-            ->get();
-    return view('Admis.AdmiMsj',['chats' => $chats]);
-  }
-  public function Guardar(Request $request){
-    $msj = new Mensajes;
-    $msj ->De = "SSA";
-    $msj ->Para = "SiK";
-    if ($request->Mensaje != "")
-      $msj->Mensaje = $request->Mensaje;
-    //Guardar archivo en la carpeta de mensajes
-    if($request->hasFile('Archivo')){
-      $archi = $request->file('Archivo');
-      $filename = time() . '.' . $archi->getClientOriginalExtension();
-      $location = public_path('Mensajes/'. $filename);
-      //Guargar archivo en storage
-      $path = $request->file('Archivo')->storeAs(
-        $archi->getClientOriginalExtension(),
-        $filename,
-        'msj');
-      $msj->Archivo = $filename;
-      $msj ->Tipo = $archi->getClientOriginalExtension();
-    }else{
-      $msj ->Tipo = "T";
-    }
-    $msj->save();
-    return redirect('/agrupaciones/Admi/AdmiMsj');
-  }
-  public function Eliminar()
-  {
-    // code...
-  }
 }//Fin controller

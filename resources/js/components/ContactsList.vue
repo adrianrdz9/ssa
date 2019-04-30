@@ -9,7 +9,6 @@
                     <p class="name">{{ contact.Siglas }}</p>
                     <p class="email">{{ contact.Nombre }}</p>
                 </div>
-                <!-- <span class="unread" v-if="contact.unread">{{ contact.unread }}</span> -->
             </li>
         </ul>
     </div>
@@ -26,7 +25,6 @@
         data() {
             return {
                 selected: 0
-                //selected: this.contacts.length ? this.contacts[0] : null
             };
         },
         methods: {
@@ -35,16 +33,6 @@
                 this.$emit('selected', contact);
             }
         },
-        // computed: {
-        //     sortedContacts() {
-        //         return _.sortBy(this.contacts, [(contact) => {
-        //             if (contact == this.selected) {
-        //                 return Infinity;
-        //             }
-        //             return contact.unread;
-        //         }]).reverse();
-        //     }
-        // }
     }
 </script>
 

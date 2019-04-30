@@ -1,4 +1,4 @@
-@extends('layouts.semiAdmi')
+@extends('layouts.app')
 @section('title','Cambio de Mesa')
 @section('content')
 <div class="row" style="margin:auto;">

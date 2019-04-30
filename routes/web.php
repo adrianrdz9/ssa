@@ -75,6 +75,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
 
     //semiAdmi(Agrupaciones)
       Route::get('/semiAdmi/semiAdmiMsj','Admis\MensajesControlller@verMensajes');
+      Route::post('/semiAdmi/semiAdmiMsj/conversation/send','Admis\MensajesControlller@send');
     //Información general
     Route::post('/InfoGeneral','Admis\semiAdmiController@InfoGeneral')->name('InfoGeneral');
     //Integrantes
