@@ -6,7 +6,9 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-
+h3 {
+  text-align: center;
+}
 :root {
   --blue: #3490dc;
   --indigo: #6574cd;
@@ -9900,4 +9902,3 @@ body {
 nav.navbar {
   background-color: #CC1414 !important;
 }
-

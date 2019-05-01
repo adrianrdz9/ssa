@@ -13,6 +13,14 @@ use Alert;
 class semiAdmiController extends Controller
 {
   /**
+    * Metodo constructor utilizado para limitar el acceso a solo al administrador (SSA)
+    *
+    * @return void
+  */
+  public function construct(){
+    $this->middleware('role:Agrupacion');
+  }
+  /**
     * Metodo utilizado para mostrar los formularios para actualizar la informacion
     * general y los integrantes de cada agrupacion
     *
@@ -43,22 +51,27 @@ class semiAdmiController extends Controller
         return redirect('/');
       else {
         $u = auth()->user()->Siglas;
+        $limite = "";
         $data = \App\Propuestas::where('Siglas',$u)
                 ->orderBy('created_at','desc')
                 ->get(['Titulo','Estado']);
         $f = \App\Ferias::orderBy('Limite','desc')
                 ->take(1)
                 ->get(['Limite']);
-        $hoy[0]= date("Y-m-d");
+        $hoy= date("Y-m-d");
         foreach ($f as $key => $value) {
-            $limite[] = $value->Limite;
+          $limite = $value->Limite;
         }
-        if($limite === $hoy){
-          $msg = "Hoy es el último día para enviar propuestas.";
-        }elseif ($limite > $hoy) {
-          $msg = "Aún puedes enviar propuestas";
-        }elseif ($limite < $hoy) {
-          $msg = "Ya no es posible enviar propuestas.";
+        if($limite == "")
+          $msg = "Aún no hay una fecha límite";
+        else{
+          if($limite === $hoy){
+            $msg = "Hoy es el último día para enviar propuestas.";
+          }elseif ($limite > $hoy) {
+            $msg = "Aún puedes enviar propuestas";
+          }elseif ($limite < $hoy) {
+            $msg = "Ya no es posible enviar propuestas.";
+          }
         }
           return view('Admis.PropuestaSemi',[
              'data'=> $data,
@@ -232,7 +245,7 @@ class semiAdmiController extends Controller
         }
 
         foreach ($a as $key => $value) {
-          if ($value!= ""){
+          if ($value!= "" && $key!="_token"){
             \App\User::where('Siglas',$u)->update([$key => $value]);
           }
         }

@@ -17,11 +17,22 @@ class UserRolesSeeder extends Seeder
         Role::create(['name' => 'eval']);
         Role::create(['name' => 'student']);
 	      Role::create(['name' => 'superAdmin']);
-        
+
         Role::create(['name' => 'SSA']);
         Role::create(['name' => 'Agrupacion']);
 
-        //Agrupacion
+        Role::create(['name' => 'admiComunidad']);
+
+  //Administrador comunidad
+  $user = User::create([
+            'username' => 'admiComunidad',
+            'Siglas' => 'ASSA',
+            'Nombre' => 'Administrador Secretaria de Servicios Academicos',
+            'Logo' => 'Logo.png',
+            'password' => Hash::make('secret')
+        ]);
+        $user->syncRoles(['admiComunidad']);
+  //Agrupaciones
   $user = User::create([
             'username' => 'SSA',
             'Siglas' => 'SSA',

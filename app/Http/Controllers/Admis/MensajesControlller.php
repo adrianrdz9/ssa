@@ -16,7 +16,7 @@ class MensajesControlller extends Controller
     * @return void
   */
   public function construct(){
-    $this->middleware('auth');
+    $this->middleware('role:SSA|Agrupacion');
   }
 
   public function verMensajes(){

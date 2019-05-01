@@ -32,18 +32,20 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            
+
             //Agrupaciones
             $table->string('Siglas')->nullable();
             $table->string('Nombre')->nullable();
             $table->string('Descripcion')->nullable();
             $table->string('Logo')->nullable();
             $table->string('Foto')->nullable();
+            $table->string('Link1')->nullable();
+            $table->string('Link2')->nullable();
             $table->boolean('active')->default(0);
-            
+
             //Numero de cuenta o siglas
             $table->string('username');
-            
+
             $table->string('password');
             $table->rememberToken();
             $table->nullableTimestamps();

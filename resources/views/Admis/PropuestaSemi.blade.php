@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.semiAdmi')
 @section('title','Propuestas')
 @section('content')
 <h3>Propuestas para la Feria de Agrupaciones Esdiantiles</h3>
