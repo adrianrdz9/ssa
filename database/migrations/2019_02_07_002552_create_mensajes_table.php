@@ -18,9 +18,8 @@ class CreateMensajesTable extends Migration
             $table->string('De');
             $table->string('Para');
             $table->string('Tipo');
-            $table->text('Mensaje');
-            $table->string('Archivo');
-            $table->integer('Estado')->default(0);
+            $table->text('Mensaje')->nullable();
+            $table->string('Archivo')->nullable();
             $table->timestamps();
         });
     }

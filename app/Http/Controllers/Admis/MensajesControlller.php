@@ -19,6 +19,13 @@ class MensajesControlller extends Controller
     $this->middleware('auth');
   }
 
+  public function verMensajes(){
+    $chats = \App\User::whereNotNull('Siglas')
+            ->orderBy('Siglas','desc')
+            ->get();
+    return view('Admis.AdmiMsj',['chats' => $chats]);
+  }
+
   public function get(){
     $contacts = \App\User::whereNotNull('Siglas')
             ->where('id', '!=' , auth()->id())
@@ -30,7 +37,7 @@ class MensajesControlller extends Controller
   public function getMessagesFor($id){
     $messages = \App\Mensajes::where('De', $id)
              ->orWhere('Para', $id)
-             ->get(['Mensaje']);
+             ->get();
    return response()->json($messages);
   }
 
@@ -40,8 +47,6 @@ class MensajesControlller extends Controller
       $msj ->Para = $request->contact_id;
       $msj ->Mensaje = $request->text;
       $msj ->Tipo = "T";
-      $msj ->Archivo = "uno.png";
-      $msj ->Estado = 1;
     $msj->save();
     $message = $request->text;
     return response()->json(['Mensaje' => $message]);

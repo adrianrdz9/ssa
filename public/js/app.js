@@ -4797,7 +4797,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contacts: {
@@ -4807,8 +4806,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      selected: 0 //selected: this.contacts.length ? this.contacts[0] : null
-
+      selected: 0
     };
   },
   methods: {
@@ -4816,17 +4814,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selected = index;
       this.$emit('selected', contact);
     }
-  } // computed: {
-  //     sortedContacts() {
-  //         return _.sortBy(this.contacts, [(contact) => {
-  //             if (contact == this.selected) {
-  //                 return Infinity;
-  //             }
-  //             return contact.unread;
-  //         }]).reverse();
-  //     }
-  // }
-
+  }
 });
 
 /***/ }),
@@ -66996,14 +66984,14 @@ var render = function() {
                 key: message.id,
                 class:
                   "message" +
-                  (message.to == _vm.contact.id ? " sent" : " received")
+                  (message.Para == _vm.contact.id ? " sent" : " received")
               },
               [
                 _c("div", { staticClass: "text" }, [
                   _vm._v(
                     "\n                " +
                       _vm._s(message.Mensaje) +
-                      "\n            "
+                      "\n          "
                   )
                 ])
               ]

@@ -1,7 +1,6 @@
 <?php
 
 Route::get('/', function(){
-
     if(auth()->check()){
       if(auth()->user()->Siglas=='SSA'){
         return view('Admis.formNoti');
@@ -12,8 +11,6 @@ Route::get('/', function(){
         return redirect('/s');
       }
     }
-
-
 
     return view('home');
 
