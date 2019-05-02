@@ -75,7 +75,6 @@ class Team extends Model
      * Verifica si un equipo puede cerrar inscripciones
      */
     public function canClose(){
-        return true;
         return $this->branch->tournament->min_per_team <= $this->accepted_users->count();
     }
 }

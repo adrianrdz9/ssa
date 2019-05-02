@@ -108,6 +108,8 @@ Route::group(['prefix' => 'agrupaciones'], function () {
 
 Route::group(['prefix' => 'actividades-deportivas'], function () {
 
+   
+
 
     Route::get('/', 'HomeController@index')->name('actividadesDeportivasIndex');
 
@@ -115,6 +117,10 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
     Route::post('/admin/slides', 'SlidesController@store')->name('storeSlide');
     Route::put('/admin/slides/{id}', 'SlidesController@update');
     Route::delete('/admin/slides/{id}', 'SlidesController@delete');
+
+    Route::get('/admin/teams', 'TeamsController@index')->name('teamsAdminIndex');
+    Route::post('/admin/teams', 'TeamsController@store');
+    Route::get('/admin/teams/create', 'TeamsController@create')->name('teamsAdminCreate');
 
 
     Route::get('/admin/events', 'EventsController@index')->name('events');
@@ -133,6 +139,7 @@ Route::group(['prefix' => 'actividades-deportivas'], function () {
 
     Route::group(['prefix' => '/torneos'], function () {
         Route::get('/', 'TournamentsController@index')->name('tournamentsIndex');
+        Route::get('/semestres', 'TournamentsController@semester')->name('tournamentsSemester');
         Route::get('/nuevo', 'TournamentsController@new')->name('newTournament');
         Route::post('/nuevo', 'TournamentsController@store')->name('newTournament');
 

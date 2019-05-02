@@ -42,6 +42,9 @@ Vue.component('team-index', require('./components/TeamIndexComponent.vue').defau
 Vue.component('responsive-finder', require('./components/ResponsiveFinder.vue').default);
 Vue.component('create-quick-signup', require('./components/CreateQuickSignUpComponent.vue').default);
 Vue.component('user-roles-component', require('./components/UserRolesComponent.vue').default);
+Vue.component('time-line', require('timeline-vuejs').default);
+Vue.component('change-log', require('./components/ChangeLog.vue').default);
+Vue.component('select-team-members', require('./components/SelectTeamMembers.vue').default);
 
 //Mensajes
 Vue.component('chat-app', require('./components/ChatApp.vue').default);

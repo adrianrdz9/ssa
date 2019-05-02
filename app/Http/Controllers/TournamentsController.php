@@ -380,4 +380,9 @@ class TournamentsController extends Controller
         ]);
     }
 
+    public function semester(){
+        $tournaments = Tournament::all()->groupBy('semester');
+
+        return view('tournaments.semester', compact('tournaments'));
+    }
 }

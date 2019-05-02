@@ -43,6 +43,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(auth()->check() && auth()->user()->hasRole('superAdmin')  ){
+            return redirect('/s');
+        }
+
         // El usuario es evaluador
         if (Auth::check() && Auth::user()->hasRole('eval')) {
             // Ejecuta el codigo correspondiente para el inicio del evaluador (vista de historico)

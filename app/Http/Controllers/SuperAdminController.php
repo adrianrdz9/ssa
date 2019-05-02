@@ -94,7 +94,12 @@ class SuperAdminController extends Controller
         return redirect('/');
     }
 
-    public function changelog(){
-        return AdminChange::all();
+    public function changelog(Request $request){
+        if($request->ajax()){
+            $changeLog = AdminChange::with('author')->orderByDesc('created_at')->get();
+            return $changeLog;
+        }
+
+        return view('sAdmin.changeLog');
     }
 }

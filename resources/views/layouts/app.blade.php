@@ -66,6 +66,7 @@
                         <div class="dropdown-menu" aria-labelledby="tournamentDropdown">
                             <a class="dropdown-item" href="{{ route('newTournament') }}">Crear torneo</a>
                             <a class="dropdown-item" href="{{ route('tournamentsIndex') }}">Ver todos los torneos</a>
+                            <a class="dropdown-item" href="{{ route('tournamentsSemester') }}">Ver por semestre</a>
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('historicIndex') }}" class="dropdown-item">Historico</a>
                             <a href="{{ route('cedulaIndex') }}" class="dropdown-item">Cédulas de inscripciones</a>
@@ -74,6 +75,15 @@
                             <a class="dropdown-item" href="{{ route('getResponsive') }}">Obtener responsiva de alumno</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('quickTournament') }}">Torneo rápido</a>
+                        </div>
+                    </li>
+                    <li class="navbar-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="tournamentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Equipos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="tournamentDropdown">
+                            <a class="dropdown-item" href="{{ route('teamsAdminIndex') }}">Todos</a>
+                            <a class="dropdown-item" href="{{ route('teamsAdminCreate') }}">Crear</a>
                         </div>
                     </li>
                 @else

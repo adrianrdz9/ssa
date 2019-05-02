@@ -119,7 +119,12 @@ class EventsController extends Controller
      */
     public function delete($id){
         // Buscar el evento y borrarlo
-        Event::find($id)->delete();
+        $oEvent = Event::find($id);
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Eliminación del evento: '.$oEvent->event
+        ]);
+        $oEvent->delete();
 
         // Redireccionar
         return redirect()->back()->with('notice', 'Evento eliminado');

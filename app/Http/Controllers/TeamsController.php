@@ -24,7 +24,7 @@ class TeamsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:admin', ['only' => ['carnet', 'credencial']]);
+        $this->middleware('role:admin', ['only' => ['carnet', 'credencial', 'create']]);
     }
 
     /**
@@ -34,11 +34,21 @@ class TeamsController extends Controller
      */
     public function index()
     {
-        // Mostrar los equipos del usuario
-        $teams = Auth::user()->teams();
-
+        if(auth()->user()->hasRole('admin')){
+            $teams = Team::all();
+        }else{
+            // Mostrar los equipos del usuario
+            $teams = Auth::user()->teams();
+        }
         // Vista de los equipos
         return view('teams.index', ['teams' => $teams]);
+    }
+
+    public function create(Request $request){
+        if($request->ajax()){
+            return User::where('account_number', '<>', ' ')->get();
+        }
+        return  view('admin.teams.create');
     }
 
     /**
@@ -50,6 +60,59 @@ class TeamsController extends Controller
      */
     public function store(Request $request)
     {
+        if(auth()->user()->hasRole('admin')){
+            $request->validate([
+                'captain_id' => 'required|exists:users,id',
+                'members' => 'required',
+                'name' => 'required',
+                'branch_id' => 'required|exists:branches,id'
+            ]);
+
+            if (
+                Team::where([
+                    ['captain_id', $request['captain_id']],
+                    ['branch_id', $request['branch_id']],
+                ])->exists()
+            ) {
+                return redirect()->back()->withInput()->with('notice', 'El usuario elegido para capitan ya es capitan de otro equipo del mismo torneo');
+           }
+
+            if (Team::where([
+                ['branch_id', $request['branch_id']],
+                ['name', $request->name],
+            ])->exists()) {
+                return redirect()->back()->withInput()->with('notice', 'Ya hay un equipo con ese nombre');
+            }
+
+            $team = Team::create([
+                'name' => $request['name'],
+                'captain_id' => $request['captain_id'],
+                'branch_id' => $request['branch_id'],
+                'isRepresentative' => $request['isRepresentative'],
+            ]);
+    
+            $team->voucher = $team->id.str_random(10);
+            $team->save();
+
+            UserInTeam::create([
+                'team_id' => $team->id,
+                'user_id' => $request['captain_id'],
+                'status' => 'accepted',
+            ]);
+
+            foreach ($request['members'] as $member_id) {
+                UserInTeam::create([
+                    'team_id' => $team->id,
+                    'user_id' => $member_id,
+                    'status' => 'accepted',
+                ]);
+            }
+
+            return redirect()->route('teamsAdminIndex');
+
+        }
+
+
         $user = Auth::user();
         $id = $request->tournament_id;
         // El usuario ya es capitan de un equipo de la rama actual
@@ -152,7 +215,7 @@ class TeamsController extends Controller
         // Buscar el equipo
         if ($team = Team::find($id)) {
             // Verivicar que el usuario sea capitan del equipo
-            if ($team->captain->id == Auth::user()->id) {
+            if ($team->captain->id == Auth::user()->id || auth()->user()->hasRole('admin') ){
                 // Buscar la solicitud que se va a actualizar
                 if ($req = UserInTeam::find($request->request_id)) {
                     // Realizar la transicion deseada (Aceptar, Rechazar)

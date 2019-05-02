@@ -50,6 +50,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/s">Usuarios y roles</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/s/cl">Historial de cambios</a>
+                </li>
             @endslot
         @endcomponent
 

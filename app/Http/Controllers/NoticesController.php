@@ -49,7 +49,7 @@ class NoticesController extends Controller
 
         AdminChange::create([
             'author_id' => auth()->user()->id,
-            'change' => 'Creación de la noticia: '.$notice->notice.' para dejar de mostrarse el día: '.$notice->max_date
+            'change' => 'Creación del aviso: '.$notice->notice.' para dejar de mostrarse el día: '.$notice->max_date
         ]);
 
         // Redireccionar
@@ -76,7 +76,7 @@ class NoticesController extends Controller
 
         AdminChange::create([
             'author_id' => auth()->user()->id,
-            'change' => 'Cambio de la noticia: '.$oNotice->notice.' -> '.$request->notice .' para dejar de mostrarse el día: '.$oNotice->max_date. ' -> '.$request->max_date
+            'change' => 'Cambio del aviso:: '.$oNotice->notice.' -> '.$request->notice .' para dejar de mostrarse el día: '.$oNotice->max_date. ' -> '.$request->max_date
         ]);
 
         // Buscar y actualizar la noticia
@@ -102,6 +102,11 @@ class NoticesController extends Controller
     public function delete($id){
         // Buscar y eliminar la noticia
         Notice::find($id)->delete();
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Eliminación de aviso'
+        ]);
 
         // Redireccionar
         return redirect()->back()->with('notice', 'Aviso eliminado');
