@@ -16,7 +16,14 @@ class MensajesControlller extends Controller
     * @return void
   */
   public function construct(){
-    $this->middleware('auth');
+    $this->middleware('role:SSA|Agrupacion');
+  }
+
+  public function verMensajes(){
+    $chats = \App\User::whereNotNull('Siglas')
+            ->orderBy('Siglas','desc')
+            ->get();
+    return view('Admis.AdmiMsj',['chats' => $chats]);
   }
 
   public function get(){
@@ -30,58 +37,19 @@ class MensajesControlller extends Controller
   public function getMessagesFor($id){
     $messages = \App\Mensajes::where('De', $id)
              ->orWhere('Para', $id)
-             ->get(['Mensaje']);
+             ->get();
    return response()->json($messages);
   }
 
   public function send(Request $request){
     $msj = new Mensajes;
-    $msj ->De = auth()->id();
-    $msj ->Para = $request->contact_id;
-    $msj ->Mensaje = $request->text;
-    $msj ->Tipo = "T";
+      $msj ->De =  auth()->id();
+      $msj ->Para = $request->contact_id;
+      $msj ->Mensaje = $request->text;
+      $msj ->Tipo = "T";
     $msj->save();
     $message = $request->text;
     return response()->json(['Mensaje' => $message]);
   }
 
-
-
-
-
-
-  public function verMensajes(){
-    $chats = \App\User::whereNotNull('Siglas')
-            ->orderBy('Siglas','desc')
-            ->get();
-    return view('Admis.AdmiMsj',['chats' => $chats]);
-  }
-  public function Guardar(Request $request){
-    $msj = new Mensajes;
-    $msj ->De = "SSA";
-    $msj ->Para = "SiK";
-    if ($request->Mensaje != "")
-      $msj->Mensaje = $request->Mensaje;
-    //Guardar archivo en la carpeta de mensajes
-    if($request->hasFile('Archivo')){
-      $archi = $request->file('Archivo');
-      $filename = time() . '.' . $archi->getClientOriginalExtension();
-      $location = public_path('Mensajes/'. $filename);
-      //Guargar archivo en storage
-      $path = $request->file('Archivo')->storeAs(
-        $archi->getClientOriginalExtension(),
-        $filename,
-        'msj');
-      $msj->Archivo = $filename;
-      $msj ->Tipo = $archi->getClientOriginalExtension();
-    }else{
-      $msj ->Tipo = "T";
-    }
-    $msj->save();
-    return redirect('/agrupaciones/Admi/AdmiMsj');
-  }
-  public function Eliminar()
-  {
-    // code...
-  }
 }//Fin controller

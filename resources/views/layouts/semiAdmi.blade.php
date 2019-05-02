@@ -1,10 +1,14 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <meta charset='utf-8'/>
-    <meta http-http-equiv='X-UA-Compatible' content='IE=edge'/>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <title>@yield('title')</title>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -12,55 +16,73 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css'>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
     <link href="{{asset('css/noticas.css')}}" rel="stylesheet"/>
-    <style>
-      nav.navbar {
-          background-color: #CC1414;
-        }
-      body{
-        background-color: #ecf0f1;
-      }
-    </style>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   </head>
   <body>
-  @include('sweet::alert')
-  <div class='container-fluid'>
-    <div class="container-fluid" id="DivLogo">
-      <img src="{{asset('images/logo_unam.png')}}" alt="Logo UNAM" width="90px" height="90px" style="margin-top:.5%;" align="left">
-      <img src="{{asset('images/logo_fi.png')}}" alt="Logo FI" width="90px" height="94px" style="margin-top:.2%;" align="left">
-      <label id="In">Facultad de Ingeniería</label>
-    </div>
-    <nav class="navbar navbar-expand-md navbar-dark">
-      <a class="navbar-brand" href="../../agrupaciones/semiAdmi/Propuesta">{{ auth()->user()->Siglas }}</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="navbar-brand" href="../../agrupaciones/semiAdmi">Información</a>
-          </li>
-          <li class="nav-item">
-            <a class="navbar-brand" href="../../agrupaciones/semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
-          </li>
-          <li class="nav-item">
-            <a class="navbar-brand" href="../../agrupaciones/semiAdmi/VerReclutamientos">Reclutamientos</a>
-          </li>
-          <li class="nav-item">
-            <a class="navbar-brand" href="../../agrupaciones/semiAdmi/Propuesta">Propuestas</a>
-          </li>
-          <li class="nav-item">
-            <a class="navbar-brand" href="../../agrupaciones/semiAdmi/CambioMesa">Cambio de Mesa</a>
-          </li>
-          <li class="nav-item">
-            <form method="POST" action=" {{ route('logout') }} ">
-              {{ csrf_field() }}
-              <button class="btn btn-danger">Cerrar sesión</button>
-            </form>
-          </li>
-        </ul>
+      @if (session('notice'))
+          <div class="alert alert-info fixed-top">
+             {{session('notice')}}
+          </div>
+      @endif
+
+      @if ($errors->any())
+          <div class="alert alert-danger fixed-top">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+      @endif
+      <div id="app">
+
+          @component('partials.navbar')
+              @slot('underLogo')
+                  @role('admin')
+                      <span>Panel de administrador</span>
+                  @endrole
+                  @role('eval')
+                      <span>Panel de evaluador</span>
+                  @endrole
+                  @role('SSA')
+                      <span>Panel de administrador</span>
+                  @endrole
+              @endslot
+
+          @slot('leftSide')
+              @role('Agrupacion')
+                  <li class="nav-item">
+                      <a class="nav-link" href="../../agrupaciones/semiAdmi">Información</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="../../agrupaciones/semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="../../agrupaciones/semiAdmi/VerReclutamientos">Reclutamientos</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="../../agrupaciones/semiAdmi/Propuesta">Propuestas</a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link" href="../../agrupaciones/semiAdmi/CambioMesa">Cambio de Mesa</a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link" href="../../agrupaciones/semiAdmi/semiAdmiMsj">Mensajes</a>
+                  </li>
+              @endrole
+            @endslot
+          @endcomponent
+          <main class="py-4 bg-white" style="margin:1%;">
+              @yield('content')
+          </main>
       </div>
-    </nav>
-        @yield('content')
-    </div>
   </body>
 </html>

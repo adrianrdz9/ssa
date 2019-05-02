@@ -9536,6 +9536,10 @@ body {
   overflow-x: hidden;
 }
 
+h3 {
+  text-align: center;
+}
+
 .bg-blue {
   background-color: #3490dc !important;
 }

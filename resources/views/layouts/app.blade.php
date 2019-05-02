@@ -12,7 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/modrnizer.min.js') }}" defer></script>
-
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet" type="text/css">
@@ -21,7 +21,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
 </head>
 <body>
     @if (session('notice'))
@@ -40,7 +40,7 @@
         </div>
     @endif
     <div id="app">
-        
+
         @component('partials.navbar')
             @slot('underLogo')
                 @role('admin')
@@ -48,6 +48,9 @@
                 @endrole
                 @role('eval')
                     <span>Panel de evaluador</span>
+                @endrole
+                @role('SSA')
+                    <span>Panel de administrador</span>
                 @endrole
             @endslot
 
@@ -85,27 +88,77 @@
                             <a class="dropdown-item" href="{{ route('teamsAdminIndex') }}">Todos</a>
                             <a class="dropdown-item" href="{{ route('teamsAdminCreate') }}">Crear</a>
                         </div>
+                    <li class="nav-item">
+                        <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
                     </li>
                 @else
                     @role('eval')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
                         </li>
-                    @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
+                            <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('teamsIndex') }}" class="nav-link">Equipos</a>
-                        </li>
+                      @else
+                        @role('SSA')
+                          <li class="nav-item">
+                            <a class="nav-link" href="../../agrupaciones/Admi">Nueva noticia</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="../../agrupaciones/Admi/Carusel">Carusel</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="../../agrupaciones/Admi/NICarusel">Nueva Imagen Carusel</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="../../agrupaciones/Admi/Contraseñas">Contraseñas</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="../../agrupaciones/Admi/Propuestas">Propuestas</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="../../agrupaciones/Admi/AdmiMsj">Mensajes</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="../../agrupaciones/Admi/EventosFeria">Eventos Feria</a>
+                          </li>
+                        @else
+                          @role('Agrupacion')
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi">Información</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/VerReclutamientos">Reclutamientos</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/Propuesta">Propuestas</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/CambioMesa">Cambio de Mesa</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="../../agrupaciones/semiAdmi/semiAdmiMsj">Mensajes</a>
+                              </li>
+                            @else
+                              <li class="nav-item">
+                                  <a class="nav-link" href="{{ route('actividadesDeportivasIndex') }}">Inicio</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('tournamentsIndex') }}" class="nav-link">Torneos</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('teamsIndex') }}" class="nav-link">Equipos</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
+                              </li>
+                            @endrole
+                        @endrole
                     @endrole
                 @endrole
-                <li class="nav-item">
-                    <a href="{{ route('sportsIndex') }}" class="nav-link">Deportes</a>
-                </li>
             @endslot
         @endcomponent
 

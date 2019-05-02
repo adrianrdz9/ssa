@@ -4584,7 +4584,9 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    console.log(this.user);
     axios.get('/agrupaciones/Admi/AdmiMsj/contacts').then(function (response) {
+      console.log(response.data);
       _this.contacts = response.data;
     });
   },
@@ -4852,7 +4854,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contacts: {
@@ -4862,8 +4863,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      selected: 0 //selected: this.contacts.length ? this.contacts[0] : null
-
+      selected: 0
     };
   },
   methods: {
@@ -4871,17 +4871,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selected = index;
       this.$emit('selected', contact);
     }
-  } // computed: {
-  //     sortedContacts() {
-  //         return _.sortBy(this.contacts, [(contact) => {
-  //             if (contact == this.selected) {
-  //                 return Infinity;
-  //             }
-  //             return contact.unread;
-  //         }]).reverse();
-  //     }
-  // }
-
+  }
 });
 
 /***/ }),
@@ -4922,16 +4912,21 @@ __webpack_require__.r(__webpack_exports__);
     sendMessage: function sendMessage(text) {
       var _this = this;
 
+      // if(this.contact.Siglas != "SSA")
+      //   var admi = '/agrupaciones/Admi/AdmiMsj/conversation/send';
+      // else {
+      //   var admi = '/agrupaciones/semiAdmi/semiAdmiMsj/conversation/send';
+      // }
+      var admi = '/agrupaciones/Admi/AdmiMsj/conversation/send';
+
       if (!this.contact) {
         return;
       }
 
-      axios.post('/agrupaciones/Admi/AdmiMsj/conversation/send', {
+      axios.post(admi, {
         contact_id: this.contact.id,
         text: text
       }).then(function (response) {
-        console.log(response.data);
-
         _this.$emit('new', response.data);
       });
     }
@@ -68768,14 +68763,14 @@ var render = function() {
                 key: message.id,
                 class:
                   "message" +
-                  (message.to == _vm.contact.id ? " sent" : " received")
+                  (message.Para == _vm.contact.id ? " sent" : " received")
               },
               [
                 _c("div", { staticClass: "text" }, [
                   _vm._v(
                     "\n                " +
                       _vm._s(message.Mensaje) +
-                      "\n            "
+                      "\n          "
                   )
                 ])
               ]

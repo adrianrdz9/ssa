@@ -18,7 +18,7 @@ class admiController extends Controller
       * @return void
     */
     public function construct(){
-      $this->middleware('auth');
+      $this->middleware('role:SSA');
     }
     /**
       * Metodo utilizado para mostrar las noticias al administrador

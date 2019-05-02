@@ -1,4 +1,4 @@
-@extends('layouts.semiAdmi')
+@extends('layouts.app')
 @section('title','Reclutamientos')
 @section('content')
 <h3>Crea un nuevo reclutamiento</h3>

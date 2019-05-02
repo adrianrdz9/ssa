@@ -1,4 +1,4 @@
-@extends('layouts.Admi')
+@extends('layouts.app')
 @section('title','Propuestas')
 @section('content')
 <h3 style="margin-top:1%;">Propuestas para la Feria de Agrupaciones</h3>

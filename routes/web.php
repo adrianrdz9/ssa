@@ -1,7 +1,6 @@
 <?php
 
 Route::get('/', function(){
-
     if(auth()->check()){
       if(auth()->user()->Siglas=='SSA'){
         return view('Admis.formNoti');
@@ -12,8 +11,6 @@ Route::get('/', function(){
         return redirect('/s');
       }
     }
-
-
 
     return view('home');
 
@@ -30,16 +27,19 @@ Route::group(['prefix' => 's'], function () {
 });
 
 Auth::routes();
+Route::group(['prefix' => 'comunidad'], function () {
+    Route::get('/', function(){
+
+    })->name('comunidadIndex');
+});
 
 Route::group(['prefix' => 'agrupaciones'], function () {
     //Administrador
     Route::any('/Admi','Admis\admiController@index')->name('Admi');
     //semiAdmis
     Route::any('/semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
-
     //logout
     Route::post('/logout','Auth\LoginController@logout')->name('logout');
-
     // Administrador
     //Noticias - Admi
     Route::get('/ANoticias','Admis\admiController@Noticias')->name('ANoticias');
@@ -53,7 +53,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/OImagenC/id/{id}','Admis\admiController@OImagenC');
     Route::get('/MImagenC/id/{id}','Admis\admiController@MImagenC');
     //Ver propuestas
-    Route::get('Admi/Propuestas','Admis\admiController@Propuestas');
+    Route::get('/Admi/Propuestas','Admis\admiController@Propuestas');
     Route::post('/NFeria','Admis\admiController@Feria')->name('NFeria');
     //Status propuestas
     Route::get('/statusA/id/{id}','Admis\admiController@StatusA');
@@ -74,6 +74,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
 
 
     //semiAdmi(Agrupaciones)
+    Route::get('/semiAdmi/semiAdmiMsj','Admis\MensajesControlller@verMensajes');
     //Información general
     Route::post('/InfoGeneral','Admis\semiAdmiController@InfoGeneral')->name('InfoGeneral');
     //Integrantes
@@ -95,7 +96,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     //Noticias - 9 (index)
     Route::get('/','Visitante\generalController@index')->name('agrupacionesIndex');
     //Noticias individual
-    Route::get('Noticia/id/{id}','Visitante\generalController@noticia');
+    Route::get('/Noticia/id/{id}','Visitante\generalController@noticia');
     Route::get('/Historial','Visitante\generalController@Historial');
     //Agrupaciones lista
     Route::get('/Agrupaciones','Visitante\generalController@agrupaciones');

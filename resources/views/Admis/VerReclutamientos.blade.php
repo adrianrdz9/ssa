@@ -1,4 +1,4 @@
-@extends('layouts.semiAdmi')
+@extends('layouts.app')
 @section('title','Reclutamientos')
 @section('content')
   @foreach ($data as $Info)

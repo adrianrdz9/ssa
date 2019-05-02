@@ -23,8 +23,10 @@
             };
         },
         mounted() {
+          console.log(this.user);
           axios.get('/agrupaciones/Admi/AdmiMsj/contacts')
             .then((response) => {
+              console.log(response.data);
               this.contacts = response.data;
             });
         },

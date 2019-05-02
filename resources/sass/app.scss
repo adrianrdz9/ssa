@@ -15,7 +15,9 @@ main{
 body {
   overflow-x: hidden;
 }
-
+h3 {
+  text-align: center;
+}
 @each $key, $color in $colors {
   .bg-#{$key}{
     background-color: $color !important;
