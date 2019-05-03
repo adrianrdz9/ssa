@@ -1,4 +1,4 @@
-@extends('layouts.visitantes')
+@extends('layouts.Agrupaciones')
 @section('title','Historial')
 @section('content')
   @foreach ($data as $Info)

@@ -4,7 +4,9 @@ Route::get('/', function(){
     if(auth()->check()){
       if(auth()->user()->Siglas=='SSA'){
         return view('Admis.formNoti');
-      }elseif (auth()->user()->Siglas != ""){
+      }elseif (auth()->user()->Siglas == 'ASSA'){
+        return view('Admis.AdmiIndex');
+      }elseif (auth()->user()->Siglas != '') {
         return view('Admis.Informacion');
       }
       if(auth()->user()->hasRole('superAdmin')  ){
@@ -109,7 +111,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
 
 Route::group(['prefix' => 'actividades-deportivas'], function () {
 
-   
+
 
 
     Route::get('/', 'HomeController@index')->name('actividadesDeportivasIndex');

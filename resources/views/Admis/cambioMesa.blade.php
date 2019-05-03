@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.Agrupaciones')
 @section('title','Cambio de Mesa')
 @section('content')
 <div class="row" style="margin:auto;">

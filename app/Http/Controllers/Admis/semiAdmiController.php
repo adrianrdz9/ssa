@@ -235,7 +235,7 @@ class semiAdmiController extends Controller
           $location = public_path('images/Agrupaciones/Fotos/'. $filename);
           Image::make($image)->resize(331,392)->save($location);
 
-          $a['Foto'] = $filename;;
+          $a['Foto'] = $filename;
         }
 
         if($request->Logo == "" && $request->Foto == "" &&

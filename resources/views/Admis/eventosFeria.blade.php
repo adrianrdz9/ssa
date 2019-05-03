@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.Agrupaciones')
 @section('title','Eventos para la feria de agrupaciones')
 @section('content')
 <!-- Mpstrar tabla con detalles, opcion de editar

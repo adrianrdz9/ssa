@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.Agrupaciones')
 @section('title','Editar carusel')
 @section('content')
 <section class="details-card">

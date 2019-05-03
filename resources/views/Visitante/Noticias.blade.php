@@ -1,4 +1,4 @@
-@extends('layouts.visitantes')
+@extends('layouts.Agrupaciones')
 @section('title','Noticias')
 @section('content')
 <div id="demo" class="carousel slide container" data-ride="carousel" style="margin-top: 1%;">

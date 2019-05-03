@@ -1,4 +1,4 @@
-@extends('layouts.visitantes')
+@extends('layouts.Agrupaciones')
 @section('title','Agrupaciones')
 @section('content')
 <link href="{{asset('css/AIndivi.css')}}" rel="stylesheet"/>

@@ -1,4 +1,4 @@
-@extends('layouts.visitantes')
+@extends('layouts.Agrupaciones')
 @section('title','Noticias')
 @section('content')
 <link href="https://fonts.googleapis.com/css?family=Inconsolata|PT+Sans+Narrow|PT+Serif" rel="stylesheet">

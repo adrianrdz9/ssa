@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.Agrupaciones')
 @section('title','Información de la agrupación')
 @section('content')
 <h3>{{ auth()->user()->Nombre }}</h3>
@@ -9,15 +9,15 @@
         <div class="col-md-6">
             <div class="form-group">
                 <h5>Logo de la Agrupación:</h5>
-                <input type="file" class="form-control-file border" name="Logo" accept=".pdf,.jpg,.png">
+                <input type="file" class="form-control-file border" name="Logo" accept=".jpg,.png">
             </div>
             <div class="form-group">
                <h5>Fotografía representativa:</h5>
-               <input type="file" class="form-control-file border" name="Foto" accept=".pdf,.jpg,.png">
+               <input type="file" class="form-control-file border" name="Foto" accept="jpg,.png">
             </div>
             <div class="form-group">
                 <h5>Link red social:</h5>
-                <input type="text" name="Link1" class="form-control" placeholder="" />
+                <input type="text" name="Link1" class="form-control" placeholder="" >
             </div>
         </div>
         <div class="col-md-6">

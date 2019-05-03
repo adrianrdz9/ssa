@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.Agrupaciones')
 @section('title','Noticias')
 @section('content')
   @foreach ($data as $Info)
