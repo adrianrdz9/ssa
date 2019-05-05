@@ -42,7 +42,7 @@
           <input type="radio" name="carusel"  value="N" checked required>No
         </label>
      </p>
-      <button type="submit" class="btn btn-primary">Publicar</button>
+      <button type="submit" class="btn btn-primary btn-block">Publicar</button>
     </form>
   </div>
 @stop

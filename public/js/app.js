@@ -67397,7 +67397,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                Escanear codigo QR (permitir acceso a la camara) "
+                    "\r\n                Escanear codigo QR (permitir acceso a la camara) "
                   ),
                   _c("br")
                 ]
@@ -67483,11 +67483,11 @@ var render = function() {
           _c("div", { staticClass: "card-header text-center" }, [
             _c("h2", [
               _vm._v(
-                "\n                \n                " +
+                "\r\n                \r\n                " +
                   _vm._s(_vm.team.branch.tournament.name) +
-                  "\n                - rama \n                " +
+                  "\r\n                - rama \r\n                " +
                   _vm._s(_vm.team.branch.branch) +
-                  "\n            "
+                  "\r\n            "
               )
             ])
           ]),
@@ -67500,9 +67500,9 @@ var render = function() {
                 _c("p", [
                   _c("b", [_vm._v("Nombre: ")]),
                   _vm._v(
-                    "\n                        " +
+                    "\r\n                        " +
                       _vm._s(_vm.team.branch.tournament.name) +
-                      "\n                    "
+                      "\r\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -67517,27 +67517,27 @@ var render = function() {
                 _c("p", [
                   _c("b", [_vm._v("Deporte: ")]),
                   _vm._v(
-                    "\n                            " +
+                    "\r\n                            " +
                       _vm._s(_vm.team.branch.tournament.sport.name) +
-                      "\n                        "
+                      "\r\n                        "
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", [
                   _c("b", [_vm._v("Máximo de equipos: ")]),
                   _vm._v(
-                    "\n                            " +
+                    "\r\n                            " +
                       _vm._s(_vm.team.branch.tournament.max_room) +
-                      "\n                        "
+                      "\r\n                        "
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", [
                   _c("b", [_vm._v("Lugares disponibles: ")]),
                   _vm._v(
-                    "\n                        " +
+                    "\r\n                        " +
                       _vm._s(_vm.team.branch.tournament.roomLeft) +
-                      "\n                    "
+                      "\r\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -67572,11 +67572,11 @@ var render = function() {
                           _c("p", [
                             _c("b", [_vm._v("Nombre: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(
                                   user.user.name + " " + user.user.last_name
                                 ) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
@@ -67591,83 +67591,83 @@ var render = function() {
                           _c("p", [
                             _c("b", [_vm._v("Correo electróncico")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.email) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Altura: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.height) +
-                                "\n                                    cm\n                                "
+                                "\r\n                                    cm\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Peso: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.weight) +
-                                "\n                                    kg\n                                "
+                                "\r\n                                    kg\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Edad: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.age) +
-                                "\n                                    años\n                                "
+                                "\r\n                                    años\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Carrera: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.career) +
-                                "\n                                    " +
+                                "\r\n                                    " +
                                 _vm._s(user.user.semester) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Servicio médico: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.medical_service) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Tipo sanguineo: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.blood_type) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Número de carnet: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.medical_card_no) +
-                                "\n\n                                "
+                                "\r\n\r\n                                "
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", [
                             _c("b", [_vm._v("Número telefonico: ")]),
                             _vm._v(
-                              "\n                                    " +
+                              "\r\n                                    " +
                                 _vm._s(user.user.phone_number) +
-                                "\n                                "
+                                "\r\n                                "
                             )
                           ])
                         ])
@@ -67683,7 +67683,7 @@ var render = function() {
           _c("div", { staticClass: "card-footer" }, [
             _c("span", [
               _vm._v(
-                "\n                Estado de inscipción: \n                "
+                "\r\n                Estado de inscipción: \r\n                "
               ),
               _vm.team.completed
                 ? _c("b", { staticClass: "text-success" }, [
@@ -86607,8 +86607,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/ardz9/Desktop/ssa/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/ardz9/Desktop/ssa/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\ssa\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\ssa\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

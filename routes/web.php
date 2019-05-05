@@ -71,7 +71,10 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     //Route::post('/AdmiMsjG','Admis\MensajesControlller@Guardar')->name('AdmiMsjG');
     //FERIAS
     //Ver eventos
-    Route::get('/Admi/EventosFeria','Admis\FeriasAdmi@verEventos');
+    Route::get('/Admi/EventosFeria','Admis\FeriasController@verEventos');
+    //Guardar evento
+    Route::post('/NEvento','Admis\FeriasController@guardarEvento')->name('NEvento');
+
 
 
 

@@ -9536,7 +9536,9 @@ body {
   overflow-x: hidden;
 }
 
-h3 {
+h2,
+h3,
+h6 {
   text-align: center;
 }
 
