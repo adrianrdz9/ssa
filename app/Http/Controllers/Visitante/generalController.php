@@ -14,7 +14,7 @@ class generalController extends Controller
   */
     public function index(){
         $data = \App\Noticias::where('Disponible', 1)
-               ->orderBy('Folio', 'desc')
+               ->orderBy('id', 'desc')
                ->take(9)
                ->get();
         $caru = \App\Carusel::where('Estado',1)
@@ -32,7 +32,7 @@ class generalController extends Controller
       * @return view
     */
     public function Historial(){
-      $data = \App\Noticias::orderBy('Folio','desc')->get();
+      $data = \App\Noticias::orderBy('id','desc')->get();
       return view('Visitante.Historial',['data' => $data]);
     }
     /**
@@ -43,8 +43,8 @@ class generalController extends Controller
       * @return view
     */
     public function noticia($id){
-      $des = \App\Noticias::where('Folio',$id)->get();
-      $data = \App\Noticias::where('Folio',$id)->get();
+      $des = \App\Noticias::where('id',$id)->get();
+      $data = \App\Noticias::where('id',$id)->get();
       return view('Visitante.Noticia',[
         'data' => $data,
         'des' => $des]);

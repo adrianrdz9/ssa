@@ -11,10 +11,10 @@
     @endif  </div>
   <div class="offset-sm-1"></div>
   <div class="col-sm-8" style="background-color:#e0e0e0; border-radius: 10px; text-align:center;">
-    <h3> {{ $Info->Titulo }} </h3> <hr/>
-    <p>  {{ $Info->DescripcionCorta }}</p>
+    <h3 style="margin-top:1%;"> {{ $Info->Titulo }} </h3> <hr/>
+    <p>  {!! $Info->DescripcionCorta !!}</p>
     <div style="text-align:right; margin-bottom:1%;">
-        <a href='Noticia/id/{{ $Info->Folio }}'><button class="btn btn-card">Ver más</button></a>
+        <a href='Noticia/id/{{ $Info->id }}'><button class="btn btn-primary">Ver más</button></a>
     </div>
   </div>
   </div>

@@ -159,6 +159,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Mews\Purifier\PurifierServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -233,6 +234,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
         'StateMachine' => Sebdesign\SM\Facade::class,
+        'Purifier' => Mews\Purifier\Facades\Purifier::class,
 
 
 

@@ -10,7 +10,7 @@
           <th>Ponente</th>
           <th>Lugar</th>
           <th>Horario</th>
-          <th>Acciones</th>
+          <th>...</th>
         </tr>
       </thead>
       <tbody>
@@ -20,14 +20,17 @@
             <td>{{ $evento->Titulo }}</td>
             <td>{{ $evento->Por }}</td>
             <td>{{ $evento->Lugar }}</td>
-            <td>{{ $evento->Hora }}</td>
+            <td>
+              <strong>Día:</strong> {{ date("d/m/Y", strtotime($evento->Dia)) }} <br/>
+              <strong>Hora:</strong> {{ $evento->Hora }}
+            </td>
             <td>
               <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> Acciones
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> ...
                 <span class="caret"></span></button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                  <li><a class="btn btn-danger btn-block" href="">Eliminar</a></li>
-                  <li><a class="btn btn-info btn-block" href="#">Editar</a></li>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1"  data-id="{{ $evento->id }}">
+                  <li> <button type="button" name="button" class="btn btn-danger btn-block Eliminar">Eliminar</button> </li>
+                  <li><a class="btn btn-info btn-block" href="/agrupaciones/ECarrusel/id/{{ $evento->id }}">Editar</a></li>
                 </ul>
               </div>
             </div>

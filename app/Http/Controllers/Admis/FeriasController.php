@@ -38,14 +38,12 @@ class FeriasController extends Controller
       $evento->Lugar = $request->Lugar;
       $evento->Hora = $request->Hora;
     $evento->save();
-    return redirect('agrupaciones/Admi/EventosFeria');
+    return redirect('agrupaciones/Admi/EventosFeria')->with('notice','¡Se guardó el evento con exito!');
   }
-  public function editarEvento($value='')
-  {
+  public function editarEvento($value=''){
     // code...
   }
-  public function eliminarEvento($value='')
-  {
-    // code...
+  public function eliminarEvento($id){
+    $res = FeriaEventos::where('id',$id)->delete();
   }
 }

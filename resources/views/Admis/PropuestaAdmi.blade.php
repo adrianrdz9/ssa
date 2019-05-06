@@ -106,34 +106,4 @@
   </div>
 </div>
 
-<script>
-  $('.Aceptar').click(function () {
-  let id = $(this).parents('div').data('id');
-    $.ajax({
-      url: "/statusA/id/" + id,
-      method: "get"
-    }).done(()=>{
-      swal(
-        'Exito!',
-        'Propuesta aceptada',
-        'success'
-        )
-        $(this).closest('.card-footer').remove();
-    });
-  });
-  $('.Comunicate').click(function () {
-  let id = $(this).parents('div').data('id');
-    $.ajax({
-      url: "/statusC/id/" + id,
-      method: "get"
-    }).done(()=>{
-      swal(
-          'Exito!',
-          'Se enviara la notificaciòn correspondiente',
-          'success'
-        )
-        $(this).closest('.btn-info').remove();
-    });
-  });
-</script>
 @stop

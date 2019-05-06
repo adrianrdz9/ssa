@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Noticias;
 use App\Ferias;
 use App\Carusel;
+use Purifier;
 use Alert;
 class admiController extends Controller
 {
@@ -27,7 +28,7 @@ class admiController extends Controller
       * @return view
     */
     public function Noticias(){
-      $data = \App\Noticias::orderBy('Folio','desc')->get();
+      $data = \App\Noticias::orderBy('id','desc')->get();
       return view('Admis.NoticiasAdmi',['data' => $data]);
     }
     /**
@@ -38,7 +39,7 @@ class admiController extends Controller
       * AJAX
     */
     public function ONoticia($id){
-      \App\Noticias::where('Folio',$id)->update(['Disponible' => 0]);
+      \App\Noticias::where('id',$id)->update(['Disponible' => 0]);
     }
     /**
       * Metodo utilizado para mostrar noticias de la página principal de visitantes
@@ -48,7 +49,7 @@ class admiController extends Controller
       * AJAX
     */
     public function MNoticia($id){
-      \App\Noticias::where('Folio',$id)->update(['Disponible' => 1]);
+      \App\Noticias::where('id',$id)->update(['Disponible' => 1]);
     }
     /**
       * Metodo utilizado para mostrar el formulario de noticias.
@@ -81,8 +82,8 @@ class admiController extends Controller
 
           $noti = new Noticias;
           $noti ->Titulo = $request->Titulo;
-          $noti ->Descripcion = $request->Descripcion;
-          $noti ->DescripcionCorta = $request->DescripcionCorta;
+          $noti ->Descripcion = Purifier::clean($request->Descripcion);
+          $noti ->DescripcionCorta = Purifier::clean($request->DescripcionCorta);
           $noti ->Fecha = $request->Fecha;
           //save Images
           if($request->hasFile('ImagenC')){
@@ -104,10 +105,10 @@ class admiController extends Controller
           if ($request->carusel == "S" && $request->hasFile('ImagenR')) {
               $carusel = new Carusel;
               $carusel->Titulo = $request->Titulo;
-              $carusel->Descripcion = $request->Descripcion;
+              $carusel->Descripcion = Purifier::clean($request->Descripcion);
               $carusel->Tipo = "N";
               foreach ($fol as $fol) {
-                $carusel->Link = "Noticia/id/".$fol->Folio;
+                $carusel->Link = "Noticia/id/".$fol->id;
               }
                 $image = $request->file('ImagenR');
                 $filename = time() . '.' . $image->getClientOriginalExtension();
@@ -116,9 +117,45 @@ class admiController extends Controller
                 $carusel->Imagen = $filename;
               $carusel->save();
           }
-            alert()->success('Se guardó la noticia con exito','Exito!','success');
-            return redirect('agrupaciones/Admi');
+            return redirect('agrupaciones/Admi')->with('notice', '¡Se guardó la noticia con exito!');
           }
+    }
+    /**
+      * Metodo utilizado para borrar noticias
+      *
+      * @param Integer $id id de la noticia seleccionada
+      * @return
+    */
+    public function eliminarNoticia($id){
+      $res = Noticias::where('id',$id)->delete();
+    }
+    /**
+      * Metodo utilizado para ver la vista con el formulario
+      * para actualizar la noticia seleccionada
+      *
+      * @param Integer $id id de la noticia seleccionada
+      * @return view
+    */
+    public function verEditarNoticia($id){
+      $data = Noticias::where('id',$id)->take(1)->get();
+      return view('Admis.AdmiNoticiaEdit', ['data' => $data]);
+    }
+    /**
+      * Metodo utilizado para guardar la informacion
+      * actualizada de la noticia seleccionada
+      *
+      * @param Request
+      * @return redirect
+    */
+    public function actualizarNoticia(Request $request){
+      $all = $request->all();
+      $noticia = Noticias::find($request->id);
+      foreach ($all as $key => $value) {
+        if($value != "" && $key != "_token")
+          $noticia->$key = Purifier::clean($value);
+      }
+      $noticia->save();
+      return redirect('agrupaciones/Admi/ANoticias')->with('notice','¡Actualización exitosa!');
     }
     /**
       * Metodo utilizado para mostrar el carrusel, dando la oportunidad de ocultar o mostrar
@@ -163,6 +200,16 @@ class admiController extends Controller
       }
     }
     /**
+      * Metodo utilizado para eliminar imagenes en el carrusel.
+      *
+      *@param Integer $id Id de la imagen seleccionada
+      *
+      * AJAX
+    */
+    public function eliminarImagenC($id){
+      $res = Carusel::where('id',$id)->delete();
+    }
+    /**
       * Metodo utilizado para mostrar el formulario para agregar imagenes al carrusel
       *
       * @return view
@@ -188,7 +235,7 @@ class admiController extends Controller
         else {
           $carusel = new Carusel;
             $carusel->Titulo = $request->Titulo;
-            $carusel->Descripcion = $request->Descripcion;
+            $carusel->Descripcion = Purifier::clean($request->Descripcion);
             $carusel->Link = $request->Link;
             $carusel->Tipo = $request->Tipo;
             $image = $request->file('Imagen');
@@ -197,8 +244,7 @@ class admiController extends Controller
               Image::make($image)->resize(600,309)->save($location);
             $carusel->Imagen = $filename;
           $carusel->save();
-          alert()->success('Imagen agregada','Exito!','success');
-          return redirect('agrupaciones/Admi/NICarusel');
+          return redirect('agrupaciones/Admi/NICarusel')->with('notice', '¡Imagen agregada!');
         }
       }
       /**
@@ -322,8 +368,7 @@ class admiController extends Controller
       $id = $request->Id;
       $c = Hash::make($request->pass);
       \App\User::where('id',$id)->update(['password' => $c]);
-      alert()->success('Exito!','Contraseña actualizada','success');
-      return redirect('agrupaciones/Admi/Contraseñas');
+      return redirect('agrupaciones/Admi/Contraseñas')->with('notice', '¡Contraseña actualizada!');
     }
   }
 

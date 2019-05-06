@@ -2,7 +2,7 @@
 @section('title','Restablecer contraseñas')
 @section('content')
 <link href="{{asset('css/AgrupaGnral.css')}}" rel="stylesheet"/>
-<div class="row" style="margin-top:1%;">
+<div class="row">
   @foreach ($data as $Info)
     <div class="col-sm-4"style=" border-radius: 10px; margin:auto;">
       @if(is_null($Info->Logo))
@@ -14,7 +14,7 @@
       @endif
     </div>
       <div class="col-sm-7"style="background-color:#e0e0e0; border-radius: 10px; margin:auto; margin-top:1%;">
-          <h3> {{ $Info->Siglas }} </h3> <hr/>
+          <h3 style="margin-top:1%;"> {{ $Info->Siglas }} </h3> <hr/>
           <p>  {{ $Info->Nombre }} </p>
           <form method="post" action="{{ url('agrupaciones/NPassword') }}">
             {{ csrf_field() }}

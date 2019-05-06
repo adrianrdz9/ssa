@@ -44,16 +44,20 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::post('/logout','Auth\LoginController@logout')->name('logout');
     // Administrador
     //Noticias - Admi
-    Route::get('/ANoticias','Admis\admiController@Noticias')->name('ANoticias');
+    Route::get('/Admi/ANoticias','Admis\admiController@Noticias')->name('ANoticias');
     Route::post('/AdmiP','Admis\admiController@store')->name('AdmiP');
     Route::get('/oNoticia/id/{id}','Admis\admiController@ONoticia');
     Route::get('/mNoticia/id/{id}','Admis\admiController@MNoticia');
+    Route::get('/DNoticia/id/{id}','Admis\admiController@eliminarNoticia')->name('DNoticia');
+    Route::get('/ENoticia/id/{id}','Admis\admiController@verEditarNoticia');
+    Route::post('/UNoticia','Admis\admiController@actualizarNoticia');
     //Carrusel
     Route::get('/Admi/Carusel','Admis\admiController@VerCarusel');
     Route::get('/Admi/NICarusel','Admis\admiController@Carusel');
     Route::post('/NCarusel','Admis\admiController@NCarusel')->name('NCarusel');
     Route::get('/OImagenC/id/{id}','Admis\admiController@OImagenC');
     Route::get('/MImagenC/id/{id}','Admis\admiController@MImagenC');
+    Route::get('/DImagenC/id/{id}','Admis\admiController@eliminarImagenC')->name('DCarusel');
     //Ver propuestas
     Route::get('/Admi/Propuestas','Admis\admiController@Propuestas');
     Route::post('/NFeria','Admis\admiController@Feria')->name('NFeria');
@@ -74,7 +78,8 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/Admi/EventosFeria','Admis\FeriasController@verEventos');
     //Guardar evento
     Route::post('/NEvento','Admis\FeriasController@guardarEvento')->name('NEvento');
-
+    //Eliminar evento
+    Route::get('/DEvento/id/{id}','Admis\FeriasController@eliminarEvento')->name('DEvento');
 
 
 

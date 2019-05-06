@@ -11,8 +11,16 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/Agrupaciones.js') }}" defer></script>
     <script src="{{ asset('js/modrnizer.min.js') }}" defer></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
+    <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+          selector:'textarea',
+          plugins: "link advlist code",
+        });
+    </script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet" type="text/css">
@@ -54,22 +62,25 @@
             @slot('leftSide')
               @role('SSA')
                 <li class="nav-item">
-                    <a class="nav-link" href="../../agrupaciones/Admi">Nueva noticia</a>
+                    <a class="nav-link" href="../../../agrupaciones/Admi/ANoticias">Noticias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../agrupaciones/Admi/Carusel">Carusel</a>
+                    <a class="nav-link" href="../../../agrupaciones/Admi">Nueva noticia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../agrupaciones/Admi/NICarusel">Nueva Imagen Carusel</a>
+                    <a class="nav-link" href="../../../agrupaciones/Admi/Carusel">Carusel</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../agrupaciones/Admi/Contraseñas">Contraseñas</a>
+                    <a class="nav-link" href="../../../agrupaciones/Admi/NICarusel">Nueva Imagen Carusel</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../agrupaciones/Admi/Propuestas">Propuestas</a>
+                    <a class="nav-link" href="../../../agrupaciones/Admi/Contraseñas">Contraseñas</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="../../agrupaciones/Admi/AdmiMsj">Mensajes</a>
+                    <a class="nav-link" href="../../../agrupaciones/Admi/Propuestas">Propuestas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../agrupaciones/Admi/AdmiMsj">Mensajes</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="../../agrupaciones/Admi/EventosFeria">Eventos Feria</a>

@@ -11,51 +11,19 @@
     @endif
   </div>
   <div class="offset-sm-1"></div>
-  <div class="col-sm-8" style="background-color:#e0e0e0; border-radius: 10px; text-align:center;">
-    <h3> {{ $Info->Titulo }} </h3> <hr/>
-    <p>  {{ $Info->DescripcionCorta }}</p>
-    @if( $Info->Disponible == "1")
-      <div style="margin-top:1%; margin-bottom:1%; text-align:right;" data-id="{{ $Info->Folio }}">
-        <button type="button" class="btn btn-danger Ocultar">Ocultar</button>
+    <div class="col-sm-8" style="background-color:#e0e0e0; border-radius: 10px; text-align:center;">
+      <h3 style="margin-top:1%;"> {{ $Info->Titulo }} </h3> <hr/>
+      <p>  {!! $Info->DescripcionCorta !!}</p>
+      <div style="margin-top:1%; margin-bottom:1%; text-align:right;" data-id="{{ $Info->id }}">
+        @if( $Info->Disponible == "1")
+            <button type="button" class="btn btn-warning Ocultar">Ocultar</button>
+        @else
+            <button type="button" class="btn btn-info Mostrar">Mostrar</button>
+        @endif
+            <button type="button" class="btn btn-danger EliminarNoticia">Eliminar</button>
+            <a href="/agrupaciones/ENoticia/id/{{ $Info->id }}"><button type="button" class="btn btn-primary">Editar</button></a>
       </div>
-    @else
-      <div style="margin-top:1%; margin-bottom:1%; text-align:right;" data-id="{{ $Info->Folio }}">
-        <button type="button" class="btn btn-info Mostrar">Mostrar</button>
-      </div>
-    @endif
-  </div>
+    </div>
   </div>
   @endforeach
-  <script>
-    $('.Ocultar').click(function () {
-    let id = $(this).parents('div').data('id');
-      $.ajax({
-        url: "/oNoticia/id/" + id,
-        method: "get"
-      }).done(()=>{
-        swal(
-            '¡Exito!',
-            'Se oculto la noticia',
-            'success'
-        )
-          $(this).parent().append('<button type="button" class="btn btn-info Mostrar">Mostrar</button>');
-          $(this).closest('.Ocultar').remove();
-      });
-    });
-    $('.Mostrar').click(function () {
-    let id = $(this).parents('div').data('id');
-      $.ajax({
-        url: "/mNoticia/id/" + id,
-        method: "get"
-      }).done(()=>{
-        swal(
-            '¡Exito!',
-            'Se mostrara la noticia',
-            'success'
-        )
-        $(this).parent().append('<button type="button" class="btn btn-danger Ocultar">Ocultar</button>');
-        $(this).closest('.Mostrar').remove();
-      });
-    });
-  </script>
 @stop

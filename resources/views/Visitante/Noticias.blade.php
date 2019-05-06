@@ -26,7 +26,7 @@
         </a>
         <div class="carousel-caption">
           <h3>{{ $images->Titulo}}</h3>
-          <p>{{ $images->Descripcion}}</p>
+          <p>{!! $images->Descripcion !!}</p>
         </div>
       </div>
       @endforeach
@@ -43,7 +43,7 @@
             @foreach($data as $dato)
             <div class="col-sm-4">
                 <div class="card-content">
-                    <div class="card-img" data-id="{{ $dato->Folio }}">
+                    <div class="card-img" data-id="{{ $dato->id }}">
                       @if (is_null($dato->ImagenC ))
                         <img src="{{asset('images/Inge.png' )}}" alt="">
                       @endif
@@ -51,10 +51,10 @@
                     </div>
                     <div class="card-desc">
                         <h3>{{ $dato->Titulo }}</h3>
-                        <p>{{ $dato->DescripcionCorta }}</p>
+                        <p>{!! $dato->DescripcionCorta !!}</p>
                     <div style="text-align:right;">
-                        <h6>{{ $dato->Fecha }}</h6>
-                        <a href='agrupaciones/Noticia/id/{{ $dato->Folio }}'><button class="btn btn-card">Ver más</button></a>
+                        <h6>{{ date('d/m/Y', strtotime($dato->Fecha)) }}</h6>
+                        <a href='agrupaciones/Noticia/id/{{ $dato->id }}'><button class="btn btn-card">Ver más</button></a>
                     </div>
                     </div>
                 </div>

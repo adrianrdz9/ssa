@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.Agrupaciones')
 @section('title','Reclutamientos')
 @section('content')
 <h3>Crea un nuevo reclutamiento</h3>

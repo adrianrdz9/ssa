@@ -16,6 +16,7 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "mbezhanov/faker-provider-collection": "^1.1",
+        "mews/purifier": "^2.1",
         "nesbot/carbon": "2.3.0 as 1.34.0",
         "onecentlin/laravel-adminer": "^4.7",
         "sebdesign/laravel-state-machine": "^1.3",

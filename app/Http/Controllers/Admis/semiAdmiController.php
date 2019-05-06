@@ -102,9 +102,7 @@ class semiAdmiController extends Controller
          $propu ->Titulo = $request->Titulo;
          $propu ->Descripcion = $request->Descripcion;
          $propu->save();
-
-         alert()->success('Propuesta','Se ha enviado tu propuesta','success');
-         return redirect('agrupaciones/semiAdmi/Propuesta');
+         return redirect('agrupaciones/semiAdmi/Propuesta')->with('notice','Se ha enviado tu propuesta');
       }
     }
     /**
@@ -202,8 +200,7 @@ class semiAdmiController extends Controller
                     }
                 }
             }
-            alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
-            return redirect('agrupaciones/semiAdmi');
+            return redirect('agrupaciones/semiAdmi')->with('notice','Actualizacion exitosa');
           }
         }
     /**
@@ -249,8 +246,7 @@ class semiAdmiController extends Controller
             \App\User::where('Siglas',$u)->update([$key => $value]);
           }
         }
-        alert()->success('Se ha actualizado la información','Actualizacion exitosa','success');
-        return redirect('agrupaciones/semiAdmi');
+        return redirect('agrupaciones/semiAdmi')->with('notice','Actualizacion exitosa');
       }
     }
     /**
@@ -321,9 +317,7 @@ class semiAdmiController extends Controller
 
           $reclu ->save();
 
-          alert()->success('Reclutamiento','Se ha creado con exito','success');
-
-          return redirect('agrupaciones/semiAdmi/Reclutamientos');
+          return redirect('agrupaciones/semiAdmi/Reclutamientos')->with('notice','El reclutamiento se ha creado con exito');
         }
       }
   }

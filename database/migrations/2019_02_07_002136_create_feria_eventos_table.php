@@ -18,7 +18,6 @@ class CreateFeriaEventosTable extends Migration
             $table->string('Siglas');
             $table->string('Titulo');
             $table->string('Por');
-            $table->string('Tipo');
             $table->date('Dia');
             $table->time('Hora');
             $table->string('Lugar');

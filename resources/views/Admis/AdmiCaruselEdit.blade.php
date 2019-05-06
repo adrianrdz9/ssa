@@ -11,13 +11,15 @@
                     </div>
                     <div class="card-desc">
                           <h3>{{ $dato->Titulo }}</h3>
-                          <p>{{ $dato->Descripcion}}</p>
+                          <p>{!! $dato->Descripcion !!}</p>
                       <div style="text-align:right;" data-id="{{ $dato->id }}">
                          @if($dato->Estado == "1")
-                          <button class="btn btn-danger Ocultar">Ocultar</button>
+                          <button class="btn btn-warning OcultarC">Ocultar</button>
                          @else
-                          <button class="btn btn-info Mostrar">Mostrar</button>
+                          <button class="btn btn-info MostrarC">Mostrar</button>
                          @endif
+                          <a href="/agrupaciones/ECarrusel/id/{{ $dato->id }}"><button type="button" class="btn btn-primary">Editar</button></a>
+                          <button class="btn btn-danger EliminarC">Eliminar</button>
                       </div>
                     </div>
                 </div>
@@ -26,34 +28,4 @@
            @endforeach
         </div>
 </section>
-<script>
-  $('.Ocultar').click(function () {
-  let id = $(this).parents('div').data('id');
-    $.ajax({
-      url: "/OImagenC/id/" + id,
-      method: "get"
-    }).done(()=>{
-      swal(
-          '¡Exito!',
-          'Se oculto la imagen',
-          'success'
-      )
-        $(this).closest('.Ocultar').remove();
-    });
-  });
-  $('.Mostrar').click(function () {
-  let id = $(this).parents('div').data('id');
-    $.ajax({
-      url: "/MImagenC/id/" + id,
-      method: "get"
-    }).done(()=>{
-      swal(
-          '¡Exito!',
-          'Se mostrara la imagen',
-          'success'
-      )
-        $(this).closest('.Mostrar').remove();
-    });
-  });
-</script>
 @stop

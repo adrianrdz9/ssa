@@ -17,11 +17,11 @@
       </div>
       <div class="form-group">
         <h4>Descripción corta:</h4>
-        <textarea class="form-control" name="DescripcionCorta" type="text" required></textarea>
+        <textarea class="form-control" name="DescripcionCorta" type="text"></textarea>
       </div>
       <div class="form-group">
         <h4>Noticia completa:</h4>
-        <textarea class="form-control" name="Descripcion" required></textarea>
+        <textarea class="form-control" name="Descripcion" ></textarea>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
