@@ -10,7 +10,7 @@
                         <img src="{{asset('images/Carusel/'. $dato->Imagen )}}" alt="" class="img-fluid">
                     </div>
                     <div class="card-desc">
-                          <h3>{{ $dato->Titulo }}</h3>
+                          <h3>{!! $dato->Titulo !!}</h3>
                           <p>{!! $dato->Descripcion !!}</p>
                       <div style="text-align:right;" data-id="{{ $dato->id }}">
                          @if($dato->Estado == "1")
@@ -18,7 +18,7 @@
                          @else
                           <button class="btn btn-info MostrarC">Mostrar</button>
                          @endif
-                          <a href="/agrupaciones/ECarrusel/id/{{ $dato->id }}"><button type="button" class="btn btn-primary">Editar</button></a>
+                          <a href="/agrupaciones/EImagenC/id/{{ $dato->id }}"><button type="button" class="btn btn-primary">Editar</button></a>
                           <button class="btn btn-danger EliminarC">Eliminar</button>
                       </div>
                     </div>

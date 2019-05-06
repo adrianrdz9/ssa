@@ -13,7 +13,7 @@
           </div>
           <div class="form-group">
             <h5>Descripción corta:</h5>
-            <textarea class="form-control" name="Descripcion" type="text"></textarea>
+            <textarea class="form-control" name="Descripcion" type="text" maxlength="150"></textarea>
           </div>
           <div class="form-group">
               <h5>Link:</h5>

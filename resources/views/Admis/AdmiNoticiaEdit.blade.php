@@ -17,7 +17,7 @@
       </div>
       <div class="form-group">
         <h4>Descripción corta:</h4>
-        <textarea class="form-control" name="DescripcionCorta" type="text" placeholder="{{ $data[0]->DescripcionCorta }}"></textarea>
+        <textarea class="form-control" name="DescripcionCorta" type="text" placeholder="{{ $data[0]->DescripcionCorta }}" maxlength="150"></textarea>
       </div>
       <div class="form-group">
         <h4>Noticia completa:</h4>

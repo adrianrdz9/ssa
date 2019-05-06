@@ -210,6 +210,33 @@ class admiController extends Controller
       $res = Carusel::where('id',$id)->delete();
     }
     /**
+      * Metodo utilizado para ver el formulario de editar carusel
+      *
+      *@param Integer $id Id de la imagen seleccionada
+      *
+    */
+    public function verEditarImagenC($id){
+      $data = Carusel::where('id',$id)->take(1)->get();
+      return view('Admis.AdmiImageEdit', ['data' => $data]);
+    }
+    /**
+      * Metodo utilizado para guardar la informacion
+      * actualizada del carrusel
+      *
+      * @param Request
+      * @return redirect
+    */
+    public function actualizarCarusel(Request $request){
+      $all = $request->all();
+      $carusel= Carusel::find($request->id);
+      foreach ($all as $key => $value) {
+        if($value != "" && $key != "_token" && $key != "id")
+          $carusel->$key = Purifier::clean($value);
+      }
+      $carusel->save();
+      return redirect('agrupaciones/Admi/Carusel')->with('notice','¡Actualización exitosa!');
+    }
+    /**
       * Metodo utilizado para mostrar el formulario para agregar imagenes al carrusel
       *
       * @return view

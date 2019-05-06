@@ -58,6 +58,8 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/OImagenC/id/{id}','Admis\admiController@OImagenC');
     Route::get('/MImagenC/id/{id}','Admis\admiController@MImagenC');
     Route::get('/DImagenC/id/{id}','Admis\admiController@eliminarImagenC')->name('DCarusel');
+    Route::get('/EImagenC/id/{id}','Admis\admiController@verEditarImagenC')->name('ECarusel');
+    Route::post('/UImagenC','Admis\admiController@actualizarCarusel');
     //Ver propuestas
     Route::get('/Admi/Propuestas','Admis\admiController@Propuestas');
     Route::post('/NFeria','Admis\admiController@Feria')->name('NFeria');

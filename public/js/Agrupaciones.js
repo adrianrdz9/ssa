@@ -104,7 +104,7 @@ let id = $(this).parents('div').data('id');
     url: "/agrupaciones/OImagenC/id/" + id,
     method: "get"
   }).done(()=>{
-    $(this).closest('.Ocultar').remove();
+    $(this).closest('.OcultarC').remove();
     swal(
         '¡Exito!',
         'Se oculto la imagen',
@@ -118,7 +118,7 @@ let id = $(this).parents('div').data('id');
     url: "/agrupaciones/MImagenC/id/" + id,
     method: "get"
   }).done(()=>{
-    $(this).closest('.Mostrar').remove();
+    $(this).closest('.MostrarC').remove();
     swal(
         '¡Exito!',
         'Se mostrara la imagen',
