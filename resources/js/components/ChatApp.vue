@@ -23,7 +23,6 @@
             };
         },
         mounted() {
-          console.log(this.user);
           axios.get('/agrupaciones/Admi/AdmiMsj/contacts')
             .then((response) => {
               console.log(response.data);
@@ -39,6 +38,7 @@
               })
           },
           saveNewMessage(text){
+            console.log(this.messages);
             this.messages.push(text);
           }
         },

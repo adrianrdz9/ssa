@@ -77,12 +77,14 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     //Route::post('/AdmiMsjG','Admis\MensajesControlller@Guardar')->name('AdmiMsjG');
     //FERIAS
     //Ver eventos
-    Route::get('/Admi/EventosFeria','Admis\FeriasController@verEventos');
+    Route::get('/Admi/EventosFeria','Admis\FeriasController@verEventos')->name('verEventos');
     //Guardar evento
     Route::post('/NEvento','Admis\FeriasController@guardarEvento')->name('NEvento');
     //Eliminar evento
     Route::get('/DEvento/id/{id}','Admis\FeriasController@eliminarEvento')->name('DEvento');
-
+    //Vista para actualizar
+    Route::get('/EEvento/id/{id}','Admis\FeriasController@verEditarEvento')->name('EEvento');
+    Route::post('/UEvento','Admis\FeriasController@actualizarEvento')->name('UEvento');;
 
 
     //semiAdmi(Agrupaciones)

@@ -26,7 +26,7 @@
             @if (is_null($data[0]->Imagen ))
               <small>No tiene imagen</small>
             @endif
-              <img src="{{asset('images/Noticias/'. $data[0]->ImagenC )}}" class="img-fluid" alt="No se puede cargar la imagen">
+              <img src="{{asset('images/Carusel/'. $data[0]->Imagen )}}" class="img-fluid" alt="No se puede cargar la imagen">
         </div>
         <div class="form-group">
           <img id="preview" alt="Imagen seleccionada" width="100%" height="100%" />

@@ -33,8 +33,15 @@
               </label>
             </div>
             <div class="form-check disabled">
-              <input class="form-check-input" type="radio" name="Tipo" value="O" required>
+              <input class="form-check-input" type="radio" name="Tipo" value="F" required>
               <label class="form-check-label" for="tipo3">
+                Para feria de agrupaciones
+              </label><br/>
+              <small>Se mostrara SOLAMENTE en la página de feria de agrupaciones</small>
+            </div>
+            <div class="form-check disabled">
+              <input class="form-check-input" type="radio" name="Tipo" value="O" required>
+              <label class="form-check-label" for="tipo4">
                 Otro
               </label>
             </div>

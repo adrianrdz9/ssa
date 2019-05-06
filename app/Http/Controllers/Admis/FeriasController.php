@@ -40,9 +40,37 @@ class FeriasController extends Controller
     $evento->save();
     return redirect('agrupaciones/Admi/EventosFeria')->with('notice','¡Se guardó el evento con exito!');
   }
-  public function editarEvento($value=''){
-    // code...
+  /**
+    * Metodo para ver el formulario de editar evento
+    * @param Integer $id id del evento seleccionadp
+    * @return view
+  */
+  public function verEditarEvento($id){
+    $data = FeriaEventos::where('id',$id)
+                          ->get(['id','Siglas','Titulo','Por','Dia','Hora','Lugar']);
+    return view('Admis.EventEdit', ['data' => $data]);
   }
+  /**
+    * Metodo para guardar los cambios en el evento
+    * @param Request $request información de formulario
+    * @return redirect
+  */
+  public function actualizarEvento(Request $request){
+    $all = $request->all();
+    $evento = FeriaEventos::find($request->id);
+    foreach ($all as $key => $value) {
+      if($value != "" && $key != "_token" && $key != "id")
+        $evento->$key = $value;
+    }
+    $evento->save();
+    return redirect()->route('verEventos')->with('notice','¡Actualización exitosa!');
+  }
+  /**
+    * Metodo para eliminar un evento
+    * @param Integer $id id del evento a eliminar
+    * @return
+    * AJAX
+  */
   public function eliminarEvento($id){
     $res = FeriaEventos::where('id',$id)->delete();
   }

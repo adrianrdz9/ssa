@@ -149,11 +149,26 @@ class admiController extends Controller
     */
     public function actualizarNoticia(Request $request){
       $all = $request->all();
+        //dd($filename1);
       $noticia = Noticias::find($request->id);
-      foreach ($all as $key => $value) {
-        if($value != "" && $key != "_token")
-          $noticia->$key = Purifier::clean($value);
-      }
+        foreach ($all as $key => $value) {
+          if($value != "" && $key != "_token" && $key != "id" & $key != "ImagenC" & $key != "ImagenR")
+            $noticia->$key = $value;
+        }
+        if($request->hasFile('ImagenC')){
+          $image = $request->file('ImagenC');
+          $filename1 = time() . '.' . $image->getClientOriginalExtension();
+          $location = public_path('images/Noticias/'. $filename1);
+          Image::make($image)->resize(600,309)->save($location);
+          $noticia->ImagenC = $filename1;
+        }
+        if($request->hasFile('ImagenR')){
+          $image = $request->file('ImagenC');
+          $filename = time() . '.' . $image->getClientOriginalExtension();
+          $location = public_path('images/Noticias/'. $filename);
+          Image::make($image)->resize(600,309)->save($location);
+          $noticia->ImagenR = $filename;
+        }
       $noticia->save();
       return redirect('agrupaciones/Admi/ANoticias')->with('notice','¡Actualización exitosa!');
     }
@@ -167,7 +182,8 @@ class admiController extends Controller
       if(is_null(auth()->user()))
         return redirect('/');
       else {
-        $data = \App\Carusel::orderBy('id','desc')->get(['id', 'Titulo','Descripcion','Imagen','Estado']);
+        $data = \App\Carusel::orderBy('id','desc')
+                              ->get(['id', 'Titulo','Descripcion','Imagen','Estado']);
         return view('Admis.AdmiCaruselEdit',['data' => $data]);
      }
     }
@@ -229,10 +245,17 @@ class admiController extends Controller
     public function actualizarCarusel(Request $request){
       $all = $request->all();
       $carusel= Carusel::find($request->id);
-      foreach ($all as $key => $value) {
-        if($value != "" && $key != "_token" && $key != "id")
-          $carusel->$key = Purifier::clean($value);
-      }
+        foreach ($all as $key => $value) {
+          if($value != "" && $key != "_token" && $key != "id" && $key != "Imagen")
+            $carusel->$key = Purifier::clean($value);
+        }
+        if($request->hasFile('Imagen')){
+          $image = $request->file('Imagen');
+          $filename = time() . '.' . $image->getClientOriginalExtension();
+          $location = public_path('images/Carusel/'. $filename);
+          Image::make($image)->resize(600,309)->save($location);
+          $carusel->Imagen = $filename;
+        }
       $carusel->save();
       return redirect('agrupaciones/Admi/Carusel')->with('notice','¡Actualización exitosa!');
     }

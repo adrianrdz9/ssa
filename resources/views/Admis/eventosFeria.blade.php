@@ -30,7 +30,7 @@
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1"  data-id="{{ $evento->id }}">
                   <li> <button type="button" name="button" class="btn btn-danger btn-block Eliminar">Eliminar</button> </li>
-                  <li><a class="btn btn-info btn-block" href="/agrupaciones/ECarrusel/id/{{ $evento->id }}">Editar</a></li>
+                  <li><a class="btn btn-info btn-block" href="/agrupaciones/EEvento/id/{{ $evento->id }}">Editar</a></li>
                 </ul>
               </div>
             </div>
@@ -69,7 +69,7 @@
         <input type="time" class="form-control col-md-11" name="Hora">
       </div>
       <button type="submit" class="btn btn-primary btn-block">Guardar</button>
-    <form>
+    </form>
   </div>
 </div>
 @stop
