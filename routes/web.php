@@ -1,22 +1,6 @@
 <?php
 
-Route::get('/', function(){
-    if(auth()->check()){
-      if(auth()->user()->Siglas=='SSA'){
-        return view('Admis.formNoti');
-      }elseif (auth()->user()->Siglas == 'ASSA'){
-        return view('Admis.AdmiIndex');
-      }elseif (auth()->user()->Siglas != '') {
-        return view('Admis.Informacion');
-      }
-      if(auth()->user()->hasRole('superAdmin')  ){
-        return redirect('/s');
-      }
-    }
-
-    return view('home');
-
-});
+Route::get('/', 'Visitante\generalController@vistas');
 
 Route::group(['prefix' => 's'], function () {
     Route::get('/', 'SuperAdminController@index');
@@ -30,9 +14,15 @@ Route::group(['prefix' => 's'], function () {
 
 Auth::routes();
 Route::group(['prefix' => 'comunidad'], function () {
-    Route::get('/', function(){
-
-    })->name('comunidadIndex');
+    //Eventos
+    Route::view('/Eventos','Admis.Comunidad.nuevoEvento');
+    Route::post('/comunidadNEvento','Admis\EventosComunidadController@save');
+    Route::get('/','Admis\EventosComunidadController@paginaPrincipal');
+    //Noticias
+    Route::get('/NoticiasAgrupaciones','Admis\NoticiasComunidadController@noticiasAgrupaciones');
+    //Agregar noticias a la página principal
+    Route::get('/Agregar/id/{id}','Admis\NoticiasComunidadController@agregarNoticiaAgrupa');
+    Route::get('/Eliminar/id/{id}','Admis\NoticiasComunidadController@eliminarNoticiaAgrupa');
 });
 
 Route::group(['prefix' => 'agrupaciones'], function () {

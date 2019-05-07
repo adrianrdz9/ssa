@@ -1,25 +1,23 @@
 @extends('layouts.Agrupaciones')
-@section('title','Agrupaciones')
 @section('content')
+<div class="card-columns">
   @foreach ($data as $Info)
-  <div class="row" style="margin-left:1%; margin-right:1%; margin-top:1%; margin-bottom:1%;">
-  <div class="col-sm-3">
-    @if($Info->Logo == "")
-      <img src="{{asset('images/Inge.png')}}" class="img-responsive" width="100%" height="100%">
-      @else
-        <img src="{{asset('images/Agrupaciones/Logos/'.$Info->Logo)}}" class="img-responsive" width="100%" height="100%">
-    @endif
-   </div>
-      <div class="offset-sm-1"></div>
-        <div class="col-sm-8" style="background-color:#e0e0e0; border-radius: 10px; text-align:center;">
-          <h3 style="margin-top:1%;"> {{ $Info->Siglas }} </h3> <hr/>
-          <p>  {{ $Info->Nombre }}</p>
-          <p>
-            <a href="Agrupacion/id/{{ $Info->Siglas }}"><button type="button" class="btn btn-info">
-              Más información
-            </button></a>
-          </p>
+    <div class="card border-primary">
+        @if($Info->Logo == "")
+          <img src="{{asset('images/Inge.png')}}" class="card-img-top">
+        @else
+          <img src="{{asset('images/Agrupaciones/Logos/'.$Info->Logo)}}" class="card-img-top">
+        @endif
+        <div class="card-body">
+          <h5 class="card-title"> {{ $Info->Siglas }} </h5>
+          <p class="card-text">{{ $Info->Nombre }}</p>
         </div>
-  </div>
+        <div class="card-footer">
+          <a href="Agrupacion/id/{{ $Info->Siglas }}"><button type="button" class="btn btn-info btn-block">
+            Más información
+          </button></a>
+        </div>
+    </div>
   @endforeach
+</div>
 @stop

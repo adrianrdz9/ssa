@@ -57,6 +57,9 @@
                 @role('SSA')
                     <span>Panel de administrador</span>
                 @endrole
+                @role('Agrupacion')
+                    <span>Panel de agrupacion</span>
+                @endrole
             @endslot
 
             @slot('leftSide')
@@ -108,13 +111,13 @@
                     @else
                       @role('admiComunidad')
                         <li class="nav-item">
-                          <a class="nav-link" href="#">Página principal</a>
+                          <a class="nav-link" href="/comunidad/">Página principal</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#">Eventos</a>
+                          <a class="nav-link" href="../../comunidad/Eventos">Eventos</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#">Agrupaciones</a>
+                          <a class="nav-link" href="../../comunidad/NoticiasAgrupaciones">Agrupaciones</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#">Actividades deportivas</a>
@@ -133,7 +136,7 @@
                             <a class="nav-link" href="/agrupaciones/Reclutamientos">Reclutamientos</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="../../">Apoyo a la comunidad</a>
+                            <a class="nav-link" href="/agrupaciones/">Inicio agrupaciones</a>
                           </li>
                       @endrole
                     @endrole

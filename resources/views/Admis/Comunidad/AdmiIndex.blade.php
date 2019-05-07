@@ -36,6 +36,7 @@
                    <th scope="col">Lugar</th>
                    <th scope="col">Fecha</th>
                    <th scope="col">Hora</th>
+                   <th scope="col">...</th>
                  </tr>
                </thead>
                @foreach ($events as $evento)
@@ -44,6 +45,17 @@
                    <td>{{ $evento->Lugar }}</td>
                    <td>{{ date("d/m/Y", strtotime($evento->Dia)) }}</td>
                    <td>{{ $evento->Hora }}</td>
+                   <td>
+                     <div class="dropdown">
+                       <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> ...
+                       <span class="caret"></span></button>
+                       <ul class="dropdown-menu" role="menu" aria-labelledby="menu1"  data-id="{{ $evento->id }}">
+                         <li> <button type="button" name="button" class="btn btn-danger btn-block Eliminar">Eliminar</button> </li>
+                         <li><a class="btn btn-info btn-block" href="/comunidad/EEvento/id/{{ $evento->id }}">Editar</a></li>
+                       </ul>
+                     </div>
+                   </div>
+                 </td>
                  </tr>
                @endforeach
              </tbody>
@@ -51,7 +63,7 @@
           </div>
         </div>
    </div>
-  <hr>
+      <hr>
   <section class="details-card">
           <div class="row">
               <div class="col-sm-4">

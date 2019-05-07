@@ -5,8 +5,30 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Noticias;
-class generalController extends Controller
-{
+use App\ComunidadEvents;
+
+class generalController extends Controller{
+  public function vistas(){
+    if(auth()->check()){
+      if(auth()->user()->Siglas=='SSA'){
+        return view('Admis.formNoti');
+      }elseif (auth()->user()->Siglas == 'ASSA'){
+        return view('Admis.Comunidad.nuevoEvento');
+      }elseif (auth()->user()->Siglas != '') {
+        return view('Admis.Informacion');
+      }
+      if(auth()->user()->hasRole('superAdmin')  ){
+        return redirect('/s');
+      }
+    }
+    $events = ComunidadEvents::orderBy('Dia','DESC')->get();
+    $noticiasAgrupa = Noticias::where('Principal','1')->orderBy('Fecha','DESC')->get();
+
+    return view ('home',[
+      'events' => $events,
+      'data' => $noticiasAgrupa,
+     ]);
+  }
   /**
     * Metodo utilizado para mostrar la página principal
     *
@@ -32,7 +54,7 @@ class generalController extends Controller
       * @return view
     */
     public function Historial(){
-      $data = \App\Noticias::orderBy('id','desc')->get();
+      $data = \App\Noticias::orderBy('id','desc')->take(18)->get();
       return view('Visitante.Historial',['data' => $data]);
     }
     /**
@@ -55,7 +77,7 @@ class generalController extends Controller
        * @return view
      */
     public function agrupaciones(){
-        $data = \App\User::where('Siglas','!=','SSA')
+        $data = \App\User::where('Siglas','!=','ASSA')
                 ->whereNotNull('Siglas')
                 ->orderBy('Siglas','asc')
                 ->get();

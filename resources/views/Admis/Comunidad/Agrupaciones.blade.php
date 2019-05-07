@@ -17,7 +17,11 @@
               </div>
               <div class="card-text">
                   <h6>{{ date('d/m/Y', strtotime($dato->Fecha)) }}</h6>
-                  <a href='Noticia/id/{{ $dato->id }}'><button class="btn btn-block btn-info">Ver más</button></a>
+                  @if($dato->Principal == 1)
+                  <a href='Eliminar/id/{{ $dato->id }}'><button class="btn btn-block btn-info">Quitar de la página principal</button></a>
+                  @else
+                   <a href='Agregar/id/{{ $dato->id }}'><button class="btn btn-block btn-info">Agregar a la página principal</button></a>
+                  @endif
               </div>
             </div>
         </div>
