@@ -26,7 +26,7 @@ class NoticiasSSAController extends Controller{
   */
   public function Noticias(){
     $data = \App\Noticias::orderBy('id','desc')->get();
-    return view('Admis.NoticiasAdmi',['data' => $data]);
+    return view('Admis.NoticiasSSA.NoticiasAdmi',['data' => $data]);
   }
   /**
     * Metodo utilizado para mostrar el formulario de noticias.
@@ -34,7 +34,7 @@ class NoticiasSSAController extends Controller{
     * @return view
   */
   public function index(){
-      return view('Admis.formNoti');
+      return view('Admis.NoticiasSSA.formNoti');
   }
   /**
     * Metodo utilizado para ocultar noticias de la página principal de visitantes
@@ -128,7 +128,7 @@ class NoticiasSSAController extends Controller{
   */
   public function verEditarNoticia($id){
     $data = Noticias::findOrFail($id)->take(1)->get();
-    return view('Admis.AdmiNoticiaEdit', ['data' => $data]);
+    return view('Admis.NoticiasSSA.AdmiNoticiaEdit', ['data' => $data]);
   }
   /**
     * Metodo utilizado para guardar la informacion
