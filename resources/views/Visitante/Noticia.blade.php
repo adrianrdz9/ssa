@@ -1,5 +1,4 @@
 @extends('layouts.Agrupaciones')
-@section('title','Noticias')
 @section('content')
 <link href="https://fonts.googleapis.com/css?family=Inconsolata|PT+Sans+Narrow|PT+Serif" rel="stylesheet">
 <h1 style="font-family: 'PT Serif', serif; text-align:center; margin-top:1%;">{{ $data[0]->Titulo }}</h1>
@@ -9,7 +8,7 @@
         class="img-fluid">
 </div>
     <br/>
-    <div style="margin-left:7%;">
+    <div class="col-md-11" style="margin-left:3%;">
          {!! $des[0]->Descripcion !!}
     </div>
 @stop

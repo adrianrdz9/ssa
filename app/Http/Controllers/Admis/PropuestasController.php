@@ -1,29 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\Admis;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Noticias;
-use App\Ferias;
-use App\Carusel;
-use Purifier;
-class admiController extends Controller
-{
-    /**
-      * Metodo constructor utilizado para limitar el acceso a solo al administrador (SSA)
-      *
-      * @return void
-    */
-    public function construct(){
-      $this->middleware('role:SSA');
-    }
-    public function Propuestas(){
-      if(is_null(auth()->user()))
-        return redirect('/');
-      else {
+
+class PropuestasController extends Controller{
+      /**
+        * Metodo constructor utilizado para limitar el acceso
+        * a solo al administrador (SSA) y agrupaciones
+        *
+        * @return void
+      */
+      public function construct(){
+        $this->middleware('role:SSA|Agrupacion');
+      }
+      /**
+        * Metodo constructor utilizado para ver las propuestas que
+        * sean realizado 
+        *
+        * @return view
+      */
+      public function Propuestas(){
         $data = \App\Propuestas::get(['id', 'Siglas','Titulo','Descripcion','Estado']);
         if(count($data)>=1){
          foreach ($data as $key => $value)
@@ -56,16 +54,15 @@ class admiController extends Controller
           'Mensaje' => $msg,
           'Presidente'=>$presi,
         ]);
-      }
-  }
-  /**
+    }
+    /**
     * Metodo utilizado para guardar en la BD la informacion referente a la feria de agrupaciones
     *
     *@param Request $request Peticion con los dato
     *
     * @return redirect
-  */
-  public function Feria(Request $request){
+    */
+    public function Feria(Request $request){
     if(is_null(auth()->user()))
       return redirect('/');
     else {
@@ -76,68 +73,33 @@ class admiController extends Controller
       $feria->save();
       return redirect('agrupaciones/Admi/Propuestas');
     }
-  }
-  /**
+    }
+    /**
     * Metodo utilizado para acepar propuestas.
     *
     *@param Integer $id Id de la noticia a eliminar
     *
     * AJAX
-  */
-  public function StatusA($id){
+    */
+    public function StatusA($id){
     if(is_null(auth()->user()))
       return redirect('/');
     else {
       \App\Propuestas::where('id',$id)->update(['Estado' => 'Aprobada']);
     }
-  }
-  /**
+    }
+    /**
     * Metodo utilizado para pedirle a una agrupacion que se comunique con la SSA
     *
     * @param Integer $id Id de la noticia a eliminar
     *
     * AJAX
-  */
-  public function StatusC($id){
+    */
+    public function StatusC($id){
     if(is_null(auth()->user()))
       return redirect('/');
     else {
       \App\Propuestas::where('id',$id)->update(['Estado' => 'Comunicate']);
     }
-  }
-  /**
-    * Metodo utilizado para mostrar la lista de agrupaciones y poder cambiar
-    *su contraseña
-    *
-    * @return view
-  */
-  public function Agrupaciones(){
-    if(is_null(auth()->user()))
-      return redirect('/');
-    else {
-      $data = \App\User::whereNotNull('Siglas')
-          ->orderBy('Siglas','asc')
-          ->get(['id', 'Siglas','Nombre','Logo']);
-      return view('Admis.Contraseñas',['data' => $data]);
     }
-  }
-  /**
-    * Metodo utilizado para guardar en la base de datos la nueva contraseñas
-    * de las agrupaciones
-    *
-    *@param Request $request Peticion con los dato
-    *
-    * @return view
-  */
-  public function NPassword(Request $request){
-    if(is_null(auth()->user()))
-      return redirect('/');
-    else {
-      $id = $request->Id;
-      $c = Hash::make($request->pass);
-      \App\User::where('id',$id)->update(['password' => $c]);
-      return redirect('agrupaciones/Admi/Contraseñas')->with('notice', '¡Contraseña actualizada!');
-    }
-  }
-
-}
+}//Fin controller

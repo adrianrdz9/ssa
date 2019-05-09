@@ -14,6 +14,9 @@ Route::group(['prefix' => 's'], function () {
 
 Auth::routes();
 Route::group(['prefix' => 'comunidad'], function () {
+    /*
+    *   ADMINISTRADOR DE COMUNIDAD (admiComunidad/ASSA)
+    */
     //Eventos
     Route::view('/Eventos','Admis.Comunidad.nuevoEvento');
     Route::post('/comunidadNEvento','Admis\EventosComunidadController@save');
@@ -27,29 +30,38 @@ Route::group(['prefix' => 'comunidad'], function () {
 
 Route::group(['prefix' => 'agrupaciones'], function () {
     //Administrador
-    Route::any('/Admi','Admis\admiController@index')->name('Admi');
+    Route::any('/Admi','Admis\NoticiasSSAController@index')->name('Admi');
     //semiAdmis
     Route::any('/semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
     //logout
     Route::post('/logout','Auth\LoginController@logout')->name('logout');
-    // Administrador
-    //Noticias - Admi
-    Route::get('/Admi/ANoticias','Admis\admiController@Noticias')->name('ANoticias');
-    Route::post('/AdmiP','Admis\admiController@store')->name('AdmiP');
-    Route::get('/oNoticia/id/{id}','Admis\admiController@ONoticia');
-    Route::get('/mNoticia/id/{id}','Admis\admiController@MNoticia');
-    Route::get('/DNoticia/id/{id}','Admis\admiController@eliminarNoticia')->name('DNoticia');
-    Route::get('/ENoticia/id/{id}','Admis\admiController@verEditarNoticia');
-    Route::post('/UNoticia','Admis\admiController@actualizarNoticia');
-    //Carrusel
-    Route::get('/Admi/Carusel','Admis\admiController@VerCarusel');
-    Route::get('/Admi/NICarusel','Admis\admiController@Carusel');
-    Route::post('/NCarusel','Admis\admiController@NCarusel')->name('NCarusel');
-    Route::get('/OImagenC/id/{id}','Admis\admiController@OImagenC');
-    Route::get('/MImagenC/id/{id}','Admis\admiController@MImagenC');
-    Route::get('/DImagenC/id/{id}','Admis\admiController@eliminarImagenC')->name('DCarusel');
-    Route::get('/EImagenC/id/{id}','Admis\admiController@verEditarImagenC')->name('ECarusel');
-    Route::post('/UImagenC','Admis\admiController@actualizarCarusel');
+    /*
+    *               ADMINISTRADOR (SSA)
+    */
+    /*
+    *   NOTICIAS
+    */
+    Route::get('/Admi/ANoticias','Admis\NoticiasSSAController@Noticias')->name('ANoticias');
+    Route::post('/AdmiP','Admis\NoticiasSSAController@store')->name('AdmiP');
+    Route::get('/oNoticia/id/{id}','Admis\NoticiasSSAController@ONoticia');
+    Route::get('/mNoticia/id/{id}','Admis\NoticiasSSAController@MNoticia');
+    Route::get('/DNoticia/id/{id}','Admis\NoticiasSSAController@eliminarNoticia')->name('DNoticia');
+    Route::get('/ENoticia/id/{id}','Admis\NoticiasSSAController@verEditarNoticia');
+    Route::post('/UNoticia','Admis\NoticiasSSAController@actualizarNoticia');
+    /*
+    *   CARRUSEL
+    */
+    Route::get('/Admi/Carusel','Admis\CarruselSSAController@VerCarusel');
+    Route::get('/Admi/NICarusel','Admis\CarruselSSAController@Carusel');
+    Route::post('/NCarusel','Admis\CarruselSSAController@NCarusel')->name('NCarusel');
+    Route::get('/OImagenC/id/{id}','Admis\CarruselSSAController@OImagenC');
+    Route::get('/MImagenC/id/{id}','Admis\CarruselSSAController@MImagenC');
+    Route::get('/DImagenC/id/{id}','Admis\CarruselSSAController@eliminarImagenC')->name('DCarusel');
+    Route::get('/EImagenC/id/{id}','Admis\CarruselSSAController@verEditarImagenC')->name('ECarusel');
+    Route::post('/UImagenC','Admis\CarruselSSAController@actualizarCarusel');
+    /*
+    *   PROPUESTAS PARA LA FERIA DE AGRUPACIONES
+    */
     //Ver propuestas
     Route::get('/Admi/Propuestas','Admis\admiController@Propuestas');
     Route::post('/NFeria','Admis\admiController@Feria')->name('NFeria');
@@ -59,13 +71,17 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     //contraseñas
     Route::get('/Admi/Contraseñas','Admis\admiController@Agrupaciones');
     Route::post('/NPassword','Admis\admiController@NPassword')->name('NPassword');
-    //Mensajes
+    /*
+    *   MENSAJES
+    */
     Route::get('/Admi/AdmiMsj','Admis\MensajesControlller@verMensajes');
     Route::get('/Admi/AdmiMsj/contacts','Admis\MensajesControlller@get');
     Route::get('/Admi/AdmiMsj/conversation/{id}','Admis\MensajesControlller@getMessagesFor');
     Route::post('/Admi/AdmiMsj/conversation/send','Admis\MensajesControlller@send');
-    //Route::post('/AdmiMsjG','Admis\MensajesControlller@Guardar')->name('AdmiMsjG');
-    //FERIAS
+    // Route::get('/semiAdmi/semiAdmiMsj','Admis\MensajesControlller@verMensajes');
+    /*
+    *   EVENTOS PARA LA FERIA
+    */
     //Ver eventos
     Route::get('/Admi/EventosFeria','Admis\FeriasController@verEventos')->name('verEventos');
     //Guardar evento
@@ -76,9 +92,9 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/EEvento/id/{id}','Admis\FeriasController@verEditarEvento')->name('EEvento');
     Route::post('/UEvento','Admis\FeriasController@actualizarEvento')->name('UEvento');;
 
-
-    //semiAdmi(Agrupaciones)
-    Route::get('/semiAdmi/semiAdmiMsj','Admis\MensajesControlller@verMensajes');
+    /*
+    *               AGRUPACIONES
+    */
     //Información general
     Route::post('/InfoGeneral','Admis\semiAdmiController@InfoGeneral')->name('InfoGeneral');
     //Integrantes
@@ -89,14 +105,18 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::post('/NPropuesta','Admis\semiAdmiController@NPropuesta')->name('NPropuesta');
     //Cambio de Mesa
     Route::get('/semiAdmi/CambioMesa','Admis\semiAdmiController@Mesa');
-    //Reclutamientos
+    /*
+    *   RECLUTAMIENTOS
+    */
     Route::get('/semiAdmi/Reclutamientos','Admis\semiAdmiController@ReclutamientosF');
     Route::post('/reclutamientoF','Admis\semiAdmiController@NReclutamiento')->name('reclutamientoF');
     Route::get('/semiAdmi/VerReclutamientos','Admis\semiAdmiController@VerReclutamientos');
     Route::get('/Reclutamiento/id/{id}','Visitante\generalController@Reclutamiento');
 
 
-    //Visitante (publicon en general )
+    /*
+    *   VISITANTES (publico en general)
+    */
     //Noticias - 9 (index)
     Route::get('/','Visitante\generalController@index')->name('agrupacionesIndex');
     //Noticias individual

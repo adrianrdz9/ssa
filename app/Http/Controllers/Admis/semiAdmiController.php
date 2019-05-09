@@ -28,18 +28,14 @@ class semiAdmiController extends Controller
   */
     public function index(){
         //Informacion general
-        if(is_null(auth()->user()))
-          return redirect('/');
-        else {
-          $u = auth()->user()->Siglas;
-          $data = \App\User::where('Siglas',$u)->get();
-          //integrantes
-          $int = \App\Integrantes::where('Siglas',$u)->orderBy('NCargo','asc')->get();
-          return view('Admis.Informacion',[
-                      'Info' => $data,
-                      'Inte' => $int
-                    ]);
-        }
+      $u = auth()->user()->Siglas;
+      $data = \App\User::where('Siglas',$u)->get();
+      //integrantes
+      $int = \App\Integrantes::where('Siglas',$u)->orderBy('NCargo','asc')->get();
+      return view('Admis.Informacion',[
+                  'Info' => $data,
+                  'Inte' => $int
+                ]);
     }
     /**
       * Metodo utilizado para mostrar las propuestas de la agrupaciones
@@ -47,9 +43,6 @@ class semiAdmiController extends Controller
       * @return view
     */
     public function Propuesta(){
-      if(is_null(auth()->user()))
-        return redirect('/');
-      else {
         $u = auth()->user()->Siglas;
         $limite = "";
         $data = \App\Propuestas::where('Siglas',$u)
@@ -77,7 +70,6 @@ class semiAdmiController extends Controller
              'data'=> $data,
              'Mensaje' => $msg,
           ]);
-      }
     }
     /**
       * Metodo utilizado guardar en la BD la informacion de la Propuesta
