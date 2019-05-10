@@ -21,7 +21,7 @@
             <button type="button" class="btn btn-info Mostrar">Mostrar</button>
         @endif
             <button type="button" class="btn btn-danger EliminarNoticia">Eliminar</button>
-            <a href="/agrupaciones/ENoticia/id/{{ $Info->id }}"><button type="button" class="btn btn-primary">Editar</button></a>
+            <a href="{{ route('editNew',['id'=> $Info->id])}}"><button type="button" class="btn btn-primary">Editar</button></a>
       </div>
     </div>
   </div>

@@ -24,17 +24,17 @@ class NoticiasSSAController extends Controller{
     *
     * @return view
   */
-  public function Noticias(){
+  public function index(){
     $data = \App\Noticias::orderBy('id','desc')->get();
-    return view('Admis.NoticiasSSA.NoticiasAdmi',['data' => $data]);
+    return view('Admis.NoticiasSSA.indexNew',['data' => $data]);
   }
   /**
     * Metodo utilizado para mostrar el formulario de noticias.
     *
     * @return view
   */
-  public function index(){
-      return view('Admis.NoticiasSSA.formNoti');
+  public function create(){
+      return view('Admis.NoticiasSSA.createNew');
   }
   /**
     * Metodo utilizado para ocultar noticias de la página principal de visitantes
@@ -67,7 +67,7 @@ class NoticiasSSAController extends Controller{
   public function store(Request $request){
       $request->validate([
         'Titulo'=>['required','string','min:8','max:55'],
-        'DescripcionCorta'=>['required','min:50','max:400'],
+        'DescripcionCorta'=>['required','min:50','max:500'],
         'Descripcion'=>['required'],
         'Fecha'=>['required','date']
       ]);
@@ -116,7 +116,7 @@ class NoticiasSSAController extends Controller{
     * @param Integer $id id de la noticia seleccionada
     * @return
   */
-  public function eliminarNoticia($id){
+  public function destroy($id){
     $res = Noticias::findOrFail($id)->delete();
   }
   /**
@@ -126,9 +126,9 @@ class NoticiasSSAController extends Controller{
     * @param Integer $id id de la noticia seleccionada
     * @return view
   */
-  public function verEditarNoticia($id){
-    $data = Noticias::findOrFail($id)->take(1)->get();
-    return view('Admis.NoticiasSSA.AdmiNoticiaEdit', ['data' => $data]);
+  public function edit($id){
+    $new = Noticias::findOrFail($id);
+    return view('Admis.NoticiasSSA.editNew', compact('new'));
   }
   /**
     * Metodo utilizado para guardar la informacion
@@ -137,9 +137,9 @@ class NoticiasSSAController extends Controller{
     * @param Request
     * @return redirect
   */
-  public function actualizarNoticia(Request $request){
-    $noticia = Noticias::findOrFail($request->id);
-    $all = $request->except('_token','id','ImagenC','ImagenR');
+  public function update(Request $request, $id){
+    $noticia = Noticias::findOrFail($id);
+    $all = $request->except('_token','_method','ImagenC','ImagenR');
       foreach ($all as $key => $value) {
         if($value != "")
           $noticia->$key = $value;

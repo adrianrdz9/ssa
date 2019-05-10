@@ -30,7 +30,7 @@ Route::group(['prefix' => 'comunidad'], function () {
 
 Route::group(['prefix' => 'agrupaciones'], function () {
     //Administrador
-    Route::any('/Admi','Admis\NoticiasSSAController@index')->name('Admi');
+    Route::any('/Admi','Admis\NoticiasSSAController@create')->name('create');
     //semiAdmis
     Route::any('/semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
     //logout
@@ -41,13 +41,13 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     /*
     *   NOTICIAS
     */
-    Route::get('/Admi/ANoticias','Admis\NoticiasSSAController@Noticias')->name('ANoticias');
-    Route::post('/AdmiP','Admis\NoticiasSSAController@store')->name('AdmiP');
+    Route::get('/Admi/ANoticias','Admis\NoticiasSSAController@index')->name('indexNew');
+    Route::post('/AdmiP','Admis\NoticiasSSAController@store')->name('storeNew');
     Route::get('/oNoticia/id/{id}','Admis\NoticiasSSAController@ONoticia');
     Route::get('/mNoticia/id/{id}','Admis\NoticiasSSAController@MNoticia');
-    Route::get('/DNoticia/id/{id}','Admis\NoticiasSSAController@eliminarNoticia')->name('DNoticia');
-    Route::get('/ENoticia/id/{id}','Admis\NoticiasSSAController@verEditarNoticia');
-    Route::post('/UNoticia','Admis\NoticiasSSAController@actualizarNoticia');
+    Route::get('/DNoticia/id/{id}','Admis\NoticiasSSAController@destroy')->name('destroyNew');
+    Route::get('/{id}/edit','Admis\NoticiasSSAController@edit')->name('editNew');
+    Route::patch('/{id}','Admis\NoticiasSSAController@update')->name('updateNew');
     /*
     *   CARRUSEL
     */

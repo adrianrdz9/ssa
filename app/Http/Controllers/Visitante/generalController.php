@@ -11,7 +11,7 @@ class generalController extends Controller{
   public function vistas(){
     if(auth()->check()){
       if(auth()->user()->Siglas=='SSA'){
-        return view('Admis.NoticiasSSA.formNoti');
+        return redirect()->route('indexNew');
       }elseif (auth()->user()->Siglas == 'ASSA'){
         return view('Admis.Comunidad.nuevoEvento');
       }elseif (auth()->user()->Siglas != '') {
