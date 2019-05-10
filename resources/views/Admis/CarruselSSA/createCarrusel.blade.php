@@ -1,23 +1,22 @@
 @extends('layouts.Agrupaciones')
-@section('title','Imágenes Carusel')
 @section('content')
 <div class="container" style="margin-top:1%;">
   <h2>Imagenes para el carusel</h2>
-<form method="post" action="{{ url('agrupaciones/NCarusel') }}" enctype="multipart/form-data">
+<form method="post" action="{{ route('storeCarrusel') }}" enctype="multipart/form-data">
   {{ csrf_field() }}
     <div class="row" style="text-align:left;">
       <div class="col-md-6">
           <div class="form-group">
               <h5>Título:</h5>
-              <input type="text" name="Titulo" class="form-control" placeholder="" />
+              <input type="text" name="Titulo" class="form-control" value="{{ old('Titulo')}}" />
           </div>
           <div class="form-group">
             <h5>Descripción corta:</h5>
-            <textarea class="form-control" name="Descripcion" type="text" maxlength="150"></textarea>
+            <textarea class="form-control" name="Descripcion" type="text" maxlength="150">{{ old('Descripcion')}}</textarea>
           </div>
           <div class="form-group">
               <h5>Link:</h5>
-              <input type="text" name="Link" class="form-control" placeholder="" />
+              <input type="text" name="Link" class="form-control" value="{{ old('Link')}}" />
           </div>
           <h5>¿Qué es?</h5>
           <div class="form-check">

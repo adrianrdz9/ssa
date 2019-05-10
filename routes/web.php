@@ -51,14 +51,14 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     /*
     *   CARRUSEL
     */
-    Route::get('/Admi/Carusel','Admis\CarruselSSAController@VerCarusel');
-    Route::get('/Admi/NICarusel','Admis\CarruselSSAController@Carusel');
-    Route::post('/NCarusel','Admis\CarruselSSAController@NCarusel')->name('NCarusel');
+    Route::get('/Admi/Carusel','Admis\CarruselSSAController@index')->name('indexCarrusel');
+    Route::get('/Admi/NICarusel','Admis\CarruselSSAController@create');
+    Route::post('/NCarusel','Admis\CarruselSSAController@store')->name('storeCarrusel');
     Route::get('/OImagenC/id/{id}','Admis\CarruselSSAController@OImagenC');
     Route::get('/MImagenC/id/{id}','Admis\CarruselSSAController@MImagenC');
-    Route::get('/DImagenC/id/{id}','Admis\CarruselSSAController@eliminarImagenC')->name('DCarusel');
-    Route::get('/EImagenC/id/{id}','Admis\CarruselSSAController@verEditarImagenC')->name('ECarusel');
-    Route::post('/UImagenC','Admis\CarruselSSAController@actualizarCarusel');
+    Route::get('/DImagenC/id/{id}','Admis\CarruselSSAController@destroy')->name('destroyCarrusel');
+    Route::get('/edit/{id}','Admis\CarruselSSAController@edit')->name('Carruseledit');
+    Route::patch('/update/{id}','Admis\CarruselSSAController@update')->name('updateCarrusel');
     /*
     *   PROPUESTAS PARA LA FERIA DE AGRUPACIONES
     */
@@ -78,19 +78,14 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/Admi/AdmiMsj/contacts','Admis\MensajesControlller@get');
     Route::get('/Admi/AdmiMsj/conversation/{id}','Admis\MensajesControlller@getMessagesFor');
     Route::post('/Admi/AdmiMsj/conversation/send','Admis\MensajesControlller@send');
-    // Route::get('/semiAdmi/semiAdmiMsj','Admis\MensajesControlller@verMensajes');
     /*
     *   EVENTOS PARA LA FERIA
     */
-    //Ver eventos
-    Route::get('/Admi/EventosFeria','Admis\FeriasController@verEventos')->name('verEventos');
-    //Guardar evento
-    Route::post('/NEvento','Admis\FeriasController@guardarEvento')->name('NEvento');
-    //Eliminar evento
-    Route::get('/DEvento/id/{id}','Admis\FeriasController@eliminarEvento')->name('DEvento');
-    //Vista para actualizar
-    Route::get('/EEvento/id/{id}','Admis\FeriasController@verEditarEvento')->name('EEvento');
-    Route::post('/UEvento','Admis\FeriasController@actualizarEvento')->name('UEvento');;
+    Route::get('/Admi/EventosFeria','Admis\FeriasController@index')->name('indexEvents');
+    Route::post('/NEvento','Admis\FeriasController@store')->name('storeEventF');
+    Route::get('/DEvento/id/{id}','Admis\FeriasController@destroy')->name('destroyEvent');
+    Route::get('/{id}/editE','Admis\FeriasController@edit')->name('editEvent');
+    Route::patch('/{id}/updateE','Admis\FeriasController@update')->name('updateEvent');;
 
     /*
     *               AGRUPACIONES

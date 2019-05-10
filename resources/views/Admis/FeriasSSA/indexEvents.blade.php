@@ -30,7 +30,7 @@
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1"  data-id="{{ $evento->id }}">
                   <li> <button type="button" name="button" class="btn btn-danger btn-block Eliminar">Eliminar</button> </li>
-                  <li><a class="btn btn-info btn-block" href="/agrupaciones/EEvento/id/{{ $evento->id }}">Editar</a></li>
+                  <li><a class="btn btn-info btn-block" href="{{ route('editEvent',['id'=> $evento->id])}}">Editar</a></li>
                 </ul>
               </div>
             </div>
@@ -41,32 +41,32 @@
     </table>
   </div>
   <div class="col-sm-4">
-   <form action="{{ route('NEvento') }}" method="post">
+   <form action="{{ route('storeEventF') }}" method="post">
      {{ csrf_field() }}
       <div class="form-group">
         <label>Agrupacion responsable</label>
-        <input type="text" class="form-control col-md-11" name="Siglas">
+        <input type="text" class="form-control col-md-11" name="Siglas" value="{{ old('Siglas')}}">
         <small class="form-text text-muted">Siglas de la agrupación</small>
       </div>
       <div class="form-group">
         <label>Titulo</label>
-        <input type="text" class="form-control col-md-11" name="Titulo">
+        <input type="text" class="form-control col-md-11" name="Titulo" value="{{ old('Titulo')}}">
       </div>
       <div class="form-group">
         <label>Ponente</label>
-        <input type="text" class="form-control col-md-11" name="Por">
+        <input type="text" class="form-control col-md-11" name="Por" value="{{ old('Por')}}">
       </div>
       <div class="form-group">
         <label>Día</label>
-        <input type="date" class="form-control col-md-11" name="Dia">
+        <input type="date" class="form-control col-md-11" name="Dia" value="{{ old('Dia')}}">
       </div>
       <div class="form-group">
         <label>Lugar</label>
-        <input type="text" class="form-control col-md-11" name="Lugar">
+        <input type="text" class="form-control col-md-11" name="Lugar" value="{{ old('Lugar')}}">
       </div>
       <div class="form-group">
         <label>Hora</label>
-        <input type="time" class="form-control col-md-11" name="Hora">
+        <input type="time" class="form-control col-md-11" name="Hora" value="{{ old('Hora')}}">
       </div>
       <button type="submit" class="btn btn-primary btn-block">Guardar</button>
     </form>

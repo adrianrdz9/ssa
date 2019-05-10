@@ -24,10 +24,10 @@ class CarruselSSAController extends Controller{
     *
     * @return view
   */
-  public function VerCarusel(){
+  public function index(){
       $data = \App\Carusel::orderBy('id','desc')
                             ->get(['id', 'Titulo','Descripcion','Imagen','Estado']);
-      return view('Admis.AdmiCaruselEdit',['data' => $data]);
+      return view('Admis.CarruselSSA.indexCarrusel',['data' => $data]);
   }
   /**
     * Metodo utilizado para mostrar el formulario para agregar
@@ -35,8 +35,8 @@ class CarruselSSAController extends Controller{
     *
     * @return view
   */
-  public function Carusel(){
-      return view('Admis.Carusel');
+  public function create(){
+      return view('Admis.CarruselSSA.createCarrusel');
   }
   /**
     * Metodo utilizado para ocular imagenes del carrusel.
@@ -46,9 +46,9 @@ class CarruselSSAController extends Controller{
     * AJAX
   */
   public function OImagenC($id){
-      \App\Carusel::findOrFail($id)
-                    ->where('id',$id)
-                    ->update(['Estado' => 0]);
+    $carru = Carusel::findOrFail($id)
+            ->where('id',$id)
+            ->update(['Estado' => 0]);
   }
   /**
     * Metodo utilizado para mostrar imagenes en el carrusel.
@@ -58,9 +58,9 @@ class CarruselSSAController extends Controller{
     * AJAX
   */
   public function MImagenC($id){
-      \App\Carusel::findOrFail($id)
-                    ->where('id',$id)
-                    ->update(['Estado' => 1]);
+      $carru = Carusel::findOrFail($id)
+              ->where('id',$id)
+              ->update(['Estado' => 1]);
   }
   /**
     * Metodo utilizado para eliminar imagenes en el carrusel.
@@ -69,7 +69,7 @@ class CarruselSSAController extends Controller{
     *
     * AJAX
   */
-  public function eliminarImagenC($id){
+  public function destroy($id){
     $res = Carusel::findOrFail($id)->delete();
   }
   /**
@@ -78,9 +78,9 @@ class CarruselSSAController extends Controller{
     *@param Integer $id Id de la imagen seleccionada
     *
   */
-  public function verEditarImagenC($id){
-    $data = Carusel::findOrFail($id)->take(1)->get();
-    return view('Admis.AdmiImageEdit', ['data' => $data]);
+  public function edit($id){
+    $carrusel = Carusel::findOrFail($id);
+    return view('Admis.CarruselSSA.editCarrusel',compact ('carrusel'));
   }
   /**
     * Metodo utilizado para guardar la informacion
@@ -89,11 +89,11 @@ class CarruselSSAController extends Controller{
     * @param Request
     * @return redirect
   */
-  public function actualizarCarusel(Request $request){
-    $all = $request->all();
+  public function update(Request $request, $id){
+    $all = $request->except('_token','_method','id','Imagen');
     $carusel= Carusel::find($request->id);
       foreach ($all as $key => $value) {
-        if($value != "" && $key != "_token" && $key != "id" && $key != "Imagen")
+        if($value != "")
           $carusel->$key = Purifier::clean($value);
       }
       if($request->hasFile('Imagen')){
@@ -104,7 +104,7 @@ class CarruselSSAController extends Controller{
         $carusel->Imagen = $filename;
       }
     $carusel->save();
-    return redirect('agrupaciones/Admi/Carusel')->with('notice','¡Actualización exitosa!');
+    return redirect()->route('indexCarrusel')->with('notice','¡Actualización exitosa!');
   }
   /**
     * Metodo utilizado para mostrar guardar en la BD
@@ -114,7 +114,7 @@ class CarruselSSAController extends Controller{
     *
     * @return redirect
   */
-  public function NCarusel(Request $request){
+  public function store(Request $request){
       $request->validate([
         'Titulo'=>['required','string','min:8','max:55'],
         'Descripcion'=>['required','max:200'],
@@ -131,6 +131,6 @@ class CarruselSSAController extends Controller{
             Image::make($image)->resize(600,309)->save($location);
           $carusel->Imagen = $filename;
         $carusel->save();
-        return redirect('agrupaciones/Admi/NICarusel')->with('notice', '¡Imagen agregada!');
+        return redirect()->route('indexCarrusel')->with('notice', '¡Imagen agregada!');
     }
 }//Fin controlador
