@@ -13,7 +13,7 @@ class generalController extends Controller{
       if(auth()->user()->Siglas=='SSA'){
         return redirect()->route('indexNew');
       }elseif (auth()->user()->Siglas == 'ASSA'){
-        return view('Admis.Comunidad.nuevoEvento');
+        return redirect()->route('indexComunidad');
       }elseif (auth()->user()->Siglas != '') {
         return view('Admis.Informacion');
       }
@@ -47,15 +47,6 @@ class generalController extends Controller{
         return view('Visitante.Noticias',['data' => $data,
                     'images' => $caru ,
                     'numero' => $num]);
-    }
-    /**
-      * Metodo utilizado para mostrar un listado de todas las noticias
-      *
-      * @return view
-    */
-    public function Historial(){
-      $data = \App\Noticias::orderBy('id','desc')->take(18)->get();
-      return view('Visitante.Historial',['data' => $data]);
     }
     /**
       * Metodo utilizado para mostrar un listado de todas las noticias

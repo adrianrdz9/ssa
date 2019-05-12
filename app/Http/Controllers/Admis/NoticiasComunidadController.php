@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Noticias;
 class NoticiasComunidadController extends Controller{
+    /**
+     * Metodo constructor usado para limitar el acceso a solo administradores
+     *
+     * @return void
+     */
+    public function __construct(){
+        $this->middleware('role:admiComunidad');
+    }
     public function noticiasAgrupaciones(){
       $data = \App\Noticias::where('Disponible', 1)
              ->orderBy('id', 'desc')

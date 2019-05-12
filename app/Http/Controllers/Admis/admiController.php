@@ -17,7 +17,7 @@ class admiController extends Controller
       *
       * @return void
     */
-    public function construct(){
+    public function __construct(){
       $this->middleware('role:SSA');
     }
     public function Propuestas(){

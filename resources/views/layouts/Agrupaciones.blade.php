@@ -71,10 +71,10 @@
                     <a class="nav-link" href="../../../agrupaciones/Admi">Nueva noticia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../../agrupaciones/Admi/Carusel">Carusel</a>
+                    <a class="nav-link" href="../../../agrupaciones/Admi/Carusel">Carrusel</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../../agrupaciones/Admi/NICarusel">Nueva Imagen Carusel</a>
+                    <a class="nav-link" href="../../../agrupaciones/Admi/NICarusel">Nueva Imagen Carrusel</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../../agrupaciones/Admi/Contraseñas">Contraseñas</a>
@@ -114,7 +114,7 @@
                           <a class="nav-link" href="/comunidad/">Página principal</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="../../comunidad/Eventos">Eventos</a>
+                          <a class="nav-link" href="{{ route('createEventC') }}">Eventos</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="../../comunidad/NoticiasAgrupaciones">Agrupaciones</a>
@@ -128,9 +128,6 @@
                         @else
                           <li class="nav-item">
                             <a class="nav-link" href="/agrupaciones/Agrupaciones">Agrupaciones</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="/agrupaciones/Historial">Historial</a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" href="/agrupaciones/Reclutamientos">Reclutamientos</a>

@@ -50,8 +50,13 @@
                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> ...
                        <span class="caret"></span></button>
                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1"  data-id="{{ $evento->id }}">
-                         <li> <button type="button" name="button" class="btn btn-danger btn-block Eliminar">Eliminar</button> </li>
-                         <li><a class="btn btn-info btn-block" href="/comunidad/EEvento/id/{{ $evento->id }}">Editar</a></li>
+                         <li><form action="{{ route('deleteEventF',['id'=> $evento->id])}}"  method="post">
+                              @csrf
+                              @method('delete')
+                              <input type="submit" class="btn btn-danger" value="Eliminar">
+                            </form>
+                          </li>
+                         <li><a class="btn btn-info btn-block" href="{{ route('editEventC',['id'=> $evento->id])}}">Editar</a></li>
                        </ul>
                      </div>
                    </div>

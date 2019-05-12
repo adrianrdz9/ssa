@@ -15,7 +15,7 @@ class NoticiasSSAController extends Controller{
     *
     * @return void
   */
-  public function construct(){
+  public function __construct(){
     $this->middleware('role:SSA');
   }
   /**
@@ -66,7 +66,7 @@ class NoticiasSSAController extends Controller{
   */
   public function store(Request $request){
       $request->validate([
-        'Titulo'=>['required','string','min:8','max:55'],
+        'Titulo'=>['required','string','min:8'],
         'DescripcionCorta'=>['required','min:50','max:500'],
         'Descripcion'=>['required'],
         'Fecha'=>['required','date']

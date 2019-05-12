@@ -55,7 +55,7 @@
                 </div>
                 <div class="card-text">
                     <h6>{{ date('d/m/Y', strtotime($dato->Fecha)) }}</h6>
-                    <a href='Noticia/id/{{ $dato->id }}'><button class="btn btn-block btn-primary">Ver más</button></a>
+                    <a href='/agrupaciones/Noticia/id/{{ $dato->id }}'><button class="btn btn-block btn-primary">Ver más</button></a>
                 </div>
               </div>
           </div>

@@ -18,9 +18,12 @@ Route::group(['prefix' => 'comunidad'], function () {
     *   ADMINISTRADOR DE COMUNIDAD (admiComunidad/ASSA)
     */
     //Eventos
-    Route::view('/Eventos','Admis.Comunidad.nuevoEvento');
-    Route::post('/comunidadNEvento','Admis\EventosComunidadController@save');
-    Route::get('/','Admis\EventosComunidadController@paginaPrincipal');
+    Route::get('/Event/create','Admis\EventosComunidadController@create')->name('createEventC');
+    Route::post('/newEvent','Admis\EventosComunidadController@store')->name('storeEventC');
+    Route::get('/','Admis\EventosComunidadController@index')->name('indexComunidad');
+    Route::get('/{id}/editEventC','Admis\EventosComunidadController@edit')->name('editEventC');
+    Route::patch('/{id}/updateEventC','Admis\EventosComunidadController@update')->name('updateEventC');
+    Route::delete('/delete/{id}','Admis\EventosComunidadController@destroy')->name('deleteEventF');
     //Noticias
     Route::get('/NoticiasAgrupaciones','Admis\NoticiasComunidadController@noticiasAgrupaciones');
     //Agregar noticias a la página principal
@@ -116,7 +119,6 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/','Visitante\generalController@index')->name('agrupacionesIndex');
     //Noticias individual
     Route::get('/Noticia/id/{id}','Visitante\generalController@noticia');
-    Route::get('/Historial','Visitante\generalController@Historial');
     //Agrupaciones lista
     Route::get('/Agrupaciones','Visitante\generalController@agrupaciones');
     //Agrupaciones individual

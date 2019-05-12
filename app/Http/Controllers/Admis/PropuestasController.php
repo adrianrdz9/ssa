@@ -12,12 +12,12 @@ class PropuestasController extends Controller{
         *
         * @return void
       */
-      public function construct(){
+      public function __construct(){
         $this->middleware('role:SSA|Agrupacion');
       }
       /**
         * Metodo constructor utilizado para ver las propuestas que
-        * sean realizado 
+        * sean realizado
         *
         * @return view
       */
