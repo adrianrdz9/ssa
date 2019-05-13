@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Carusel;
+use App\AdminChange;
 use Purifier;
 
 class CarruselSSAController extends Controller{
@@ -46,9 +47,12 @@ class CarruselSSAController extends Controller{
     * AJAX
   */
   public function OImagenC($id){
-    $carru = Carusel::findOrFail($id)
-            ->where('id',$id)
-            ->update(['Estado' => 0]);
+    Carusel::find($id)->update(['Estado' => 0]);
+    $ima = Carusel::find($id);
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Oculto la imagen con el titulo"'. strip_tags($ima->Titulo) .'" del carrusel',
+    ]);
   }
   /**
     * Metodo utilizado para mostrar imagenes en el carrusel.
@@ -58,9 +62,12 @@ class CarruselSSAController extends Controller{
     * AJAX
   */
   public function MImagenC($id){
-      $carru = Carusel::findOrFail($id)
-              ->where('id',$id)
-              ->update(['Estado' => 1]);
+    Carusel::find($id)->update(['Estado' => 1]);
+    $ima = Carusel::find($id);
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Mostrara la imagen con el titulo"'. strip_tags($ima->Titulo) .'" en el carrusel',
+    ]);
   }
   /**
     * Metodo utilizado para eliminar imagenes en el carrusel.
@@ -71,6 +78,10 @@ class CarruselSSAController extends Controller{
   */
   public function destroy($id){
     $res = Carusel::findOrFail($id)->delete();
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Elimino la imagen con el titulo"'. strip_tags($ima->Titulo) .'" del carrusel',
+    ]);
   }
   /**
     * Metodo utilizado para ver el formulario de editar carusel
@@ -104,6 +115,10 @@ class CarruselSSAController extends Controller{
         $carusel->Imagen = $filename;
       }
     $carusel->save();
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Actualizó la imagen con el titulo"'. strip_tags($ima->Titulo) .'" del carrusel',
+    ]);
     return redirect()->route('indexCarrusel')->with('notice','¡Actualización exitosa!');
   }
   /**
@@ -131,6 +146,10 @@ class CarruselSSAController extends Controller{
             Image::make($image)->resize(1614,985)->save($location);
           $carusel->Imagen = $filename;
         $carusel->save();
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Agrego una nueva imagen al carrusel con el titulo: "'. strip_tags($ima->Titulo) .'"',
+        ]);
         return redirect()->route('indexCarrusel')->with('notice', '¡Imagen agregada!');
     }
 }//Fin controlador

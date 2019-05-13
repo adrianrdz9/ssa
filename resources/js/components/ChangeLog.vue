@@ -10,7 +10,8 @@
       <div class="container right" :id="moment(item.created_at).format('MMMM[/]YYYY')" v-for="item of items" :key="item.id">
         <div class="content">
           <h2>{{ moment(item.created_at).format('D [de] MMMM [de] YYYY') }}</h2>
-          <strong>{{ item.author.name }}  {{ item.author.last_name }}</strong>
+          <strong>{{ item.author.name }}  {{ item.author.last_name }} </strong>
+          <strong>{{ item.author.Siglas }}  {{ item.author.Nombre }} </strong>
           <p>{{ item.change }}</p>
         </div>
       </div>
@@ -19,7 +20,7 @@
 </template>
 
 <script>
-export default {
+export default { 
   data() {
     return {
       items: [],
