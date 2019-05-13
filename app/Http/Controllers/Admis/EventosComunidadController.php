@@ -44,7 +44,7 @@ class EventosComunidadController extends Controller{
       * @param Request $request info del formulario para eventos
       * @return view
     */
-    public function save(Request $request){
+    public function store(Request $request){
       $all = $request->except('_token');
       $evento = new ComunidadEvents;
       foreach ($all as $key => $value) {

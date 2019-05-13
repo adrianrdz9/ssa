@@ -27,7 +27,6 @@
            </center>
          </div>
       </div>
-        <div >
           <div class="table-responsive">
             <table class="table" style="margin-top:1%;">
               <thead class="thead-dark">
@@ -39,6 +38,7 @@
                    <th scope="col">...</th>
                  </tr>
                </thead>
+             <tbody>
                @foreach ($events as $evento)
                  <tr>
                    <td>{{ $evento->Evento }}</td>
@@ -46,27 +46,20 @@
                    <td>{{ date("d/m/Y", strtotime($evento->Dia)) }}</td>
                    <td>{{ $evento->Hora }}</td>
                    <td>
-                     <div class="dropdown">
-                       <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> ...
-                       <span class="caret"></span></button>
-                       <ul class="dropdown-menu" role="menu" aria-labelledby="menu1"  data-id="{{ $evento->id }}">
-                         <li><form action="{{ route('deleteEventF',['id'=> $evento->id])}}"  method="post">
-                              @csrf
-                              @method('delete')
-                              <input type="submit" class="btn btn-danger" value="Eliminar">
-                            </form>
-                          </li>
-                         <li><a class="btn btn-info btn-block" href="{{ route('editEventC',['id'=> $evento->id])}}">Editar</a></li>
-                       </ul>
-                     </div>
-                   </div>
-                 </td>
+                       <div class="dropdown">
+                         <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> ...
+                         <span class="caret"></span></button>
+                         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1"  data-id="{{ $evento->id }}">
+                           <li> <button type="button" name="button" class="btn btn-danger btn-block EliminarEC">Eliminar</button> </li>
+                           <li><a class="btn btn-info btn-block" href="{{ route('editEventC',['id'=> $evento->id])}}">Editar</a></li>
+                         </ul>
+                       </div>
+                   </td>
                  </tr>
                @endforeach
              </tbody>
             </table>
           </div>
-        </div>
    </div>
       <hr>
   <section class="details-card">

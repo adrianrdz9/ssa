@@ -133,6 +133,9 @@
                             <a class="nav-link" href="/agrupaciones/Reclutamientos">Reclutamientos</a>
                           </li>
                           <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Feria') }}">Feria de agrupaciones</a>
+                          </li>
+                          <li class="nav-item">
                             <a class="nav-link" href="/agrupaciones/">Inicio agrupaciones</a>
                           </li>
                       @endrole

@@ -1,5 +1,4 @@
 @extends('layouts.Agrupaciones')
-@section('title','Noticias')
 @section('content')
 <div id="demo" class="carousel slide" data-ride="carousel" style="width:100%;">
   <ul class="carousel-indicators">

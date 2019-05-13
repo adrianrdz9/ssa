@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
   <h3>Agregar evento a la página principal</h3>
-  <form action="{{ url('comunidad/comunidadNEvento') }}" method="post">
+  <form action="{{ route('storeEventC') }}" method="post">
      {{ csrf_field() }}
       <div class="form-group">
         <label>Titulo</label>

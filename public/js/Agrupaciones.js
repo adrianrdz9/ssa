@@ -169,3 +169,24 @@ let id = $(this).parents('div').data('id');
       $(this).closest('.btn-info').remove();
   });
 });
+//Eventos página principal
+$('.EliminarEC').click(function () {
+let id = $(this).parents('ul').data('id');
+  $.ajax({
+    url: "/comunidad/delete/" + id,
+    method: "get",
+  }).done(()=>{
+    $(this).closest('tr').remove();
+    swal(
+        '¡Exito!',
+        'Elimino el evento',
+        'success'
+    )
+  }).fail(()=>{
+    swal(
+        '¡Error!',
+        'No es posible eliminar este evento',
+        'error'
+    )
+  });
+});

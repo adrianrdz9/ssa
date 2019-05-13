@@ -6,15 +6,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Noticias;
 use App\ComunidadEvents;
+use App\Carusel;
+use Reclutamiento;
 
 class generalController extends Controller{
   public function vistas(){
     if(auth()->check()){
-      if(auth()->user()->Siglas=='SSA'){
+      if(auth()->user()->hasRole('SSA') ){
         return redirect()->route('indexNew');
-      }elseif (auth()->user()->Siglas == 'ASSA'){
+      }elseif (auth()->user()->hasRole('admiComunidad')){
         return redirect()->route('indexComunidad');
-      }elseif (auth()->user()->Siglas != '') {
+      }elseif (auth()->user()->hasRole('Agrupacion') ) {
         return view('Admis.Informacion');
       }
       if(auth()->user()->hasRole('superAdmin')  ){
@@ -112,7 +114,7 @@ class generalController extends Controller{
         ]);
     }
     public function Reclutamientos(){
-          $data = \App\Reclutamientos::orderBy('Fecha','desc')->get();
+          $data = Reclutamientos::orderBy('Fecha','desc')->get();
           $count = count($data);
             for ($i=0; $i < $count ; $i++) {
                 $Fecha = explode("-", $data[$i]->Fecha);
@@ -120,14 +122,28 @@ class generalController extends Controller{
               }
           return view('Visitante.Reclutamientos',['data'=> $data, 'num' => $count]);
         }
-        public function Reclutamiento($id){
-          $data = \App\Reclutamientos::where('id',$id)->get();
-          $u = $data[0]->Siglas;
-          $Fecha = explode("-", $data[0]->Fecha);
-          //Dar formato a fecha dd/mm/aaaa
-          $data[0]->Fecha = $Fecha[2] . "/" . $Fecha[1] . "/" . $Fecha[0];
-          $agrupa = \App\User::where('Siglas',$u)->get(['Nombre']);
-          return view('Visitante.RecluIndividual',[
-            'data' => $data, 'Agrupa'=> $agrupa]);
-         }
-    }
+    public function Reclutamiento($id){
+      $data = Reclutamientos::findOrFail($id)
+                  ->where('id',$id)
+                  ->get();
+      $u = $data[0]->Siglas;
+      $Fecha = explode("-", $data[0]->Fecha);
+      //Dar formato a fecha dd/mm/aaaa
+      $data[0]->Fecha = $Fecha[2] . "/" . $Fecha[1] . "/" . $Fecha[0];
+      $agrupa = \App\User::where('Siglas',$u)->get(['Nombre']);
+      return view('Visitante.RecluIndividual',[
+        'data' => $data, 'Agrupa'=> $agrupa]);
+     }
+     public function Feria(){
+       $carrusel = Carusel::where('Tipo','F')
+                   ->orderBy('created_at','desc')
+                   ->get();
+       $numero = count($carrusel);
+       $eventos = ComunidadEvents::orderBy('Dia')->get();
+       return view('Visitante.Feria',[
+         'carrusel' => $carrusel,
+         'eventos' => $eventos,
+         'numero' => $numero
+       ]);
+     }
+   }//Fin controller

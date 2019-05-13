@@ -17,27 +17,33 @@ Route::group(['prefix' => 'comunidad'], function () {
     /*
     *   ADMINISTRADOR DE COMUNIDAD (admiComunidad/ASSA)
     */
-    //Eventos
+    /*
+    *   Evntos para la página principal
+    */
     Route::get('/Event/create','Admis\EventosComunidadController@create')->name('createEventC');
     Route::post('/newEvent','Admis\EventosComunidadController@store')->name('storeEventC');
     Route::get('/','Admis\EventosComunidadController@index')->name('indexComunidad');
     Route::get('/{id}/editEventC','Admis\EventosComunidadController@edit')->name('editEventC');
     Route::patch('/{id}/updateEventC','Admis\EventosComunidadController@update')->name('updateEventC');
-    Route::delete('/delete/{id}','Admis\EventosComunidadController@destroy')->name('deleteEventF');
-    //Noticias
+    Route::get('/delete/{id}','Admis\EventosComunidadController@destroy')->name('deleteEventF');
+    /*
+    *   NOTICIAS de agrupaciones (bolsa de trabajo y actividades deportivas)
+    */
+    /*
+    * Noticas de agrupaciones
+    */
     Route::get('/NoticiasAgrupaciones','Admis\NoticiasComunidadController@noticiasAgrupaciones');
-    //Agregar noticias a la página principal
     Route::get('/Agregar/id/{id}','Admis\NoticiasComunidadController@agregarNoticiaAgrupa');
     Route::get('/Eliminar/id/{id}','Admis\NoticiasComunidadController@eliminarNoticiaAgrupa');
+    /*
+    * Noticas de actividades deportivas
+    */
+    /*
+    * Noticas de bolsa de trabajo
+    */
 });
 
 Route::group(['prefix' => 'agrupaciones'], function () {
-    //Administrador
-    Route::any('/Admi','Admis\NoticiasSSAController@create')->name('create');
-    //semiAdmis
-    Route::any('/semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
-    //logout
-    Route::post('/logout','Auth\LoginController@logout')->name('logout');
     /*
     *               ADMINISTRADOR (SSA)
     */
@@ -45,6 +51,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     *   NOTICIAS
     */
     Route::get('/Admi/ANoticias','Admis\NoticiasSSAController@index')->name('indexNew');
+    Route::get('/Admi','Admis\NoticiasSSAController@create')->name('create');
     Route::post('/AdmiP','Admis\NoticiasSSAController@store')->name('storeNew');
     Route::get('/oNoticia/id/{id}','Admis\NoticiasSSAController@ONoticia');
     Route::get('/mNoticia/id/{id}','Admis\NoticiasSSAController@MNoticia');
@@ -78,6 +85,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     *   MENSAJES
     */
     Route::get('/Admi/AdmiMsj','Admis\MensajesControlller@verMensajes');
+    Route::get('/semiAdmi/semiAdmiMsj','Admis\MensajesControlller@verMensajes');
     Route::get('/Admi/AdmiMsj/contacts','Admis\MensajesControlller@get');
     Route::get('/Admi/AdmiMsj/conversation/{id}','Admis\MensajesControlller@getMessagesFor');
     Route::post('/Admi/AdmiMsj/conversation/send','Admis\MensajesControlller@send');
@@ -94,6 +102,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     *               AGRUPACIONES
     */
     //Información general
+    Route::get('/semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
     Route::post('/InfoGeneral','Admis\semiAdmiController@InfoGeneral')->name('InfoGeneral');
     //Integrantes
     Route::post('/Integrantes','Admis\semiAdmiController@Integrantes')->name('Integrantes');
@@ -125,6 +134,8 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/Agrupacion/id/{id}','Visitante\generalController@individual');
     //Reclutammientos
     Route::get('/Reclutamientos','Visitante\generalController@Reclutamientos');
+    //Feria de agrupaciones
+    Route::get('/Feria','Visitante\generalController@Feria')->name('Feria');
 
 });
 

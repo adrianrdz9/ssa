@@ -100,7 +100,7 @@ class CarruselSSAController extends Controller{
         $image = $request->file('Imagen');
         $filename = time() . '.' . $image->getClientOriginalExtension();
         $location = public_path('images/Carusel/'. $filename);
-        Image::make($image)->resize(600,309)->save($location);
+        Image::make($image)->resize(1614,985)->save($location);
         $carusel->Imagen = $filename;
       }
     $carusel->save();
@@ -128,7 +128,7 @@ class CarruselSSAController extends Controller{
           $image = $request->file('Imagen');
           $filename = time() . '.' . $image->getClientOriginalExtension();
           $location = public_path('images/Carusel/'. $filename);
-            Image::make($image)->resize(600,309)->save($location);
+            Image::make($image)->resize(1614,985)->save($location);
           $carusel->Imagen = $filename;
         $carusel->save();
         return redirect()->route('indexCarrusel')->with('notice', '¡Imagen agregada!');
