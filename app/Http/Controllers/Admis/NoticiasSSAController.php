@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Noticias;
 use App\Carusel;
+use App\AdminChange;
 use Purifier;
 class NoticiasSSAController extends Controller{
   /**
@@ -25,7 +26,7 @@ class NoticiasSSAController extends Controller{
     * @return view
   */
   public function index(){
-    $data = \App\Noticias::orderBy('id','desc')->get();
+    $data = Noticias::orderBy('id','desc')->get();
     return view('Admis.NoticiasSSA.indexNew',['data' => $data]);
   }
   /**
@@ -44,8 +45,14 @@ class NoticiasSSAController extends Controller{
     * AJAX
   */
   public function ONoticia($id){
-    \App\Noticias::findOrFail($id)
-        ->update(['Disponible' => 0]);
+    Noticias::findOrFail($id)->update(['Disponible' => 0]);
+
+    $ima = Noticias::find($id);
+
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Oculto la noticia con el titulo"'. strip_tags($ima->Titulo) .'" en la página de agrupaciones',
+    ]);
   }
   /**
     * Metodo utilizado para mostrar noticias de la página principal de visitantes
@@ -55,7 +62,14 @@ class NoticiasSSAController extends Controller{
     * AJAX
   */
   public function MNoticia($id){
-    \App\Noticias::findOrFail($id)->update(['Disponible' => 1]);
+    Noticias::findOrFail($id)->update(['Disponible' => 1]);
+
+    $ima = Noticias::find($id);
+
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Mostrara la noticia con el titulo"'. strip_tags($ima->Titulo) .'" en la página de agruapciones',
+    ]);
   }
   /**
     * Metodo utilizado para guardar los datos registrados el formulario de noticias.
@@ -108,7 +122,13 @@ class NoticiasSSAController extends Controller{
               $carusel->Imagen = $filename;
             $carusel->save();
         }
-          return redirect('agrupaciones/Admi')->with('notice', '¡Se guardó la noticia con exito!');
+
+        AdminChange::create([
+            'author_id' => auth()->user()->id,
+            'change' => 'Agrego una nueva noticia con el titulo: "'. strip_tags($request->Titulo .'"',
+        ]);
+
+        return redirect('agrupaciones/Admi')->with('notice', '¡Se guardó la noticia con exito!');
   }
   /**
     * Metodo utilizado para borrar noticias
@@ -117,7 +137,12 @@ class NoticiasSSAController extends Controller{
     * @return
   */
   public function destroy($id){
-    $res = Noticias::findOrFail($id)->delete();
+    $event = Noticias::findOrFail($id);
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Eliminación la noticia: '.$event->Evento
+    ]);
+    $event->delete();
   }
   /**
     * Metodo utilizado para ver la vista con el formulario
@@ -159,6 +184,12 @@ class NoticiasSSAController extends Controller{
         $noticia->ImagenR = $filename;
       }
     $noticia->save();
+
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Actualización de la noticia:'. strip_tags($request->Titulo) .'Hpña'
+    ]);
+
     return redirect('agrupaciones/Admi/ANoticias')->with('notice','¡Actualización exitosa!');
   }
 

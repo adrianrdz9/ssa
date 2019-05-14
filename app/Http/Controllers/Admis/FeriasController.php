@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admis;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\FeriaEventos;
+use App\AdminChange;
+
 class FeriasController extends Controller
 {
   /**
@@ -34,17 +36,27 @@ class FeriasController extends Controller
       'Siglas'=>['required','string','min:2'],
       'Titulo'=>['required','min:8'],
       'Por'=>['required'],
-      'Dia'=>['required','date','after|yesterday'],
-      'Dia'=>['required']
+      'Dia'=>['required','date','after:yesterday'],
+      'Lugar'=>['required'],
+      'Hora'=>['required'],
     ]);
-    $evento = new FeriaEventos;
-      $evento->Siglas = $request->Siglas;
-      $evento->Titulo = $request->Titulo;
-      $evento->Por = $request->Por;
-      $evento->Dia = $request->Dia;
-      $evento->Lugar = $request->Lugar;
-      $evento->Hora = $request->Hora;
-    $evento->save();
+
+    // Realizar creacion
+    $event = FeriaEventos::create([
+        'Siglas' => $request->Siglas,
+        'Titulo' => $request->Titulo,
+        'Por' => $request->Por,
+        'Dia' => $request->Dia,
+        'Lugar' => $request->Lugar,
+        'Hora' => $request->Hora,
+    ]);
+
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Agrego a la feria de agrupaciones el evento: "'.$event->Titulo
+        .'" para el día: '.$event->Dia.' por la agrupación: '.$event->Siglas
+    ]);
+
     return redirect()->route('indexEvents')->with('notice','¡Se guardó el evento con exito!');
   }
   /**
@@ -62,13 +74,34 @@ class FeriasController extends Controller
     * @return redirect
   */
   public function update(Request $request, $id){
-    $all = $request->except('_token','_method');
-    $evento = FeriaEventos::findOrFail($id);
-    foreach ($all as $key => $value) {
-      if($value != "")
-        $evento->$key = $value;
-    }
-    $evento->save();
+    $request->validate([
+      'Siglas'=>['nullable','string','min:2'],
+      'Titulo'=>['nullable','min:8'],
+      'Por'=>['nullable'],
+      'Dia'=>['nullable','date','after:yesterday'],
+      'Lugar'=>['nullable','string'],
+      'Hora'=>['nullable'],
+    ]);
+
+    $event = FeriaEventos::findOrFail($id);
+
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Actualización del evento: "'. strip_tags($event->Titulo).'"  ->  "'.$request->Titulo
+        .'" del día: '.$event->Dia.' -> '. $request->Dia
+        .' a la hora: '.$event->Hora.' -> '. $request->Hora
+        .' en: '.$event->Lugar.' -> '. $request->Lugar
+    ]);
+
+    FeriaEventos::find($id)->update([
+        'Siglas'=>$request->Siglas,
+        'Titulo'=>$request->Titulo,
+        'Por'=>$request->Por,
+        'Dia'=>$request->Dia,
+        'Lugar' => $request->Lugar,
+        'Hora' => $request->Hora
+    ]);
+
     return redirect()->route('indexEvents')->with('notice','¡Actualización exitosa!');
   }
   /**
@@ -77,7 +110,12 @@ class FeriasController extends Controller
     * @return
     * AJAX
   */
-  public function destroyvento($id){
-    $res = FeriaEventos::findOrFail($id)->delete();
+  public function destroy($id){
+    $event = FeriaEventos::findOrFail($id);
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Eliminación del evento: "'.$event->Titulo.'"',
+    ]);
+    $event->delete();
   }
 }

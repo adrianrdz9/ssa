@@ -114,7 +114,7 @@
                           <a class="nav-link" href="/comunidad/">Página principal</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="{{ route('createEventC') }}">Eventos</a>
+                          <a class="nav-link" href="{{ route('createEventC') }}">Nuevo evento</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="../../comunidad/NoticiasAgrupaciones">Agrupaciones</a>

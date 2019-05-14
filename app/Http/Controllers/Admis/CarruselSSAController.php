@@ -77,11 +77,12 @@ class CarruselSSAController extends Controller{
     * AJAX
   */
   public function destroy($id){
-    $res = Carusel::findOrFail($id)->delete();
+    $event = Carusel::findOrFail($id);
     AdminChange::create([
         'author_id' => auth()->user()->id,
-        'change' => 'Elimino la imagen con el titulo"'. strip_tags($ima->Titulo) .'" del carrusel',
+        'change' => 'Eliminación del evento: '.$event->Titulo
     ]);
+    $event->delete();
   }
   /**
     * Metodo utilizado para ver el formulario de editar carusel
@@ -117,7 +118,7 @@ class CarruselSSAController extends Controller{
     $carusel->save();
     AdminChange::create([
         'author_id' => auth()->user()->id,
-        'change' => 'Actualizó la imagen con el titulo"'. strip_tags($ima->Titulo) .'" del carrusel',
+        'change' => 'Actualizó la imagen con el titulo "'. strip_tags($ima->Titulo) .'" del carrusel',
     ]);
     return redirect()->route('indexCarrusel')->with('notice','¡Actualización exitosa!');
   }

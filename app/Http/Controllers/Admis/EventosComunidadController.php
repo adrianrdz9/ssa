@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ComunidadEvents;
 use App\Noticias;
+use App\AdminChange;
 class EventosComunidadController extends Controller{
 
     /**
@@ -45,13 +46,22 @@ class EventosComunidadController extends Controller{
       * @return view
     */
     public function store(Request $request){
-      $all = $request->except('_token');
-      $evento = new ComunidadEvents;
-      foreach ($all as $key => $value) {
-        if($value != "")
-          $evento->$key = $value;
-      }
-      $evento->save();
+      $request->validate([
+        'Evento'=>['required','string','min:8'],
+        'Dia'=>['required','date','after:yesterday'],
+        'Lugar'=>['required','string'],
+        'Hora'=>['required']
+      ]);
+      $event = ComunidadEvents::create([
+          'Evento' => $request->Evento,
+          'Dia' => $request->Dia,
+          'Lugar' => $request->Lugar,
+          'Hora' => $request->Hora
+      ]);
+      AdminChange::create([
+          'author_id' => auth()->user()->id,
+          'change' => 'Agregó el evento "'. strip_tags($event->Evento).'" a la página principal',
+      ]);
       return redirect()->back()->with('notice','Se guardo el evento');
     }
     /**
@@ -69,13 +79,30 @@ class EventosComunidadController extends Controller{
       * @return redirect
     */
     public function update(Request $request, $id){
-      $all = $request->except('_token','_method');
-      $evento = ComunidadEvents::findOrFail($id);
-      foreach ($all as $key => $value) {
-        if($value != "")
-          $evento->$key = $value;
-      }
-      $evento->save();
+      $request->validate([
+        'Evento'=> 'nullable|string|min:8',
+        'Dia'=> 'nullable|date|after:yesterday',
+        'Lugar'=> 'nullable|string',
+        'Hora'=> 'nullable'
+      ]);
+
+      $event = ComunidadEvents::findOrFail($id);
+
+      AdminChange::create([
+          'author_id' => auth()->user()->id,
+          'change' => 'Actualización del evento: '. strip_tags($event->Evento).' -> '.$request->Evento
+          .' del día: '.$event->Dia.' -> '. $request->Dia
+          .' a la hora: '.$event->Hora.' -> '. $request->Hora
+          .' en: '.$event->Lugar.' -> '. $request->Lugar
+      ]);
+
+      ComunidadEvents::find($id)->update([
+          'Evento'=>$request->Evento,
+          'Dia'=>$request->Dia,
+          'Lugar' => $request->Lugar,
+          'Hora' => $request->Hora
+      ]);
+
       return redirect()->route('indexComunidad')->with('notice','¡Actualización exitosa!');
     }
     /**
@@ -85,7 +112,12 @@ class EventosComunidadController extends Controller{
       * @return
     */
     public function destroy($id){
-       ComunidadEvents::findOrFail($id)->delete();
+      $event = ComunidadEvents::findOrFail($id);
+      AdminChange::create([
+          'author_id' => auth()->user()->id,
+          'change' => 'Eliminación del evento: '.$event->Evento
+      ]);
+      $event->delete();
        return redirect()->route('indexComunidad')->with('notice','Se elimino el evento');
     }
 }

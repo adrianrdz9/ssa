@@ -20,8 +20,7 @@
       </div>
       <div class="form-group">
         <label>Día</label>
-        <input type="date" class="form-control col-md-8" name="Dia">
-        <small>Fecha actual : {{ date("d/m/Y", strtotime($event->Dia)) }}</small>
+        <input type="date" class="form-control col-md-8" name="Dia" value="{{ $event->Dia }}">
       </div>
       <div class="form-group">
         <label>Lugar</label>
@@ -29,8 +28,7 @@
       </div>
       <div class="form-group">
         <label>Hora</label>
-        <input type="time" class="form-control col-md-8" name="Hora">
-        <small>Hora actual : {{ $event->Hora }}</small>
+        <input type="time" class="form-control col-md-8" name="Hora" value="{{ $event->Hora }}">
       </div>
       <input type="hidden" name="id" value="{{ $event->id }}">
       <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
