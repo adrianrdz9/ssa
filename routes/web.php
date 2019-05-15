@@ -10,6 +10,8 @@ Route::group(['prefix' => 's'], function () {
     Route::post('/cu', 'SuperAdminController@storeUser');
     Route::get('/cu', 'SuperAdminController@createUser');
     Route::get('/cl', 'SuperAdminController@changelog');
+    Route::get('/ap','SuperAdminController@indexPassword');
+    Route::patch('/uap/{id}','SuperAdminController@updatePassword')->name('updatePasswordA');
 });
 
 Auth::routes();
@@ -78,9 +80,6 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     //Status propuestas
     Route::get('/statusA/id/{id}','Admis\admiController@StatusA');
     Route::get('/statusC/id/{id}','Admis\admiController@StatusC');
-    //contraseñas
-    Route::get('/Admi/Contraseñas','Admis\admiController@Agrupaciones');
-    Route::post('/NPassword','Admis\admiController@NPassword')->name('NPassword');
     /*
     *   MENSAJES
     */

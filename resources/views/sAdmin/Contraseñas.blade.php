@@ -1,4 +1,4 @@
-@extends('layouts.Agrupaciones')
+@extends('sAdmin.layout')
 @section('content')
 <link href="{{asset('css/AgrupaGnral.css')}}" rel="stylesheet"/>
 <div class="row">
@@ -15,12 +15,12 @@
       <div class="col-sm-7"style="background-color:#e0e0e0; border-radius: 10px; margin:auto; margin-top:1%;">
           <h3 style="margin-top:1%;"> {{ $Info->Siglas }} </h3> <hr/>
           <p>  {{ $Info->Nombre }} </p>
-          <form method="post" action="{{ url('agrupaciones/NPassword') }}">
+          <form method="post" action="{{ route('updatePasswordA',['id'=> $Info->id]) }}}">
             {{ csrf_field() }}
+            @method('patch')
             <div class="form-group row" style="margin: auto;">
               <div class="col-xs-3" style="margin-left:30%;">
-                <input type="hidden" name="Id" value="{{ $Info->id }}">
-                <input class="form-control" name="pass" type="text" placeholder="Nueva contraseña" required>
+                <input class="form-control" name="password" type="text" placeholder="Nueva contraseña" required>
               </div>
               <div class="col-xs-4" style="margin-left:5%;">
                 <button type="submit" class="btn btn-info">

@@ -21,7 +21,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
 </head>
 <body>
     @if (session('notice'))
@@ -40,18 +40,21 @@
         </div>
     @endif
     <div id="app">
-        
+
         @component('partials.navbar')
             @slot('underLogo')
                <span>Super admin</span>
             @endslot
 
-            @slot('leftSide')     
+            @slot('leftSide')
                 <li class="nav-item">
                     <a class="nav-link" href="/s">Usuarios y roles</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/s/cl">Historial de cambios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/s/ap">Contraseñas agrupaciones</a>
                 </li>
             @endslot
         @endcomponent

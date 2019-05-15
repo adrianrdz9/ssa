@@ -102,4 +102,32 @@ class SuperAdminController extends Controller
 
         return view('sAdmin.changeLog');
     }
+
+    /**
+      * Metodo utilizado para mostrar la lista de agrupaciones y poder cambiar
+      *su contraseña
+      *
+      * @return view
+    */
+    public function indexPassword(){
+      $data = User::whereNotNull('Siglas')
+          ->orderBy('Siglas','asc')
+          ->get(['id', 'Siglas','Nombre','Logo']);
+      return view('SAdmin.Contraseñas',['data' => $data]);
+    }
+    /**
+      * Metodo utilizado para guardar en la base de datos la nueva contraseñas
+      * de las agrupaciones
+      *
+      *@param Request $request Peticion con los dato
+      *
+      * @return view
+    */
+    public function updatePassword(Request $request, $id){
+      $request->validate(['password' => 'required|string|min:8']);
+      $c = Hash::make($request->password);
+      User::find($id)->update(['password' => $c]);
+      return redirect('agrupaciones/Admi/Contraseñas')->with('notice', '¡Contraseña actualizada!');
+    }
+
 }

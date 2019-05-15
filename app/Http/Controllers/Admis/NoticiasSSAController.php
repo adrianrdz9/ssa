@@ -106,7 +106,7 @@ class NoticiasSSAController extends Controller{
           $noti->ImagenR = $filename;
         }
         $noti->save();
-        $fol = \App\Noticias::where('Titulo',$request->Titulo)->get();
+        $fol = Noticias::where('Titulo',$request->Titulo)->get();
         if ($request->carusel == "S" && $request->hasFile('ImagenR')) {
             $carusel = new Carusel;
             $carusel->Titulo = $request->Titulo;
@@ -125,7 +125,8 @@ class NoticiasSSAController extends Controller{
 
         AdminChange::create([
             'author_id' => auth()->user()->id,
-            'change' => 'Agrego una nueva noticia con el titulo: "'. strip_tags($request->Titulo .'"',
+            'change' => 'Creó la noticia "'. strip_tags($request->Titulo)
+            .'"',
         ]);
 
         return redirect('agrupaciones/Admi')->with('notice', '¡Se guardó la noticia con exito!');
@@ -140,7 +141,7 @@ class NoticiasSSAController extends Controller{
     $event = Noticias::findOrFail($id);
     AdminChange::create([
         'author_id' => auth()->user()->id,
-        'change' => 'Eliminación la noticia: '.$event->Evento
+        'change' => 'Eliminación la noticia: '.$event->Titulo,
     ]);
     $event->delete();
   }
@@ -187,7 +188,7 @@ class NoticiasSSAController extends Controller{
 
     AdminChange::create([
         'author_id' => auth()->user()->id,
-        'change' => 'Actualización de la noticia:'. strip_tags($request->Titulo) .'Hpña'
+        'change' => 'Actualización de la noticia: "'. strip_tags($request->Titulo) .'"'
     ]);
 
     return redirect('agrupaciones/Admi/ANoticias')->with('notice','¡Actualización exitosa!');
