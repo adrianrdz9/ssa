@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Noticias;
 use App\ComunidadEvents;
 use App\Carusel;
-use Reclutamiento;
+use App\User;
+use App\Integrantes;
+use App\Reclutamientos;
 
 class generalController extends Controller{
   public function vistas(){
@@ -17,7 +19,7 @@ class generalController extends Controller{
       }elseif (auth()->user()->hasRole('admiComunidad')){
         return redirect()->route('indexComunidad');
       }elseif (auth()->user()->hasRole('Agrupacion') ) {
-        return view('Admis.Informacion');
+        return redirect()->route('semiAdmi');
       }
       if(auth()->user()->hasRole('superAdmin')  ){
         return redirect('/s');
@@ -37,11 +39,11 @@ class generalController extends Controller{
     * @return view
   */
     public function index(){
-        $data = \App\Noticias::where('Disponible', 1)
+        $data = Noticias::where('Disponible', 1)
                ->orderBy('id', 'desc')
                ->take(9)
                ->get();
-        $caru = \App\Carusel::where('Estado',1)
+        $caru = Carusel::where('Estado',1)
               ->orderBy('id','desc')
               ->take(5)
               ->get();
@@ -58,8 +60,8 @@ class generalController extends Controller{
       * @return view
     */
     public function noticia($id){
-      $des = \App\Noticias::where('id',$id)->get();
-      $data = \App\Noticias::where('id',$id)->get();
+      $des = Noticias::where('id',$id)->get();
+      $data = Noticias::where('id',$id)->get();
       return view('Visitante.Noticia',[
         'data' => $data,
         'des' => $des]);
@@ -70,7 +72,7 @@ class generalController extends Controller{
        * @return view
      */
     public function agrupaciones(){
-        $data = \App\User::where('Siglas','!=','ASSA')
+        $data = User::where('Siglas','!=','ASSA')
                 ->whereNotNull('Siglas')
                 ->orderBy('Siglas','asc')
                 ->get();
@@ -84,21 +86,21 @@ class generalController extends Controller{
       * @return view
     */
     public function individual($id){
-        $data = \App\User::where('Siglas',$id)->get();
-        $coun = \App\Integrantes::where('Siglas',$id)->get();
+        $data = User::where('Siglas',$id)->get();
+        $coun = Integrantes::where('Siglas',$id)->get();
         $coun = count($coun);
         if($coun > 3){
-          $int1 = \App\Integrantes::where('Siglas',$id)
+          $int1 = Integrantes::where('Siglas',$id)
                   ->orderBy('NCargo','asc')
                   ->take(3)
                   ->get();
           $lim = $coun - count($int1);
-          $int2 =  \App\Integrantes::where('Siglas',$id)
+          $int2 =  Integrantes::where('Siglas',$id)
                   ->orderBy('NCargo','desc')
                   ->take($lim)
                   ->get();
         }else {
-          $int1 = \App\Integrantes::where('Siglas',$id)
+          $int1 = Integrantes::where('Siglas',$id)
                   ->orderBy('NCargo','asc')
                   ->take(3)
                   ->get();
@@ -130,7 +132,7 @@ class generalController extends Controller{
       $Fecha = explode("-", $data[0]->Fecha);
       //Dar formato a fecha dd/mm/aaaa
       $data[0]->Fecha = $Fecha[2] . "/" . $Fecha[1] . "/" . $Fecha[0];
-      $agrupa = \App\User::where('Siglas',$u)->get(['Nombre']);
+      $agrupa = User::where('Siglas',$u)->get(['Nombre']);
       return view('Visitante.RecluIndividual',[
         'data' => $data, 'Agrupa'=> $agrupa]);
      }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admis;
+namespace App\Http\Controller\SSA;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

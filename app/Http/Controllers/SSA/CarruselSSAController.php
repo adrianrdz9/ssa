@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admis;
+namespace App\Http\Controllers\SSA;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +28,7 @@ class CarruselSSAController extends Controller{
   public function index(){
       $data = \App\Carusel::orderBy('id','desc')
                             ->get(['id', 'Titulo','Descripcion','Imagen','Estado']);
-      return view('Admis.CarruselSSA.indexCarrusel',['data' => $data]);
+      return view('SSA.CarruselSSA.indexCarrusel',['data' => $data]);
   }
   /**
     * Metodo utilizado para mostrar el formulario para agregar
@@ -37,7 +37,7 @@ class CarruselSSAController extends Controller{
     * @return view
   */
   public function create(){
-      return view('Admis.CarruselSSA.createCarrusel');
+      return view('SSA.CarruselSSA.createCarrusel');
   }
   /**
     * Metodo utilizado para ocular imagenes del carrusel.
@@ -92,7 +92,7 @@ class CarruselSSAController extends Controller{
   */
   public function edit($id){
     $carrusel = Carusel::findOrFail($id);
-    return view('Admis.CarruselSSA.editCarrusel',compact ('carrusel'));
+    return view('SSA.CarruselSSA.editCarrusel',compact ('carrusel'));
   }
   /**
     * Metodo utilizado para guardar la informacion

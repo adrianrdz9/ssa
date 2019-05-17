@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admis;
+namespace App\Http\Controllers\SSA;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;

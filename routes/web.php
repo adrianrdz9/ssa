@@ -11,7 +11,7 @@ Route::group(['prefix' => 's'], function () {
     Route::get('/cu', 'SuperAdminController@createUser');
     Route::get('/cl', 'SuperAdminController@changelog');
     Route::get('/ap','SuperAdminController@indexPassword');
-    Route::patch('/uap/{id}','SuperAdminController@updatePassword')->name('updatePasswordA');
+    Route::patch('/uap/{id}','SuperAdminController@updatePassword')->name('UPA');
 });
 
 Auth::routes();
@@ -22,21 +22,21 @@ Route::group(['prefix' => 'comunidad'], function () {
     /*
     *   Evntos para la página principal
     */
-    Route::get('/Event/create','Admis\EventosComunidadController@create')->name('createEventC');
-    Route::post('/newEvent','Admis\EventosComunidadController@store')->name('storeEventC');
-    Route::get('/','Admis\EventosComunidadController@index')->name('indexComunidad');
-    Route::get('/{id}/editEventC','Admis\EventosComunidadController@edit')->name('editEventC');
-    Route::patch('/{id}/updateEventC','Admis\EventosComunidadController@update')->name('updateEventC');
-    Route::get('/delete/{id}','Admis\EventosComunidadController@destroy')->name('deleteEventF');
+    Route::get('/Event/create','Comunidad\EventosComunidadController@create')->name('createEventC');
+    Route::post('/newEvent','Comunidad\EventosComunidadController@store')->name('storeEventC');
+    Route::get('/','Comunidad\EventosComunidadController@index')->name('indexComunidad');
+    Route::get('/{id}/editEventC','Comunidad\EventosComunidadController@edit')->name('editEventC');
+    Route::patch('/{id}/updateEventC','Comunidad\EventosComunidadController@update')->name('updateEventC');
+    Route::get('/delete/{id}','Comunidad\EventosComunidadController@destroy')->name('deleteEventF');
     /*
     *   NOTICIAS de agrupaciones (bolsa de trabajo y actividades deportivas)
     */
     /*
     * Noticas de agrupaciones
     */
-    Route::get('/NoticiasAgrupaciones','Admis\NoticiasComunidadController@noticiasAgrupaciones');
-    Route::get('/Agregar/id/{id}','Admis\NoticiasComunidadController@agregarNoticiaAgrupa');
-    Route::get('/Eliminar/id/{id}','Admis\NoticiasComunidadController@eliminarNoticiaAgrupa');
+    Route::get('/NoticiasAgrupaciones','Comunidad\NoticiasComunidadController@noticiasAgrupaciones');
+    Route::get('/Agregar/id/{id}','Comunidad\NoticiasComunidadController@agregarNoticiaAgrupa');
+    Route::get('/Eliminar/id/{id}','Comunidad\NoticiasComunidadController@eliminarNoticiaAgrupa');
     /*
     * Noticas de actividades deportivas
     */
@@ -52,25 +52,25 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     /*
     *   NOTICIAS
     */
-    Route::get('/Admi/ANoticias','Admis\NoticiasSSAController@index')->name('indexNew');
-    Route::get('/Admi','Admis\NoticiasSSAController@create')->name('create');
-    Route::post('/AdmiP','Admis\NoticiasSSAController@store')->name('storeNew');
-    Route::get('/oNoticia/id/{id}','Admis\NoticiasSSAController@ONoticia');
-    Route::get('/mNoticia/id/{id}','Admis\NoticiasSSAController@MNoticia');
-    Route::get('/DNoticia/id/{id}','Admis\NoticiasSSAController@destroy')->name('destroyNew');
-    Route::get('/{id}/edit','Admis\NoticiasSSAController@edit')->name('editNew');
-    Route::patch('/{id}','Admis\NoticiasSSAController@update')->name('updateNew');
+    Route::get('/Admi/ANoticias','SSA\NoticiasSSAController@index')->name('indexNew');
+    Route::get('/Admi','SSA\NoticiasSSAController@create')->name('create');
+    Route::post('/AdmiP','SSA\NoticiasSSAController@store')->name('storeNew');
+    Route::get('/oNoticia/id/{id}','SSA\NoticiasSSAController@ONoticia');
+    Route::get('/mNoticia/id/{id}','SSA\NoticiasSSAController@MNoticia');
+    Route::get('/DNoticia/id/{id}','SSA\NoticiasSSAController@destroy')->name('destroyNew');
+    Route::get('/{id}/edit','SSA\NoticiasSSAController@edit')->name('editNew');
+    Route::patch('/{id}','SSA\NoticiasSSAController@update')->name('updateNew');
     /*
     *   CARRUSEL
     */
-    Route::get('/Admi/Carusel','Admis\CarruselSSAController@index')->name('indexCarrusel');
-    Route::get('/Admi/NICarusel','Admis\CarruselSSAController@create');
-    Route::post('/NCarusel','Admis\CarruselSSAController@store')->name('storeCarrusel');
-    Route::get('/OImagenC/id/{id}','Admis\CarruselSSAController@OImagenC');
-    Route::get('/MImagenC/id/{id}','Admis\CarruselSSAController@MImagenC');
-    Route::get('/DImagenC/id/{id}','Admis\CarruselSSAController@destroy')->name('destroyCarrusel');
-    Route::get('/edit/{id}','Admis\CarruselSSAController@edit')->name('Carruseledit');
-    Route::patch('/update/{id}','Admis\CarruselSSAController@update')->name('updateCarrusel');
+    Route::get('/Admi/Carusel','SSA\CarruselSSAController@index')->name('indexCarrusel');
+    Route::get('/Admi/NICarusel','SSA\CarruselSSAController@create');
+    Route::post('/NCarusel','SSA\CarruselSSAController@store')->name('storeCarrusel');
+    Route::get('/OImagenC/id/{id}','SSA\CarruselSSAController@OImagenC');
+    Route::get('/MImagenC/id/{id}','SSA\CarruselSSAController@MImagenC');
+    Route::get('/DImagenC/id/{id}','SSA\CarruselSSAController@destroy')->name('destroyCarrusel');
+    Route::get('/edit/{id}','SSA\CarruselSSAController@edit')->name('Carruseledit');
+    Route::patch('/update/{id}','SSA\CarruselSSAController@update')->name('updateCarrusel');
     /*
     *   PROPUESTAS PARA LA FERIA DE AGRUPACIONES
     */
@@ -83,41 +83,46 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     /*
     *   MENSAJES
     */
-    Route::get('/Admi/AdmiMsj','Admis\MensajesControlller@verMensajes');
-    Route::get('/semiAdmi/semiAdmiMsj','Admis\MensajesControlller@verMensajes');
-    Route::get('/Admi/AdmiMsj/contacts','Admis\MensajesControlller@get');
-    Route::get('/Admi/AdmiMsj/conversation/{id}','Admis\MensajesControlller@getMessagesFor');
-    Route::post('/Admi/AdmiMsj/conversation/send','Admis\MensajesControlller@send');
+    Route::get('/Admi/AdmiMsj','MensajesControlller@verMensajes');
+    Route::get('/semiAdmi/semiAdmiMsj','MensajesControlller@verMensajes');
+    Route::get('/Admi/AdmiMsj/contacts','MensajesControlller@get');
+    Route::get('/Admi/AdmiMsj/conversation/{id}','MensajesControlller@getMessagesFor');
+    Route::post('/Admi/AdmiMsj/conversation/send','MensajesControlller@send');
     /*
     *   EVENTOS PARA LA FERIA
     */
-    Route::get('/Admi/EventosFeria','Admis\FeriasController@index')->name('indexEvents');
-    Route::post('/NEvento','Admis\FeriasController@store')->name('storeEventF');
-    Route::get('/DEvento/id/{id}','Admis\FeriasController@destroy')->name('destroyEvent');
-    Route::get('/{id}/editE','Admis\FeriasController@edit')->name('editEvent');
-    Route::patch('/{id}/updateE','Admis\FeriasController@update')->name('updateEvent');;
+    Route::get('/Admi/EventosFeria','SSA\FeriasController@index')->name('indexEvents');
+    Route::post('/NEvento','SSA\FeriasController@store')->name('storeEventF');
+    Route::get('/DEvento/id/{id}','SSA\FeriasController@destroy')->name('destroyEvent');
+    Route::get('/{id}/editE','SSA\FeriasController@edit')->name('editEvent');
+    Route::patch('/{id}/updateE','SSA\FeriasController@update')->name('updateEvent');;
 
     /*
     *               AGRUPACIONES
     */
     //Información general
-    Route::get('/semiAdmi','Admis\semiAdmiController@index')->name('semiAdmi');
-    Route::post('/InfoGeneral','Admis\semiAdmiController@InfoGeneral')->name('InfoGeneral');
+    Route::get('/semiAdmi','Agrupacion\agrupacionController@index')->name('semiAdmi');
+    Route::post('/InfoGeneral','Agrupacion\agrupacionController@InfoGeneral')->name('InfoGeneral');
     //Integrantes
-    Route::post('/Integrantes','Admis\semiAdmiController@Integrantes')->name('Integrantes');
+    Route::post('/Integrantes','Agrupacion\agrupacionController@Integrantes')->name('Integrantes');
+    /*
+    *   PROPUESTAS
+    */
     //status propuesta
     Route::get('/semiAdmi/Propuesta','Admis\semiAdmiController@Propuesta')->name('PropuestaSemi');
     //Nueva propuesta
     Route::post('/NPropuesta','Admis\semiAdmiController@NPropuesta')->name('NPropuesta');
-    //Cambio de Mesa
-    Route::get('/semiAdmi/CambioMesa','Admis\semiAdmiController@Mesa');
+    /*
+    *   CAMBIO DE MESA
+    */
+    Route::get('/semiAdmi/CambioMesa','Agrupacion\agrupacionController@Mesa');
     /*
     *   RECLUTAMIENTOS
     */
-    Route::get('/semiAdmi/Reclutamientos','Admis\semiAdmiController@ReclutamientosF');
-    Route::post('/reclutamientoF','Admis\semiAdmiController@NReclutamiento')->name('reclutamientoF');
-    Route::get('/semiAdmi/VerReclutamientos','Admis\semiAdmiController@VerReclutamientos');
-    Route::get('/Reclutamiento/id/{id}','Visitante\generalController@Reclutamiento');
+    Route::get('/semiAdmi/VerReclutamientos','Agrupacion\reclutamientosController@index');
+    Route::get('/semiAdmi/Reclutamientos','Agrupacion\reclutamientosController@create');
+    Route::post('/reclutamientoF','Agrupacion\reclutamientosController@store')->name('storeReclu');
+
 
 
     /*
@@ -131,8 +136,10 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/Agrupaciones','Visitante\generalController@agrupaciones');
     //Agrupaciones individual
     Route::get('/Agrupacion/id/{id}','Visitante\generalController@individual');
-    //Reclutammientos
+    //Reclutamientos
     Route::get('/Reclutamientos','Visitante\generalController@Reclutamientos');
+    //Reclutamiento
+    Route::get('/Reclutamiento/id/{id}','Visitante\generalController@Reclutamiento');
     //Feria de agrupaciones
     Route::get('/Feria','Visitante\generalController@Feria')->name('Feria');
 

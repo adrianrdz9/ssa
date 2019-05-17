@@ -1,3 +1,4 @@
+<!-- No se puede acceder a el  -->
 @extends('layouts.Agrupaciones')
 @section('content')
 <div class="row">

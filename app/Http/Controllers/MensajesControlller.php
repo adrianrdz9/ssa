@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admis;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,7 +27,7 @@ class MensajesControlller extends Controller
     $chats = \App\User::whereNotNull('Siglas')
             ->orderBy('Siglas','desc')
             ->get();
-    return view('Admis.AdmiMsj',['chats' => $chats]);
+    return view('SSA.AdmiMsj',['chats' => $chats]);
   }
   /**
     * Metodo para lista de contacts

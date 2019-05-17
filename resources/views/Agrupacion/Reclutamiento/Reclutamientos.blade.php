@@ -1,9 +1,8 @@
 @extends('layouts.Agrupaciones')
-@section('title','Reclutamientos')
 @section('content')
 <h3>Crea un nuevo reclutamiento</h3>
 <div class="container">
-<form method="post" action="{{ url('agrupaciones/reclutamientoF') }}" enctype="multipart/form-data">
+<form method="post" action="{{ route('storeReclu') }}" enctype="multipart/form-data">
   {{ csrf_field() }}
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -12,7 +11,7 @@
     </div>
     <div class="form-group col-md-6">
       <h4>Descripción:</h4>
-      <textarea class="form-control" name="Descripcion" type="text" required></textarea>
+      <textarea class="form-control" name="Descripcion" type="text"></textarea>
     </div>
   </div>
   <div class="form-row">

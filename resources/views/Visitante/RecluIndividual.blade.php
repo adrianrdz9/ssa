@@ -5,31 +5,43 @@
   <h1 style="font-family: 'PT Serif', serif; text-align:center; margin-top:1%;">
     {{ $data[0]->Cargo }}
   </h1>
-  <h3 style="font-family: 'PT Serif', serif; text-align:center; margin-top:1%;">
+  <h3 style="font-family: 'PT Serif', serif;margin-top:1%;">
     {{ $Agrupa[0]->Nombre }}
   </h3>
-  <div class="row">
+  <div class="row" style="margin:auto;">
     <div class="col-sm-4" style="margin-left: auto; text-align:center;">
-      <img src="{{asset('images/FI.png' )}}" class="img-fluid">
+      <img src="{{asset('images/logo_fi.png' )}}" class="img-fluid">
     </div>
-    <div class="col-sm-6" style="margin-left: auto; text-align:center;">
-      <div style="margin-left:7%;">
-           {{ $data[0]->Descripcion }}
+    <div class="col-sm-8" style="margin-left: auto; text-align:center;">
+      <div style="margin-top:3%;">
+           {!! $data[0]->Descripcion !!}
       </div>
-      <p><b>{{ $data[0]->Fecha }}</b> a las <b>{{ $data[0]->Hora }}</b> en <b>{{ $data[0]->Lugar }}</b>
-      </p>
-      <h4>Requisitos</h4>
-      <dl style="text-align:left;">
-        <dt>Semestre:</dt>
-          <dd>{{ $data[0]->Semestre }} semestre</dd>
-        <dt>Promedio:</dt>
-          <dd>{{ $data[0]->Promedio }}</dd>
-        <dt>Conocimientos previos:</dt>
-            <dd>{{ $data[0]->Conocimientos }}</dd>
-        @if($data[0]->Disponibilidad != "No")
-            <dt>Disponibilidad de horario.</dt>
-        @endif
-      </dl>
-    </div>
-  </div>
+      <p>Cita el día <b>{{ $data[0]->Fecha }}</b> a las <b>{{ $data[0]->Hora }}</b> en el <b>{{ $data[0]->Lugar }}</b></p>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+              <th>Requisitos</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Semestre</td>
+              <td>{{ $data[0]->Semestre }}</td>
+            </tr>
+            <tr>
+              <td>Promedio</td>
+              <td>{{ $data[0]->Promedio }}</td>
+            </tr>
+            <tr>
+              <td>Conocimientos previos</td>
+              <td>{{ $data[0]->Conocimientos }}</td>
+            </tr>
+            @if($data[0]->Disponibilidad != "No")
+            <tr>
+              <td>Disponibilidad de horario</td>
+              <td>Requerida</td>
+            </tr>
+            @endif
+          </tbody>
+        </table>
+      </div>
 @stop

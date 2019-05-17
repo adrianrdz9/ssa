@@ -47,7 +47,7 @@
       </div>
     </div>
     <div style="margin-top:5%;">
-      {{ $data[0]->Descripcion }}
+      {!! $data[0]->Descripcion !!}
     </div>
   </div>
 </div>

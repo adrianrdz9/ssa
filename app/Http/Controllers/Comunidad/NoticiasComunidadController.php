@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admis;
+namespace App\Http\Controllers\Comunidad;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -64,5 +64,5 @@ class NoticiasComunidadController extends Controller{
 
       return redirect()->back()->with('notice','Ahora no se mostrara en la página principal');
     }
-    
+
 }//Fin Controller

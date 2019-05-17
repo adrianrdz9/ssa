@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admis;
+namespace App\Http\Controllers\Comunidad;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,7 +26,7 @@ class EventosComunidadController extends Controller{
     public function index(){
       $events = ComunidadEvents::orderBy('Dia','DESC')->get();
       $noticiasAgrupa = Noticias::where('Principal','1')->orderBy('Fecha','DESC')->get();
-      return view ('Admis.Comunidad.AdmiIndex',[
+      return view ('Comunidad.AdmiIndex',[
                   'events' => $events,
                   'data' => $noticiasAgrupa
           ]);
@@ -37,7 +37,7 @@ class EventosComunidadController extends Controller{
       * @return view
     */
     public function create(){
-      return view ('Admis.Comunidad.createEventF');
+      return view ('Comunidad.createEventF');
     }
     /**
       * Metodo utilizado para guardar la informacion de un evento nuevo
@@ -71,7 +71,7 @@ class EventosComunidadController extends Controller{
     */
     public function edit($id){
       $event = ComunidadEvents::findOrFail($id);
-      return view('Admis.Comunidad.editEvent',compact('event'));
+      return view('Comunidad.editEvent',compact('event'));
     }
     /**
       * Metodo para guardar los cambios en el evento

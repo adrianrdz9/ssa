@@ -120,14 +120,15 @@ class SuperAdminController extends Controller
       * de las agrupaciones
       *
       *@param Request $request Peticion con los dato
+      * @param Integer $id id de la agrupacion
       *
-      * @return view
+      * @return redirect
     */
     public function updatePassword(Request $request, $id){
-      $request->validate(['password' => 'required|string|min:8']);
+      $request->validate(['password' => 'required|string|min:6']);
       $c = Hash::make($request->password);
       User::find($id)->update(['password' => $c]);
-      return redirect('agrupaciones/Admi/Contraseñas')->with('notice', '¡Contraseña actualizada!');
+      return redirect()->back()->with('notice', '¡Contraseña actualizada!');
     }
 
 }
