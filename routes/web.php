@@ -122,7 +122,9 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/semiAdmi/VerReclutamientos','Agrupacion\reclutamientosController@index');
     Route::get('/semiAdmi/Reclutamientos','Agrupacion\reclutamientosController@create');
     Route::post('/reclutamientoF','Agrupacion\reclutamientosController@store')->name('storeReclu');
-
+    Route::get('/delete/{id}','Agrupacion\reclutamientosController@delete');
+    Route::get('/edit/{id}','Agrupacion\reclutamientosController@edit')->name('editReclu');
+    Route::patch('/updateReclu/{id}','Agrupacion\reclutamientosController@update')->name('updateReclu');
 
 
     /*

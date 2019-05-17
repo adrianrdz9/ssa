@@ -4,7 +4,7 @@
   @foreach ($data as $Info)
   <div class="col-sm-4" style="margin-top:1%;">
       <div class="card border-primary" style="border-radius:2%;">
-        <div class="card-header" data-id="{{ $Info->id }}">
+        <div class="card-header">
           <h3 style="margin-top:1%;"> {{ $Info->Cargo }} </h3>
         </div>
         <div class="card-body">
@@ -17,9 +17,9 @@
             <li>Conocimientos: {{ $Info->Conocimientos }}</li>
           </ul>
         </div>
-        <div class="card-footer" style="text-align:right;">
-          <button type="button" class="btn btn-primary">Editar</button>
-          <button type="button" class="btn btn-danger">Eliminar</button>
+        <div class="card-footer" style="text-align:right;" data-id="{{ $Info->id }}">
+          <a href="{{ route('editReclu',['id'=> $Info->id])}}"><button type="button" class="btn btn-primary">Editar</button></a>
+          <button type="button" class="btn btn-danger EliminarR">Eliminar</button>
         </div>
     </div>
   </div>

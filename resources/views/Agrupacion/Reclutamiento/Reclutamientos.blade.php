@@ -36,7 +36,7 @@
         <h4>Semestre</h4>
       </div>
       <div class="form-group">
-        <select class="form-control" name="Semes">
+        <select class="form-control" name="Semestre">
           <option>Primero-Segundo</option>
           <option>Tercero-Cuarto</option>
           <option>Quinto-Sexto</option>

@@ -44,7 +44,7 @@ class reclutamientosController extends Controller{
   }
   /**
     * Metodo utilizado para guardar la informacion de un nuevo reclutamiento
-    *
+    * @param Request
     * @return view
   */
   public function store(Request $request){
@@ -60,7 +60,7 @@ class reclutamientosController extends Controller{
       $reclu ->Siglas = $u;
       $reclu ->Cargo = $request->Cargo;
       $reclu ->Descripcion = $request->Descripcion;
-      $reclu ->Semestre = $request->Semes;
+      $reclu ->Semestre = $request->Semestre;
       if($request->Pro == "No es necesario"){
         $reclu ->Promedio = 0;
       }else {
@@ -77,9 +77,66 @@ class reclutamientosController extends Controller{
       $reclu->Lugar = $request->Lugar;
 
     $reclu ->save();
-
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Creó el reclutamiento: "'.$request->Cargo.'"'
+    ]);
     return redirect('agrupaciones/semiAdmi/Reclutamientos')->with('notice','El reclutamiento se ha creado con exito');
   }
+  /**
+    * Metodo utilizado para eliminar el reclutamiento seleccionado
+    * @param Integer $id del reclutamiento seleccionado
+    * @return
+  */
+  public function delete($id){
+    $reclu = Reclutamientos::findOrFail($id);
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Eliminó el reclutamiento para: '.$reclu->Cargo,
+    ]);
+    $reclu->delete();
+  }
+  /**
+    * Metodo utilizado para ver el formulario para editar el reclutamiento seleccionado
+    * @param Integer $id del reclutamiento seleccionado
+    * @return view
+  */
+  public function edit($id){
+    $reclu = Reclutamientos::findOrFail($id);
+    return view('Agrupacion.Reclutamiento.editReclutamiento', compact('reclu'));
+  }
+  /**
+    * Metodo utilizado para actualizar el reclutamiento seleccionado
+    * @param Integer $id del reclutamiento seleccionado
+    * @param Request
+    * @return view
+  */
+  public function update(Request $request,$id){
+    $reclu = Reclutamientos::findOrFail($id);
+    $all = $request->except('_token','_method','Pro','Cono','Disponibilidad');
+      foreach ($all as $key => $value) {
+        if($value != "")
+          $reclu->$key = $value;
+      }
+      if($request->Pro == "No es necesario"){
+        $reclu ->Promedio = 0;
+      }else {
+        $reclu ->Promedio = $request->Pro;
+      }
+      if($request->Cono != ""){
+        $reclu ->Conocimientos = Purifier::clean($request->Cono);
+      }
+      if($request->Disponibilidad == "S"){
+        $reclu ->Disponibilidad = $request->Disponibilidad;
+      }
+    $reclu->save();
 
+    AdminChange::create([
+        'author_id' => auth()->user()->id,
+        'change' => 'Actualización el reclutamiento: "'.$request->Cargo.'"'
+    ]);
+
+    return redirect()->back()->with('notice','¡Actualización exitosa!');
+  }
 
 }//Fin controller

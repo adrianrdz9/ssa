@@ -190,3 +190,24 @@ let id = $(this).parents('ul').data('id');
     )
   });
 });
+//Reclutamiento agrupacion
+$('.EliminarR').click(function () {
+let id = $(this).parents('div').data('id');
+  $.ajax({
+    url: "/agrupaciones/delete/" + id,
+    method: "get",
+  }).done(()=>{
+    $(this).closest('.col-sm-4').remove();
+    swal(
+        '¡Exito!',
+        'Elimino el Reclutamiento',
+        'success'
+    )
+  }).fail(()=>{
+    swal(
+        '¡Error!',
+        'No es posible eliminar este reclutamiento',
+        'error'
+    )
+  });
+});
