@@ -79,12 +79,14 @@ class NoticiasSSAController extends Controller{
     * @return redirect
   */
   public function store(Request $request){
+    //Validar
       $request->validate([
         'Titulo'=>['required','string','min:8'],
         'DescripcionCorta'=>['required','min:50','max:500'],
         'Descripcion'=>['required'],
         'Fecha'=>['required','date']
       ]);
+      //Nueva noticia
         $noti = new Noticias;
         $noti ->Titulo = $request->Titulo;
         $noti ->Descripcion = Purifier::clean($request->Descripcion);
@@ -105,7 +107,9 @@ class NoticiasSSAController extends Controller{
           Image::make($image)->resize(743,387)->save($location);
           $noti->ImagenR = $filename;
         }
+        //Guardar
         $noti->save();
+        //Si se pide que se muestre en elcarrusel, aqui es donde se guarda
         $fol = Noticias::where('Titulo',$request->Titulo)->get();
         if ($request->carusel == "S" && $request->hasFile('ImagenR')) {
             $carusel = new Carusel;
@@ -122,13 +126,13 @@ class NoticiasSSAController extends Controller{
               $carusel->Imagen = $filename;
             $carusel->save();
         }
-
+        //Guardar en el historial la creación de la noticia
         AdminChange::create([
             'author_id' => auth()->user()->id,
             'change' => 'Creó la noticia "'. strip_tags($request->Titulo)
             .'"',
         ]);
-
+        //redireccionar al formulario,con notificación
         return redirect('agrupaciones/Admi')->with('notice', '¡Se guardó la noticia con exito!');
   }
   /**
@@ -138,11 +142,14 @@ class NoticiasSSAController extends Controller{
     * @return
   */
   public function destroy($id){
+    //Encontrar la noticia seleccionada
     $event = Noticias::findOrFail($id);
+    //Guardar en el historial su eliminación
     AdminChange::create([
         'author_id' => auth()->user()->id,
         'change' => 'Eliminación la noticia: '.$event->Titulo,
     ]);
+    //Eliminar la noticia
     $event->delete();
   }
   /**
@@ -164,12 +171,16 @@ class NoticiasSSAController extends Controller{
     * @return redirect
   */
   public function update(Request $request, $id){
+    //Encontrar la noticia
     $noticia = Noticias::findOrFail($id);
+    //Obtener la informacion del formulario
     $all = $request->except('_token','_method','ImagenC','ImagenR');
+    //Guardar la nueva informacion en caso de se hayan cambios
       foreach ($all as $key => $value) {
         if($value != "")
           $noticia->$key = $value;
       }
+      //Ver si tiene cambios en las imagenes
       if($request->hasFile('ImagenC')){
         $image = $request->file('ImagenC');
         $filename1 = time() . '.' . $image->getClientOriginalExtension();
@@ -184,8 +195,9 @@ class NoticiasSSAController extends Controller{
         Image::make($image)->resize(600,309)->save($location);
         $noticia->ImagenR = $filename;
       }
+    //Guardar la actualización
     $noticia->save();
-
+    //Guardar en el historial su actualización
     AdminChange::create([
         'author_id' => auth()->user()->id,
         'change' => 'Actualización de la noticia: "'. strip_tags($request->Titulo) .'"'
