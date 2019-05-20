@@ -18,7 +18,7 @@
                          @else
                           <button class="btn btn-info MostrarC">Mostrar</button>
                          @endif
-                          <a href="{{ route('Carruseledit',['id'=> $dato->id])}}"><button type="button" class="btn btn-primary">Editar</button></a>
+                          <a href="{{ route('editCarrusel',['id'=> $dato->id]) }}"><button type="button" class="btn btn-primary">Editar</button></a>
                           <button class="btn btn-danger EliminarC">Eliminar</button>
                       </div>
                     </div>

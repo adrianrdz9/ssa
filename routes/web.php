@@ -52,14 +52,14 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     /*
     *   NOTICIAS
     */
-    Route::get('/Admi/ANoticias','SSA\NoticiasSSAController@index')->name('indexNew');
+    Route::get('/Admi/ANoticias','SSA\NoticiasSSAController@index')->name('indexNoticia');
     Route::get('/Admi','SSA\NoticiasSSAController@create')->name('create');
     Route::post('/AdmiP','SSA\NoticiasSSAController@store')->name('storeNew');
     Route::get('/oNoticia/id/{id}','SSA\NoticiasSSAController@ONoticia');
     Route::get('/mNoticia/id/{id}','SSA\NoticiasSSAController@MNoticia');
-    Route::get('/DNoticia/id/{id}','SSA\NoticiasSSAController@destroy')->name('destroyNew');
-    Route::get('/{id}/edit','SSA\NoticiasSSAController@edit')->name('editNew');
-    Route::patch('/{id}','SSA\NoticiasSSAController@update')->name('updateNew');
+    Route::get('/DNoticia/id/{id}','SSA\NoticiasSSAController@destroy');
+    Route::get('/{id}/edit','SSA\NoticiasSSAController@edit')->name('editNoticia');
+    Route::patch('/{id}','SSA\NoticiasSSAController@update')->name('updateNoticia');
     /*
     *   CARRUSEL
     */
@@ -69,7 +69,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     Route::get('/OImagenC/id/{id}','SSA\CarruselSSAController@OImagenC');
     Route::get('/MImagenC/id/{id}','SSA\CarruselSSAController@MImagenC');
     Route::get('/DImagenC/id/{id}','SSA\CarruselSSAController@destroy')->name('destroyCarrusel');
-    Route::get('/edit/{id}','SSA\CarruselSSAController@edit')->name('Carruseledit');
+    Route::get('/edit/{id}','SSA\CarruselSSAController@edit')->name('editCarrusel');
     Route::patch('/update/{id}','SSA\CarruselSSAController@update')->name('updateCarrusel');
     /*
     *   PROPUESTAS PARA LA FERIA DE AGRUPACIONES

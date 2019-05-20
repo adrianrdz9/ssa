@@ -15,7 +15,7 @@ class generalController extends Controller{
   public function vistas(){
     if(auth()->check()){
       if(auth()->user()->hasRole('SSA') ){
-        return redirect()->route('indexNew');
+        return redirect()->route('indexNoticia');
       }elseif (auth()->user()->hasRole('admiComunidad')){
         return redirect()->route('indexComunidad');
       }elseif (auth()->user()->hasRole('Agrupacion') ) {

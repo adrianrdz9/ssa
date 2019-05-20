@@ -71,13 +71,10 @@
                     <a class="nav-link" href="../../../agrupaciones/Admi">Nueva noticia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../../agrupaciones/Admi/Carusel">Carrusel</a>
+                    <a class="nav-link" href="{{ route('indexCarrusel') }}">Carrusel</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../../agrupaciones/Admi/NICarusel">Nueva Imagen Carrusel</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../../../agrupaciones/Admi/Contraseñas">Contraseñas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../../agrupaciones/Admi/Propuestas">Propuestas</a>

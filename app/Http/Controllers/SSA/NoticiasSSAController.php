@@ -10,6 +10,7 @@ use App\Noticias;
 use App\Carusel;
 use App\AdminChange;
 use Purifier;
+use Storage;
 class NoticiasSSAController extends Controller{
   /**
     * Metodo constructor utilizado para limitar el acceso a solo al administrador (SSA)
@@ -26,8 +27,8 @@ class NoticiasSSAController extends Controller{
     * @return view
   */
   public function index(){
-    $data = Noticias::orderBy('id','desc')->get();
-    return view('SSA.NoticiasSSA.indexNew',['data' => $data]);
+    $dato = Noticias::orderBy('id','desc')->get();
+    return view('SSA.NoticiasSSA.indexNoticia',compact('dato'));
   }
   /**
     * Metodo utilizado para mostrar el formulario de noticias.
@@ -35,7 +36,7 @@ class NoticiasSSAController extends Controller{
     * @return view
   */
   public function create(){
-      return view('SSA.NoticiasSSA.createNew');
+      return view('SSA.NoticiasSSA.createNoticia');
   }
   /**
     * Metodo utilizado para ocultar noticias de la página principal de visitantes
@@ -84,7 +85,9 @@ class NoticiasSSAController extends Controller{
         'Titulo'=>['required','string','min:8'],
         'DescripcionCorta'=>['required','min:50','max:500'],
         'Descripcion'=>['required'],
-        'Fecha'=>['required','date']
+        'Fecha'=>['required','date'],
+        'ImagenC' => ['sometimes','image'],
+        'ImagenR'=>['sometimes','image']
       ]);
       //Nueva noticia
         $noti = new Noticias;
@@ -160,8 +163,8 @@ class NoticiasSSAController extends Controller{
     * @return view
   */
   public function edit($id){
-    $new = Noticias::findOrFail($id);
-    return view('SSA.NoticiasSSA.editNew', compact('new'));
+    $noticia = Noticias::findOrFail($id);
+    return view('SSA.NoticiasSSA.editNoticia', compact('noticia'));
   }
   /**
     * Metodo utilizado para guardar la informacion
@@ -173,28 +176,40 @@ class NoticiasSSAController extends Controller{
   public function update(Request $request, $id){
     //Encontrar la noticia
     $noticia = Noticias::findOrFail($id);
-    //Obtener la informacion del formulario
-    $all = $request->except('_token','_method','ImagenC','ImagenR');
+    $request->validate([
+      'Titulo'=>['required','string','min:8'],
+      'DescripcionCorta'=>['required','min:50','max:500'],
+      'Descripcion'=>['required'],
+      'Fecha'=>['nullable','date'],
+      'ImagenC' => ['sometimes','image'],
+      'ImagenR'=>['sometimes','image']
+    ]);
     //Guardar la nueva informacion en caso de se hayan cambios
-      foreach ($all as $key => $value) {
-        if($value != "")
-          $noticia->$key = $value;
-      }
-      //Ver si tiene cambios en las imagenes
+      $noticia->Titulo = $request->Titulo;
+      $noticia->DescripcionCorta = Purifier::clean($request->DescripcionCorta);
+      $noticia->Descripcion = Purifier::clean($request->Descripcion);
+      $noticia->Fecha = $request->Fecha;
+    //Ver si tiene cambios en las imagenes
       if($request->hasFile('ImagenC')){
+        //actualizar la imagen
         $image = $request->file('ImagenC');
         $filename1 = time() . '.' . $image->getClientOriginalExtension();
         $location = public_path('images/Noticias/'. $filename1);
         Image::make($image)->resize(600,309)->save($location);
+        //Nombre de la imagen anterior
+        $oldFilename = $noticia->ImagenC;
+        //Actualizar imagen cuadrada
         $noticia->ImagenC = $filename1;
+        //Eliminar la imagen anterior
+        Storage::delete('images/Noticias/'. $oldFilename);
       }
-      if($request->hasFile('ImagenR')){
-        $image = $request->file('ImagenC');
-        $filename = time() . '.' . $image->getClientOriginalExtension();
-        $location = public_path('images/Noticias/'. $filename);
-        Image::make($image)->resize(600,309)->save($location);
-        $noticia->ImagenR = $filename;
-      }
+    if($request->hasFile('ImagenR')){
+      $image = $request->file('ImagenC');
+      $filename = time() . '.' . $image->getClientOriginalExtension();
+      $location = public_path('images/Noticias/'. $filename);
+      Image::make($image)->resize(600,309)->save($location);
+      $noticia->ImagenR = $filename;
+    }
     //Guardar la actualización
     $noticia->save();
     //Guardar en el historial su actualización
