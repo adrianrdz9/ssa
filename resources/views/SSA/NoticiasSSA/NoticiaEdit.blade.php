@@ -30,7 +30,7 @@
           @if (is_null($noticia->ImagenC ))
             <small>No tiene imagen secundaria</small>
           @endif
-            <img src="{{asset('images/Noticias/'. $noticia->ImagenC )}}" class="img-fluid" alt="No se puede cargar la imagen">
+            <img src="{{asset('images/Noticias/'.$noticia->ImagenC )}}" class="img-fluid" alt="No se puede cargar la imagen">
         </div>
         <div class="form-group col-md-6">
           <h4 for="inputCity">Imagen rectangular:</h4>
@@ -38,7 +38,7 @@
           @if (is_null($noticia->ImagenR ))
             <small>No tiene imagen principal</small>
           @endif
-            <img src="{{asset('images/Noticias/'. $noticia->ImagenR )}}" class="img-fluid" alt="No se puede cargar la imagen">
+            <img src="{{asset('images/Noticias/'.$noticia->ImagenR )}}" class="img-fluid" alt="No se puede cargar la imagen">
         </div>
       </div>
       <button type="submit" class="btn btn-primary btn-block">Actualizar</button>

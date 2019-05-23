@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Carusel;
 use App\AdminChange;
 use Purifier;
@@ -26,7 +27,7 @@ class CarruselSSAController extends Controller{
     * @return view
   */
   public function index(){
-      $data = \App\Carusel::orderBy('id','desc')
+      $data = Carusel::orderBy('id','desc')
                             ->get(['id', 'Titulo','Descripcion','Imagen','Estado']);
       return view('SSA.CarruselSSA.indexCarrusel',['data' => $data]);
   }
@@ -77,12 +78,16 @@ class CarruselSSAController extends Controller{
     * AJAX
   */
   public function destroy($id){
-    $event = Carusel::findOrFail($id);
+    $imagen = Carusel::findOrFail($id);
     AdminChange::create([
         'author_id' => auth()->user()->id,
-        'change' => 'Eliminación del evento: '.$event->Titulo
+        'change' => 'Eliminación del evento: '.$imagen->Titulo
     ]);
-    $event->delete();
+    //Eliminar del sistema la imagen del carrusel
+    $oldImagen = $imagen->Imagen;
+    Storage::delete('Carusel/'.$oldImagen);
+    //Eliminar el registro de la base de datos
+    $imagen->delete();
   }
   /**
     * Metodo utilizado para ver el formulario de editar carusel

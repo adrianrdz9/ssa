@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Noticias;
 use App\Carusel;
 use App\AdminChange;
 use Purifier;
-use Storage;
 class NoticiasSSAController extends Controller{
   /**
     * Metodo constructor utilizado para limitar el acceso a solo al administrador (SSA)
@@ -28,7 +28,7 @@ class NoticiasSSAController extends Controller{
   */
   public function index(){
     $dato = Noticias::orderBy('id','desc')->get();
-    return view('SSA.NoticiasSSA.indexNoticia',compact('dato'));
+    return view('SSA.NoticiasSSA.NoticiaIndex',compact('dato'));
   }
   /**
     * Metodo utilizado para mostrar el formulario de noticias.
@@ -91,26 +91,29 @@ class NoticiasSSAController extends Controller{
       ]);
       //Nueva noticia
         $noti = new Noticias;
+        //guardar imagen rectangular si la tiene
+        if($request->hasFile('ImagenR')){
+          $rectangular = $request->file('ImagenR');
+          $filenameR = time() . '.' . $rectangular->getClientOriginalExtension();
+          $rectangular_img = Image::make($rectangular);
+          $rectangular_img->resize(743,387)->save(public_path('images/Noticias/'.$filenameR));
+          $noti->ImagenR = $filenameR;
+        }
+        //Guardar la informacion de la noticia
         $noti ->Titulo = $request->Titulo;
+        //Usar Purifier para evitar inyecciones de script
         $noti ->Descripcion = Purifier::clean($request->Descripcion);
         $noti ->DescripcionCorta = Purifier::clean($request->DescripcionCorta);
         $noti ->Fecha = $request->Fecha;
-        //save Images
+        //Guardar imagen cuadrada si la tiene
         if($request->hasFile('ImagenC')){
-          $image = $request->file('ImagenC');
-          $filename = time() . '.' . $image->getClientOriginalExtension();
-          $location = public_path('images/Noticias/'. $filename);
-          Image::make($image)->resize(600,309)->save($location);
-          $noti->ImagenC = $filename;
+          $cuadrada = $request->file('ImagenC');
+          $filenameC = time() . '.' . $cuadrada->getClientOriginalExtension();
+          $cuadrada_img = Image::make($cuadrada);
+          $cuadrada_img->resize(600,309)->save(public_path('images/Noticias/'.$filenameC));
+          $noti->ImagenC = $filenameC;
         }
-        if($request->hasFile('ImagenR')){
-          $image = $request->file('ImagenR');
-          $filename = time() . '.' . $image->getClientOriginalExtension();
-          $location = public_path('images/Noticias/'. $filename);
-          Image::make($image)->resize(743,387)->save($location);
-          $noti->ImagenR = $filename;
-        }
-        //Guardar
+        // //Guardar
         $noti->save();
         //Si se pide que se muestre en elcarrusel, aqui es donde se guarda
         $fol = Noticias::where('Titulo',$request->Titulo)->get();
@@ -146,14 +149,19 @@ class NoticiasSSAController extends Controller{
   */
   public function destroy($id){
     //Encontrar la noticia seleccionada
-    $event = Noticias::findOrFail($id);
+    $noticia = Noticias::findOrFail($id);
     //Guardar en el historial su eliminación
     AdminChange::create([
         'author_id' => auth()->user()->id,
-        'change' => 'Eliminación la noticia: '.$event->Titulo,
+        'change' => 'Eliminación la noticia: '.$noticia->Titulo,
     ]);
+    //eliminar del sistemas las imagenes anteriores
+    $oldImageC = $noticia->ImagenC;
+    Storage::delete('Noticias/'.$oldImageC);
+    $oldImageR = $noticia->ImagenR;
+    Storage::delete('Noticias/'.$oldImageR);
     //Eliminar la noticia
-    $event->delete();
+    $noticia->delete();
   }
   /**
     * Metodo utilizado para ver la vista con el formulario
@@ -164,7 +172,7 @@ class NoticiasSSAController extends Controller{
   */
   public function edit($id){
     $noticia = Noticias::findOrFail($id);
-    return view('SSA.NoticiasSSA.editNoticia', compact('noticia'));
+    return view('SSA.NoticiasSSA.NoticiaEdit', compact('noticia'));
   }
   /**
     * Metodo utilizado para guardar la informacion
@@ -184,31 +192,37 @@ class NoticiasSSAController extends Controller{
       'ImagenC' => ['sometimes','image'],
       'ImagenR'=>['sometimes','image']
     ]);
+    //Ver si tiene cambios en la imagen cuadrada
+    if($request->hasFile('ImagenC')){
+      //actualizar la imagen
+      $image = $request->file('ImagenC');
+      $filename1 = time() . '.' . $image->getClientOriginalExtension();
+      $location = public_path('images/Noticias/'. $filename1);
+      Image::make($image)->resize(700,300)->save($location);
+      //Nombre de la imagen anterior
+      $oldFilename = $noticia->ImagenC;
+      //Actualizar imagen cuadrada
+      $noticia->ImagenC = $filename1;
+      //Eliminar la imagen anterior
+      Storage::delete('Noticias/'.$oldFilename);
+    }
     //Guardar la nueva informacion en caso de se hayan cambios
       $noticia->Titulo = $request->Titulo;
       $noticia->DescripcionCorta = Purifier::clean($request->DescripcionCorta);
       $noticia->Descripcion = Purifier::clean($request->Descripcion);
       $noticia->Fecha = $request->Fecha;
-    //Ver si tiene cambios en las imagenes
-      if($request->hasFile('ImagenC')){
-        //actualizar la imagen
-        $image = $request->file('ImagenC');
-        $filename1 = time() . '.' . $image->getClientOriginalExtension();
-        $location = public_path('images/Noticias/'. $filename1);
-        Image::make($image)->resize(600,309)->save($location);
-        //Nombre de la imagen anterior
-        $oldFilename = $noticia->ImagenC;
-        //Actualizar imagen cuadrada
-        $noticia->ImagenC = $filename1;
-        //Eliminar la imagen anterior
-        Storage::delete('images/Noticias/'. $oldFilename);
-      }
+    //ver si hay cambios en la imagen rectangular
     if($request->hasFile('ImagenR')){
-      $image = $request->file('ImagenC');
+      $image = $request->file('ImagenR');
       $filename = time() . '.' . $image->getClientOriginalExtension();
       $location = public_path('images/Noticias/'. $filename);
       Image::make($image)->resize(600,309)->save($location);
-      $noticia->ImagenR = $filename;
+      //Nombre de la imagen anterior
+      $oldFilename2 = $noticia->ImagenR;
+      //Actualizar imagen cuadrada
+      $noticia->ImagenC = $filename;
+      //Eliminar la imagen anterior
+      Storage::delete('Noticias/'.$oldFilename2);
     }
     //Guardar la actualización
     $noticia->save();

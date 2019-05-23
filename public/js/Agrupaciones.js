@@ -48,7 +48,7 @@ let id = $(this).parents('div').data('id');
     url: "/agrupaciones/DNoticia/id/" + id,
     method: "get"
   }).done(()=>{
-    $(this).closest('.row').remove();
+    $(this).closest('.col-sm-4').remove();
     swal(
         '¡Exito!',
         'Se elimino la noticia',

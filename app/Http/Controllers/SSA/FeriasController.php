@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controller\SSA;
+namespace App\Http\Controllers\SSA;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,7 +24,7 @@ class FeriasController extends Controller
   */
   public function index(){
     $eventos = FeriaEventos::orderBy('Dia','desc')->get();
-    return view('Admis.FeriasSSA.indexEvents',['eventos' => $eventos]);
+    return view('SSA.FeriasSSA.indexEvents',['eventos' => $eventos]);
   }
   /**
     * Metodo para guardar eventos para la feria
@@ -66,7 +66,7 @@ class FeriasController extends Controller
   */
   public function edit($id){
     $event = FeriaEventos::findOrFail($id);
-    return view('Admis.FeriasSSA.EventEdit',compact('event'));
+    return view('SSA.FeriasSSA.EventEdit',compact('event'));
   }
   /**
     * Metodo para guardar los cambios en el evento
