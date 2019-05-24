@@ -3,7 +3,7 @@
         <ul>
             <li v-for="(contact, index) in contacts" :key="contact.id" @click = "selectContact(index,contact)" :class="{ 'selected': index == selected }">
                 <div class="avatar">
-                    <img :src="'/images/Agrupaciones/Logos/' +  contact.Logo" :alt="contact.Siglas">
+                    <img :src="'/images/Agrupaciones/Logos/' + contact.Logo" :alt="contact.Siglas">
                 </div>
                 <div class="contact">
                     <p class="name">{{ contact.Siglas }}</p>

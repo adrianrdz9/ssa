@@ -32,7 +32,7 @@ let id = $(this).parents('div').data('id');
         'Se mostrara la noticia',
         'success'
     )
-    $(this).parent().append(' <button type="button" class="btn btn-danger Ocultar">Ocultar</button>');
+    $(this).parent().append(' <button type="button" class="btn btn-warning Ocultar">Ocultar</button>');
     $(this).closest('.Mostrar').remove();
   }).fail(()=>{
     swal(

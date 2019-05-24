@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Comunidad;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Noticias;
+use App\Noticias;
+use App\AdminChange;
 class NoticiasComunidadController extends Controller{
     /**
      * Metodo constructor usado para limitar el acceso a solo administrador (ASSA)
@@ -20,11 +21,11 @@ class NoticiasComunidadController extends Controller{
       * @return View
     */
     public function noticiasAgrupaciones(){
-      $data = \App\Noticias::where('Disponible', 1)
+      $data = Noticias::where('Disponible', 1)
              ->orderBy('id', 'desc')
              ->take(9)
              ->get();
-      return view('Admis.Comunidad.Agrupaciones', [ 'data' => $data ]);
+      return view('Comunidad.Agrupaciones', [ 'data' => $data ]);
     }
     /**
       * Metodo utilizado para agregar la noticia seleccionada,

@@ -75,7 +75,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     *   PROPUESTAS PARA LA FERIA DE AGRUPACIONES
     */
     //Ver propuestas
-    Route::get('/Admi/Propuestas','Admis\admiController@Propuestas');
+    Route::get('/Admi/Propuestas','SSA\PropuestasController@Propuestas');
     Route::post('/NFeria','Admis\admiController@Feria')->name('NFeria');
     //Status propuestas
     Route::get('/statusA/id/{id}','Admis\admiController@StatusA');

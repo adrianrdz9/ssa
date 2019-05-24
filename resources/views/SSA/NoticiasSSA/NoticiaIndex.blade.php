@@ -16,6 +16,11 @@
         <p>{!! $info->DescripcionCorta !!}</p>
       </div>
       <div class="card-footer"style="text-align:right;" data-id="{{ $info->id }}">
+        @if( $info->Disponible == "1")
+            <button type="button" class="btn btn-warning Ocultar">Ocultar</button>
+        @else
+            <button type="button" class="btn btn-info Mostrar">Mostrar</button>
+        @endif
         <a href="{{ route('editNoticia',['id'=> $info->id])}}"><button type="button" class="btn btn-primary">Editar</button></a>
         <button class="btn btn-danger EliminarNoticia">Eliminar</button>
       </div>

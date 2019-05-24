@@ -49,7 +49,7 @@ class PropuestasController extends Controller{
         }else{
           $msg = "Aún no hay fechas.";
         }
-        return view('Admis.PropuestaAdmi',[
+        return view('SSA.PropuestaAdmi',[
           'Propuestas' => $data,
           'Mensaje' => $msg,
           'Presidente'=>$presi,

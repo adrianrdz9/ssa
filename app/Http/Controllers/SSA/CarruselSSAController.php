@@ -154,7 +154,7 @@ class CarruselSSAController extends Controller{
         $carusel->save();
         AdminChange::create([
             'author_id' => auth()->user()->id,
-            'change' => 'Agrego una nueva imagen al carrusel con el titulo: "'. strip_tags($ima->Titulo) .'"',
+            'change' => 'Agrego una nueva imagen al carrusel con el titulo: "'. strip_tags($carusel->Titulo) .'"',
         ]);
         return redirect()->route('indexCarrusel')->with('notice', '¡Imagen agregada!');
     }

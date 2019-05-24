@@ -16,7 +16,7 @@
          <div class="carousel-inner container">
            <center>
              <div class="carousel-item active">
-               <img style="margin:auto;"class="img-fluid" src="{{asset('images/agrupaciones.jpeg')}}" alt="Imagen" width="100%">
+               <img style="margin:auto;"class="img-fluid" src="{{asset('images/home.jpg')}}" alt="Imagen" width="100%">
              </div>
              <div class="carousel-item">
                <img class="img-fluid" src="{{asset('images/deportes.jpeg')}}" alt="Imagen" width="100%">
