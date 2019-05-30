@@ -16,14 +16,14 @@ class NoticiasComunidadController extends Controller{
         $this->middleware('role:admiComunidad');
     }
     /**
-      * Metodo utilizado para ver las noticias agrupaciones
+      * Metodo utilizado para ver las noticias agrupaciones que esten disponibles
       *
       * @return View
     */
     public function noticiasAgrupaciones(){
       $data = Noticias::where('Disponible', 1)
              ->orderBy('id', 'desc')
-             ->take(9)
+             ->limit(9)
              ->get();
       return view('Comunidad.Agrupaciones', [ 'data' => $data ]);
     }

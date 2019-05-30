@@ -65,56 +65,56 @@
             @slot('leftSide')
               @role('SSA')
                 <li class="nav-item">
-                    <a class="nav-link" href="../../../agrupaciones/Admi/ANoticias">Noticias</a>
+                    <a class="nav-link" href="{{ route('indexNoticia')}}">Noticias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../../agrupaciones/Admi">Nueva noticia</a>
+                    <a class="nav-link" href="{{ route('createNoticia')}}">Nueva noticia</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('indexCarrusel') }}">Carrusel</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../../agrupaciones/Admi/NICarusel">Nueva Imagen Carrusel</a>
+                    <a class="nav-link" href="{{ route('createCarrusel')}}">Nueva Imagen Carrusel</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../../agrupaciones/Admi/Propuestas">Propuestas</a>
+                    <a class="nav-link" href="{{ route('AdmiPropuestas')}}">Propuestas</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="../../../agrupaciones/Admi/AdmiMsj">Mensajes</a>
+                  <a class="nav-link" href="{{ route('admiMsj')}}">Mensajes</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="../../agrupaciones/Admi/EventosFeria">Eventos Feria</a>
+                  <a class="nav-link" href="{{ route('indexEvents')}}">Eventos Feria</a>
                 </li>
                 @else
                   @role('Agrupacion')
                       <li class="nav-item">
-                        <a class="nav-link" href="../../agrupaciones/semiAdmi">Información</a>
+                        <a class="nav-link" href="{{ route('semiAdmi')}}">Información</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="../../agrupaciones/semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
+                        <a class="nav-link" href="{{ route('createReclutamiento')}}s">Nuevo reclutamiento</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="../../agrupaciones/semiAdmi/VerReclutamientos">Reclutamientos</a>
+                        <a class="nav-link" href="{{ route('indexReclutamiento')}}">Reclutamientos</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="../../agrupaciones/semiAdmi/Propuesta">Propuestas</a>
+                        <a class="nav-link" href="{{ route('PropuestaSemi')}}">Propuestas</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="../../agrupaciones/semiAdmi/CambioMesa">Cambio de Mesa</a>
+                        <a class="nav-link" href="{{ route('cambioMesa')}}">Cambio de Mesa</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="../../agrupaciones/semiAdmi/semiAdmiMsj">Mensajes</a>
+                        <a class="nav-link" href="{{ route('semiMsj')}}">Mensajes</a>
                       </li>
                     @else
                       @role('admiComunidad')
                         <li class="nav-item">
-                          <a class="nav-link" href="/comunidad/">Página principal</a>
+                          <a class="nav-link" href="{{ route('indexComunidad')}}">Página principal</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="{{ route('createEventC') }}">Nuevo evento</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="../../comunidad/NoticiasAgrupaciones">Agrupaciones</a>
+                          <a class="nav-link" href="{{ route('noticiasAgrupas')}}">Agrupaciones</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#">Actividades deportivas</a>
@@ -124,16 +124,16 @@
                         </li>
                         @else
                           <li class="nav-item">
-                            <a class="nav-link" href="/agrupaciones/Agrupaciones">Agrupaciones</a>
+                            <a class="nav-link" href="{{ route('agrupaciones')}}">Agrupaciones</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="/agrupaciones/Reclutamientos">Reclutamientos</a>
+                            <a class="nav-link" href="{{ route('ReclutaIndex')}}">Reclutamientos</a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" href="{{ route('Feria') }}">Feria de agrupaciones</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="/agrupaciones/">Inicio agrupaciones</a>
+                            <a class="nav-link" href="{{ route('agrupacionesIndex')}}">Inicio agrupaciones</a>
                           </li>
                       @endrole
                     @endrole

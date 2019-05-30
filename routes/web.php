@@ -19,12 +19,12 @@ Route::group(['prefix' => 'comunidad'], function () {
     /*
     *   ADMINISTRADOR DE COMUNIDAD (admiComunidad/ASSA)
     */
+    Route::get('/','Comunidad\EventosComunidadController@index')->name('indexComunidad');
     /*
     *   Evntos para la página principal
     */
     Route::get('/Event/create','Comunidad\EventosComunidadController@create')->name('createEventC');
     Route::post('/newEvent','Comunidad\EventosComunidadController@store')->name('storeEventC');
-    Route::get('/','Comunidad\EventosComunidadController@index')->name('indexComunidad');
     Route::get('/{id}/editEventC','Comunidad\EventosComunidadController@edit')->name('editEventC');
     Route::patch('/{id}/updateEventC','Comunidad\EventosComunidadController@update')->name('updateEventC');
     Route::get('/delete/{id}','Comunidad\EventosComunidadController@destroy')->name('deleteEventF');
@@ -34,7 +34,7 @@ Route::group(['prefix' => 'comunidad'], function () {
     /*
     * Noticas de agrupaciones
     */
-    Route::get('/NoticiasAgrupaciones','Comunidad\NoticiasComunidadController@noticiasAgrupaciones');
+    Route::get('/NotiAgrupaciones','Comunidad\NoticiasComunidadController@noticiasAgrupaciones')->name('noticiasAgrupas');
     Route::get('/Agregar/id/{id}','Comunidad\NoticiasComunidadController@agregarNoticiaAgrupa');
     Route::get('/Eliminar/id/{id}','Comunidad\NoticiasComunidadController@eliminarNoticiaAgrupa');
     /*
@@ -53,7 +53,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     *   NOTICIAS
     */
     Route::get('/Admi/ANoticias','SSA\NoticiasSSAController@index')->name('indexNoticia');
-    Route::get('/Admi','SSA\NoticiasSSAController@create')->name('create');
+    Route::get('/Admi','SSA\NoticiasSSAController@create')->name('createNoticia');
     Route::post('/AdmiP','SSA\NoticiasSSAController@store')->name('storeNew');
     Route::get('/oNoticia/id/{id}','SSA\NoticiasSSAController@ONoticia');
     Route::get('/mNoticia/id/{id}','SSA\NoticiasSSAController@MNoticia');
@@ -64,7 +64,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     *   CARRUSEL
     */
     Route::get('/Admi/Carusel','SSA\CarruselSSAController@index')->name('indexCarrusel');
-    Route::get('/Admi/NICarusel','SSA\CarruselSSAController@create');
+    Route::get('/Admi/NICarusel','SSA\CarruselSSAController@create')->name('createCarrusel');
     Route::post('/NCarusel','SSA\CarruselSSAController@store')->name('storeCarrusel');
     Route::get('/OImagenC/id/{id}','SSA\CarruselSSAController@OImagenC');
     Route::get('/MImagenC/id/{id}','SSA\CarruselSSAController@MImagenC');
@@ -75,7 +75,7 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     *   PROPUESTAS PARA LA FERIA DE AGRUPACIONES
     */
     //Ver propuestas
-    Route::get('/Admi/Propuestas','SSA\PropuestasController@Propuestas');
+    Route::get('/Admi/Propuestas','SSA\PropuestasController@Propuestas')->name('AdmiPropuestas');
     Route::post('/NFeria','Admis\admiController@Feria')->name('NFeria');
     //Status propuestas
     Route::get('/statusA/id/{id}','Admis\admiController@StatusA');
@@ -83,8 +83,8 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     /*
     *   MENSAJES
     */
-    Route::get('/Admi/AdmiMsj','MensajesControlller@verMensajes');
-    Route::get('/semiAdmi/semiAdmiMsj','MensajesControlller@verMensajes');
+    Route::get('/Admi/AdmiMsj','MensajesControlller@verMensajes')->name('admiMsj');
+    Route::get('/semiAdmi/semiAdmiMsj','MensajesControlller@verMensajes')->name('semiMsj');
     Route::get('/Admi/AdmiMsj/contacts','MensajesControlller@get');
     Route::get('/Admi/AdmiMsj/conversation/{id}','MensajesControlller@getMessagesFor');
     Route::post('/Admi/AdmiMsj/conversation/send','MensajesControlller@send');
@@ -115,12 +115,12 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     /*
     *   CAMBIO DE MESA
     */
-    Route::get('/semiAdmi/CambioMesa','Agrupacion\agrupacionController@Mesa');
+    Route::get('/semiAdmi/CambioMesa','Agrupacion\agrupacionController@Mesa')->name('cambioMesa');
     /*
     *   RECLUTAMIENTOS
     */
-    Route::get('/semiAdmi/VerReclutamientos','Agrupacion\reclutamientosController@index');
-    Route::get('/semiAdmi/Reclutamientos','Agrupacion\reclutamientosController@create');
+    Route::get('/semiAdmi/VerReclutamientos','Agrupacion\reclutamientosController@index')->name('indexReclutamiento');
+    Route::get('/semiAdmi/Reclutamiento','Agrupacion\reclutamientosController@create')->name('createReclutamiento');
     Route::post('/reclutamientoF','Agrupacion\reclutamientosController@store')->name('storeReclu');
     Route::get('/delete/{id}','Agrupacion\reclutamientosController@delete');
     Route::get('/edit/{id}','Agrupacion\reclutamientosController@edit')->name('editReclu');
@@ -133,15 +133,15 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     //Noticias - 9 (index)
     Route::get('/','Visitante\generalController@index')->name('agrupacionesIndex');
     //Noticias individual
-    Route::get('/Noticia/id/{id}','Visitante\generalController@noticia');
+    Route::get('/Noticia/id/{id}','Visitante\generalController@noticia')->name('NoticiaAgrupa');
     //Agrupaciones lista
-    Route::get('/Agrupaciones','Visitante\generalController@agrupaciones');
+    Route::get('/Agrupaciones','Visitante\generalController@agrupaciones')->name('agrupaciones');
     //Agrupaciones individual
-    Route::get('/Agrupacion/id/{id}','Visitante\generalController@individual');
+    Route::get('/Agrupacion/id/{id}','Visitante\generalController@individual')->name('infoAgrupa');
     //Reclutamientos
-    Route::get('/Reclutamientos','Visitante\generalController@Reclutamientos');
+    Route::get('/Reclutamientos','Visitante\generalController@Reclutamientos')->name('ReclutaIndex');
     //Reclutamiento
-    Route::get('/Reclutamiento/id/{id}','Visitante\generalController@Reclutamiento');
+    Route::get('/Reclutamiento/id/{id}','Visitante\generalController@Reclutamiento')->name('reclutamiento');
     //Feria de agrupaciones
     Route::get('/Feria','Visitante\generalController@Feria')->name('Feria');
 

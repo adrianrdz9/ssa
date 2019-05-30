@@ -27,7 +27,7 @@
             </ul>
           </div>
           <div class="card-footer" style="text-align:right;">
-              <a href='Reclutamiento/id/{{ $Info->id }}'><button class="btn btn-primary btn-block">Ver más</button></a>
+              <a href="{{ route('reclutamiento',['id'=> $Info->id])}}"><button class="btn btn-primary btn-block">Ver más</button></a>
           </div>
       </div>
     </div>

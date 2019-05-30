@@ -86,34 +86,36 @@ class NoticiasSSAController extends Controller{
         'DescripcionCorta'=>['required','min:50','max:500'],
         'Descripcion'=>['required'],
         'Fecha'=>['required','date'],
-        'ImagenC' => ['sometimes','image'],
-        'ImagenR'=>['sometimes','image']
+        'ImagenC' => ['sometimes','image:png,jpg,jpeg'],
+        'ImagenR'=>['sometimes','image:png,jpg,jpeg']
       ]);
       //Nueva noticia
         $noti = new Noticias;
-        //guardar imagen rectangular si la tiene
-        if($request->hasFile('ImagenR')){
-          $rectangular = $request->file('ImagenR');
-          $filenameR = time() . '.' . $rectangular->getClientOriginalExtension();
-          $rectangular_img = Image::make($rectangular);
-          $rectangular_img->resize(743,387)->save(public_path('images/Noticias/'.$filenameR));
-          $noti->ImagenR = $filenameR;
-        }
         //Guardar la informacion de la noticia
         $noti ->Titulo = $request->Titulo;
         //Usar Purifier para evitar inyecciones de script
         $noti ->Descripcion = Purifier::clean($request->Descripcion);
         $noti ->DescripcionCorta = Purifier::clean($request->DescripcionCorta);
         $noti ->Fecha = $request->Fecha;
+        //guardar imagen rectangular si la tiene
+        if($request->hasFile('ImagenR')){
+          $rectangular = $request->file('ImagenR');
+          $filenameR = time() . 'R.' . $rectangular->getClientOriginalExtension();
+          $path = $request->file('ImagenR')->storeAs(
+              'public/images/Noticias/Principal', $filenameR
+          );
+          $noti->ImagenR = $filenameR;
+        }
         //Guardar imagen cuadrada si la tiene
         if($request->hasFile('ImagenC')){
           $cuadrada = $request->file('ImagenC');
-          $filenameC = time() . '.' . $cuadrada->getClientOriginalExtension();
-          $cuadrada_img = Image::make($cuadrada);
-          $cuadrada_img->resize(600,309)->save(public_path('images/Noticias/'.$filenameC));
+          $filenameC = time() . 'C.' . $cuadrada->getClientOriginalExtension();
+          $path2 = $request->file('ImagenC')->storeAs(
+              'public/images/Noticias/Secundaria', $filenameC
+          );
           $noti->ImagenC = $filenameC;
         }
-        // //Guardar
+        //Guardar
         $noti->save();
         //Si se pide que se muestre en elcarrusel, aqui es donde se guarda
         $fol = Noticias::where('Titulo',$request->Titulo)->get();
@@ -204,7 +206,7 @@ class NoticiasSSAController extends Controller{
       //Actualizar imagen cuadrada
       $noticia->ImagenC = $filename1;
       //Eliminar la imagen anterior
-      Storage::delete('Noticias/'.$oldFilename);
+      Storage::delete('public/images/Noticias/'.$oldFilename);
     }
     //Guardar la nueva informacion en caso de se hayan cambios
       $noticia->Titulo = $request->Titulo;
@@ -222,7 +224,7 @@ class NoticiasSSAController extends Controller{
       //Actualizar imagen cuadrada
       $noticia->ImagenC = $filename;
       //Eliminar la imagen anterior
-      Storage::delete('Noticias/'.$oldFilename2);
+      Storage::delete('public/images/Noticias/'.$oldFilename2);
     }
     //Guardar la actualización
     $noticia->save();

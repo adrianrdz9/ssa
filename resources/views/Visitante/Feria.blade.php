@@ -7,10 +7,10 @@
       <li data-target="#demo" data-slide-to="{{ $c }}"></li>
     @endfor
   </ul>
-  <div class="carousel-inner">
+  <div class="carousel-inner" style="text-align:center;">
     <div class="carousel-item active">
       <a href="https://www.youtube.com/watch?v=Ad3St7UJ9p0" target="_blank">
-        <img src="{{asset('images/Feria.jpg')}}" alt="Welcome"class="img-fluid">
+        <img src="{{asset('images/Feria.jpg')}}" alt="Welcome" class="img-fluid">
       </a>
       <div class="carousel-caption">
       </div>

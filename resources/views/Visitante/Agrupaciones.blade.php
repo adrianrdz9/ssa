@@ -13,7 +13,7 @@
           <p class="card-text">{{ $Info->Nombre }}</p>
         </div>
         <div class="card-footer">
-          <a href="Agrupacion/id/{{ $Info->Siglas }}"><button type="button" class="btn btn-info btn-block">
+          <a href="{{ route('infoAgrupa',['id'=> $Info->id])}}"><button type="button" class="btn btn-info btn-block">
             Más información
           </button></a>
         </div>
