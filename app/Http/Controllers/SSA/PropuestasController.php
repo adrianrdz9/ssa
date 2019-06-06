@@ -4,7 +4,9 @@ namespace App\Http\Controllers\SSA;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Propuestas;
+use App\Integrantes;
+use App\Ferias;
 class PropuestasController extends Controller{
       /**
         * Metodo constructor utilizado para limitar el acceso
@@ -22,18 +24,25 @@ class PropuestasController extends Controller{
         * @return view
       */
       public function Propuestas(){
-        $data = \App\Propuestas::get(['id', 'Siglas','Titulo','Descripcion','Estado']);
-        if(count($data)>=1){
-         foreach ($data as $key => $value)
-              $siglas[] = $value->Siglas;
-          $presi = \App\Integrantes::where([['Cargo','Presidente'],['Siglas',$siglas]])
-                                    ->get(['Nombre', 'Email','Numero']);
+        $data = Propuestas::get(['id', 'Siglas','Titulo','Descripcion','Estado']);
+        $data = (array) $data;
+         $l = count($data["\x00*\x00items"]);
+        if($l>0){
+          for ($i = 0; $i < $l ; $i++) {
+            $siglas = $data["\x00*\x00items"][$i]->Siglas;
+            $presi = Integrantes::where([['Cargo','Presidente'],['Siglas',$siglas]])
+                    ->get(['Nombre', 'Email','Numero']);
+            //Agregar
+            $data["\x00*\x00items"][$i]->PNombre = $presi[$i]->Nombre;
+            $data["\x00*\x00items"][$i]->PEmail = $presi[$i]->Email;
+            $data["\x00*\x00items"][$i]->PNumero = $presi[$i]->Numero;
+            error_reporting(0);
+          }
         }else{
-          $presi = [];
           $data = [];
         }
         $msg = "";
-        $f = \App\Ferias::orderBy('Limite','desc')->take(1)->get();
+        $f = Ferias::orderBy('Limite','desc')->take(1)->get();
         $hoy[0]= date("Y-m-d");
         if(count($f)>=1){
           foreach ($f as $key => $value) {
@@ -52,7 +61,7 @@ class PropuestasController extends Controller{
         return view('SSA.PropuestaAdmi',[
           'Propuestas' => $data,
           'Mensaje' => $msg,
-          'Presidente'=>$presi,
+          'Contar' => $l
         ]);
     }
     /**

@@ -28,7 +28,8 @@ class CarruselSSAController extends Controller{
   */
   public function index(){
       $data = Carusel::orderBy('id','desc')
-                            ->get(['id', 'Titulo','Descripcion','Imagen','Estado']);
+              ->limit(9)
+              ->get(['id', 'Titulo','Descripcion','Imagen','Estado']);
       return view('SSA.CarruselSSA.indexCarrusel',['data' => $data]);
   }
   /**
@@ -85,7 +86,7 @@ class CarruselSSAController extends Controller{
     ]);
     //Eliminar del sistema la imagen del carrusel
     $oldImagen = $imagen->Imagen;
-    Storage::delete('Carusel/'.$oldImagen);
+    Storage::delete('public/images/Carusel/'.$oldImagen);
     //Eliminar el registro de la base de datos
     $imagen->delete();
   }
@@ -116,8 +117,9 @@ class CarruselSSAController extends Controller{
       if($request->hasFile('Imagen')){
         $image = $request->file('Imagen');
         $filename = time() . '.' . $image->getClientOriginalExtension();
-        $location = public_path('images/Carusel/'. $filename);
-        Image::make($image)->resize(1614,985)->save($location);
+        $path = $request->file('Imagen')->storeAs(
+            'public/images/Carusel', $filename
+        );
         $carusel->Imagen = $filename;
       }
     $carusel->save();

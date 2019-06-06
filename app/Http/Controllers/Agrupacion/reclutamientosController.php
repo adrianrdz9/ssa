@@ -24,7 +24,7 @@ class reclutamientosController extends Controller{
     * @return view
   */
   public function index(){
-    $u = auth()->user()->Siglas;
+    $u = auth()->user()->username;
     $data= Reclutamientos::where('Siglas',$u)
             ->get();
     $count = count($data);
@@ -53,7 +53,7 @@ class reclutamientosController extends Controller{
       'Descripcion' => 'required',
       'Fecha' => 'required|after:today',
     ));
-    $u = auth()->user()->Siglas;
+    $u = auth()->user()->username;
 
     $reclu = new Reclutamientos;
 

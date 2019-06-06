@@ -28,7 +28,7 @@ class semiAdmiController extends Controller
   */
     public function index(){
         //Informacion general
-      $u = auth()->user()->Siglas;
+      $u = auth()->user()->username;
       $data = \App\User::where('Siglas',$u)->get();
       //integrantes
       $int = \App\Integrantes::where('Siglas',$u)->orderBy('NCargo','asc')->get();
@@ -43,7 +43,7 @@ class semiAdmiController extends Controller
       * @return view
     */
     public function Propuesta(){
-        $u = auth()->user()->Siglas;
+        $u = auth()->user()->username;
         $limite = "";
         $data = \App\Propuestas::where('Siglas',$u)
                 ->orderBy('created_at','desc')
@@ -66,7 +66,7 @@ class semiAdmiController extends Controller
             $msg = "Ya no es posible enviar propuestas.";
           }
         }
-          return view('Admis.PropuestaSemi',[
+          return view('Agrupacion.PropuestaSemi',[
              'data'=> $data,
              'Mensaje' => $msg,
           ]);
@@ -87,7 +87,7 @@ class semiAdmiController extends Controller
          'Titulo' => 'required|max:191' ,
          'Descripcion' => 'required',
        ));
-       $u = auth()->user()->Siglas;
+       $u = auth()->user()->username;
 
          $propu = new Propuestas;
          $propu ->Siglas = $u;
@@ -109,7 +109,7 @@ class semiAdmiController extends Controller
           if(is_null(auth()->user()))
             return redirect('/');
           else {
-            $u = auth()->user()->Siglas;
+            $u = auth()->user()->username;
             $Cargos = Array
             (
                 Array(
@@ -207,7 +207,7 @@ class semiAdmiController extends Controller
       if(is_null(auth()->user()))
         return redirect('/');
       else {
-        $u = auth()->user()->Siglas;
+        $u = auth()->user()->username;
         $a = $request->all();
 
         if($request->hasFile('Logo')){
@@ -258,7 +258,7 @@ class semiAdmiController extends Controller
         if(is_null(auth()->user()))
           return redirect('/');
         else {
-          $u = auth()->user()->Siglas;
+          $u = auth()->user()->username;
           $data= \App\Reclutamientos::where('Siglas',$u)
                   ->get();
           $count = count($data);
@@ -285,7 +285,7 @@ class semiAdmiController extends Controller
             'Descripcion' => 'required',
             'Fecha' => 'required|after:today',
           ));
-          $u = auth()->user()->Siglas;
+          $u = auth()->user()->username;
 
           $reclu = new Reclutamientos;
           $reclu ->Siglas = $u;

@@ -60,22 +60,22 @@
           @slot('leftSide')
               @role('Agrupacion')
                   <li class="nav-item">
-                      <a class="nav-link" href="../../agrupaciones/semiAdmi">Información</a>
+                      <a class="nav-link" href="{{ route('semiAdmi') }}">Información</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="../../agrupaciones/semiAdmi/Reclutamientos">Nuevo reclutamiento</a>
+                      <a class="nav-link" href="../../agrupaciones/semiAdmi/Reclutamiento">Nuevo reclutamiento</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="../../agrupaciones/semiAdmi/VerReclutamientos">Reclutamientos</a>
+                      <a class="nav-link" href="{{ route('indexReclutamiento') }}">Reclutamientos</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="../../agrupaciones/semiAdmi/Propuesta">Propuestas</a>
+                      <a class="nav-link" href="{{ route('PropuestaSemi') }}">Propuestas</a>
                   </li>
                   <li class="nav-item">
-                        <a class="nav-link" href="../../agrupaciones/semiAdmi/CambioMesa">Cambio de Mesa</a>
+                        <a class="nav-link" href="{{ route('cambioMesa') }}">Cambio de Mesa</a>
                   </li>
                   <li class="nav-item">
-                        <a class="nav-link" href="../../agrupaciones/semiAdmi/semiAdmiMsj">Mensajes</a>
+                        <a class="nav-link" href="{{ route('semiMsj') }}">Mensajes</a>
                   </li>
               @endrole
             @endslot

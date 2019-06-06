@@ -204,22 +204,6 @@
 
                             <div class="col-md-6 col-xs-12">
                                 <div class="form-group row">
-                                    <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
-
-                                    <div class="col-md-8">
-                                        <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}">
-
-                                        @if ($errors->has('address'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('address') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-xs-12">
-                                <div class="form-group row">
                                     <label for="medical_service" class="col-md-4 col-form-label text-md-right">{{ __('Medical service type') }}*</label>
 
                                     <div class="col-md-8">
@@ -282,6 +266,37 @@
                                         @if ($errors->has('phone_number'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('phone_number') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group row">
+                                    <label for="Siglas" class="col-md-4 col-form-label text-md-right">{{ __('Siglas') }}</label>
+                                    <div class="col-md-8">
+                                        <input id="Siglas" type="text" class="form-control{{ $errors->has('Siglas') ? ' is-invalid' : '' }}" name="Siglas" value="{{ old('Siglas') }}">
+
+                                        @if ($errors->has('Siglas'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('Siglas') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group row">
+                                    <label for="nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre agrupación') }}</label>
+
+                                    <div class="col-md-8">
+                                        <input id="nombre" type="text" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{ old('nombre') }}">
+
+                                        @if ($errors->has('nombre'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('nombre') }}</strong>
                                             </span>
                                         @endif
                                     </div>

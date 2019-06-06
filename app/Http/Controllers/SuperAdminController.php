@@ -67,9 +67,15 @@ class SuperAdminController extends Controller
             'medical_card_no' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|max:255',
 
+            'Siglas' => 'nullable|string|max:255',
+            'nombre' => 'nullable|string|max:255',
+
             'password' => 'required|string|min:6|confirmed',
         ]);
 
+        if($request['Siglas'] != ""){
+          $request['account_number'] = $request['Siglas'];
+        }
         $user = User::create([
             'name' => $request['name'],
             'last_name'=>$request['last_name'],
@@ -86,6 +92,10 @@ class SuperAdminController extends Controller
             'blood_type'=>$request['blood_type'],
             'medical_card_no'=>$request['medical_card_no'],
             'phone_number'=>$request['phone_number'],
+
+            'Siglas'=>$request['Siglas'],
+            'Nombre'=>$request['nombre'],
+
             'password' => Hash::make($request['password']),
         ]);
 

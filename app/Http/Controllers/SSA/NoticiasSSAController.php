@@ -27,7 +27,9 @@ class NoticiasSSAController extends Controller{
     * @return view
   */
   public function index(){
-    $dato = Noticias::orderBy('id','desc')->get();
+    $dato = Noticias::orderBy('id','desc')
+            ->limit(9)
+            ->get();
     return view('SSA.NoticiasSSA.NoticiaIndex',compact('dato'));
   }
   /**
@@ -128,10 +130,11 @@ class NoticiasSSAController extends Controller{
               $carusel->Link = "Noticia/id/".$fol->id;
             }
               $image = $request->file('ImagenR');
-              $filename = time() . '.' . $image->getClientOriginalExtension();
-              $location = public_path('images/Carusel/'. $filename);
-              Image::make($image)->resize(1730,879)->save($location);
-              $carusel->Imagen = $filename;
+              $filenameR = time() . 'R.' . $image->getClientOriginalExtension();
+              $path = $request->file('ImagenR')->storeAs(
+                  'public/images/Carusel', $filenameR
+              );
+              $carusel->Imagen = $filenameR;
             $carusel->save();
         }
         //Guardar en el historial la creación de la noticia
@@ -155,13 +158,19 @@ class NoticiasSSAController extends Controller{
     //Guardar en el historial su eliminación
     AdminChange::create([
         'author_id' => auth()->user()->id,
-        'change' => 'Eliminación la noticia: '.$noticia->Titulo,
+        'change' => 'Eliminación la noticia: '.strip_tags($noticia->Titulo),
     ]);
     //eliminar del sistemas las imagenes anteriores
     $oldImageC = $noticia->ImagenC;
-    Storage::delete('Noticias/'.$oldImageC);
+    Storage::delete('public/images/Noticias/Secundaria/'.$oldImageC);
     $oldImageR = $noticia->ImagenR;
-    Storage::delete('Noticias/'.$oldImageR);
+    Storage::delete('public/images/Noticias/Principal/'.$oldImageR);
+    //Si se encuentra en el carrusel tambien eliminarla
+    if($noticia->Principal == 1){
+      $carru = Carusel::where('Titulo',$noticia->Titulo);
+      Storage::delete('public/images/Carusel/'.$carru->Imagen);
+      $carru->delete();
+    }
     //Eliminar la noticia
     $noticia->delete();
   }
@@ -194,38 +203,39 @@ class NoticiasSSAController extends Controller{
       'ImagenC' => ['sometimes','image'],
       'ImagenR'=>['sometimes','image']
     ]);
-    //Ver si tiene cambios en la imagen cuadrada
-    if($request->hasFile('ImagenC')){
-      //actualizar la imagen
-      $image = $request->file('ImagenC');
-      $filename1 = time() . '.' . $image->getClientOriginalExtension();
-      $location = public_path('images/Noticias/'. $filename1);
-      Image::make($image)->resize(700,300)->save($location);
-      //Nombre de la imagen anterior
-      $oldFilename = $noticia->ImagenC;
-      //Actualizar imagen cuadrada
-      $noticia->ImagenC = $filename1;
-      //Eliminar la imagen anterior
-      Storage::delete('public/images/Noticias/'.$oldFilename);
-    }
     //Guardar la nueva informacion en caso de se hayan cambios
       $noticia->Titulo = $request->Titulo;
       $noticia->DescripcionCorta = Purifier::clean($request->DescripcionCorta);
       $noticia->Descripcion = Purifier::clean($request->Descripcion);
       $noticia->Fecha = $request->Fecha;
+      //Ver si tiene cambios en la imagen cuadrada
+      if($request->hasFile('ImagenC')){
+        $cuadrada = $request->file('ImagenC');
+        $filenameC = time() . 'C.' . $cuadrada->getClientOriginalExtension();
+        $path = $request->file('ImagenC')->storeAs(
+            'public/images/Noticias/Secundaria', $filenameC
+        );
+        //Nombre de la imagen cuadrada anterior
+        $oldImageC = $noticia->ImagenC;
+        Storage::delete('public/images/Noticias/Secundaria/'.$oldImageC);
+        //actualizar
+        $noticia->ImagenC = $filenameC;
+      }
+
     //ver si hay cambios en la imagen rectangular
     if($request->hasFile('ImagenR')){
-      $image = $request->file('ImagenR');
-      $filename = time() . '.' . $image->getClientOriginalExtension();
-      $location = public_path('images/Noticias/'. $filename);
-      Image::make($image)->resize(600,309)->save($location);
-      //Nombre de la imagen anterior
-      $oldFilename2 = $noticia->ImagenR;
-      //Actualizar imagen cuadrada
-      $noticia->ImagenC = $filename;
-      //Eliminar la imagen anterior
-      Storage::delete('public/images/Noticias/'.$oldFilename2);
+      $rectangular = $request->file('ImagenR');
+      $filenameR = time() . 'R.' . $rectangular->getClientOriginalExtension();
+      $path2 = $request->file('ImagenR')->storeAs(
+          'public/images/Noticias/Principal', $filenameR
+      );
+      //Nombre de la imagen resctangular anterior
+      $oldImageR = $noticia->ImagenR;
+      Storage::delete('public/images/Noticias/Principal/'.$oldImageR);
+      //actualizar
+      $noticia->ImagenR = $filenameR;
     }
+
     //Guardar la actualización
     $noticia->save();
     //Guardar en el historial su actualización

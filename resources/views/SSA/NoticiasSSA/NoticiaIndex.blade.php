@@ -8,7 +8,7 @@
         @if(is_null($info->ImagenC))
         <img src="{{asset('images/Inge.png')}}" class="img-fluid" width="100%" height="100%" style="border-radius:2%;">
         @else
-          <img src="{{asset('images/Noticias/'.$info->ImagenC)}}" class="img-fluid" width="100%" height="100%" style="border-radius:2%;">
+          <img src="{{asset('storage/images/Noticias/Secundaria/'.$info->ImagenC)}}" class="img-fluid" width="100%" height="100%" style="border-radius:2%;">
         @endif
       </div>
       <div class="card-body">

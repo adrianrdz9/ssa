@@ -2,7 +2,7 @@
 
 /**
  * Modelo el usuario
- * 
+ *
  * Role
  * ^ Belongs to many throu
  * | UserRoles
@@ -10,7 +10,7 @@
  * | Belongs to many through
  * V UserInTeam
  * Team
- * 
+ *
  */
 
 namespace App;
@@ -47,12 +47,12 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
 
     /**
      * Metodo constructor que define los formatos que se guardaran de la imagen de perfil
-     * 
+     *
      * @return void
      */
     public function __construct(array $attributes = [])
     {
-        
+
         $this->hasAttachedFile('avatar', [
             'variants' => [
                 'medium' => [
@@ -68,22 +68,23 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
         $this->hasAttachedFile('credencial');
         $this->hasAttachedFile('carnet');
 
-        parent::__construct($attributes);   
+        parent::__construct($attributes);
     }
 
     /**
      * Propiedad que almacena los campos que se pueden actualizar "en masa"
-     * 
+     *
      * @var Array[String]
      */
     protected $fillable = [
         'name', 'last_name', 'email', 'height', 'weight', 'birthdate', 'career', 'semester', 'account_number',
-        'curp', 'address', 'medical_service', 'blood_type', 'medical_card_no', 'phone_number', 'password', 'username'
+        'curp', 'address', 'medical_service', 'blood_type', 'medical_card_no', 'phone_number', 'password', 'username',
+        'Siglas','Nombre'
     ];
 
     /**
      * Propiedad que almacena los campos que se oculataran cuando se serialice el usuario
-     * 
+     *
      * @var Array[String]
      */
     protected $hidden = [
@@ -92,7 +93,7 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
 
     /**
      * Metodo que devuelve la edad del usuario
-     * 
+     *
      * @return Integer
      */
     public function getAgeAttribute()
@@ -102,7 +103,7 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
 
     /**
      * Metodo que devuelve la ruta de la imagen de perfil o la imagen por defecto
-     * 
+     *
      * @return String
      */
     public function avatarPath(){
@@ -116,7 +117,7 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
     /**
      * Metodo que devuelve la ruta publica de la imagen de perfil o la imagen por defecto
      * esta ruta es necesaria en la generacion de un PDF
-     * 
+     *
      * @return String
      */
     public function avatarPublicPath(){
@@ -127,10 +128,10 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
     }
 
     /**
-     * Metodo que devuelve los equipos a los que pertence junto con sus compañeros 
+     * Metodo que devuelve los equipos a los que pertence junto con sus compañeros
      * y las solicitudes en caso de ser capitan
-     * 
-     * @return 
+     *
+     * @return
      *  Array[
      *    <UserInTeam
      *       <Team
@@ -142,7 +143,7 @@ class User extends Authenticatable implements \Czim\Paperclip\Contracts\Attachab
      *       >
      *    >
      *  ]
-     * 
+     *
      */
     public function teams(){
         $teams = UserInTeam::where('user_id', $this->id)->with('team.accepted_users')->with('team.captain')->with('team.branch.tournament')->get();

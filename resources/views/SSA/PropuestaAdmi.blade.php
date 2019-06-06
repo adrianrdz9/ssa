@@ -2,61 +2,25 @@
 @section('title','Propuestas')
 @section('content')
 <h3 style="margin-top:1%;">Propuestas para la Feria de Agrupaciones</h3>
-<div>
+<div class="row">
   @if($Propuestas != [])
-    @foreach ($Propuestas as $value)
-      @if($value->Estado == "Pendiente")
-      <div class="card" data-id="{{ $value->id }}">
-        <div class="card-header">{{ $value->Titulo }} por {{ $value->Siglas}}</div>
-        <div class="card-body" style="text-align:left;">
-          <p class="card-text">{{ $value->Descripcion }}</p>
-          <b>Contacto:</b> <br/>
-          <p style="margin-left:3%;">
-            @foreach ($Presidente as $Info)
-              Presidente: {{ $Info->Nombre }} <br/>
-              Celular: {{ $Info->Numero }} <br/>
-              Email: {{ $Info->Email }}
-            @endforeach
-          </p>
-        </div>
-         <div class="card-footer" style="text-align:right;" data-id="{{ $value->id }}">
-          <button type="button" class="btn btn-success Aceptar">Aceptar</button>
-          <button type="button" class="btn btn-info Comunicate">Comunicate con nosotros</button>
-        </div>
-      </div>
+    @for ($i = 0; $i < $Contar; $i++)
+      @if($Propuestas["\x00*\x00items"][$i]->Estado == "Pendiente")
+          @component('SSA._propuestaTile', [ 'propuesta' => $Propuestas["\x00*\x00items"][$i]])
+              <button type="button" class="btn btn-success Aceptar">Aceptar</button>
+              <button type="button" class="btn btn-info Comunicate">Comunicate con nosotros</button>
+          @endcomponent
       @endif
-      @if($value->Estado == "Aprobada")
-      <div class="card" data-id="{{ $value->id }}">
-        <div class="card-header">{{ $value->Titulo }} por {{ $value->Siglas}}</div>
-        <div class="card-body" style="text-align:left;">
-          <p class="card-text">{{ $value->Descripcion }}</p>
-          <b>Contacto:</b> <br/>
-          <p style="margin-left:3%;">
-            Presidente: Pablo Neruda <br/>
-            Celular: 5528072878 <br/>
-            Email: pablo@comunidad.unam.mx <br/>
-          </p>
-        </div>
-      </div>
+      @if($Propuestas["\x00*\x00items"][$i]->Estado == "Aprobada")
+          @component('SSA._propuestaTile', [ 'propuesta' => $Propuestas["\x00*\x00items"][$i]])
+          @endcomponent
       @endif
-      @if($value->Estado == "Comunicate")
-      <div class="card" data-id="{{ $value->id }}">
-        <div class="card-header">{{ $value->Titulo }} por {{ $value->Siglas}}</div>
-        <div class="card-body" style="text-align:left;">
-          <p class="card-text">{{ $value->Descripcion }}</p>
-          <b>Contacto:</b> <br/>
-          <p style="margin-left:3%;">
-            Presidente: Pablo Neruda <br/>
-            Celular: 5528072878 <br/>
-            Email: pablo@comunidad.unam.mx <br/>
-          </p>
-        </div>
-         <div class="card-footer" style="text-align:right;" data-id="{{ $value->id }}">
-          <button type="button" class="btn btn-success Aceptar">Aceptar</button>
-        </div>
-      </div>
+      @if($Propuestas["\x00*\x00items"][$i]->Estado == "Comunicate")
+          @component('SSA._propuestaTile', [ 'propuesta' => $Propuestas["\x00*\x00items"][$i]])
+              <button type="button" class="btn btn-success Aceptar">Aceptar</button>
+          @endcomponent
       @endif
-    @endforeach
+    @endfor
    @else
      <div>
        @if($Mensaje == "Ya no se recibiran propuestas." || $Mensaje == "Aún no hay fechas.")
@@ -83,7 +47,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <form method="post" action="{{ url('agrupaciones/NFeria') }}">
+        <form method="post" action="{{ route('NFeria') }}">
           {{ csrf_field() }}
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Titulo:</label>

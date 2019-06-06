@@ -24,7 +24,7 @@ class agrupacionController extends Controller{
   */
   public function index(){
     //Informacion general
-    $u = auth()->user()->Siglas;
+    $u = auth()->user()->username;
     $data = \App\User::where('Siglas',$u)->get();
     //integrantes
     $int = \App\Integrantes::where('Siglas',$u)->orderBy('NCargo','asc')->get();
@@ -43,7 +43,7 @@ class agrupacionController extends Controller{
     * @return redirect
   */
   public function Integrantes(Request $request){
-      $u = auth()->user()->Siglas;
+      $u = auth()->user()->username;
       $Cargos = Array
       (
           Array(
@@ -141,7 +141,7 @@ class agrupacionController extends Controller{
       * @return redirect
     */
     public function InfoGeneral(Request $request){
-      $u = auth()->user()->Siglas;
+      $u = auth()->user()->username;
       $a = $request->all();
 
       if($request->hasFile('Logo')){
