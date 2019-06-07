@@ -63,7 +63,7 @@
                       <a class="nav-link" href="{{ route('semiAdmi') }}">Información</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="../../agrupaciones/semiAdmi/Reclutamiento">Nuevo reclutamiento</a>
+                      <a class="nav-link" href="{{ route('createReclutamiento') }}">Nuevo reclutamiento</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="{{ route('indexReclutamiento') }}">Reclutamientos</a>

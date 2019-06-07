@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\FeriaEventos;
 use App\AdminChange;
-
+use App\Ferias;
 class FeriasController extends Controller
 {
   /**
@@ -17,6 +17,27 @@ class FeriasController extends Controller
   public function __construct(){
     $this->middleware('role:SSA');
   }
+  /**
+    * Metodo utilizado para guardar en la BD la informacion referente a la feria de agrupaciones
+    *
+    *@param Request $request Peticion con los dato
+    *
+    * @return redirect
+  */
+  public function Feria(Request $request){
+    $this->validate($request, array(
+      'Nombre' => 'required|max:191|string' ,
+      'FechaI' => 'required|date|after:yesterday',
+      'FechaL' => 'required|date|after:today',
+    ));
+    $feria = new Ferias;
+      $feria ->Nombre = $request->Nombre;
+      $feria ->Inicio = $request->FechaI;
+      $feria ->Limite = $request->FechaL;
+    $feria->save();
+    return redirect()->route('AdmiPropuestas')->with('notice','Se han guardado las fechas');
+  }
+  // ================================== EVENTOS ========================================
   /**
     * Metodo para acceder a la vista con eventos
     *

@@ -62,6 +62,7 @@ let id = $(this).parents('div').data('id');
     )
   });
 });
+//FERIA DE AGRUPACIONES
 //EventosFerias
 $('.Eliminar').click(function () {
 let id = $(this).parents('ul').data('id');
@@ -83,7 +84,48 @@ let id = $(this).parents('ul').data('id');
     )
   });
 });
-//carrusel
+//Propuestas
+$('.AceptarP').click(function () {
+let id = $(this).parents('div').data('id');
+  $.ajax({
+    url: "/agrupaciones/statusA/id/" + id,
+    method: "get",
+  }).done(()=>{
+    $(this).closest('.AceptarP').remove();
+    swal(
+        '¡Exito!',
+        'Se ha aceptado la propuesta',
+        'success'
+    )
+  }).fail(()=>{
+    swal(
+        '¡Error!',
+        'No es posible aceptar la propuesta',
+        'error'
+    )
+  });
+});
+$('.Comunicate').click(function () {
+let id = $(this).parents('div').data('id');
+  $.ajax({
+    url: "/agrupaciones/statusC/id/" + id,
+    method: "get",
+  }).done(()=>{
+    $(this).closest('.Comunicate').remove();
+    swal(
+        '¡Exito!',
+        'Se notificara a la agrupación',
+        'success'
+    )
+  }).fail(()=>{
+    swal(
+        '¡Error!',
+        'No es posible realizar esta acción',
+        'error'
+    )
+  });
+});
+//CARRUSEL
 //Mostrar imagen seleccionada
 function readURL(input) {
   if (input.files && input.files[0]) {

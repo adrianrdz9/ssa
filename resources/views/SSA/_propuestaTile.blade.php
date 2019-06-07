@@ -7,10 +7,9 @@
         <p style="margin-left:3%;">
             Presidente: {{ $propuesta->PNombre }} <br/>
             Celular: {{ $propuesta->PNumero }} <br/>
-            Email: {{ $propuesta-PPEmail }}
+            Email: {{ $propuesta->PEmail }}
         </p>
     </div>
-    {{ $propuesta }}
    <div class="card-footer" style="text-align:right;" data-id="{{ $propuesta->id }}">
      {{ $slot }}
    </div>

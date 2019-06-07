@@ -74,12 +74,13 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     /*
     *   PROPUESTAS PARA LA FERIA DE AGRUPACIONES
     */
+    //Fechas feria
+    Route::post('/NFeria','SSA\FeriasController@Feria')->name('NFeria');
     //Ver propuestas
     Route::get('/Admi/Propuestas','SSA\PropuestasController@Propuestas')->name('AdmiPropuestas');
-    Route::post('/NFeria','Admis\admiController@Feria')->name('NFeria');
     //Status propuestas
-    Route::get('/statusA/id/{id}','Admis\admiController@StatusA');
-    Route::get('/statusC/id/{id}','Admis\admiController@StatusC');
+    Route::get('/statusA/id/{id}','SSA\PropuestasController@StatusA');
+    Route::get('/statusC/id/{id}','SSA\PropuestasController@StatusC');
     /*
     *   MENSAJES
     */
@@ -109,9 +110,9 @@ Route::group(['prefix' => 'agrupaciones'], function () {
     *   PROPUESTAS
     */
     //status propuesta
-    Route::get('/semiAdmi/Propuesta','Admis\semiAdmiController@Propuesta')->name('PropuestaSemi');
+    Route::get('/semiAdmi/Propuesta','SSA\PropuestasController@Propuesta')->name('PropuestaSemi');
     //Nueva propuesta
-    Route::post('/NPropuesta','Admis\semiAdmiController@NPropuesta')->name('NPropuesta');
+    Route::post('/NPropuesta','SSA\PropuestasControllerr@NPropuesta')->name('NPropuesta');
     /*
     *   CAMBIO DE MESA
     */

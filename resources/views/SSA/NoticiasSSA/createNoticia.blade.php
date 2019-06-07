@@ -12,7 +12,7 @@
         </div>
         <div class="form-group col-md-6">
           <h4>Fecha </h4>
-          <input type="date" name="Fecha" value="{{ old('Fecha')}}" required>
+          <input class="form-control" type="date" name="Fecha" value="{{ old('Fecha')}}" required>
         </div>
       </div>
       <div class="form-group">
